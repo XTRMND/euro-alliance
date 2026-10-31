@@ -1,0 +1,87 @@
+/*
+ * Design tokens. Components use these and never hard-code a colour, size or duration.
+ *
+ * Colours are the Figma variables (collection «Color»), named after their code syntax. Page
+ * 02 Foundations is empty, so type, layout, radius and shadow values are measured from the
+ * components and templates (PR 3). Motion comes from docs/motion.md § 1.
+ *
+ * Sizes that differ between the 390 and 1440 frames scale fluidly between those two widths.
+ * Breakpoint (media queries can't read custom properties): 768px.
+ */
+
+:root {
+  /* Colour */
+  --color-brand-primary: #0c427e;
+  --color-brand-primary-strong: #183169;
+  --color-brand-accent: #c0aa81; /* never text on light backgrounds; fine on navy */
+  --color-brand-accent-subtle: #ede3d0;
+  --color-bg-page: #ffffff;
+  --color-bg-subtle: #f5f6f8;
+  --color-bg-warm: #f7f3ec;
+  --color-text-primary: #14202e;
+  --color-text-muted: #5a6676;
+  --color-text-on-brand: #ffffff;
+  --color-border-default: #dce1e7;
+
+  /* Type families (src/styles/fonts.ts sets the --font-sofia-* and --font-caveat variables) */
+  --font-display: var(--font-sofia-sans-extra-condensed), 'Arial Narrow', sans-serif;
+  --font-body: var(--font-sofia-sans), Arial, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  /* Type styles, for `font:` (weight size/line-height family) */
+  --type-display-weight: 800; /* ExtraBold at 390, Black from 768 up */
+  --type-display: var(--type-display-weight) clamp(3rem, 2.35rem + 2.667vw, 4.75rem) / 0.96
+    var(--font-display); /* 48 → 76 */
+  --type-h2: 800 clamp(2.25rem, 1.879rem + 1.524vw, 3.25rem) / 1 var(--font-display); /* 36 → 52 */
+  --type-h3: 700 1.8125rem / 1 var(--font-display); /* 29 */
+  --type-figure: 800 2.75rem / 0.96 var(--font-display); /* 44 */
+  --type-lead: 400 clamp(1.0625rem, 1.016rem + 0.19vw, 1.1875rem) / 1.52 var(--font-body); /* 17 → 19 */
+  --type-body: 400 1rem / 1.5 var(--font-body); /* 16 */
+  --type-small: 400 0.9375rem / 1.5 var(--font-body); /* 15 */
+  --type-label: 600 1rem / 1.2 var(--font-body); /* 16, Figma style Label/M */
+  --type-kicker: 700 0.9375rem / 1.55 var(--font-display); /* 15, uppercase */
+  --tracking-kicker: 0.06em;
+  --tracking-caps: 0.04em;
+
+  /* Layout */
+  --page-max: 1440px;
+  --content-max: 1280px;
+  --page-margin: clamp(24px, 3.2px + 5.333vw, 80px); /* 24 → 80 */
+  --space-section: clamp(48px, 33.14px + 3.81vw, 88px); /* 48 → 88 */
+  --gap-cards: 24px;
+
+  /* Shape */
+  --radius-button: 10px;
+  --radius-image: 14px;
+  --radius-card: 16px;
+
+  /* Shadows, always navy */
+  --shadow-rgb: 23 48 105;
+  --shadow-card: 0 8px 12px rgb(var(--shadow-rgb) / 0.07);
+  --shadow-card-hover: 0 16px 17px rgb(var(--shadow-rgb) / 0.16);
+  --shadow-paper: 0 6px 9px rgb(var(--shadow-rgb) / 0.08);
+  --shadow-photo: 0 10px 24px rgb(var(--shadow-rgb) / 0.14);
+  --shadow-bubble: 0 3px 8px rgb(var(--shadow-rgb) / 0.25);
+
+  /* Focus ring (not in Figma; proposed in PR 3) */
+  --focus-ring: 3px solid var(--color-brand-primary);
+  --focus-ring-on-brand: 3px solid var(--color-brand-accent);
+  --focus-offset: 2px;
+
+  /* Motion (docs/motion.md § 1) */
+  --motion-button: 150ms;
+  --motion-card: 250ms;
+  --motion-news: 350ms;
+  --motion-landing: 850ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --landing-rise: 30px;
+  --landing-stagger: 120ms;
+  --strip-height: 56px;
+  --strip-speed: 18; /* px per second */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --type-display-weight: 900;
+  }
+}

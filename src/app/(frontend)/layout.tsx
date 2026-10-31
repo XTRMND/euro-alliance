@@ -1,4 +1,7 @@
 import type { Metadata } from 'next'
+import { fontVariables } from '@/styles/fonts'
+import '@/styles/tokens.css'
+import '@/styles/globals.css'
 
 // Temporary until PR 8 (homepage) and PR 22 (SEO) move these into the CMS.
 export const metadata: Metadata = {
@@ -11,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function FrontendLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="bg">
+    <html lang="bg" className={fontVariables}>
       <body>{children}</body>
     </html>
   )
