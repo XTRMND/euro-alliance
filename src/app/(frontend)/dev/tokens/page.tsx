@@ -16,6 +16,7 @@ export const metadata: Metadata = {
 const colours = [
   'brand-primary',
   'brand-primary-strong',
+  'brand-primary-subtle',
   'brand-accent',
   'brand-accent-subtle',
   'bg-page',
