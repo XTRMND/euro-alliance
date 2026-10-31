@@ -4,4 +4,5 @@ import { devRoutes, routes } from '@/lib/routes'
 export const pages = [
   { name: 'Home', path: routes.home() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
+  { name: 'Components (dev)', path: devRoutes.components },
 ]

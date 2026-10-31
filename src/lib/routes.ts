@@ -74,6 +74,7 @@ export type AboutSection = keyof typeof aboutSections
 /** Reference pages for development, served only with DEV_PAGES=true. */
 export const devRoutes = {
   tokens: '/dev/tokens',
+  components: '/dev/components',
 } as const
 
 function withQuery(path: string, name: string, value: string | undefined): string {

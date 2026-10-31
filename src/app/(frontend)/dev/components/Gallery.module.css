@@ -1,0 +1,72 @@
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-section) var(--page-margin);
+  display: grid;
+  gap: var(--space-section);
+}
+
+.title {
+  font: var(--type-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.section {
+  display: grid;
+  gap: 20px;
+}
+
+.heading {
+  font: var(--type-h2);
+  color: var(--color-brand-primary-strong);
+}
+
+.heading code {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+}
+
+.column {
+  display: grid;
+  justify-items: start;
+  gap: 16px;
+}
+
+.caption {
+  min-width: 72px;
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+/* Accent buttons are only used on navy. */
+.navy {
+  display: inline-flex;
+  padding: 12px;
+  border-radius: var(--radius-card);
+  background: var(--color-brand-primary-strong);
+}
+
+.fieldset {
+  display: grid;
+  gap: 12px;
+  max-width: 320px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 4px;
+  padding: 0;
+  font: var(--type-kicker);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}

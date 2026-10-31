@@ -7,7 +7,10 @@ import { devRoutes } from '@/lib/routes'
 
 test.skip(process.platform !== 'linux', 'Snapshots are Linux renders')
 
-const snapshots = [{ name: 'tokens', path: devRoutes.tokens }]
+const snapshots = [
+  { name: 'tokens', path: devRoutes.tokens },
+  { name: 'components', path: devRoutes.components },
+]
 
 for (const { name, path } of snapshots) {
   for (const width of [1440, 390]) {

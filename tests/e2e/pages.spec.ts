@@ -60,7 +60,10 @@ for (const { name, path } of pages) {
           }
         }
 
-        for (const button of document.querySelectorAll('button')) {
+        // A disabled button has no action by design.
+        for (const button of document.querySelectorAll<HTMLButtonElement>(
+          'button:not(:disabled)',
+        )) {
           // React keeps a button's props on the element; it's the only way to see an onClick
           // in a production build.
           const propsKey = Object.keys(button).find((key) => key.startsWith('__reactProps$'))
