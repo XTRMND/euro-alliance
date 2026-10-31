@@ -21,9 +21,14 @@ WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     HOSTNAME=0.0.0.0 \
-    PORT=3000
+    PORT=3000 \
+    MEDIA_DIR=/app/media
 # The standalone folder already holds .next/static and public/ (scripts/prepare-standalone.mjs).
 COPY --from=builder --chown=node:node /app/.next/standalone ./
+# Uploaded media: mount a volume here. On start, Payload applies pending migrations and seeds an
+# empty database.
+RUN mkdir -p /app/media && chown node:node /app/media
+VOLUME ["/app/media"]
 USER node
 EXPOSE 3000
 CMD ["node", "server.js"]
