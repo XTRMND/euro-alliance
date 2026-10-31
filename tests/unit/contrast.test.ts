@@ -21,6 +21,8 @@ const pairs: [text: string, background: string, size: Size, where: string][] = [
   ['text-muted', 'bg-page', 'normal', 'secondary text on cards'],
   ['brand-primary', 'bg-warm', 'normal', 'links and kickers on paper'],
   ['brand-primary', 'bg-page', 'normal', 'links and dates on cards'],
+  ['brand-primary', 'brand-primary-subtle', 'normal', 'Secondary button, hover'],
+  ['brand-primary', 'brand-accent-subtle', 'normal', 'Link button, hover'],
   ['brand-primary-strong', 'bg-warm', 'normal', 'headings on paper'],
   ['brand-primary-strong', 'bg-page', 'normal', 'headings on cards'],
   ['brand-primary-strong', 'brand-accent', 'normal', 'highlighter, chips and ticks'],
@@ -32,7 +34,7 @@ const pairs: [text: string, background: string, size: Size, where: string][] = [
 
 describe('text contrast (WCAG AA)', () => {
   it('reads every colour token', () => {
-    expect(Object.keys(colour)).toHaveLength(11)
+    expect(Object.keys(colour)).toHaveLength(12)
   })
 
   it.each(pairs)('%s on %s (%s): %s', (text, background, size) => {

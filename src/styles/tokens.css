@@ -13,6 +13,7 @@
   /* Colour */
   --color-brand-primary: #0c427e;
   --color-brand-primary-strong: #183169;
+  --color-brand-primary-subtle: #eaf0f6; /* Secondary button hover */
   --color-brand-accent: #c0aa81; /* never text on light backgrounds; fine on navy */
   --color-brand-accent-subtle: #ede3d0;
   --color-bg-page: #ffffff;

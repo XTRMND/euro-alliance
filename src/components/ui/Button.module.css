@@ -1,0 +1,91 @@
+/*
+ * Button (18:30). Figma has Default and Hover; keyboard focus shows the Hover look plus the
+ * focus ring. `data-hover` forces the Hover look for the dev gallery.
+ * Every variant has a 1.5px border (transparent unless Secondary) so all are 45px tall, as in
+ * Figma, where the Secondary stroke sits inside the box.
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11.5px 20.5px;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-button);
+  font: var(--type-label);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-button) var(--ease-out),
+    color var(--motion-button) var(--ease-out),
+    border-color var(--motion-button) var(--ease-out);
+}
+
+.button:disabled,
+.button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+}
+
+.secondary {
+  background: transparent;
+  color: var(--color-brand-primary);
+  border-color: var(--color-brand-primary);
+}
+
+.accent {
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary-strong);
+}
+
+.accent:focus-visible {
+  outline: var(--focus-ring-on-brand);
+}
+
+.link {
+  padding: 4px 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-brand-primary);
+}
+
+.primary:is(:focus-visible, [data-hover]) {
+  background: var(--color-brand-primary-strong);
+}
+
+.secondary:is(:focus-visible, [data-hover]) {
+  background: var(--color-brand-primary-subtle);
+}
+
+.accent:is(:focus-visible, [data-hover]) {
+  background: var(--color-bg-page);
+}
+
+.link:is(:focus-visible, [data-hover]) {
+  background: var(--color-brand-accent-subtle);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary:not(:disabled):hover {
+    background: var(--color-brand-primary-strong);
+  }
+
+  .secondary:not(:disabled):hover {
+    background: var(--color-brand-primary-subtle);
+  }
+
+  .accent:not(:disabled):hover {
+    background: var(--color-bg-page);
+  }
+
+  .link:not(:disabled):hover {
+    background: var(--color-brand-accent-subtle);
+  }
+}
