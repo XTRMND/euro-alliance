@@ -29,7 +29,7 @@ Euro Alliance (ЕВРО-АЛИАНС ООД) is a language school, a licensed vo
 - **Payload CMS** (MIT) installed inside the same Next.js app (`src/app/(payload)`), on **PostgreSQL** (`@payloadcms/db-postgres`), with migrations committed.
 - Server-side rendering with CDN caching. Content changes revalidate pages on demand from Payload hooks (`revalidateTag` / `revalidatePath`).
 - **Hosting is on the user's own servers. Do not assume Vercel** or any managed platform. Build a portable Node app: `output: 'standalone'`, a Dockerfile, Postgres via `DATABASE_URL`, media storage behind a Payload storage adapter. Ask the user before choosing anything infrastructure-specific (CDN, object storage, SMTP, preview environments, cron).
-- **Fonts** via `next/font/google` (self-hosted at build time, no runtime request to Google): Sofia Sans Extra Condensed, Sofia Sans, Caveat. Subsets: Cyrillic and Latin.
+- **Fonts**, all self-hosted (no runtime request to Google): Sofia Sans and Sofia Sans Extra Condensed as one subset variable WOFF2 each, made by `scripts/build-fonts.sh` (Cyrillic and Latin together, only the weights in use; PR 4); Caveat through `next/font/google`.
 - **Styling:** CSS Modules with design tokens as CSS custom properties (decided in PR 1). Tokens come from Figma variables and no component hard-codes a colour.
 - **Tests:** Vitest (unit), Playwright (smoke and visual), `@axe-core/playwright` (accessibility), Lighthouse CI (budgets).
 - Use the current stable versions at scaffold time, pin them, and list them in the PR 1 description.
@@ -220,10 +220,11 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Integration tests | `pnpm test:int` (Payload against `TEST_DATABASE_URL`, which is wiped and migrated on every run) |
 | Schema change | edit the config, then `pnpm migrate:create <name>`, `pnpm generate:types`, `pnpm generate:importmap`, and commit all of it; CI fails if any of them is stale |
 | Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
-| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens` (never set in production) |
+| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens` and `/dev/components` (never set in production) |
 | Visual snapshots | run in CI only (Linux renders). New ones are written on the first run and uploaded as the `visual-snapshots` artifact; commit them under `tests/e2e/__screenshots__/` |
 | E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100; first run: `pnpm exec playwright install chromium`) |
-| Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`) |
+| Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`). CI is the reference: a busy laptop runs slower than CI, and the simulated mobile LCP moves with it |
+| Rebuild fonts | `scripts/build-fonts.sh` (needs `pip install fonttools brotli`) |
 | Docker image | `docker build -t euro-alliance .` |
 
 The content import arrives in PR 21.
@@ -263,6 +264,9 @@ Design questions for the user (found in PR 3; the build follows the default in b
 - Home's section titles are plain frames (52/0.96, 38 on mobile), not Section heading instances (52/1, 36 on mobile). [the component, PR 8]
 - The Course card description in Figma says "Image from filtered stock", which clashes with real photos only. The card shows sticker art. [sticker art, no photo, PR 9]
 - Focus ring: not in Figma. [3 px brand/primary outline, 2 px offset; sand on navy]
+- Control borders: the unchecked checkbox and radio and the off toggle use border/default (#DCE1E7), about 1.3:1 on white and paper. WCAG 1.4.11 asks 3:1 for the parts that show a control and its state, and axe doesn't check this. Proposal: a 1.5 px text/muted border on unchecked boxes and on the off track (5.8:1). [as in Figma, PR 4]
+- Buttons: Figma has Default and Hover only. [focus = Hover plus the focus ring; pressed = Hover; disabled = 50% opacity. Avoid disabled buttons where a validation message can explain instead]
+- Hover on Chip, Checkbox and Radio card isn't in Figma. [the border turns brand/primary]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
