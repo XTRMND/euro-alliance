@@ -205,17 +205,24 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 |---|---|
 | Install | `pnpm install` |
 | Local database | `docker compose up -d` (PostgreSQL 18 on port 5432; set `DB_PORT` if it's taken) |
-| Dev server | `pnpm dev` (http://localhost:3000) |
+| Environment | `cp .env.example .env`, then set `PAYLOAD_SECRET` |
+| Migrate and seed | `pnpm migrate`, then `pnpm seed` (fills in missing company facts and offices; never overwrites) |
+| Dev server | `pnpm dev` (http://localhost:3000, admin at `/admin`; the first account created is the admin) |
 | Production build | `pnpm build` (standalone server in `.next/standalone`) |
 | Run the build | `pnpm start` |
 | Typecheck | `pnpm typecheck` |
 | Lint and format | `pnpm lint`, `pnpm format:check` (`pnpm format` fixes formatting) |
 | Unit tests | `pnpm test` (`pnpm test:watch` while working) |
+| Integration tests | `pnpm test:int` (Payload against `TEST_DATABASE_URL`, which is wiped and migrated on every run) |
+| Schema change | edit the config, then `pnpm migrate:create <name>`, `pnpm generate:types`, `pnpm generate:importmap`, and commit all of it; CI fails if any of them is stale |
+| Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
 | E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100; first run: `pnpm exec playwright install chromium`) |
 | Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`) |
 | Docker image | `docker build -t euro-alliance .` |
 
-Database migrate and seed arrive in PR 2, the content import in PR 21.
+The content import arrives in PR 21.
+
+**Production start:** the Docker image has no CLI. On start, Payload applies pending migrations (`prodMigrations`) and seeds an empty database. Mount a volume at `/app/media` for uploads.
 
 **Adding a page:** name its route folder with the segments from `src/lib/routes.ts` (a unit test enforces this), add it to `tests/e2e/pages.ts` so the shared checks run on it, and add key pages to `paths` in `lighthouserc.cjs`.
 
@@ -227,8 +234,10 @@ Decided:
 - Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
 - Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
 - Planned steps are pushed straight to `main` (§ 10).
+- Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
 
 Waiting on the client:
+- The tour operator certificate: its number and exact wording (not in the `site` global until supplied).
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist).
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
 - English content.
@@ -250,6 +259,7 @@ Decisions this package proposes (confirm before the PR that needs them):
 - gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
 - Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning.
+- Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.
 
 ## 13. When in doubt
 

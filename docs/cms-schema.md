@@ -188,12 +188,17 @@ The brief lists no fields. Build the fields from Certificate card 145:364 (read 
 
 | Kind | Treatment |
 |---|---|
-| `photo` | Responsive sizes (proposed widths 480, 768, 1080, 1440, 1920, 2880) in AVIF and WebP, plus **pre-composited duotone tints** at each size: 88% (hero), 55% (homepage news), 45% (about and general photos), 30% (news pages). |
-| `art` | Responsive sizes; optional halftone derivative. |
-| `scan` | Responsive sizes; no colour treatment. |
+| `photo` | **Four pre-composited tints**: 88% (hero), 55% (homepage news), 45% (about and general photos), 30% (news pages). Stored as uploads in the hidden `media-tints` collection, at most 2880 px wide, JPEG without EXIF. |
+| `art` | Original only. Optional halftone derivative later if a design needs it. |
+| `scan` | Original only; no colour treatment. |
 | `logo` | **Served exactly as uploaded** (EU publicity rules). No recompression, tint, crop or reformat. |
 
-**Duotone:** map luminance to a two-colour ramp, shadows brand/primary-strong (#183169) and highlights bg/warm (#F7F3EC), then blend with the colour original at the tint percentage ("colour + 45% duotone"). Before coding, read a duotone photo fill in Figma (News card 62:240 at both tints, and the homepage hero) with `get_design_context`; if Figma uses a different colour pair or blend mode, Figma wins.
+Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never used on the site. **Responsive widths and AVIF/WebP** come from Next's image optimizer (`next/image`) on top of the original or the tint, cached behind the CDN, instead of a dozen pre-generated files per tint. (Implemented in PR 2; the earlier proposal pre-generated widths 480–2880 in both formats.)
+
+**Duotone, as measured in Figma (PR 2).** Figma uses two treatments, and the code reproduces both (`src/lib/media/tints.ts`):
+
+- **55%, 45% and 30%** (News card 62:240, Polaroid 259:582, Torn window 259:588): the colour photo with a duotone copy on top at the tint's opacity. The duotone is a gradient map of the photo's luminance with three stops, not two: brand/primary-strong #183169 → brand/accent #C0AA81 (at 48%) → bg/warm #F7F3EC, with luminance raised to the power 1.34. Fitted to the Figma images within RMSE 6/255.
+- **88%, the homepage hero** (57:301): Figma blend layers over the colour photo, navy #183169 in *screen* mode and sand #E6D6B8 in *multiply* mode, each at 88%. #E6D6B8 appears only here and is not a colour token.
 
 **Rendering (`DuotoneImage`):** the component takes `tint` (88 / 55 / 45 / 30) and `clearOnHover`. It serves the pre-composited variant for that tint as a single image, which is best for LCP. With `clearOnHover`, the colour original sits underneath, lazy-loaded, and the composite fades to `opacity: 0` on hover (`docs/motion.md` § 5).
 
