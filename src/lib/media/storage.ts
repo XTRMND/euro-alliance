@@ -5,7 +5,8 @@ import path from 'node:path'
 // storage means adding Payload's storage plugin in payload.config.ts and reading originals from
 // the bucket in readUpload; nothing else touches the disk.
 
-const root = path.resolve(process.env.MEDIA_DIR ?? 'media')
+// A runtime data folder, not code: keep Turbopack from tracing the whole project into the build.
+const root = path.resolve(/* turbopackIgnore: true */ process.env.MEDIA_DIR ?? 'media')
 
 export const uploadDirs = {
   media: path.join(root, 'media'),
