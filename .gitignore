@@ -18,6 +18,7 @@ next-env.d.ts
 /blob-report/
 /playwright/.cache/
 /.lighthouseci/
+/lighthouse-reports/
 
 # misc
 .DS_Store

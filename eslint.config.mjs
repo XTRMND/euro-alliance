@@ -7,6 +7,11 @@ export default defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
+  {
+    // CommonJS config files (Lighthouse CI loads them with require).
+    files: ['**/*.cjs'],
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
+  },
   globalIgnores([
     '.next/**',
     'out/**',
@@ -15,6 +20,7 @@ export default defineConfig([
     'test-results/**',
     'playwright-report/**',
     '.lighthouseci/**',
+    'lighthouse-reports/**',
     'docs/reference/**',
   ]),
 ])
