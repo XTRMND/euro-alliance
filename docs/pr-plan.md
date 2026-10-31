@@ -1,8 +1,8 @@
 # PR plan
 
-The ordered list of pull requests. Work through them in order; each one is a logical step, reviewed and squash-merged by the user before the next one starts (or in parallel only when the user says so). Every page PR meets the definition of done in `CLAUDE.md` § 9. Node links are in `docs/figma-map.md`.
+The ordered list of steps, still numbered and named as PRs. Work through them in order. Since 31.10.2026 each step is pushed straight to `main` once its checks pass, instead of going through a pull request (`docs/git-workflow.md` § 1). Every page step meets the definition of done in `CLAUDE.md` § 9. Node links are in `docs/figma-map.md`.
 
-**Needs** lists what must be settled before the PR can be finished. If it isn't settled, build what you can, leave the rest behind a clear TODO, and list it under Open items in the PR.
+**Needs** lists what must be settled before the step can be finished. If it isn't settled, build what you can, leave the rest behind a clear TODO, and list it under Open items in `CLAUDE.md` § 12 and in the step's commit body.
 
 ## Before PR 1: kick-off
 

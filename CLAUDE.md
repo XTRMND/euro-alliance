@@ -181,7 +181,7 @@ Read line heights, letter spacing and the spacing scale from page 02 Foundations
 
 A page PR is done when all of these hold:
 
-1. **Matches Figma** at 1440 and 390 px: side-by-side with `get_screenshot` of the desktop and mobile nodes, attached to the PR.
+1. **Matches Figma** at 1440 and 390 px: side-by-side with `get_screenshot` of the desktop and mobile nodes, saved in `docs/screenshots/<page>/`.
 2. **Layout audit** at 1440, 1024, 768, 390 and 360 px: no horizontal overflow, no colliding neighbours, nothing off the page edge, and every card and button keeps its hover and its link. A Playwright test asserts `document.documentElement.scrollWidth <= innerWidth` at each width.
 3. **Lighthouse** (mobile, lab, median of 3 runs), proposed targets: Performance ≥ 90 (desktop ≥ 95), Accessibility 100, Best Practices 100, SEO 100, LCP ≤ 2.5 s, CLS ≤ 0.05, TBT ≤ 200 ms. The user may change these; Lighthouse CI enforces whatever is in `lighthouserc`.
 4. **axe clean:** zero violations from `@axe-core/playwright` on the page at both widths, including open states (menu, filters sheet, wizard steps, cookie settings).
@@ -191,9 +191,10 @@ A page PR is done when all of these hold:
 
 ## 10. Git (summary; the full rules are `docs/git-workflow.md`)
 
-- The user created the repo. Clone it. **Never push to `main`.**
-- One PR per logical step, on a short-lived branch (`feat/…`, `fix/…`, `chore/…`, `docs/…`). Conventional Commits. Small, reviewable commits.
-- Squash-merge after the user's review. No force-push to shared branches.
+- **Planned steps go straight to `main`** (the user's decision, 31.10.2026). No branch or PR unless the user asks for one. Never force-push `main`.
+- One step from `docs/pr-plan.md` at a time, as small Conventional Commits that each build.
+- Before pushing, run every CI check locally (typecheck, lint, format, unit, build, e2e, Lighthouse). After pushing, confirm CI is green on `main`; if it isn't, fix forward straight away.
+- What a PR description would hold (summary, Figma links, deviations, open items) goes in the body of the step's last commit. Open items also go into § 12, and the Figma side-by-side screenshots into `docs/screenshots/`.
 - Secrets only in env. Never commit `.env*` files other than `.env.example`.
 
 ## 11. Commands
@@ -224,6 +225,8 @@ Decided:
 - URL scheme in `docs/content-import.md` § 4, agreed 31.10.2026.
 - pnpm and CSS Modules (PR 1).
 - Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
+- Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
+- Planned steps are pushed straight to `main` (§ 10).
 
 Waiting on the client:
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist).
@@ -232,7 +235,6 @@ Waiting on the client:
 - Viewer access to GA4 and Search Console.
 
 Waiting on the user:
-- Media storage: local volume or S3-compatible (PR 2 needs it).
 - Which CDN (purge API for `docs/cms-schema.md` § 9).
 - SMTP provider and sender domain (PR 11).
 - How scheduled jobs run: Payload's job runner or system cron (PR 11).

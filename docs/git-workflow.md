@@ -4,9 +4,11 @@ How Claude Code works with git on this project.
 
 ## 1. Repository
 
-- The user creates the GitHub repository. Claude Code clones it and works on branches.
-- **Never push to `main`.** Never merge your own PR.
-- Suggested branch protection on `main` (the user sets it): require a pull request, require the CI checks to pass, require linear history (squash merges only), block force-pushes.
+- The user creates the GitHub repository. Claude Code clones it.
+- **Planned steps are pushed straight to `main`** (the user's decision, 31.10.2026). Branches and pull requests (§ 2, § 4, § 6) apply only when the user asks for one. Never force-push `main`.
+- Before every push, run the checks of every CI job locally. After it, confirm CI is green on `main`; if it isn't, fix forward straight away.
+- What § 4 lists for a PR is still written down: in the body of the step's last commit, with the screenshots in `docs/screenshots/` and open items in `CLAUDE.md` § 12.
+- Branch protection that requires a pull request would block these pushes, so `main` stays unprotected while this rule holds.
 
 ## 2. Branches
 
