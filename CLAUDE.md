@@ -108,7 +108,7 @@ Use only official information from the client or from euro-alliance.net. **Never
 
 ## 5. Design tokens
 
-Variables (collection «Color», `VariableCollectionId:1:7`). Generate `src/styles/tokens.css` from `get_variable_defs`; the table is for checking.
+Variables (collection «Color», `VariableCollectionId:1:7`). They live in `src/styles/tokens.css` (PR 3) with the type, layout, shape, shadow, focus and motion tokens; `/dev/tokens` shows them all (run with `DEV_PAGES=true`). The tables are for checking.
 
 | Variable | Value | CSS custom property |
 |---|---|---|
@@ -118,30 +118,34 @@ Variables (collection «Color», `VariableCollectionId:1:7`). Generate `src/styl
 | bg/page | #FFFFFF | `--color-bg-page` |
 | bg/subtle | #F5F6F8 | `--color-bg-subtle` |
 | bg/warm | #F7F3EC | `--color-bg-warm` |
-| bg/accent-subtle | #EDE3D0 | `--color-bg-accent-subtle` |
+| bg/accent-subtle | #EDE3D0 | `--color-brand-accent-subtle` (Figma's code syntax) |
 | text/primary | #14202E | `--color-text-primary` |
 | text/muted | #5A6676 | `--color-text-muted` |
 | text/on-brand | #FFFFFF | `--color-text-on-brand` |
 | border/default | #DCE1E7 | `--color-border-default` |
 
-| Use | Font | Weight | Size (px) |
-|---|---|---|---|
-| Display | Sofia Sans Extra Condensed | ExtraBold | 76 |
-| H2 | Sofia Sans Extra Condensed | ExtraBold | 52 (mobile 36) |
-| H3 | Sofia Sans Extra Condensed | Bold | 29 |
-| Figure | Sofia Sans Extra Condensed | ExtraBold | 44 |
-| Body L | Sofia Sans | Regular | 19 |
-| Body M | Sofia Sans | Regular | 16 |
-| Label | Sofia Sans | SemiBold | 16 |
-| Handwriting | Caveat | Bold | per Figma |
+Page 02 Foundations is empty (checked in PR 3), and Figma has one text style, «Label/M». The type scale below is measured from the components and templates; sizes scale fluidly between the 390 and 1440 frames.
 
-Read line heights, letter spacing and the spacing scale from page 02 Foundations.
+| Token | Font | Weight | Size / line height (px) |
+|---|---|---|---|
+| `--type-display` | Sofia Sans Extra Condensed | Black from 768 px, ExtraBold below (as in the frames) | 76 / 0.96, mobile 48 |
+| `--type-h2` | Sofia Sans Extra Condensed | ExtraBold | 52 / 1, mobile 36 |
+| `--type-h3` | Sofia Sans Extra Condensed | Bold | 29 / 1 |
+| `--type-figure` | Sofia Sans Extra Condensed | ExtraBold | 44 / 0.96 |
+| `--type-lead` | Sofia Sans | Regular | 19 / 1.52, mobile 17 |
+| `--type-body` | Sofia Sans | Regular | 16 / 1.5 |
+| `--type-small` | Sofia Sans | Regular | 15 / 1.5 |
+| `--type-label` | Sofia Sans | SemiBold | 16 / 1.2 (Label/M) |
+| `--type-kicker` | Sofia Sans Extra Condensed | Bold, uppercase, 0.06em | 15 / 1.55 |
+| `--font-hand` | Caveat | Bold | per Figma |
+
+Components whose own sizes sit between these steps (card titles at 28–32 px, prices at 34 px) take them from their Figma node.
 
 **Contrast** (the old site failed on 200 elements, so this matters):
 - brand/accent (#C0AA81) is about 2.2:1 on white and 2:1 on paper. **Never use it for text on light backgrounds.** Decoration, highlighter and stickers only.
-- Sand on navy (count bubble) is about 4.5:1 on brand/primary and 5.7:1 on brand/primary-strong. Fine for the number; keep the small label at least as large as in Figma, and check which navy the bubble uses.
+- Sand on navy (count bubble) is about 4.4:1 on brand/primary and 5.5:1 on brand/primary-strong. The bubble uses brand/primary-strong; keep the small label at least as large as in Figma.
 - text/muted on bg/warm is about 5.3:1: fine for body text.
-- Add a unit test that checks every text/background pair the components use against WCAG AA.
+- `tests/unit/contrast.test.ts` checks every text/background pair the components use against WCAG AA, reading the colours from `tokens.css`. Add a row when a component uses a new pair.
 
 ## 6. Approved design rules
 
@@ -216,6 +220,8 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Integration tests | `pnpm test:int` (Payload against `TEST_DATABASE_URL`, which is wiped and migrated on every run) |
 | Schema change | edit the config, then `pnpm migrate:create <name>`, `pnpm generate:types`, `pnpm generate:importmap`, and commit all of it; CI fails if any of them is stale |
 | Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
+| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens` (never set in production) |
+| Visual snapshots | run in CI only (Linux renders). New ones are written on the first run and uploaded as the `visual-snapshots` artifact; commit them under `tests/e2e/__screenshots__/` |
 | E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100; first run: `pnpm exec playwright install chromium`) |
 | Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`) |
 | Docker image | `docker build -t euro-alliance .` |
@@ -249,6 +255,14 @@ Waiting on the user:
 - How scheduled jobs run: Payload's job runner or system cron (PR 11).
 - Container registry and preview environments.
 - Backups.
+
+Design questions for the user (found in PR 3; the build follows the default in brackets until answered):
+- Page 02 Foundations is empty. Was it meant to hold the type and spacing scale? [tokens measured from the components]
+- Sand text on light backgrounds: Figure card numbers (259:410, about 2.3:1) and numbered List rows (259:2318) fail WCAG even as large text, against § 5. [build them in brand/primary-strong, and show Figma's sand version for approval in PR 6]
+- Card gap: Figma rows use 24 px, § 6 says 32 px. [24 px, `--gap-cards`]
+- Home's section titles are plain frames (52/0.96, 38 on mobile), not Section heading instances (52/1, 36 on mobile). [the component, PR 8]
+- The Course card description in Figma says "Image from filtered stock", which clashes with real photos only. The card shows sticker art. [sticker art, no photo, PR 9]
+- Focus ring: not in Figma. [3 px brand/primary outline, 2 px offset; sand on navy]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
