@@ -1,0 +1,128 @@
+import config from '@payload-config'
+import { getPayload, type Payload } from 'payload'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import type { User } from '@/payload-types'
+import { seed } from '@/seed'
+
+let payload: Payload
+let admin: User
+let editor: User
+let otherEditor: User
+
+const asUser = (user: User) => ({ overrideAccess: false, user })
+const anonymous = { overrideAccess: false }
+
+beforeAll(async () => {
+  payload = await getPayload({ config })
+  await seed(payload)
+  const { totalDocs } = await payload.count({ collection: 'users' })
+  expect(totalDocs).toBe(0)
+
+  // Asks to be an editor; the first account becomes the admin regardless.
+  admin = await payload.create({
+    collection: 'users',
+    data: { email: 'admin@test.invalid', password: 'test-password-1', role: 'editor' },
+  })
+  editor = await payload.create({
+    collection: 'users',
+    data: { email: 'editor@test.invalid', password: 'test-password-2', role: 'editor' },
+    ...asUser(admin),
+  })
+  otherEditor = await payload.create({
+    collection: 'users',
+    data: { email: 'other@test.invalid', password: 'test-password-3', role: 'editor' },
+    ...asUser(admin),
+  })
+})
+
+afterAll(() => payload.destroy())
+
+describe('users', () => {
+  it('makes the first account the admin', () => {
+    expect(admin.role).toBe('admin')
+    expect(editor.role).toBe('editor')
+  })
+
+  it('shows editors only their own account', async () => {
+    const { docs } = await payload.find({ collection: 'users', ...asUser(editor) })
+
+    expect(docs.map((u) => u.email)).toEqual(['editor@test.invalid'])
+  })
+
+  it('stops editors from changing roles or other accounts', async () => {
+    const self = await payload.update({
+      collection: 'users',
+      id: editor.id,
+      data: { role: 'admin', name: 'Editor' },
+      ...asUser(editor),
+    })
+    expect([self.role, self.name]).toEqual(['editor', 'Editor'])
+
+    await expect(
+      payload.update({
+        collection: 'users',
+        id: otherEditor.id,
+        data: { name: 'Hijacked' },
+        ...asUser(editor),
+      }),
+    ).rejects.toThrow()
+  })
+
+  it('stops editors from creating accounts', async () => {
+    await expect(
+      payload.create({
+        collection: 'users',
+        data: { email: 'new@test.invalid', password: 'test-password-4', role: 'editor' },
+        ...asUser(editor),
+      }),
+    ).rejects.toThrow()
+  })
+
+  it('hides every account from the public', async () => {
+    await expect(payload.find({ collection: 'users', ...anonymous })).rejects.toThrow()
+  })
+})
+
+describe('offices', () => {
+  it('are readable by the public but not editable', async () => {
+    const { docs } = await payload.find({ collection: 'offices', ...anonymous })
+    expect(docs).toHaveLength(3)
+
+    await expect(
+      payload.update({ collection: 'offices', id: docs[0].id, data: { name: 'X' }, ...anonymous }),
+    ).rejects.toThrow()
+  })
+
+  it('let editors edit everything but the inquiry role', async () => {
+    const { docs } = await payload.find({
+      collection: 'offices',
+      where: { role: { equals: 'courses' } },
+    })
+
+    const updated = await payload.update({
+      collection: 'offices',
+      id: docs[0].id,
+      data: { department: 'Test', role: 'translations-sofia' },
+      ...asUser(editor),
+    })
+
+    expect([updated.department, updated.role]).toEqual(['Test', 'courses'])
+  })
+})
+
+describe('site', () => {
+  it('is readable by the public and editable by editors only', async () => {
+    const site = await payload.findGlobal({ slug: 'site', ...anonymous })
+    expect(site.companyId).toBe('115302753')
+
+    await expect(
+      payload.updateGlobal({ slug: 'site', data: { footerLegal: 'X' }, ...anonymous }),
+    ).rejects.toThrow()
+    const updated = await payload.updateGlobal({
+      slug: 'site',
+      data: { footerLegal: 'Test' },
+      ...asUser(editor),
+    })
+    expect(updated.footerLegal).toBe('Test')
+  })
+})
