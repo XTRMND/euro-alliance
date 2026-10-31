@@ -127,6 +127,14 @@ jobs:
             playwright-report
             test-results
           retention-days: 7
+      # New visual baselines are written on the first run; commit them from this artifact.
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-snapshots
+          path: tests/e2e/__screenshots__
+          if-no-files-found: ignore
+          retention-days: 7
 
   lighthouse:
     needs: build

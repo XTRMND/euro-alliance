@@ -5,6 +5,7 @@ import {
   aboutSections,
   anchors,
   audienceSegments,
+  devRoutes,
   languageSegments,
   queryParams,
   routes,
@@ -100,6 +101,7 @@ describe('route folders', () => {
     ...Object.values(segments),
     ...Object.values(languageSegments),
     ...Object.values(audienceSegments),
+    ...Object.values(devRoutes).flatMap((path) => path.split('/').filter(Boolean)),
   ])
 
   // Route groups (x), dynamic [x], private _x and parallel @x folders aren't URL segments.

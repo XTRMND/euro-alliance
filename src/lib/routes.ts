@@ -71,6 +71,11 @@ export const aboutSections = {
 } as const
 export type AboutSection = keyof typeof aboutSections
 
+/** Reference pages for development, served only with DEV_PAGES=true. */
+export const devRoutes = {
+  tokens: '/dev/tokens',
+} as const
+
 function withQuery(path: string, name: string, value: string | undefined): string {
   return value ? `${path}?${new URLSearchParams({ [name]: value })}` : path
 }
