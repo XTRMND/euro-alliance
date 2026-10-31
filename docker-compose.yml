@@ -1,0 +1,22 @@
+# Local PostgreSQL for development: `docker compose up -d`. Set DB_PORT if 5432 is taken.
+services:
+  db:
+    image: postgres:18.6-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: euro_alliance
+      POSTGRES_PASSWORD: euro_alliance
+      POSTGRES_DB: euro_alliance
+    ports:
+      - '127.0.0.1:${DB_PORT:-5432}:5432'
+    volumes:
+      # Postgres 18 images keep their data under /var/lib/postgresql/18/docker.
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U euro_alliance -d euro_alliance']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  db-data:

@@ -1,0 +1,100 @@
+// The URL scheme (docs/content-import.md § 4). Every internal link is built here. Route folders
+// under src/app/(frontend) use the same segments; tests/unit/routes.test.ts keeps them in sync.
+
+export const languages = [
+  'english',
+  'german',
+  'french',
+  'spanish',
+  'italian',
+  'bulgarian',
+  'russian',
+] as const
+export type Language = (typeof languages)[number]
+
+export const audiences = ['adults', 'students'] as const
+export type Audience = (typeof audiences)[number]
+
+/** Russian is taught to students only. */
+export type AudienceFor<L extends Language> = L extends 'russian' ? 'students' : Audience
+
+export const languageSegments: Record<Language, string> = {
+  english: 'angliyski',
+  german: 'nemski',
+  french: 'frenski',
+  spanish: 'ispanski',
+  italian: 'italianski',
+  bulgarian: 'balgarski',
+  russian: 'ruski',
+}
+
+export const audienceSegments: Record<Audience, string> = {
+  adults: 'vazrastni',
+  students: 'uchenitsi',
+}
+
+export const segments = {
+  courses: 'kursove',
+  languages: 'ezitsi',
+  vouchers: 'vaucheri',
+  vocational: 'profesionalno-obuchenie',
+  professions: 'profesii',
+  teachers: 'pedagogicheski-spetsialisti',
+  farmers: 'zemedeltsi',
+  computerCourses: 'kompyutarni-kursove',
+  translations: 'prevodi',
+  news: 'novini',
+  about: 'za-nas',
+  contact: 'kontakti',
+  privacy: 'poveritelnost',
+  cookies: 'biskvitki',
+  search: 'tarsene',
+} as const
+
+export const queryParams = {
+  page: 'stranitsa',
+  topic: 'tema',
+  search: 'q',
+} as const
+
+export const anchors = {
+  certificates: 'sertifikati',
+} as const
+
+/** Provisional: PR 16 takes the final ids from the About Subnav items (189:349). */
+export const aboutSections = {
+  history: 'istoria',
+  team: 'ekip',
+  standards: 'standarti',
+  documents: 'dokumenti',
+  projects: 'proekti',
+} as const
+export type AboutSection = keyof typeof aboutSections
+
+function withQuery(path: string, name: string, value: string | undefined): string {
+  return value ? `${path}?${new URLSearchParams({ [name]: value })}` : path
+}
+
+export const routes = {
+  home: () => '/',
+  courses: () => `/${segments.courses}`,
+  course: (slug: string) => `/${segments.courses}/${slug}`,
+  languageProgram: <L extends Language>(language: L, audience: AudienceFor<L>) =>
+    `/${segments.languages}/${languageSegments[language]}/${audienceSegments[audience]}`,
+  vouchers: () => `/${segments.vouchers}`,
+  professions: () => `/${segments.vocational}/${segments.professions}`,
+  teachers: () => `/${segments.vocational}/${segments.teachers}`,
+  farmers: () => `/${segments.vocational}/${segments.farmers}`,
+  computerCourses: () => `/${segments.computerCourses}`,
+  translations: () => `/${segments.translations}`,
+  news: (page = 1) =>
+    withQuery(`/${segments.news}`, queryParams.page, page > 1 ? String(page) : undefined),
+  newsArticle: (slug: string) => `/${segments.news}/${slug}`,
+  about: (section?: AboutSection) =>
+    section ? `/${segments.about}#${aboutSections[section]}` : `/${segments.about}`,
+  /** `topic` preselects the contact wizard; PR 11 narrows it to the wizard's topics. */
+  contact: (topic?: string) => withQuery(`/${segments.contact}`, queryParams.topic, topic),
+  privacy: () => `/${segments.privacy}`,
+  cookies: () => `/${segments.cookies}`,
+  search: (query?: string) => withQuery(`/${segments.search}`, queryParams.search, query),
+}

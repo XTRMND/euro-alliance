@@ -63,9 +63,9 @@ One extractor per page type, using `cheerio` on the fetched HTML (Playwright onl
 
 `scripts/import/out/report.md`, attached to PR 21: counts per collection versus the inventory, records left as draft and why, missing fields (prices, dates, photos), images without reviewed alt, legacy URLs with no mapping, and anything the extractors couldn't parse.
 
-## 4. Proposed URL scheme (needs the user's agreement)
+## 4. URL scheme (agreed 31.10.2026)
 
-Transliterated Bulgarian slugs, following the official Bulgarian transliteration (Закон за транслитерацията): а a, б b, в v, г g, д d, е e, ж zh, з z, и i, й y, к k, л l, м m, н n, о o, п p, р r, с s, т t, у u, ф f, х h, ц ts, ч ch, ш sh, щ sht, ъ a, ь y, ю yu, я ya; «ия» at the end of a word becomes «ia». Lowercase, hyphens, no trailing slash. All routes are defined in `src/lib/routes.ts`, so changing the scheme touches one file.
+Transliterated Bulgarian slugs, following the official Bulgarian transliteration (Закон за транслитерацията): а a, б b, в v, г g, д d, е e, ж zh, з z, и i, й y, к k, л l, м m, н n, о o, п p, р r, с s, т t, у u, ф f, х h, ц ts, ч ch, ш sh, щ sht, ъ a, ь y, ю yu, я ya; «ия» at the end of a word becomes «ia». Lowercase, hyphens, no trailing slash. Every internal link is built in `src/lib/routes.ts`; route folders under `src/app/(frontend)` use the same segments, and a unit test keeps the two in sync.
 
 | Page | Proposed route |
 |---|---|

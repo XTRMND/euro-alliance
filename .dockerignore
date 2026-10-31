@@ -1,0 +1,17 @@
+.git
+.github
+node_modules
+.next
+.env*
+
+# Not needed to build the app
+docs
+tests
+*.md
+coverage
+test-results
+playwright-report
+blob-report
+.lighthouseci
+lighthouse-reports
+.DS_Store

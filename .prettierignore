@@ -1,0 +1,11 @@
+pnpm-lock.yaml
+.next/
+coverage/
+test-results/
+playwright-report/
+.lighthouseci/
+lighthouse-reports/
+
+# Hand-written docs keep their own table layout.
+*.md
+docs/reference/

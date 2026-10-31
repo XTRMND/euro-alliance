@@ -24,12 +24,13 @@ Euro Alliance (ЕВРО-АЛИАНС ООД) is a language school, a licensed vo
 
 ## 2. Stack
 
-- **Next.js** (App Router) + **TypeScript** (strict) + React.
+- **Next.js** (App Router) + **TypeScript** (strict) + React. Next.js 16 changed APIs and conventions: before using an API you don't know well in this version, read its page in `node_modules/next/dist/docs/`.
+- **Runtime:** Node 24 LTS (`.nvmrc`) and pnpm 11 (`packageManager` in `package.json`).
 - **Payload CMS** (MIT) installed inside the same Next.js app (`src/app/(payload)`), on **PostgreSQL** (`@payloadcms/db-postgres`), with migrations committed.
 - Server-side rendering with CDN caching. Content changes revalidate pages on demand from Payload hooks (`revalidateTag` / `revalidatePath`).
 - **Hosting is on the user's own servers. Do not assume Vercel** or any managed platform. Build a portable Node app: `output: 'standalone'`, a Dockerfile, Postgres via `DATABASE_URL`, media storage behind a Payload storage adapter. Ask the user before choosing anything infrastructure-specific (CDN, object storage, SMTP, preview environments, cron).
 - **Fonts** via `next/font/google` (self-hosted at build time, no runtime request to Google): Sofia Sans Extra Condensed, Sofia Sans, Caveat. Subsets: Cyrillic and Latin.
-- **Styling:** CSS Modules with design tokens as CSS custom properties (proposal; the user may switch this to Tailwind in PR 1). Either way, tokens come from Figma variables and no component hard-codes a colour.
+- **Styling:** CSS Modules with design tokens as CSS custom properties (decided in PR 1). Tokens come from Figma variables and no component hard-codes a colour.
 - **Tests:** Vitest (unit), Playwright (smoke and visual), `@axe-core/playwright` (accessibility), Lighthouse CI (budgets).
 - Use the current stable versions at scaffold time, pin them, and list them in the PR 1 description.
 
@@ -197,9 +198,32 @@ A page PR is done when all of these hold:
 
 ## 11. Commands
 
-PR 1 fills this section with the real commands (install, dev, build, test, e2e, lint, typecheck, db migrate, seed, import).
+Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `package.json`.
+
+| Task | Command |
+|---|---|
+| Install | `pnpm install` |
+| Local database | `docker compose up -d` (PostgreSQL 18 on port 5432; set `DB_PORT` if it's taken) |
+| Dev server | `pnpm dev` (http://localhost:3000) |
+| Production build | `pnpm build` (standalone server in `.next/standalone`) |
+| Run the build | `pnpm start` |
+| Typecheck | `pnpm typecheck` |
+| Lint and format | `pnpm lint`, `pnpm format:check` (`pnpm format` fixes formatting) |
+| Unit tests | `pnpm test` (`pnpm test:watch` while working) |
+| E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100; first run: `pnpm exec playwright install chromium`) |
+| Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`) |
+| Docker image | `docker build -t euro-alliance .` |
+
+Database migrate and seed arrive in PR 2, the content import in PR 21.
+
+**Adding a page:** name its route folder with the segments from `src/lib/routes.ts` (a unit test enforces this), add it to `tests/e2e/pages.ts` so the shared checks run on it, and add key pages to `paths` in `lighthouserc.cjs`.
 
 ## 12. Open items (keep this list current)
+
+Decided:
+- URL scheme in `docs/content-import.md` § 4, agreed 31.10.2026.
+- pnpm and CSS Modules (PR 1).
+- Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
 
 Waiting on the client:
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist).
@@ -208,8 +232,12 @@ Waiting on the client:
 - Viewer access to GA4 and Search Console.
 
 Waiting on the user:
-- Hosting and infrastructure details: servers, CDN, object storage for media, SMTP, preview environments, cron, backups.
-- Agreement on the URL scheme (proposal in `docs/content-import.md`). Routes live in `src/lib/routes.ts` so a change is one file.
+- Media storage: local volume or S3-compatible (PR 2 needs it).
+- Which CDN (purge API for `docs/cms-schema.md` § 9).
+- SMTP provider and sender domain (PR 11).
+- How scheduled jobs run: Payload's job runner or system cron (PR 11).
+- Container registry and preview environments.
+- Backups.
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
@@ -223,4 +251,4 @@ Decisions this package proposes (confirm before the PR that needs them):
 
 ## 13. When in doubt
 
-Ask the user rather than guess, in the PR description or in chat. Always ask about: infrastructure choices, the URL scheme until it is agreed, any content you can't source, and any deviation from the design.
+Ask the user rather than guess, in the PR description or in chat. Always ask about: infrastructure choices, any change to the agreed URL scheme, any content you can't source, and any deviation from the design.
