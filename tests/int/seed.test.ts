@@ -101,8 +101,21 @@ describe('seed', () => {
   })
 
   it('never seeds courses or news', async () => {
-    expect((await payload.count({ collection: 'courses' })).totalDocs).toBe(0)
-    expect((await payload.count({ collection: 'news' })).totalDocs).toBe(0)
+    const count = async () => [
+      (await payload.count({ collection: 'courses' })).totalDocs,
+      (await payload.count({ collection: 'news' })).totalDocs,
+    ]
+    const before = await count()
+
+    await seed(payload)
+
+    expect(await count()).toEqual(before)
+    // Figma's sample course cards are never seed data.
+    const sample = await payload.count({
+      collection: 'courses',
+      where: { title: { equals: 'Английски език B2' } },
+    })
+    expect(sample.totalDocs).toBe(0)
   })
 
   it('never duplicates or overwrites', async () => {

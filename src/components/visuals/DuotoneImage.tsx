@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import type { Tint } from '@/lib/media/tints'
 import type { Media, MediaTint } from '@/payload-types'
 import styles from './DuotoneImage.module.css'
@@ -44,7 +44,7 @@ export function DuotoneImage({
   return (
     <span className={[styles.frame, className].filter(Boolean).join(' ')}>
       {(clearOnHover || !tinted?.url) && (
-        <Image
+        <Img
           src={media.url}
           alt={tinted?.url ? '' : media.alt}
           fill
@@ -55,7 +55,7 @@ export function DuotoneImage({
         />
       )}
       {tinted?.url && (
-        <Image
+        <Img
           src={tinted.url}
           alt={media.alt}
           fill

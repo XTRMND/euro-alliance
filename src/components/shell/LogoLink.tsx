@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import type { MouseEvent } from 'react'
@@ -30,7 +30,7 @@ export function LogoLink({ theme, label, className }: LogoLinkProps) {
 
   return (
     <Link href="/" aria-label={label} className={className} onClick={onClick}>
-      <Image src={theme === 'light' ? logoLight : logoDark} alt="" unoptimized />
+      <Img src={theme === 'light' ? logoLight : logoDark} alt="" unoptimized />
     </Link>
   )
 }

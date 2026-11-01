@@ -22,7 +22,9 @@ type MarqueeProps = {
 export function Marquee({ children, labels, className }: MarqueeProps) {
   const root = useRef<HTMLDivElement>(null)
   const firstSet = useRef<HTMLUListElement>(null)
-  const [copies, setCopies] = useState(2)
+  // One copy (two sets) fills the strip on every screen we measured, so the server renders that
+  // and the measure only adds copies on very wide strips: less to hydrate, no relayout on mobile.
+  const [copies, setCopies] = useState(1)
   const [duration, setDuration] = useState<number>()
   const [offScreen, setOffScreen] = useState(false)
   const [paused, setPaused] = useState(false)

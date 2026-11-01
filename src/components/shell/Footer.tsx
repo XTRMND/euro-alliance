@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
 import { currentYear, formatDateNumeric } from '@/lib/format'
 import { routes } from '@/lib/routes'
@@ -69,7 +69,7 @@ export async function Footer({ navigation, site }: FooterProps) {
           <div className={styles.funding}>
             {logos?.url && (
               <div className={styles.fundingLogos}>
-                <Image
+                <Img
                   src={logos.url}
                   alt={logos.alt}
                   width={logos.width ?? 176}

@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
 import { Chip } from '@/components/ui/Chip'
 import { Tape } from '@/components/visuals/Tape'
@@ -52,7 +52,7 @@ export async function ProjectCard({
       )}
       {logoStrip?.url && (
         <div className={styles.logos}>
-          <Image
+          <Img
             src={logoStrip.url}
             alt={logoStrip.alt}
             width={logoStrip.width ?? 560}

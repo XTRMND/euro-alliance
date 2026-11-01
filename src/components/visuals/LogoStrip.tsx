@@ -1,4 +1,5 @@
-import Image, { type StaticImageData } from 'next/image'
+import type { StaticImageData } from 'next/image'
+import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
 import styles from './LogoStrip.module.css'
 import { Marquee } from './Marquee'
@@ -29,7 +30,7 @@ export async function LogoStrip({
     >
       {logos.map(({ name, src }) => (
         <li key={name} className={styles.logo}>
-          <Image src={src} alt={name} fill sizes="110px" unoptimized className={styles.image} />
+          <Img src={src} alt={name} fill sizes="110px" unoptimized className={styles.image} />
         </li>
       ))}
     </Marquee>

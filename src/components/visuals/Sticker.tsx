@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import computer from '@/assets/stickers/computer.png'
 import contact from '@/assets/stickers/contact.png'
 import corporate from '@/assets/stickers/corporate.png'
@@ -60,7 +60,7 @@ type StickerProps = {
 export function Sticker({ topic, sizes, eager = false, className }: StickerProps) {
   return (
     <span className={[styles.sticker, className].filter(Boolean).join(' ')}>
-      <Image
+      <Img
         src={stickers[topic]}
         alt=""
         fill

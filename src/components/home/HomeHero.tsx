@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
 import { CountBubble } from '@/components/patterns/CountBubble'
 import { Highlight } from '@/components/patterns/Highlight'
@@ -79,7 +79,7 @@ export async function HomeHero({ hero }: { hero: Home['hero'] }) {
             {second && (
               <div className={styles.second}>
                 <div className={styles.frame}>
-                  <Image
+                  <Img
                     src={second.url!}
                     alt={second.alt}
                     fill

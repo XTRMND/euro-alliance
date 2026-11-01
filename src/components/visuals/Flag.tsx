@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { Img } from '@/components/ui/Img'
 import bulgarian from '@/assets/flags/bulgarian.svg'
 import english from '@/assets/flags/english.svg'
 import french from '@/assets/flags/french.svg'
@@ -27,7 +27,7 @@ type FlagProps = {
 export function Flag({ language, eager = false, className }: FlagProps) {
   return (
     <span className={[styles.sticker, className].filter(Boolean).join(' ')}>
-      <Image
+      <Img
         src={flags[language]}
         alt=""
         unoptimized

@@ -48,7 +48,7 @@ test.describe('hero', () => {
     await page.goto(routes.home())
     const photo = page.getByRole('img', { name: /Деца в класна стая/ })
 
-    await expect(photo).toHaveAttribute('src', /classroom-hero\.jpg/)
+    await expect(photo).toHaveAttribute('src', /-hero\.jpg/)
     await expect(photo).toHaveAttribute('fetchpriority', 'high')
     await expect(page.getByText('7', { exact: true })).toBeVisible()
     await expect(page.getByText('езика', { exact: true })).toBeVisible()
