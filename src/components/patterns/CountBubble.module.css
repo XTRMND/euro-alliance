@@ -1,0 +1,24 @@
+/* --bubble-rotate lets the landing motion turn it in from −40° (docs/motion.md § 2). */
+.bubble {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  background: var(--color-brand-primary-strong);
+  transform: rotate(var(--bubble-rotate, -8deg));
+  white-space: nowrap;
+}
+
+.number {
+  font: 800 2.75rem / 0.96 var(--font-display);
+  color: var(--color-brand-accent);
+}
+
+.label {
+  font: 700 0.9375rem / 1.5 var(--font-display);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--color-text-on-brand);
+}

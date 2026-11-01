@@ -19,5 +19,8 @@
     "heading": "Ask about a course, voucher or translation",
     "text": "Start your language future now.",
     "cta": "Start an inquiry"
+  },
+  "projectCard": {
+    "goals": "Project goals"
   }
 }

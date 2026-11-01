@@ -1,0 +1,82 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  padding: 30px 30px 26px;
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  box-shadow: 0 6px 9px rgb(var(--shadow-rgb) / 0.1);
+}
+
+.title {
+  font: 800 1.875rem / 1.04 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.facts {
+  margin: 0;
+}
+
+.fact {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--color-border-default);
+  line-height: 1.6;
+}
+
+.fact dt {
+  font: 700 0.8125rem / 1.6 var(--font-display);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.fact dd {
+  margin: 0;
+  font: 600 0.9375rem / 1.6 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.goals {
+  display: grid;
+  gap: 16px;
+}
+
+.goalsLabel {
+  font: 700 0.8125rem / 1.2 var(--font-display);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.logos {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.logos img {
+  display: block;
+  width: 100%;
+  max-height: 110px;
+  object-fit: contain;
+}
+
+@media (max-width: 479px) {
+  .fact {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

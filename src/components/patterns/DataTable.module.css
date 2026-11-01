@@ -1,0 +1,92 @@
+.wrap {
+  padding: 8px 24px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 14px;
+  background: var(--color-bg-page);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  line-height: 1.55;
+}
+
+.table th {
+  padding: 14px 16px 14px 0;
+  font: 700 0.8125rem / 1.55 var(--font-display);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-align: left;
+  color: var(--color-text-muted);
+}
+
+.row td {
+  padding: 14px 16px 14px 0;
+  border-top: 1px solid var(--color-border-default);
+  font: 400 0.9375rem / 1.55 var(--font-body);
+  color: var(--color-text-primary);
+  vertical-align: top;
+}
+
+.empty {
+  padding: 22px 0;
+  border-top: 1px solid var(--color-border-default);
+  text-align: center;
+}
+
+.emptyTitle {
+  font: 600 1.0625rem / 1.55 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.emptyText {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+/* Mobile: no header row; each row is a block with the column label before each value. */
+@media (max-width: 767px) {
+  .wrap {
+    padding: 4px 16px;
+  }
+
+  .head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .table,
+  .table tbody,
+  .row,
+  .row td {
+    display: block;
+  }
+
+  .row {
+    padding: 12px 0;
+    border-top: 1px solid var(--color-border-default);
+  }
+
+  tbody > .row:first-child {
+    border-top: 0;
+  }
+
+  .row td {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 12px;
+    padding: 4px 0;
+    border-top: 0;
+  }
+
+  .row td::before {
+    content: attr(data-label);
+    font: 700 0.8125rem / 1.6 var(--font-display);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+}

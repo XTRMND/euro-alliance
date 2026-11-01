@@ -1,0 +1,8 @@
+/* The Home hero's «от 1999 г.» (57:273): sand block, 5px top and 16px side padding at 76px, 2°. */
+.highlight {
+  display: inline-block;
+  padding: 0.066em 0.21em 0;
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary-strong);
+  transform: rotate(2deg);
+}

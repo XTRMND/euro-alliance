@@ -1,0 +1,23 @@
+/*
+ * Torn window (259:588): a 640 × 470 rim around a 600 × 430 photo, both Figma SVGs, scaled
+ * together. The rim's SVG reaches past the frame for its shadow (18px at the sides, 10px above,
+ * 26px below), placed as in Figma.
+ */
+.window {
+  position: relative;
+  width: min(100%, 640px);
+  aspect-ratio: 640 / 470;
+}
+
+.window::before {
+  content: '';
+  position: absolute;
+  inset: -2.13% -2.81% -5.53%;
+  background: url('../../assets/torn-window-rim.svg') center / 100% 100% no-repeat;
+}
+
+.photo {
+  position: absolute;
+  inset: 4.255% 3.125%; /* 20px of 470 and 640 */
+  mask: url('../../assets/torn-window-mask.svg') center / 100% 100% no-repeat;
+}

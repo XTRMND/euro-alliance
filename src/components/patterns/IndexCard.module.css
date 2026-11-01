@@ -1,0 +1,34 @@
+.card {
+  position: relative;
+  padding: 28px 28px 16px;
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  box-shadow: var(--shadow-paper);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+  font: 800 1.875rem / 1.1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.chip {
+  padding: 1px 7px 2px;
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary-strong);
+  font: 700 0.9375rem / 1.3 var(--font-display);
+}
+
+.bubble {
+  position: absolute;
+  top: -20px;
+  right: -8px;
+}

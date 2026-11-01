@@ -1,0 +1,22 @@
+.heading {
+  display: grid;
+  gap: 10px;
+  max-width: 820px;
+}
+
+.kicker {
+  font: var(--type-kicker);
+  letter-spacing: var(--tracking-kicker);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+
+.title {
+  font: var(--type-h2);
+  color: var(--color-brand-primary-strong);
+}
+
+.lead {
+  font: 400 1.125rem / 1.55 var(--font-body);
+  color: var(--color-text-muted);
+}
