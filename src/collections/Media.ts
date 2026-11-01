@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { anyone, isAdmin, isStaff } from '@/access'
+import { revalidateCollection } from '@/hooks/revalidate'
 import { regenerateTints, removeTints } from '@/hooks/tints'
 import { uploadDirs } from '@/lib/media/storage'
 
@@ -23,7 +24,9 @@ export const Media: CollectionConfig = {
     adminThumbnail: 'thumbnail',
   },
   hooks: {
-    afterChange: [regenerateTints],
+    // Pages that show a photo or logo read it with its tints, tagged with this collection.
+    afterChange: [regenerateTints, revalidateCollection],
+    afterDelete: [revalidateCollection],
     beforeDelete: [removeTints],
   },
   fields: [

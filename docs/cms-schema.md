@@ -43,10 +43,14 @@ Disable GraphQL if nothing uses it. Lock down the REST API to what the site need
 |---|---|---|
 | `title` | text, required | |
 | `slug` | text, unique | *(proposed)* transliterated from the title (`src/lib/slug.ts`) |
-| `topic` | select, required | Language or topic. **Drives the sticker.** Values = the 16 topic stickers and 7 flag stickers in Course sticker set 50:274; read their names with `get_design_context`. |
-| `audience` | select | Students / adults (and any other audience in the Courses filters, 80:880) |
+| `topic` | select, required | Language or topic. **Drives the sticker.** Values = the course stickers of set 50:274 (`courseTopics` in `src/lib/courses.ts`; the hero and contact art aren't offered). |
+| `category` | select, required | *(PR 8)* The «Категория» filter group (116:1190): languages, exams, vocational, vouchers, teachers, farmers, computer |
+| `language` | select | *(PR 8)* The «Език» filter group; the 7 languages |
+| `audience` | select | Students / adults / companies (the «Аудитория» filter group, 116:1190) |
+| `audienceNote` | text, optional | *(PR 8)* Shown after the audience on the card («Ученици 12 клас») |
+| `cardTag` | text, optional | *(PR 8)* The card's second tag («Вечерна група»); empty: «С ваучер» for a voucher course, else the format |
 | `level` | text, optional | Drives the level bubble. Empty → no bubble (`Show level` off). |
-| `format` | select | Values from the Courses filters in Figma |
+| `format` | select | In person / online (the «Формат» filter group) |
 | `startDate` | date, optional | |
 | `schedule` | text / rich text | |
 | `price` | number, optional | Empty → price hidden. Store with `currency` *(proposed)*, default EUR. **Never convert imported лв prices silently**; flag them. |
@@ -198,7 +202,7 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 **Duotone, as measured in Figma (PR 2).** Figma uses two treatments, and the code reproduces both (`src/lib/media/tints.ts`):
 
 - **55%, 45% and 30%** (News card 62:240, Polaroid 259:582, Torn window 259:588): the colour photo with a duotone copy on top at the tint's opacity. The duotone is a gradient map of the photo's luminance with three stops, not two: brand/primary-strong #183169 → brand/accent #C0AA81 (at 48%) → bg/warm #F7F3EC, with luminance raised to the power 1.34. Fitted to the Figma images within RMSE 6/255.
-- **88%, the homepage hero** (57:301): Figma blend layers over the colour photo, navy #183169 in *screen* mode and sand #E6D6B8 in *multiply* mode, each at 88%. #E6D6B8 appears only here and is not a colour token.
+- **88%, the homepage hero** (57:301): the photo in greyscale under Figma's blend layers, navy #183169 in *screen* mode and sand #E6D6B8 in *multiply* mode, each at 88%. Figma's render is desaturated first (a filter on the image fill that design context doesn't report; measured in PR 8, mean colour within 1/255). #E6D6B8 appears only here and is not a colour token.
 
 **Rendering (`DuotoneImage`):** the component takes `tint` (88 / 55 / 45 / 30) and `clearOnHover`. It serves the pre-composited variant for that tint as a single image, which is best for LCP. With `clearOnHover`, the colour original sits underneath, lazy-loaded, and the composite fades to `opacity: 0` on hover (`docs/motion.md` § 5).
 
@@ -206,7 +210,7 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 
 **Tints live in one file** (`src/lib/media/tints.ts`). A script `media:regen` rebuilds all derivatives if a tint changes.
 
-**Hero photo:** the client's classroom photo, full resolution, `kind: photo`, tint 88%. Preload it on the homepage with `fetchpriority="high"`.
+**Hero photo:** the client's classroom photo, `kind: photo`, tint 88%, loaded at once with `fetchpriority="high"` (it is the mobile LCP element). Seeded from Figma's crop of its image fill (666 × 796); a full-resolution original is an open item.
 
 ## 5. Inquiry routing and email
 
@@ -236,8 +240,8 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 |---|---|
 | `site` | Company facts (from `CLAUDE.md` § 3), default SEO image, footer legal line |
 | `navigation` | Header and footer links. Nav labels are content, so they live here, not in i18n. |
-| `home` | Homepage hero, program cards (with fixed targets for «Изпити и сертификати» and «Компютърни курсове»), featured news count |
-| `translation` | Languages and topics |
+| `home` | Homepage hero (heading, highlight, lead, two buttons, the photo and an optional second photo), section titles, program cards, the translations block (title, lead, steps, button), featured news count, partner logos. Every link picks a destination from a fixed list (`src/lib/destinations.ts`), which gives «Изпити и сертификати» and «Компютърни курсове» their fixed targets. |
+| `translation` | Languages (PR 8: they fill the language pair of «Изпратете документ»; hidden with fewer than two) and topics (PR 14) |
 | `inquiryRouting` | Routing table (§ 5), admin-only |
 
 ## 8. Search

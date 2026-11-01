@@ -1,0 +1,216 @@
+/* «Изпратете документ» (51:295 / 115:825): white; copy and dropzone side by side from 1024px,
+   64px apart, stacked below. */
+
+.section {
+  background: var(--color-bg-page);
+}
+
+.inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 48px var(--page-margin);
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  align-content: start;
+}
+
+/* Language pair: 230px boxes with «на» between them; on small screens full-width boxes with the
+   label inside. */
+.pair {
+  display: grid;
+  gap: 18px;
+  width: 100%;
+}
+
+.field {
+  display: grid;
+  grid-template-areas: 'box';
+  align-items: center;
+}
+
+.fieldLabel {
+  z-index: 1;
+  grid-area: box;
+  padding-left: 17px;
+  font: 500 1.0625rem / 1.45 var(--font-body);
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.fieldLabel::first-letter {
+  text-transform: uppercase;
+}
+
+.box {
+  position: relative;
+  grid-area: box;
+}
+
+/* The ▾ of Figma's selects. */
+.box::after {
+  content: '▾';
+  position: absolute;
+  top: 50%;
+  right: 18px;
+  font: 500 0.875rem / 1 var(--font-body);
+  color: var(--color-text-muted);
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.select {
+  width: 100%;
+  padding: 13px 40px 13px 48px;
+  font: 600 1.125rem / 1.45 var(--font-body);
+  color: var(--color-brand-primary-strong);
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-button);
+  appearance: none;
+  cursor: pointer;
+}
+
+.steps {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font: 600 0.9375rem / 1.45 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.number {
+  padding: 0 8px 2px;
+  font: 800 1.625rem / 1.45 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  background: var(--color-brand-accent);
+  transform: rotate(2deg);
+}
+
+.cta {
+  justify-self: stretch;
+}
+
+/* Dropzone (51:322): paper, dashed navy border, 20px corners. Dragging a file over it fills it
+   with the sand tint (not in Figma). */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  min-height: 284px;
+  padding: 24px;
+  text-align: center;
+  background: var(--color-bg-warm);
+  border: 2px dashed var(--color-brand-primary);
+  border-radius: 20px;
+  transition: background-color var(--motion-button) var(--ease-out);
+}
+
+.dropzone[data-dragging] {
+  background: var(--color-brand-accent-subtle);
+  border-style: solid;
+}
+
+.dropArt {
+  width: clamp(105px, 26vw, 143px);
+}
+
+.dropTitle {
+  font: 800 clamp(1.875rem, 1.786rem + 0.381vw, 2.125rem) / 0.96 var(--font-display); /* 30 → 34 */
+  color: var(--color-brand-primary-strong);
+}
+
+.dropHint {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 640px) {
+  .pair {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    width: auto;
+    padding-block: 6px;
+  }
+
+  .field {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .fieldLabel {
+    padding: 0;
+  }
+
+  .fieldLabel::first-letter {
+    text-transform: none;
+  }
+
+  /* «от» is read, not shown. */
+  .fieldFrom .fieldLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .box {
+    width: 230px;
+  }
+
+  .select {
+    padding-left: 18px;
+  }
+
+  .steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    padding-block: 10px 6px;
+  }
+
+  .cta {
+    justify-self: start;
+  }
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding-block: 88px;
+  }
+
+  .copy {
+    gap: 22px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
+    gap: 64px;
+    align-items: start;
+  }
+
+  .dropzone {
+    min-height: 360px;
+  }
+}

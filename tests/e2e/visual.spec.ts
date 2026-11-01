@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test'
-import { devRoutes } from '@/lib/routes'
+import { devRoutes, routes } from '@/lib/routes'
 
 // Visual regression against the last approved build (docs/git-workflow.md § 5). The snapshots
 // are CI's Linux renders, so this runs on Linux only. CI writes missing snapshots and uploads
@@ -8,10 +8,12 @@ import { devRoutes } from '@/lib/routes'
 test.skip(process.platform !== 'linux', 'Snapshots are Linux renders')
 
 const snapshots = [
+  { name: 'home', path: routes.home() },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },
   { name: 'visuals', path: devRoutes.visuals },
+  { name: 'cards', path: devRoutes.cards },
 ]
 
 for (const { name, path } of snapshots) {

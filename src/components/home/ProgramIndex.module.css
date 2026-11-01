@@ -1,0 +1,39 @@
+/* «Какво предлагаме» (51:273): paper, 96px above and 104px below (48px on mobile). The title is
+   60px capitals on a sand block tilted 1.5° (38px on mobile, 115:685). */
+
+.section {
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 22px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 48px var(--page-margin) 40px;
+}
+
+.title {
+  font: 800 clamp(2.375rem, 1.864rem + 2.095vw, 3.75rem) / 1 var(--font-display); /* 38 → 60 */
+  text-transform: uppercase;
+  color: var(--color-brand-primary-strong);
+}
+
+.highlight {
+  display: inline-block;
+  padding: 0 0.2em 0.067em;
+  background: var(--color-brand-accent);
+  transform: rotate(1.5deg);
+}
+
+/* Room for the tape above the cards and their tilt. */
+.cards {
+  --row-space: 20px;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    gap: 44px;
+    padding-block: 96px 104px;
+  }
+}

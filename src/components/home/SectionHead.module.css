@@ -1,0 +1,22 @@
+.head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.link {
+  flex: none;
+}
+
+/* «курсове» in «Всички курсове»: read, but not shown below 768px. */
+@media (max-width: 767.98px) {
+  .long {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

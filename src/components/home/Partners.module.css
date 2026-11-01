@@ -1,0 +1,28 @@
+/* Partners (52:284): white between two hairlines, 56px above and below (32px on mobile). */
+
+.section {
+  background: var(--color-bg-page);
+  border-block: 1px solid var(--color-border-default);
+}
+
+.inner {
+  display: grid;
+  gap: 14px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 32px var(--page-margin);
+}
+
+.title {
+  font: 700 1rem / 1.45 var(--font-display);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    gap: 18px;
+    padding-block: 56px;
+  }
+}

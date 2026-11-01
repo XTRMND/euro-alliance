@@ -1,0 +1,20 @@
+/* «Предстоящи курсове» (48:227): white, 72px above and 80px below; 44px and 40px on mobile. */
+
+.section {
+  background: var(--color-bg-page);
+}
+
+.inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 44px var(--page-margin) 40px;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    gap: 24px;
+    padding-block: 72px 80px;
+  }
+}

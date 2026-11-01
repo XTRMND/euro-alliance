@@ -1,0 +1,20 @@
+/* «Новини и проекти» (52:267): paper, 80px around (48px on mobile). */
+
+.section {
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 48px var(--page-margin);
+}
+
+@media (min-width: 768px) {
+  .inner {
+    gap: 28px;
+    padding-block: 80px;
+  }
+}

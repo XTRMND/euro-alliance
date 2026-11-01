@@ -220,7 +220,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Integration tests | `pnpm test:int` (Payload against `TEST_DATABASE_URL`, which is wiped and migrated on every run) |
 | Schema change | edit the config, then `pnpm migrate:create <name>`, `pnpm generate:types`, `pnpm generate:importmap`, and commit all of it; CI fails if any of them is stale |
 | Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
-| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens`, `/dev/components` and `/dev/patterns` (never set in production) |
+| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens`, `/dev/components`, `/dev/patterns`, `/dev/visuals` and `/dev/cards` (never set in production) |
 | Visual snapshots | run in CI only (Linux renders). New ones are written on the first run and uploaded as the `visual-snapshots` artifact; commit them under `tests/e2e/__screenshots__/` |
 | E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100 against the database in `.env`; first run: `pnpm exec playwright install chromium`) |
 | Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`). CI is the reference: a busy laptop runs slower than CI, and the simulated mobile LCP moves with it |
@@ -245,7 +245,7 @@ Decided:
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
 Decided by the user on 01.11.2026:
-- Mobile LCP budget stays 2.5 s. Lighthouse CI runs 3 times per URL and asserts each metric on its median. A page that misses it is flagged in its commit notes and fixed in PR 23; the budget isn't relaxed. A flagged page goes on `lcpFlagged` in `lighthouserc.cjs`: its LCP is still checked against 2.5 s but reported as a warning, so `main` stays green; PR 23 empties the list. Flagged now: `/` (the placeholder homepage, on the edge: CI medians 2.38 s and 2.65 s on the same code).
+- Mobile LCP budget stays 2.5 s. Lighthouse CI runs 3 times per URL and asserts each metric on its median. A page that misses it is flagged in its commit notes and fixed in PR 23; the budget isn't relaxed. A flagged page goes on `lcpFlagged` in `lighthouserc.cjs`: its LCP is still checked against 2.5 s but reported as a warning, so `main` stays green; PR 23 empties the list. Flagged now: `/` (the homepage from PR 8: the LCP element is the hero photo, local mobile median 3.06 s; the placeholder before it was on the edge at 2.38–2.65 s).
 - Sand text only on navy (count bubble, inquiry band, footer). On paper and white, numbers are navy (Figure card, numbered List row); a design deviation the user will mirror in Figma.
 - «Езици» goes to the course listing filtered to language courses (`routes.courses('languages')`, `/kursove?kategoria=ezitsi`; PR 9 reads the filter). «Професионално обучение» is a disclosure button (aria-expanded, not a link) with ЦПО професии, Педагогически специалисти and Земеделски производители: a dropdown in the header, an expandable group in the mobile menu. The footer keeps its link to ЦПО професии.
 - «Ценоразпис» stays out: there's no official price list and prices are never invented. Add it only if the client supplies one.
@@ -258,6 +258,9 @@ Waiting on the client:
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
 - English content.
 - Viewer access to GA4 and Search Console.
+- The classroom photo in the homepage hero: seeded from Figma's crop of its image fill (666 × 796). A full-resolution original would serve large screens better.
+- The translation agency's languages (the `translation` global): Figma shows only Български and Немски. Until the list exists, the language pair of «Изпратете документ» is hidden.
+- Courses and news: never seeded, so the homepage's «Предстоящи курсове» and «Новини и проекти» stay hidden until the client adds them or the import (PR 21) brings them in.
 - Partner logos: Figma has eight (Агенция по заетостта, НАПОО, Аграрен университет, Pearson Longman, Oxford University Press, ТПК Пловдив, ПУ «Паисий Хилендарски», Gateway School of English) as 150 px greyscale images. Is the list current, and are there sharper originals? They're in `src/seed/partners/` until then.
 
 Waiting on the user:
@@ -295,6 +298,17 @@ From the visuals (PR 7):
 - Halftone: the Course visual uses 36% and the notebook's shadow 32% in Figma; the course card is 42% as in § 6. The 7% textbook halftone arrives with the textbook card. [Figma]
 - Notebook page: the rules (#E8EDF5) and punched holes (#E0E3E8) aren't Figma variables. [brand/primary-subtle and border/default, the nearest tokens]
 - Landing motion of other hero art: only the Course visual has a start pose (Pose=Intro). [`landing.art` fades in; each page PR reads its «Prototype · … landing» frame]
+
+From the homepage (PR 8):
+- Hero collage: Figma's «Photo B (stock, colour)» is stock, so it isn't used. The `home` global has an optional second photo for a real one. [hidden until supplied]
+- Hero photo tint: Figma's render is desaturated before the navy screen and sand multiply layers, which design context doesn't report. The pipeline now does the same (`blend` method). [matches the render]
+- Backgrounds: Figma's «Предстоящи курсове», «Преводи и легализация» and partner sections are white, not paper as § 6 says. [Figma]
+- Landing motion (from «Prototype · Начало landing», 149:4372): the copy rises 20 px (the prototype), not 30 px. The H1 and the photo move without fading in, because they're the LCP candidates (`docs/motion.md` § 2); the prototype fades them. No timing in Figma. [`docs/motion.md` timing]
+- «Виж предстоящите курсове» goes to the course listing, since the homepage section is hidden without courses. «Езици за ученици» and «Езици за възрастни» go to the English programme pages, as in the footer. [as described]
+- Course card: the whole card is one link to the course; «Запиши се» is part of it, not a second control. Program card: the title is the link, and the underlined «Виж …» line is part of the card. [one link per card, `docs/motion.md` § 5]
+- «Предстоящи курсове» lists published courses with a start date from today, soonest first, four per tab. A tab with no courses isn't shown. Courses without a start date aren't listed there. [as described]
+- Dropzone: a dropped or chosen file opens the contact wizard with the file in memory and the chosen languages in the link (`?tema=prevodi&ot=…&na=…`). Nothing is uploaded before the wizard. Dragging a file over it fills it with the sand tint (not in Figma). [as described; the wizard arrives in PR 11]
+- News card: on touch screens the photo clears to colour while the card is in the middle of the screen (from the component's Figma description). [built]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).

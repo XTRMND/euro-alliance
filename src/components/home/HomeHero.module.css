@@ -1,0 +1,262 @@
+/* Home hero (57:269 / 115:248). The collage (57:288) is laid out in Figma's 560 × 600 frame:
+   every length in it is a multiple of --u, 1/560 of its width, so the mobile frame (342px) is
+   the desktop one scaled. Positions are each element's unrotated box, centred where Figma's
+   rotated bounding box is. */
+
+.hero {
+  --landing-rise: 20px; /* «Prototype · Начало landing»: the copy starts 20px lower */
+
+  overflow-x: clip;
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 28px var(--page-margin) 40px;
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  align-content: center;
+}
+
+.title {
+  font: var(--type-display);
+  color: var(--color-brand-primary-strong);
+}
+
+/* «от 1999 г.» on its own line, 6px below. */
+.title .highlight {
+  display: table;
+  margin-top: 6px;
+  rotate: -0.5deg;
+}
+
+.lead {
+  max-width: 560px;
+  font: var(--type-lead);
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.primary {
+  align-self: stretch;
+}
+
+.collage {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 560 / 600;
+}
+
+.stage {
+  --u: calc(100cqw / 560);
+
+  position: absolute;
+  inset: 0;
+}
+
+.globe {
+  position: absolute;
+  top: 0;
+  left: calc(140 * var(--u));
+  width: calc(430 * var(--u));
+}
+
+/* Polaroids: white frame, 12px sides and top, 14px bottom. */
+.photo,
+.second {
+  position: absolute;
+  padding: calc(12 * var(--u)) calc(12 * var(--u)) calc(14 * var(--u));
+  background: var(--color-bg-page);
+  box-shadow: 0 calc(8 * var(--u)) calc(22 * var(--u)) rgb(var(--shadow-rgb) / 0.16);
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-warm);
+}
+
+.photo {
+  top: calc(155.89 * var(--u));
+  left: calc(15.19 * var(--u));
+  rotate: -5deg;
+}
+
+.photo .frame {
+  width: calc(284 * var(--u));
+  height: calc(336 * var(--u));
+}
+
+.second {
+  top: calc(418.3 * var(--u));
+  left: calc(323.56 * var(--u));
+  rotate: 4deg;
+}
+
+.second .frame {
+  width: calc(220 * var(--u));
+  height: calc(150 * var(--u));
+}
+
+.colour {
+  object-fit: cover;
+  opacity: 0.88;
+}
+
+.stage .tapeLeft,
+.stage .tapeRight {
+  width: calc(86 * var(--u));
+  height: calc(26 * var(--u));
+  opacity: 0.85;
+  transform: none;
+}
+
+.stage .tapeLeft {
+  top: calc(163.72 * var(--u));
+  left: calc(0.88 * var(--u));
+  rotate: 38deg;
+}
+
+.stage .tapeRight {
+  top: calc(145.24 * var(--u));
+  left: calc(226.36 * var(--u));
+  rotate: -32deg;
+}
+
+.marks {
+  position: absolute;
+  top: calc(64 * var(--u));
+  left: calc(-78 * var(--u));
+  width: calc(70 * var(--u));
+  height: calc(70 * var(--u));
+  stroke: var(--color-brand-accent);
+}
+
+.stage .bubble {
+  --bubble-rotate: 8deg;
+
+  position: absolute;
+  top: calc(28.03 * var(--u));
+  left: calc(430.77 * var(--u));
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    align-items: center;
+    width: auto;
+  }
+
+  .primary {
+    align-self: auto;
+  }
+
+  .collage {
+    justify-self: center;
+  }
+}
+
+@media (min-width: 768px) {
+  .title .highlight {
+    rotate: 0deg;
+  }
+}
+
+@media (min-width: 900px) {
+  .inner {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    min-height: 720px;
+    padding-block: 48px 72px;
+  }
+
+  .copy {
+    gap: 26px;
+  }
+
+  .collage {
+    justify-self: end;
+  }
+}
+
+/* Landing (docs/motion.md § 2): start values from «Prototype · Начало landing» (149:4372). */
+@media (prefers-reduced-motion: no-preference) {
+  .globe {
+    animation: globe-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .photo {
+    animation: photo-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .second {
+    animation: second-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .stage .tapeLeft,
+  .stage .tapeRight,
+  .marks {
+    animation: drop-in var(--motion-landing) var(--ease-out) calc(2 * var(--landing-stagger)) both;
+  }
+
+  .stage .bubble {
+    animation: bubble-in var(--motion-landing) var(--ease-out) calc(2 * var(--landing-stagger)) both;
+  }
+}
+
+@keyframes globe-in {
+  from {
+    translate: calc(40 * var(--u)) 0;
+  }
+}
+
+/* No fade: the photo may be the page's LCP element. */
+@keyframes photo-in {
+  from {
+    translate: calc(16.52 * var(--u)) calc(71.4 * var(--u));
+    rotate: -11deg;
+  }
+}
+
+@keyframes second-in {
+  from {
+    opacity: 0;
+    translate: calc(-8.83 * var(--u)) calc(129.71 * var(--u));
+    rotate: 9deg;
+  }
+}
+
+@keyframes drop-in {
+  from {
+    opacity: 0;
+    translate: 0 calc(-20 * var(--u));
+  }
+}
+
+/* From −12° to the bubble's resting 8° (its transform keeps the 8°). */
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    translate: calc(20.77 * var(--u)) calc(-62.27 * var(--u));
+    rotate: -20deg;
+  }
+}
