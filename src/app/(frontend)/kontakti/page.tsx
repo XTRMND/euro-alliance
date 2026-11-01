@@ -1,13 +1,12 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import { LocationCard } from '@/components/contact/LocationCard'
+import { LocationGrid } from '@/components/contact/LocationGrid'
 import { OfficeCard } from '@/components/contact/OfficeCard'
 import { PageHero } from '@/components/patterns/PageHero'
 import { Sticker } from '@/components/visuals/Sticker'
 import { Wizard } from '@/components/wizard/Wizard'
 import { getContact, getCourse, getOffices, getSite, getTranslationLanguages } from '@/lib/cms'
 import { topicFromQuery } from '@/lib/inquiries'
-import type { Media } from '@/payload-types'
 import { queryParams, routes } from '@/lib/routes'
 import { slugify } from '@/lib/slug'
 import styles from './page.module.css'
@@ -80,20 +79,7 @@ export default async function ContactPage({ searchParams }: PageProps<'/kontakti
             <h2 id="locations-title" className={styles.locationsTitle}>
               {t('contact.locations')}
             </h2>
-            <div className={styles.locationGrid}>
-              {contact.locations!.map((location) => (
-                <LocationCard
-                  key={location.id ?? location.anchor}
-                  id={location.anchor}
-                  kicker={location.kicker}
-                  street={location.street}
-                  address={location.address}
-                  latitude={location.latitude}
-                  longitude={location.longitude}
-                  map={typeof location.map === 'object' ? (location.map as Media | null) : null}
-                />
-              ))}
-            </div>
+            <LocationGrid locations={contact.locations!} />
           </div>
         </section>
       )}

@@ -1,12 +1,21 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { LocationGrid } from '@/components/contact/LocationGrid'
 import { CalloutBand } from '@/components/patterns/CalloutBand'
 import { CardGrid } from '@/components/patterns/CardGrid'
 import { FigureCard } from '@/components/patterns/FigureCard'
+import { List } from '@/components/patterns/List'
 import { ProjectCard } from '@/components/patterns/ProjectCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { PageCounterBox } from '@/components/sections/PageCounterBox'
+import { SendDocument } from '@/components/sections/SendDocument'
 import { Button } from '@/components/ui/Button'
-import { getProfessions, getTeacherProgrammes } from '@/lib/cms'
+import {
+  getContact,
+  getProfessions,
+  getTeacherProgrammes,
+  getTranslationLanguages,
+} from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
 import { groupByDirection, groupInOrder } from '@/lib/programs'
 import { anchors } from '@/lib/routes'
@@ -72,6 +81,37 @@ async function TeacherProgrammesSection({ section, id }: { section: Section; id:
     <Wrap section={section} id={id}>
       {'heading' in section && <Head section={section} id={id} />}
       <TeacherProgrammesList themes={themes} />
+    </Wrap>
+  )
+}
+
+/** «Изпратете документ» on paper, with the languages of the Translation global. */
+async function SendDocumentSection({ section, id }: { section: Section; id: string }) {
+  if (section.blockType !== 'sendDocument') return null
+  const languages = await getTranslationLanguages()
+  return (
+    <SendDocument
+      id={id}
+      anchor={section.anchor ?? undefined}
+      tone="paper"
+      artOnMobileOnly={section.dropzoneArt === 'mobile'}
+      title={section.heading}
+      lead={section.lead}
+      steps={(section.steps ?? []).map((step) => step.text)}
+      languages={languages}
+      cta={section.buttonLabel ? { label: section.buttonLabel } : undefined}
+    />
+  )
+}
+
+/** The offices' Location cards from the Contact global; without any, no section. */
+async function LocationsSection({ section, id }: { section: Section; id: string }) {
+  const locations = (await getContact()).locations ?? []
+  if (locations.length === 0) return null
+  return (
+    <Wrap section={section} id={id}>
+      {'heading' in section && <Head section={section} id={id} />}
+      <LocationGrid locations={locations} />
     </Wrap>
   )
 }
@@ -228,6 +268,61 @@ function SectionContent({ section, index }: { section: Section; index: number })
         </Wrap>
       )
     }
+    case 'sendDocument':
+      return <SendDocumentSection section={section} id={id} />
+    case 'priceFactors': {
+      const items = section.items ?? []
+      return (
+        <Wrap section={section} id={id} className={styles.beside}>
+          <div className={styles.factors}>
+            <Head section={section} id={id} />
+            {items.length > 0 && (
+              <List
+                marker="number"
+                className={styles.factorList}
+                items={items.map((item) => ({
+                  text: (
+                    <>
+                      <strong className={styles.itemTitle}>{item.title}</strong>
+                      {item.text && <span className={styles.itemText}>{item.text}</span>}
+                    </>
+                  ),
+                }))}
+              />
+            )}
+          </div>
+          {section.counter && <PageCounterBox />}
+        </Wrap>
+      )
+    }
+    case 'faqColumns': {
+      const columns = (section.columns ?? []).filter((column) => (column.items ?? []).length > 0)
+      if (columns.length === 0) return null
+      return (
+        <section className={[styles.section, styles.faqColumns].join(' ')}>
+          {columns.map((column, i) => (
+            <div
+              key={column.id ?? i}
+              id={column.anchor ?? undefined}
+              className={[styles.faqColumn, column.anchor && styles.anchor]
+                .filter(Boolean)
+                .join(' ')}
+            >
+              <h2 className={styles.columnTitle}>{column.heading}</h2>
+              <FaqList
+                items={(column.items ?? []).map((item) => ({
+                  question: item.question,
+                  answer: <RichText data={item.answer} disableContainer />,
+                }))}
+              />
+              {column.note && <p className={styles.note}>{column.note}</p>}
+            </div>
+          ))}
+        </section>
+      )
+    }
+    case 'locations':
+      return <LocationsSection section={section} id={id} />
     case 'teacherProgrammes':
       return <TeacherProgrammesSection section={section} id={id} />
     case 'exams':

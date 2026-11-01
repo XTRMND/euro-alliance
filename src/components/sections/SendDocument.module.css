@@ -5,6 +5,14 @@
   background: var(--color-bg-page);
 }
 
+.section.paper {
+  background: var(--color-bg-warm);
+}
+
+.section[id] {
+  scroll-margin-top: 80px;
+}
+
 .inner {
   display: grid;
   gap: 18px;
@@ -212,5 +220,9 @@
 
   .dropzone {
     min-height: 360px;
+  }
+
+  .artMobile {
+    display: none;
   }
 }

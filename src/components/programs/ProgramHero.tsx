@@ -9,7 +9,9 @@ import styles from './ProgramHero.module.css'
 
 // The course-page hero of every program that isn't a language (Vouchers 236:3407, Professions
 // 236:3683 …): breadcrumb, the H1 with its highlight, the lead and the buttons; beside it the
-// Course visual with the program's sticker and the count bubble («6 КУРСА»). On mobile the visual
+// Course visual with the program's sticker and the count bubble («6 КУРСА»). The highlighted
+// phrase takes a line of its own unless the program says otherwise (Translations keeps one
+// line, 171:2527). On mobile the visual
 // follows the buttons. It lands once like the course page: the copy rises, the sticker settles
 // from Pose=Intro, the bubble turns in. The H1 rises without fading (it's the LCP candidate).
 
@@ -30,7 +32,11 @@ export function ProgramHero({ program, breadcrumb, actions }: ProgramHeroProps) 
             <Breadcrumb items={breadcrumb} />
           </div>
           {hero.kicker && <p className={[styles.kicker, landing.copy].join(' ')}>{hero.kicker}</p>}
-          <h1 className={[styles.title, landing.rise].join(' ')}>
+          <h1
+            className={[styles.title, hero.highlightBreak !== false && styles.break, landing.rise]
+              .filter(Boolean)
+              .join(' ')}
+          >
             {withHighlight(hero.heading, hero.highlight)}
           </h1>
           {hero.lead && <p className={[styles.lead, landing.copy].join(' ')}>{hero.lead}</p>}

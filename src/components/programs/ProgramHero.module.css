@@ -23,7 +23,7 @@
 }
 
 .kicker {
-  font: var(--type-kicker);
+  font: 700 clamp(1rem, 0.963rem + 0.152vw, 1.0625rem) / 1.5 var(--font-display); /* 16 → 17 */
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-brand-primary);
@@ -34,13 +34,17 @@
   color: var(--color-brand-primary-strong);
 }
 
-/* The highlighted phrase on a line of its own, 6px below the first: 12px sides and 4px below at
-   76px, 1.5°. */
+/* The highlighted phrase: 12px sides and 4px below at 76px, 1.5°; on a line of its own, 6px
+   below the first, unless the program keeps one line. */
 .title > span {
-  display: table;
-  margin-top: 0.08em;
+  display: inline-block;
   padding: 0 0.158em 0.053em;
   transform: rotate(1.5deg);
+}
+
+.title.break > span {
+  display: table;
+  margin-top: 0.08em;
 }
 
 .lead {

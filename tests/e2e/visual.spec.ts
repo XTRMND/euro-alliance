@@ -18,6 +18,7 @@ const snapshots = [
   { name: 'teachers', path: routes.teachers() },
   { name: 'farmers', path: routes.farmers() },
   { name: 'computer-courses', path: routes.computerCourses() },
+  { name: 'translations', path: routes.translations() },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },

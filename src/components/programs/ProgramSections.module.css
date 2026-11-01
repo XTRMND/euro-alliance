@@ -92,6 +92,42 @@
   gap: 32px;
 }
 
+/* «Цена по оферта» (172:2288): the factors beside the Page counter from 1024px. */
+.factors {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+/* The price factors: rows 14px apart without rules (172:2288). */
+.factorList {
+  display: grid;
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.factorList > li {
+  padding: 0;
+  border-top: 0;
+}
+
+/* «Какво включва всяка тематика» and «Видове устни преводи» (172:2357): two columns from 1024px,
+   64px apart, each with its own H2 (34px, 30 on a phone). */
+.faqColumns {
+  gap: 40px;
+}
+
+.faqColumn {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.columnTitle {
+  font: 800 clamp(1.875rem, 1.78rem + 0.381vw, 2.125rem) / 0.96 var(--font-display); /* 30 → 34 */
+  color: var(--color-brand-primary-strong);
+}
+
 .prose {
   max-width: 760px;
   font: var(--type-body);
@@ -115,6 +151,11 @@
 }
 
 @media (min-width: 1024px) {
+  .faqColumns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 64px;
+  }
+
   .beside {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 64px;
