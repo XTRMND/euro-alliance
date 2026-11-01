@@ -65,6 +65,13 @@ export const Courses: CollectionConfig = {
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
     slugField(),
     {
+      name: 'description',
+      type: 'textarea',
+      label: 'Кратко описание',
+      localized: true,
+      admin: { description: 'Под заглавието на страницата на курса.' },
+    },
+    {
       type: 'row',
       fields: [
         {
@@ -149,7 +156,66 @@ export const Courses: CollectionConfig = {
         { name: 'seats', type: 'number', label: 'Свободни места', min: 0 },
       ],
     },
-    { name: 'schedule', type: 'textarea', label: 'График', localized: true },
+    {
+      type: 'collapsible',
+      label: 'Кога',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'days',
+              type: 'text',
+              label: 'Учебни дни',
+              localized: true,
+              admin: { description: 'Например «пн и ср или вт и чт».' },
+            },
+            {
+              name: 'hours',
+              type: 'text',
+              label: 'Учебни часове',
+              admin: { description: 'Например 18:00–20:50.' },
+            },
+          ],
+        },
+        { name: 'duration', type: 'textarea', label: 'Хорариум', localized: true },
+        { name: 'schedule', type: 'textarea', label: 'График (бележка)', localized: true },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Къде',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'venue', type: 'text', label: 'Учебна база', localized: true },
+            { name: 'city', type: 'text', label: 'Град', localized: true },
+          ],
+        },
+      ],
+    },
+    {
+      type: 'collapsible',
+      label: 'Какво получавате',
+      fields: [
+        {
+          name: 'levelName',
+          type: 'text',
+          label: 'Ниво (пълно име)',
+          localized: true,
+          admin: { description: 'Например «B2 Upper-Intermediate». Празно: показва се нивото.' },
+        },
+        {
+          type: 'row',
+          fields: [
+            { name: 'program', type: 'text', label: 'Програма', localized: true },
+            { name: 'document', type: 'text', label: 'Документ', localized: true },
+          ],
+        },
+        { name: 'included', type: 'text', label: 'Включено', localized: true },
+      ],
+    },
     {
       type: 'row',
       fields: [
@@ -169,6 +235,13 @@ export const Courses: CollectionConfig = {
             { value: 'EUR', label: '€' },
             { value: 'BGN', label: 'лв.' },
           ],
+        },
+        {
+          name: 'regularPrice',
+          type: 'number',
+          label: 'Редовна цена',
+          min: 0,
+          admin: { description: 'При промоция: по-високата редовна цена, показва се зачертана.' },
         },
         {
           name: 'priceNote',

@@ -285,6 +285,10 @@ export interface Course {
    * Попълва се от заглавието, ако е празно.
    */
   slug?: string | null;
+  /**
+   * Под заглавието на страницата на курса.
+   */
+  description?: string | null;
   category: 'languages' | 'exams' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer';
   language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
   /**
@@ -322,12 +326,34 @@ export interface Course {
   level?: string | null;
   startDate?: string | null;
   seats?: number | null;
+  /**
+   * Например «пн и ср или вт и чт».
+   */
+  days?: string | null;
+  /**
+   * Например 18:00–20:50.
+   */
+  hours?: string | null;
+  duration?: string | null;
   schedule?: string | null;
+  venue?: string | null;
+  city?: string | null;
+  /**
+   * Например «B2 Upper-Intermediate». Празно: показва се нивото.
+   */
+  levelName?: string | null;
+  program?: string | null;
+  document?: string | null;
+  included?: string | null;
   /**
    * Празно: цената не се показва. Само официални цени.
    */
   price?: number | null;
   currency?: ('EUR' | 'BGN') | null;
+  /**
+   * При промоция: по-високата редовна цена, показва се зачертана.
+   */
+  regularPrice?: number | null;
   /**
    * Например «за целия курс» или «промоция».
    */
@@ -590,6 +616,7 @@ export interface OfficesSelect<T extends boolean = true> {
 export interface CoursesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  description?: T;
   category?: T;
   language?: T;
   topic?: T;
@@ -600,9 +627,19 @@ export interface CoursesSelect<T extends boolean = true> {
   level?: T;
   startDate?: T;
   seats?: T;
+  days?: T;
+  hours?: T;
+  duration?: T;
   schedule?: T;
+  venue?: T;
+  city?: T;
+  levelName?: T;
+  program?: T;
+  document?: T;
+  included?: T;
   price?: T;
   currency?: T;
+  regularPrice?: T;
   priceNote?: T;
   voucherEligible?: T;
   legacyUrl?: T;
