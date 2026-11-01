@@ -48,7 +48,7 @@ export async function Header({ navigation, office }: HeaderProps) {
           email={office?.emails?.[0]?.email}
         />
 
-        <LogoLink theme="light" label={t('logoLabel')} className={styles.logo} priority />
+        <LogoLink theme="light" label={t('logoLabel')} className={styles.logo} />
 
         <div className={styles.end}>
           <ul className={styles.links}>

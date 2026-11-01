@@ -287,6 +287,7 @@ Decisions this package proposes (confirm before the PR that needs them):
 - Upload limits for translation documents.
 - gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
+- Mobile LCP budget (2.5 s, simulated slow 4G): the shell on an empty page already lands at about 2.1–2.5 s. Most of that is the Next.js and React runtime (about 140 KB of JavaScript), which Lighthouse's simulation counts in full even though it doesn't block the text. Real pages add photos and more code. PR 23 trims what it can; keep 2.5 s, or set the mobile LCP budget higher and keep the field target (CrUX LCP ≤ 2.5 s) as the real goal?
 - Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning.
 - Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.
 

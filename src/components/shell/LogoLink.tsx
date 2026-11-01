@@ -14,11 +14,10 @@ type LogoLinkProps = {
   theme: 'light' | 'dark'
   label: string
   className?: string
-  /** Only for the header logo, which is above the fold. */
-  priority?: boolean
 }
 
-export function LogoLink({ theme, label, className, priority = false }: LogoLinkProps) {
+// Not preloaded: the logo is never the largest paint, and a preload competes with the fonts.
+export function LogoLink({ theme, label, className }: LogoLinkProps) {
   const pathname = usePathname()
 
   function onClick(event: MouseEvent<HTMLAnchorElement>) {
@@ -31,12 +30,7 @@ export function LogoLink({ theme, label, className, priority = false }: LogoLink
 
   return (
     <Link href="/" aria-label={label} className={className} onClick={onClick}>
-      <Image
-        src={theme === 'light' ? logoLight : logoDark}
-        alt=""
-        unoptimized
-        priority={priority}
-      />
+      <Image src={theme === 'light' ? logoLight : logoDark} alt="" unoptimized />
     </Link>
   )
 }
