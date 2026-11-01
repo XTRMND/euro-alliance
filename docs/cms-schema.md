@@ -166,11 +166,11 @@ Built in PR 13 (`src/collections/FundedProjects.ts`): `title`, `code` (e.g. BG16
 
 ### Documents / licences
 
-`title`, `type` *(proposed: licence / certificate / diploma sample)*, `scan` (upload → media, `kind: scan`). Only details that appear on the document itself.
+Built in PR 16 (`src/collections/Documents.ts`): `title` (the caption), `type` (licence / certificate / sample), `scan` (upload → media, `kind: scan`, shown untinted and full size in a dialog). Ordered by dragging. Only details that appear on the document itself. Seeded with the four licences and certificates and the three sample documents from the About frame's image fills (low resolution: ask the client for the originals).
 
 ### Team
 
-`name`, `role`, `photo` (upload → media, `kind: photo`), `order`. The About page team section renders only when at least one published entry has a photo. Until the client sends photos, it stays hidden.
+Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → media, `kind: photo`), ordered by dragging. Not shown yet: the About page's «Екип» section is text only in Figma (the `about` global), and member cards with photos have no design. Nothing seeded.
 
 ### Inquiries
 
@@ -268,6 +268,7 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 | `navigation` | Header and footer links. Nav labels are content, so they live here, not in i18n. |
 | `home` | Homepage hero (heading, highlight, lead, two buttons, the photo and an optional second photo), section titles, program cards, the translations block (title, lead, steps, button), featured news count, partner logos. Every link picks a destination from a fixed list (`src/lib/destinations.ts`), which gives «Изпити и сертификати» and «Компютърни курсове» their fixed targets. |
 | `translation` | Languages (PR 8: they fill the language pair of «Изпратете документ»; hidden with fewer than two) and topics (PR 14) |
+| `about` | *(PR 16)* The About page, a group per section in the subnav's order: hero (kicker, title, highlight, lead, photo, two links), history (lead, years, closing), figures, the «Обучили сме…» statement (audiences, note, up to three polaroids), team (quote, values), standards (the ticket's groups and stub), licences (→ Documents, links), documents after a course (list, fees box, → Documents as samples), projects (→ Funded projects), e-learning (benefits, platforms). An empty section hides itself and its subnav item. |
 | `inquiryRouting` | Routing table (§ 5), admin-only |
 
 ## 8. Search

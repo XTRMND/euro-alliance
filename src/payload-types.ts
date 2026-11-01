@@ -80,6 +80,8 @@ export interface Config {
     exams: Exam;
     'teacher-programmes': TeacherProgramme;
     'funded-projects': FundedProject;
+    documents: Document;
+    team: Team;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -107,6 +109,8 @@ export interface Config {
     exams: ExamsSelect<false> | ExamsSelect<true>;
     'teacher-programmes': TeacherProgrammesSelect<false> | TeacherProgrammesSelect<true>;
     'funded-projects': FundedProjectsSelect<false> | FundedProjectsSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    team: TeamSelect<false> | TeamSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -126,6 +130,7 @@ export interface Config {
     translation: Translation;
     'inquiry-routing': InquiryRouting;
     contact: Contact;
+    about: About;
     'payload-jobs-stats': PayloadJobsStat;
   };
   globalsSelect: {
@@ -135,6 +140,7 @@ export interface Config {
     translation: TranslationSelect<false> | TranslationSelect<true>;
     'inquiry-routing': InquiryRoutingSelect<false> | InquiryRoutingSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
     'payload-jobs-stats': PayloadJobsStatsSelect<false> | PayloadJobsStatsSelect<true>;
   };
   locale: 'bg' | 'en';
@@ -1340,6 +1346,37 @@ export interface TeacherProgramme {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  _order?: string | null;
+  title: string;
+  type: 'licence' | 'certificate' | 'sample';
+  /**
+   * Показва се както е, без оцветяване.
+   */
+  scan: number | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team".
+ */
+export interface Team {
+  id: number;
+  _order?: string | null;
+  name: string;
+  role?: string | null;
+  photo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * Пазят се 1 година, освен ако не са довели до договор.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1568,6 +1605,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'funded-projects';
         value: number | FundedProject;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'team';
+        value: number | Team;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2324,6 +2369,32 @@ export interface FundedProjectsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  _order?: T;
+  title?: T;
+  type?: T;
+  scan?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team_select".
+ */
+export interface TeamSelect<T extends boolean = true> {
+  _order?: T;
+  name?: T;
+  role?: T;
+  photo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
@@ -2812,6 +2883,231 @@ export interface Contact {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  hero?: {
+    kicker?: string | null;
+    title?: string | null;
+    /**
+     * Част от заглавието.
+     */
+    highlight?: string | null;
+    lead?: string | null;
+    photo?: (number | null) | Media;
+    primary?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'voucherInquiry'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'levelTest'
+            | 'otherInquiry'
+            | 'news'
+            | 'about'
+            | 'contact'
+          )
+        | null;
+    };
+    secondary?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'voucherInquiry'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'levelTest'
+            | 'otherInquiry'
+            | 'news'
+            | 'about'
+            | 'contact'
+          )
+        | null;
+    };
+  };
+  history?: {
+    kicker?: string | null;
+    heading?: string | null;
+    lead?: string | null;
+    items?:
+      | {
+          year: string;
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    closing?: string | null;
+  };
+  figures?: {
+    heading?: string | null;
+    /**
+     * Само официални числа.
+     */
+    items?:
+      | {
+          figure: string;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  statement?: {
+    before?: string | null;
+    highlight?: string | null;
+    after?: string | null;
+    audiences?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    note?: string | null;
+    photos?:
+      | {
+          photo: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  team?: {
+    kicker?: string | null;
+    heading?: string | null;
+    quote?: string | null;
+    values?:
+      | {
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  standards?: {
+    kicker?: string | null;
+    heading?: string | null;
+    lead?: string | null;
+    groups?:
+      | {
+          title: string;
+          fields?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    stub?: {
+      label?: string | null;
+      title?: string | null;
+      chip?: string | null;
+      buttonLabel?: string | null;
+      note?: string | null;
+    };
+  };
+  licences?: {
+    kicker?: string | null;
+    heading?: string | null;
+    lead?: string | null;
+    documents?: (number | Document)[] | null;
+    links?:
+      | {
+          label: string;
+          destination?:
+            | (
+                | 'courses'
+                | 'languageCourses'
+                | 'languagesStudents'
+                | 'languagesAdults'
+                | 'certificates'
+                | 'professions'
+                | 'vouchers'
+                | 'voucherInquiry'
+                | 'teachers'
+                | 'farmers'
+                | 'computerCourses'
+                | 'translations'
+                | 'sendDocument'
+                | 'levelTest'
+                | 'otherInquiry'
+                | 'news'
+                | 'about'
+                | 'contact'
+              )
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  documents?: {
+    kicker?: string | null;
+    heading?: string | null;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    fees?: {
+      text?: string | null;
+      duplicate?: string | null;
+      note?: string | null;
+    };
+    samples?: (number | Document)[] | null;
+  };
+  projects?: {
+    kicker?: string | null;
+    heading?: string | null;
+    projects?: (number | FundedProject)[] | null;
+  };
+  elearning?: {
+    kicker?: string | null;
+    heading?: string | null;
+    lead?: string | null;
+    benefits?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    platformsTitle?: string | null;
+    platforms?:
+      | {
+          name: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-jobs-stats".
  */
 export interface PayloadJobsStat {
@@ -3080,6 +3376,190 @@ export interface ContactSelect<T extends boolean = true> {
         longitude?: T;
         map?: T;
         id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        kicker?: T;
+        title?: T;
+        highlight?: T;
+        lead?: T;
+        photo?: T;
+        primary?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+            };
+        secondary?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+            };
+      };
+  history?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+        items?:
+          | T
+          | {
+              year?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+        closing?: T;
+      };
+  figures?:
+    | T
+    | {
+        heading?: T;
+        items?:
+          | T
+          | {
+              figure?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  statement?:
+    | T
+    | {
+        before?: T;
+        highlight?: T;
+        after?: T;
+        audiences?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        note?: T;
+        photos?:
+          | T
+          | {
+              photo?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  team?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        quote?: T;
+        values?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  standards?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+        groups?:
+          | T
+          | {
+              title?: T;
+              fields?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        stub?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              chip?: T;
+              buttonLabel?: T;
+              note?: T;
+            };
+      };
+  licences?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+        documents?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+              id?: T;
+            };
+      };
+  documents?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        fees?:
+          | T
+          | {
+              text?: T;
+              duplicate?: T;
+              note?: T;
+            };
+        samples?: T;
+      };
+  projects?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        projects?: T;
+      };
+  elearning?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        lead?: T;
+        benefits?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        platformsTitle?: T;
+        platforms?:
+          | T
+          | {
+              name?: T;
+              id?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

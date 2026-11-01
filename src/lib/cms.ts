@@ -367,3 +367,23 @@ export const getNewsArticle = unstable_cache(
   ['news-article'],
   { tags: [tags.collection('news'), tags.collection('media')] },
 )
+
+/** The About page with its documents, projects and photos (the photos with their tints). */
+export const getAbout = unstable_cache(
+  async () => {
+    const about = await (
+      await payload()
+    ).findGlobal({ slug: 'about', locale: 'bg', depth: 2, overrideAccess: false })
+    await attachTints([about.hero?.photo, ...(about.statement?.photos ?? []).map((p) => p.photo)])
+    return about
+  },
+  ['about'],
+  {
+    tags: [
+      tags.global('about'),
+      tags.collection('documents'),
+      tags.collection('funded-projects'),
+      tags.collection('media'),
+    ],
+  },
+)

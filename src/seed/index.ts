@@ -3,6 +3,7 @@ import path from 'node:path'
 import type { Payload } from 'payload'
 import type { Media } from '@/payload-types'
 import { defaultRouting } from '@/lib/inquiries'
+import { about, aboutDocuments, aboutPhotos, pkipProject } from './about'
 import {
   company,
   contact,
@@ -53,6 +54,7 @@ export async function seed(payload: Payload) {
 
   await seedContact(payload)
   await seedPrograms(payload)
+  await seedAbout(payload)
 
   const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
   if (isEmpty(routing.rules)) {
@@ -274,6 +276,92 @@ async function seedPrograms(payload: Payload) {
     })
     payload.logger.info(`Seeded the program «${program.title}».`)
   }
+}
+
+/**
+ * The About page: its copy, photos, the client's documents and both funded projects, while the
+ * page is empty. Documents and projects are found by title first, so nothing is duplicated.
+ */
+async function seedAbout(payload: Payload) {
+  const current = await payload.findGlobal({ slug: 'about', locale: 'bg', depth: 0 })
+  if (!isEmpty(current.hero?.title)) return
+
+  const documentIds: number[] = []
+  for (const { scan, ...document } of aboutDocuments) {
+    const found = await payload.find({
+      collection: 'documents',
+      where: { title: { equals: document.title } },
+      depth: 0,
+      limit: 1,
+      draft: true,
+    })
+    const doc =
+      found.docs[0] ??
+      (await payload.create({
+        collection: 'documents',
+        locale: 'bg',
+        data: { ...document, scan: (await uploadOnce(payload, scan)).id, _status: 'published' },
+      }))
+    documentIds.push(doc.id)
+  }
+
+  const projectIds: number[] = []
+  for (const title of [farmersProject.title, pkipProject.title]) {
+    const found = await payload.find({
+      collection: 'funded-projects',
+      where: { title: { equals: title } },
+      depth: 0,
+      limit: 1,
+      draft: true,
+    })
+    const project =
+      found.docs[0] ??
+      (title === pkipProject.title
+        ? await payload.create({
+            collection: 'funded-projects',
+            locale: 'bg',
+            data: {
+              ...pkipProject,
+              logoStrip: (await uploadOnce(payload, { ...fundingLogo, kind: 'logo' })).id,
+              _status: 'published',
+            },
+          })
+        : null)
+    if (project) projectIds.push(project.id)
+  }
+
+  const photos = []
+  for (const [i, file] of [
+    aboutPhotos.barcelona,
+    aboutPhotos.internships,
+    aboutPhotos.graz,
+  ].entries()) {
+    photos.push({
+      photo: (await uploadOnce(payload, file)).id,
+      caption: about.statement.captions[i],
+    })
+  }
+
+  await payload.updateGlobal({
+    slug: 'about',
+    locale: 'bg',
+    data: {
+      ...about,
+      hero: { ...about.hero, photo: (await uploadOnce(payload, aboutPhotos.hero)).id },
+      statement: {
+        before: about.statement.before,
+        highlight: about.statement.highlight,
+        after: about.statement.after,
+        audiences: about.statement.audiences,
+        note: about.statement.note,
+        photos,
+      },
+      licences: { ...about.licences, documents: documentIds.slice(0, 4) },
+      documents: { ...about.documents, samples: documentIds.slice(4) },
+      projects: { ...about.projects, projects: projectIds },
+    } as never,
+  })
+  payload.logger.info('Seeded the About page.')
 }
 
 /** The contact page's copy and location cards, with their map snapshots. */

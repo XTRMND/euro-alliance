@@ -8,6 +8,7 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
+import { Documents } from './collections/Documents'
 import { Exams } from './collections/Exams'
 import { FundedProjects } from './collections/FundedProjects'
 import { Inquiries } from './collections/Inquiries'
@@ -18,9 +19,11 @@ import { News } from './collections/News'
 import { Offices } from './collections/Offices'
 import { Professions } from './collections/Professions'
 import { Programs } from './collections/Programs'
+import { Team } from './collections/Team'
 import { TeacherProgrammes } from './collections/TeacherProgrammes'
 import { TextbookSystems } from './collections/TextbookSystems'
 import { Users } from './collections/Users'
+import { About } from './globals/About'
 import { Contact } from './globals/Contact'
 import { Home } from './globals/Home'
 import { InquiryRouting } from './globals/InquiryRouting'
@@ -55,10 +58,12 @@ export default buildConfig({
     Exams,
     TeacherProgrammes,
     FundedProjects,
+    Documents,
+    Team,
     Inquiries,
     InquiryFiles,
   ],
-  globals: [Site, Navigation, Home, Translation, InquiryRouting, Contact],
+  globals: [Site, Navigation, Home, Translation, InquiryRouting, Contact, About],
   jobs,
   localization: {
     locales: [

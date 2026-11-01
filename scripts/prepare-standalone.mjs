@@ -9,7 +9,8 @@ if (existsSync('public')) {
 }
 
 // Files the production seed uploads on first start (src/seed): the homepage photo, the partner
-// logos and the contact page's maps. Read at runtime from the working directory, like public/.
-for (const dir of ['home', 'partners', 'contact']) {
+// logos, the contact page's maps and the About page's photos and scans. Read at runtime from the
+// working directory, like public/.
+for (const dir of ['home', 'partners', 'contact', 'about']) {
   cpSync(`src/seed/${dir}`, `.next/standalone/src/seed/${dir}`, { recursive: true })
 }

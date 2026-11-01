@@ -105,13 +105,18 @@ export const contactLocations = {
 } as const
 export type ContactLocation = keyof typeof contactLocations
 
-/** Provisional: PR 16 takes the final ids from the About Subnav items (189:349). */
+/**
+ * The About page's sections: the Subnav's items (189:349), transliterated, and the licences
+ * («Виж лицензите» links there; not in the subnav).
+ */
 export const aboutSections = {
   history: 'istoria',
   team: 'ekip',
   standards: 'standarti',
+  licences: 'litsenzi',
   documents: 'dokumenti',
   projects: 'proekti',
+  elearning: 'elektronno-obuchenie',
 } as const
 export type AboutSection = keyof typeof aboutSections
 
