@@ -13,10 +13,12 @@ export const pages = [
   { name: 'Farmers', path: routes.farmers() },
   { name: 'Computer courses', path: routes.computerCourses() },
   { name: 'Translations', path: routes.translations() },
+  { name: 'News', path: routes.news() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },
   { name: 'Visuals (dev)', path: devRoutes.visuals },
   { name: 'Cards (dev)', path: devRoutes.cards },
   { name: 'Course states (dev)', path: devRoutes.course },
+  { name: 'News article (dev)', path: devRoutes.news },
 ]

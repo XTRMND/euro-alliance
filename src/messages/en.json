@@ -400,5 +400,27 @@
     "note": "The price per page depends on the subject.",
     "quote": "Ask for a quote",
     "framework": "Framework agreement?"
+  },
+  "news": {
+    "breadcrumb": "News",
+    "title": "News about us",
+    "titleHighlight": "us",
+    "lead": "More about the activities we take part in, organise or support.",
+    "all": "All news",
+    "empty": "No news yet.",
+    "readMore": "Read the news",
+    "pagination": {
+      "label": "Pages",
+      "page": "Page {n}",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "contents": "Contents",
+    "readingTime": "{minutes} min read",
+    "latest": "Latest news",
+    "share": "Share",
+    "shareFacebook": "Share on Facebook",
+    "related": "More news",
+    "newWindow": "opens in a new window"
   }
 }

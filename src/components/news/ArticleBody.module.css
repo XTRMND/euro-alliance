@@ -1,0 +1,143 @@
+/* The article text (186:2664): a 680 column, 20px between blocks, 48 above an H2. Sizes on a
+   phone from 188:2437. */
+.body {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+  min-width: 0;
+  font: 400 clamp(1.0625rem, 1.026rem + 0.152vw, 1.125rem) / 1.65 var(--font-body); /* 17 → 18 */
+  color: var(--color-text-primary);
+}
+
+.body > * {
+  margin: 0;
+}
+
+.body a:not(.linkCard) {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.body ul,
+.body ol {
+  display: grid;
+  gap: 6px;
+  padding-left: 1.4em;
+}
+
+.lead {
+  font: 500 clamp(1.25rem, 1.137rem + 0.457vw, 1.4375rem) / 1.5 var(--font-body); /* 20 → 23 */
+  color: var(--color-brand-primary-strong);
+}
+
+.h2 {
+  margin-top: 28px;
+  scroll-margin-top: 24px;
+  font: 800 clamp(1.875rem, 1.734rem + 0.571vw, 2.25rem) / 1.04 var(--font-display); /* 30 → 36 */
+  color: var(--color-brand-primary-strong);
+}
+
+.h3 {
+  margin-top: 8px;
+  font: var(--type-h3);
+  color: var(--color-brand-primary-strong);
+}
+
+/* Pull quote (186:2689): a 4px sand bar and the quote in navy. */
+.quote {
+  display: flex;
+  gap: 18px;
+  padding: 8px 0;
+  font: 800 clamp(1.75rem, 1.609rem + 0.571vw, 2.125rem) / 1.04 var(--font-display); /* 28 → 34 */
+  color: var(--color-brand-primary);
+}
+
+.quote::before {
+  content: '';
+  flex: none;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--color-brand-accent);
+}
+
+.figures {
+  display: grid;
+  gap: 20px;
+}
+
+/* One under the other on a phone: Figma's three-up row breaks the labels mid-word there. */
+.figureRow {
+  display: grid;
+  gap: 8px;
+}
+
+.caption {
+  font: 500 0.9375rem / 1.65 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* Link card (186:2695): navy, 14px radius, the label in sand and the address in white, the sand
+   button beside them (under them on a phone). One link. */
+.linkCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+  text-decoration: none;
+}
+
+.linkCard:focus-visible {
+  outline: var(--focus-ring-on-brand);
+}
+
+.linkText {
+  display: grid;
+  min-width: 0;
+}
+
+.linkLabel {
+  font: 700 0.875rem / 1.65 var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent);
+}
+
+.linkUrl {
+  overflow-wrap: anywhere;
+  font: 600 1.125rem / 1.65 var(--font-body);
+}
+
+.linkButton {
+  flex: none;
+  padding: 13px 22px;
+  border-radius: 10px;
+  background: var(--color-brand-accent);
+  font: var(--type-label);
+  color: var(--color-brand-primary-strong);
+  transition: background-color var(--motion-button) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .linkCard:hover .linkButton {
+    background: var(--color-brand-accent-subtle);
+  }
+}
+
+@media (min-width: 640px) {
+  .figureRow {
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 16px;
+  }
+
+  .linkCard {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

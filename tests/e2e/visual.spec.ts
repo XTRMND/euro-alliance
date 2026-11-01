@@ -19,12 +19,14 @@ const snapshots = [
   { name: 'farmers', path: routes.farmers() },
   { name: 'computer-courses', path: routes.computerCourses() },
   { name: 'translations', path: routes.translations() },
+  { name: 'news', path: routes.news() },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },
   { name: 'visuals', path: devRoutes.visuals },
   { name: 'cards', path: devRoutes.cards },
   { name: 'course', path: devRoutes.course },
+  { name: 'news-article', path: devRoutes.news },
 ]
 
 for (const { name, path } of snapshots) {

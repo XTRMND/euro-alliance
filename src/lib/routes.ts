@@ -123,6 +123,7 @@ export const devRoutes = {
   visuals: '/dev/visuals',
   cards: '/dev/cards',
   course: '/dev/course',
+  news: '/dev/news',
 } as const
 
 function withQuery(path: string, name: string, value: string | undefined): string {

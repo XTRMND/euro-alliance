@@ -1,0 +1,125 @@
+/* TOC item (185:366): a 3px rail segment and the label, 14px apart, 8px above and below. */
+.rail {
+  display: none;
+}
+
+.meta {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  font: 500 0.875rem / 1.65 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.label {
+  font: 700 0.9375rem / 1.65 var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 14px;
+  padding: 8px 0;
+  font: 500 0.9375rem / 1.4 var(--font-body);
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.item::before {
+  content: '';
+  flex: none;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--color-border-default);
+}
+
+.item[data-state='read'] {
+  color: var(--color-brand-primary-strong);
+}
+
+.item[data-state='read']::before {
+  background: var(--color-brand-accent);
+}
+
+.item[data-state='active'] {
+  font-weight: 600;
+  color: var(--color-brand-primary-strong);
+}
+
+.item[data-state='active']::before {
+  background: var(--color-brand-primary-strong);
+}
+
+@media (hover: hover) {
+  .item:hover {
+    color: var(--color-brand-primary-strong);
+  }
+}
+
+/* «Съдържание · 2 мин. четене» (188:2423): a white box that opens the items. */
+.box {
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+}
+
+.toggle {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  border: 0;
+  background: none;
+  font: 600 0.9375rem / 1.6 var(--font-body);
+  color: var(--color-brand-primary-strong);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sign {
+  font: 800 1.375rem / 1 var(--font-display);
+}
+
+.box .items {
+  padding: 0 18px 10px;
+}
+
+/* The reading progress (188:2398): 4px at the top of the screen, navy over the border colour. */
+.progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 20;
+  height: 4px;
+  background: var(--color-border-default);
+}
+
+.progress > span {
+  display: block;
+  height: 100%;
+  background: var(--color-brand-primary-strong);
+  transform-origin: left;
+}
+
+@media (min-width: 1024px) {
+  .rail {
+    position: sticky;
+    top: 32px;
+    display: block;
+  }
+
+  .box,
+  .progress {
+    display: none;
+  }
+}

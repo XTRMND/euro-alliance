@@ -1,0 +1,61 @@
+/* News (183:2437): the lead story 24 / 56 around it; «Всички новини» with three columns from
+   1024px (48px between rows, 32 between columns), two from 768. */
+.feature,
+.all,
+.empty {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding-inline: var(--page-margin);
+}
+
+.feature {
+  --landing-rise: 60px;
+
+  padding-block: 8px 32px;
+}
+
+.empty {
+  padding-block: 8px 64px;
+  font: var(--type-body);
+  color: var(--color-text-muted);
+}
+
+.all {
+  display: grid;
+  gap: 28px;
+  padding-block: 16px 48px;
+}
+
+.allTitle {
+  font: 800 clamp(2.375rem, 2.234rem + 0.571vw, 2.75rem) / 0.96 var(--font-display); /* 38 → 44 */
+  color: var(--color-brand-primary-strong);
+}
+
+.grid {
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .feature {
+    padding-block: 24px 56px;
+  }
+
+  .all {
+    padding-block: 24px 80px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

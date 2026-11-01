@@ -1,0 +1,121 @@
+/* Article hero (183:2590 / 188:2400): breadcrumb, date chip, H1 68 (42 on a phone) up to 1000
+   wide, the cover 520 high (230), radius 18 (14). */
+.hero {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 20px var(--page-margin) 16px;
+}
+
+.heroCopy {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
+/* On a phone the breadcrumb stops at «Новини» (188:2400). */
+@media (max-width: 767px) {
+  .breadcrumb li:last-child,
+  .breadcrumb li:nth-last-child(2) [aria-hidden] {
+    display: none;
+  }
+}
+
+.date {
+  padding: 2px 8px 3px;
+  background: var(--color-brand-accent);
+  font: 700 clamp(0.875rem, 0.852rem + 0.095vw, 0.9375rem) / 1.6 var(--font-display); /* 14 → 15 */
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary-strong);
+}
+
+.title {
+  max-width: 1000px;
+  font: 800 clamp(2.625rem, 2.045rem + 2.381vw, 4.25rem) / 0.97 var(--font-display); /* 42 → 68 */
+  color: var(--color-brand-primary-strong);
+}
+
+.cover {
+  position: relative;
+  justify-self: stretch;
+  height: clamp(230px, 120px + 28vw, 520px);
+  border-radius: clamp(14px, 13px + 0.3vw, 18px);
+  overflow: hidden;
+}
+
+.cover > span {
+  position: absolute;
+  inset: 0;
+}
+
+/* Body (183:2601): rail 220 · text 680 · sidebar, 56px apart from 1280px. */
+.layout {
+  display: grid;
+  gap: 24px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 20px var(--page-margin) 32px;
+}
+
+.sidebar {
+  min-width: 0;
+}
+
+/* «Още новини» (183:2626): three cards, a swipe row on a phone. */
+.more {
+  display: grid;
+  gap: 20px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 8px var(--page-margin) 48px;
+}
+
+.moreTitle {
+  font: 800 clamp(2.125rem, 1.982rem + 0.571vw, 2.75rem) / 0.96 var(--font-display); /* 34 → 44 */
+  color: var(--color-brand-primary-strong);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    gap: 18px;
+    padding-block: 56px 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+    padding-block: 40px 72px;
+  }
+
+  .layout[data-outline] {
+    grid-template-columns: 220px minmax(0, 680px);
+  }
+
+  .layout[data-outline] .sidebar {
+    grid-column: 2;
+  }
+
+  .more {
+    gap: 28px;
+    padding-block: 24px 80px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .layout {
+    grid-template-columns: minmax(0, 680px) minmax(0, 1fr);
+  }
+
+  .layout[data-outline] {
+    grid-template-columns: 220px minmax(0, 680px) minmax(0, 1fr);
+  }
+
+  .layout[data-outline] .sidebar {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,61 @@
+/* Page number (181:371): 44px squares, 10px radius, 10px apart; the current page navy. */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.number {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 10px;
+  background: var(--color-bg-page);
+  font: 800 1.25rem / 1.5 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  text-decoration: none;
+  transition: border-color var(--motion-button) var(--ease-out);
+}
+
+.number[aria-current] {
+  border-color: var(--color-brand-primary-strong);
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+/* Hover isn't in Figma: the border turns navy, as on chips. */
+a.number:focus-visible {
+  border-color: var(--color-brand-primary);
+}
+
+@media (hover: hover) {
+  a.number:hover {
+    border-color: var(--color-brand-primary);
+  }
+}
+
+.step {
+  padding: 4px 0;
+  font: var(--type-label);
+  color: var(--color-brand-primary);
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) {
+  .step:hover {
+    text-decoration: underline;
+  }
+}

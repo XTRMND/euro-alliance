@@ -1,0 +1,89 @@
+/* «Актуални новини» (183:2611): a white card, 16px radius; items 14px tall rows with a rule. */
+.sidebar {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.latest {
+  padding: 24px 26px 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 16px;
+  background: var(--color-bg-page);
+}
+
+.latestTitle {
+  font: 800 1.75rem / 1.2 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.date {
+  font: 700 0.8125rem / 1.6 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title {
+  font: 600 1rem / 1.6 var(--font-body);
+  color: var(--color-brand-primary-strong);
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+@media (hover: hover) {
+  a.title:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-brand-accent);
+  }
+}
+
+/* «Сподели» and the sand «f» circle (183:2622). */
+.share {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 4px 0;
+}
+
+.shareLabel {
+  font: 700 0.9375rem / 1.6 var(--font-display);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.facebook {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-brand-accent);
+  font: 800 1.375rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  text-decoration: none;
+  transition:
+    background-color var(--motion-button) var(--ease-out),
+    color var(--motion-button) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .facebook:hover {
+    background: var(--color-brand-primary-strong);
+    color: var(--color-text-on-brand);
+  }
+}
