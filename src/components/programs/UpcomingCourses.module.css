@@ -1,4 +1,4 @@
-/* «Предстоящи курсове» on a language page: 40px above (28 on mobile), 88 below (44). */
+/* «Предстоящи курсове» on a program page: 40px above (28 on mobile), 88 below (44). */
 .upcoming {
   display: grid;
   gap: 18px;

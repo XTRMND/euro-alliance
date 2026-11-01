@@ -12,11 +12,13 @@ import { CertificateCard } from './CertificateCard'
 import { FaqList } from './FaqList'
 import { FeatureCard } from './FeatureCard'
 import styles from './ProgramSections.module.css'
-import { SystemCard } from './SystemCard'
+import { SystemCard, type SystemCardData } from './SystemCard'
+import { VoucherApplyButton } from './VoucherApplyButton'
 
 // A program page's sections, from its blocks (docs/cms-schema.md, Programs). Each is a paper
-// section with its heading; a section with nothing to show isn't rendered. The certificates
-// section is the `#sertifikati` anchor the homepage's «Изпити и сертификати» card links to.
+// section with its heading; a section with nothing to show isn't rendered. A section with an
+// anchor takes it as its id (the hero's «Как да кандидатствате» links there); the certificates
+// section is always `#sertifikati`, where the homepage's «Изпити и сертификати» card links.
 
 type Section = NonNullable<Program['sections']>[number]
 
@@ -42,6 +44,42 @@ function Head({
   )
 }
 
+/** A callout's button; one into the voucher inquiry reports its click. */
+function calloutButton(
+  cta: { label?: string | null; destination?: string | null } | null | undefined,
+) {
+  const href = hrefOf(cta?.destination)
+  if (!href || !cta?.label) return { cta: null }
+  return cta.destination === 'voucherInquiry'
+    ? { action: <VoucherApplyButton href={href} label={cta.label} variant="accent" /> }
+    : { cta: { label: cta.label, href } }
+}
+
+/** The section element: its anchor as the id, named by its heading. */
+function Wrap({
+  section,
+  id,
+  anchor,
+  children,
+}: {
+  section: Section
+  id: string
+  anchor?: string
+  children: React.ReactNode
+}) {
+  const target = anchor ?? ('anchor' in section ? section.anchor : null) ?? undefined
+  const heading = 'heading' in section ? section.heading : null
+  return (
+    <section
+      id={target}
+      className={[styles.section, target && styles.anchor].filter(Boolean).join(' ')}
+      aria-labelledby={heading ? id : undefined}
+    >
+      {children}
+    </section>
+  )
+}
+
 function SectionContent({ section, index }: { section: Section; index: number }) {
   const id = `section-${index}`
   switch (section.blockType) {
@@ -49,28 +87,32 @@ function SectionContent({ section, index }: { section: Section; index: number })
       const items = section.items ?? []
       if (items.length === 0) return null
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
           <CardGrid columns={Math.min(Math.max(items.length, 2), 4) as 2 | 3 | 4}>
             {items.map((item, i) => (
               <FeatureCard key={item.id ?? i} index={i + 1} title={item.title} text={item.text} />
             ))}
           </CardGrid>
-        </section>
+        </Wrap>
       )
     }
-    case 'textbookSystems': {
-      const systems = objects<TextbookSystem>(section.systems)
-      if (systems.length === 0) return null
+    case 'textbookSystems':
+    case 'systemCards': {
+      const cards: (SystemCardData & { id?: string | number | null })[] =
+        section.blockType === 'textbookSystems'
+          ? objects<TextbookSystem>(section.systems)
+          : (section.cards ?? [])
+      if (cards.length === 0) return null
       const href = hrefOf(section.link?.destination)
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
-          <div className={styles.systems} data-count={Math.min(systems.length, 3)}>
-            {systems.map((system) => (
+          <div className={styles.systems} data-count={Math.min(cards.length, 3)}>
+            {cards.map((card, i) => (
               <SystemCard
-                key={system.id}
-                system={system}
+                key={card.id ?? i}
+                system={card}
                 columns={section.columns === 'one' ? 'one' : 'two'}
               />
             ))}
@@ -80,18 +122,14 @@ function SectionContent({ section, index }: { section: Section; index: number })
               {section.link.label}
             </Button>
           )}
-        </section>
+        </Wrap>
       )
     }
     case 'certificates': {
       const certificates = objects<Certificate>(section.certificates)
       if (certificates.length === 0) return null
       return (
-        <section
-          id={anchors.certificates}
-          className={[styles.section, styles.anchor].join(' ')}
-          aria-labelledby={section.heading ? id : undefined}
-        >
+        <Wrap section={section} id={id} anchor={anchors.certificates}>
           <Head section={section} id={id} />
           <SwipeRow
             columns={4}
@@ -109,14 +147,14 @@ function SectionContent({ section, index }: { section: Section; index: number })
               />
             ))}
           </SwipeRow>
-        </section>
+        </Wrap>
       )
     }
     case 'faq': {
       const items = section.items ?? []
       if (items.length === 0) return null
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
           <FaqList
             items={items.map((item) => ({
@@ -124,44 +162,51 @@ function SectionContent({ section, index }: { section: Section; index: number })
               answer: <RichText data={item.answer} disableContainer />,
             }))}
           />
-        </section>
+        </Wrap>
       )
     }
     case 'figures': {
       const items = section.items ?? []
       if (items.length === 0) return null
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
           <CardGrid columns={Math.min(Math.max(items.length, 2), 4) as 2 | 3 | 4}>
             {items.map((item, i) => (
               <FigureCard key={item.id ?? i} figure={item.figure} label={item.label} />
             ))}
           </CardGrid>
-        </section>
+        </Wrap>
       )
     }
-    case 'callout': {
-      const href = hrefOf(section.cta?.destination)
+    case 'callout':
       return (
         <section className={styles.section}>
           <CalloutBand
             title={section.heading}
             text={section.text}
             layout={section.layout === 'stack' ? 'stack' : 'row'}
-            cta={href && section.cta?.label ? { label: section.cta.label, href } : null}
+            {...calloutButton(section.cta)}
           />
         </section>
       )
-    }
     case 'levels':
     case 'steps': {
       const items = section.items ?? []
       if (items.length === 0) return null
+      const callout = section.blockType === 'steps' ? section.callout : null
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
-          <ol className={section.blockType === 'steps' ? styles.steps : styles.levels}>
+          {callout?.heading && (
+            <CalloutBand
+              title={callout.heading}
+              text={callout.text}
+              headingLevel="h3"
+              {...calloutButton(callout.cta)}
+            />
+          )}
+          <ol className={styles.steps}>
             {items.map((item, i) => (
               <li key={item.id ?? i} className={styles.listItem}>
                 <span className={styles.number}>
@@ -174,18 +219,21 @@ function SectionContent({ section, index }: { section: Section; index: number })
               </li>
             ))}
           </ol>
-        </section>
+          {section.blockType === 'steps' && section.note && (
+            <p className={styles.note}>{section.note}</p>
+          )}
+        </Wrap>
       )
     }
     case 'richText':
       if (!section.body) return null
       return (
-        <section className={styles.section} aria-labelledby={section.heading ? id : undefined}>
+        <Wrap section={section} id={id}>
           <Head section={section} id={id} />
           <div className={styles.prose}>
             <RichText data={section.body} disableContainer />
           </div>
-        </section>
+        </Wrap>
       )
     default:
       return null

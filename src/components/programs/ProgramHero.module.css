@@ -1,0 +1,109 @@
+/* Program course-page hero (236:3407 / 249:3456). Mobile: the copy, the buttons stacked on the
+   left, then the visual (267 × 390). Desktop: the copy in a 700 column, the visual in a 420 × 500
+   box on the right, both centred on the row. */
+
+.hero {
+  overflow-x: clip;
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 24px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 24px var(--page-margin) 40px;
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  max-width: 700px;
+}
+
+.kicker {
+  font: var(--type-kicker);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+
+.title {
+  font: 800 clamp(3rem, 2.443rem + 2.286vw, 4.75rem) / 0.98 var(--font-display); /* 48 → 76 */
+  color: var(--color-brand-primary-strong);
+}
+
+/* The highlighted phrase on a line of its own, 6px below the first: 12px sides and 4px below at
+   76px, 1.5°. */
+.title > span {
+  display: table;
+  margin-top: 0.08em;
+  padding: 0 0.158em 0.053em;
+  transform: rotate(1.5deg);
+}
+
+.lead {
+  max-width: 640px;
+  font: 400 clamp(1.0625rem, 1.017rem + 0.19vw, 1.1875rem) / 1.55 var(--font-body); /* 17 → 19 */
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  padding-top: 6px;
+}
+
+/* The visual: the panel is 344 of 420 wide (268 of 327 on mobile), tilted −2°, with the count
+   bubble over its lower left (104px, 85 on mobile). */
+.art {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 327px);
+  aspect-ratio: 420 / 500;
+}
+
+.art .visual {
+  position: absolute;
+  top: 2.4%;
+  left: 9.5%;
+  width: 81.9%;
+  rotate: -2deg;
+}
+
+.art .bubble {
+  position: absolute;
+  top: 66%;
+  left: -3.4%;
+  scale: 0.82;
+  transform-origin: top left;
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-flow: row wrap;
+    gap: 12px 20px;
+    align-items: center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: 40px;
+    align-items: center;
+    min-height: 620px;
+    padding-block: 56px 64px;
+  }
+
+  .art {
+    width: 420px;
+  }
+
+  .art .bubble {
+    scale: 1;
+  }
+}

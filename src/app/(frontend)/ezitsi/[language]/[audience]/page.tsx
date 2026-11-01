@@ -1,17 +1,13 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import { CourseCard } from '@/components/cards/CourseCard'
-import { SectionHeading } from '@/components/patterns/SectionHeading'
-import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { AudienceTabs } from '@/components/programs/AudienceTabs'
 import { LanguageHero } from '@/components/programs/LanguageHero'
+import { ProgramActions } from '@/components/programs/ProgramActions'
 import { ProgramSections } from '@/components/programs/ProgramSections'
+import { loadUpcoming, UpcomingCourses } from '@/components/programs/UpcomingCourses'
 import { InquiryBand } from '@/components/shell/InquiryBand'
-import { Button } from '@/components/ui/Button'
-import { getLanguageProgram, getListedCourses } from '@/lib/cms'
-import { courseFiltersQuery, emptyCourseFilters } from '@/lib/course-filters'
-import { hrefOf } from '@/lib/destinations'
+import { getLanguageProgram } from '@/lib/cms'
 import {
   audienceFromSegment,
   hasLanguagePage,
@@ -19,7 +15,6 @@ import {
   otherAudience,
 } from '@/lib/programs'
 import { routes } from '@/lib/routes'
-import styles from './page.module.css'
 
 // A language program (English adults 130:1993 / 147:1317, students 159:1993 / 166:1701): one
 // template for every language and audience, filled from the CMS. Unpublished or missing
@@ -42,25 +37,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return { title: found.program.title, description: found.program.hero.lead ?? undefined }
 }
 
-const upcomingId = 'predstoyashti-kursove'
-
 export default async function LanguageProgramPage({ params }: Params) {
   const found = await load(params)
   if (!found) notFound()
   const { program, language, audience } = found
 
-  const filters = { ...emptyCourseFilters, language: [language], audience: [audience], shown: 9 }
-  const [{ docs: courses }, t] = await Promise.all([getListedCourses(filters), getTranslations()])
-  const listing = `${routes.courses()}${courseFiltersQuery(filters).replace(/&?pokazani=\d+/, '')}`
+  const [upcoming, t] = await Promise.all([loadUpcoming(program), getTranslations()])
   const other = otherAudience(language, audience)
-  const languageName = t(`languages.${language}`)
-
-  const href = (destination?: string | null) =>
-    destination === 'languageCourses'
-      ? courses.length > 0
-        ? `#${upcomingId}`
-        : listing
-      : hrefOf(destination)
 
   return (
     <>
@@ -69,7 +52,7 @@ export default async function LanguageProgramPage({ params }: Params) {
         language={language}
         breadcrumb={[
           { label: t('program.languages'), href: routes.courses('languages') },
-          { label: languageName },
+          { label: t(`languages.${language}`) },
         ]}
         tabs={
           <AudienceTabs
@@ -85,38 +68,9 @@ export default async function LanguageProgramPage({ params }: Params) {
             }
           />
         }
-        actions={(program.hero.ctas ?? []).flatMap((cta, i) => {
-          const target = href(cta.destination)
-          return target ? (
-            <Button key={cta.id ?? i} href={target} variant={i === 0 ? 'primary' : 'link'}>
-              {cta.label}
-            </Button>
-          ) : (
-            []
-          )
-        })}
+        actions={<ProgramActions program={program} upcoming={upcoming} />}
       />
-      {courses.length > 0 && (
-        <section
-          id={upcomingId}
-          className={styles.upcoming}
-          aria-labelledby={`${upcomingId}-title`}
-        >
-          {program.upcoming?.heading && (
-            <SectionHeading id={`${upcomingId}-title`} title={program.upcoming.heading} />
-          )}
-          <SwipeRow columns={4} itemWidth={280} className={styles.courses}>
-            {courses.slice(0, 4).map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-          </SwipeRow>
-          {program.upcoming?.linkLabel && (
-            <Button href={listing} variant="link" className={styles.all}>
-              {program.upcoming.linkLabel}
-            </Button>
-          )}
-        </section>
-      )}
+      <UpcomingCourses program={program} upcoming={upcoming} />
       <ProgramSections sections={program.sections} />
       <InquiryBand />
     </>

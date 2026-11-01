@@ -81,6 +81,52 @@ test.describe('English for adults', () => {
   })
 })
 
+test.describe('vouchers', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('the hero buttons go to the voucher inquiry and to how to apply', async ({ page }) => {
+    await page.goto(routes.vouchers())
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Обучение с ваучери')
+    await expect(page.getByRole('link', { name: 'Съгласувайте обучението' })).toHaveAttribute(
+      'href',
+      routes.contact('vaucheri'),
+    )
+    await page.getByRole('link', { name: 'Как да кандидатствате' }).click()
+    const apply = page.locator('#kak-da-kandidatstvate')
+    await expect(apply).toBeInViewport()
+    await expect(
+      apply.getByRole('heading', { name: 'Как да кандидатствате за безплатен ваучер' }),
+    ).toBeVisible()
+  })
+
+  test('the callout links the phone and the email, and the steps follow it', async ({ page }) => {
+    await page.goto(routes.vouchers())
+    const apply = page.locator('#kak-da-kandidatstvate')
+
+    await expect(apply.getByRole('link', { name: '0886 601 108' })).toHaveAttribute(
+      'href',
+      'tel:+359886601108',
+    )
+    await expect(apply.getByRole('link', { name: 'office@euro-alliance.net' })).toHaveAttribute(
+      'href',
+      'mailto:office@euro-alliance.net',
+    )
+    await expect(apply.getByRole('listitem')).toHaveCount(3)
+  })
+
+  test('shows the approved programmes and no upcoming courses without courses', async ({
+    page,
+  }) => {
+    await page.goto(routes.vouchers())
+
+    for (const name of ['Многоезикова компетентност', 'Цифрова компетентност']) {
+      await expect(page.getByRole('heading', { name, level: 3 })).toBeVisible()
+    }
+    await expect(page.locator('#predstoyashti-kursove')).toHaveCount(0)
+  })
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

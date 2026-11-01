@@ -346,6 +346,14 @@
     "audience": {
       "adults": "For adults",
       "students": "For students"
+    },
+    "vocational": "Vocational training",
+    "pages": {
+      "vouchers": "Vouchers",
+      "vocational": "Professions and specialities",
+      "teachers": "Pedagogical specialists",
+      "farmers": "Training for farmers",
+      "computer": "Computer courses"
     }
   }
 }

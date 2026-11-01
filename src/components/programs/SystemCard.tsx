@@ -6,13 +6,19 @@ import styles from './SystemCard.module.css'
 // System card (135:389 Columns=Two, 240:662 Columns=One): a taped index card with the kicker chip,
 // the title, the count bubble, a description, the numbered levels and an optional note on a navy
 // strip, over a 7% halftone corner. Level numbers are navy, not Figma's sand: sand text only on
-// navy (CLAUDE.md § 12).
+// navy (CLAUDE.md § 12). It shows a textbook system or any card of the same shape, such as the
+// voucher programmes.
+
+export type SystemCardData = Pick<
+  TextbookSystem,
+  'name' | 'kicker' | 'count' | 'countLabel' | 'description' | 'levels' | 'strip'
+>
 
 export function SystemCard({
   system,
   columns,
 }: {
-  system: TextbookSystem
+  system: SystemCardData
   columns: 'one' | 'two'
 }) {
   const levels = system.levels ?? []
