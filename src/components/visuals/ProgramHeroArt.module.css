@@ -1,0 +1,243 @@
+/* Program hero art (131:311). Every length is Figma's, in --u: one Figma pixel of the 560 × 460
+   frame, so the art and its text scale together with the column. Rotated parts are placed by
+   their own box (Figma's bounding boxes are the rotated ones). */
+.art {
+  container-type: inline-size;
+  aspect-ratio: 560 / 460;
+}
+
+.stage {
+  --u: calc(100cqw / 560);
+
+  position: relative;
+  height: 100%;
+}
+
+/* 380 × 400 at 3°, 20px right of and below the page. */
+.stage .shadow {
+  --halftone-opacity: 0.32;
+
+  inset: auto;
+  top: calc(69.67 * var(--u));
+  left: calc(79.28 * var(--u));
+  width: calc(380 * var(--u));
+  height: calc(400 * var(--u));
+  border-radius: calc(6 * var(--u));
+  transform: rotate(3deg);
+}
+
+/* The page: ruled every 34px from 92px, a sand margin line at 58px. */
+.page {
+  position: absolute;
+  top: calc(49.67 * var(--u));
+  left: calc(59.28 * var(--u));
+  width: calc(380 * var(--u));
+  height: calc(400 * var(--u));
+  overflow: hidden;
+  border-radius: calc(6 * var(--u));
+  background-color: var(--color-bg-page);
+  background-image:
+    linear-gradient(
+      to right,
+      transparent calc(58 * var(--u)),
+      var(--color-brand-accent) calc(58 * var(--u)) calc(59.5 * var(--u)),
+      transparent calc(59.5 * var(--u))
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--color-brand-primary-subtle) 0 max(1px, var(--u)),
+      transparent 0 calc(34 * var(--u))
+    );
+  background-position:
+    0 0,
+    0 calc(92 * var(--u));
+  background-size:
+    100% 100%,
+    100% calc(308 * var(--u));
+  background-repeat: no-repeat;
+  box-shadow: 0 calc(10 * var(--u)) calc(26 * var(--u)) rgb(var(--shadow-rgb) / 0.09);
+  transform: rotate(3deg);
+}
+
+/* Three punched holes, 14px at x 20 and y 70, 200, 330. */
+.holes span {
+  position: absolute;
+  top: calc(70 * var(--u));
+  left: calc(20 * var(--u));
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  border: max(1px, var(--u)) solid var(--color-border-default);
+  border-radius: 50%;
+  background: var(--color-bg-page);
+}
+
+.holes span:nth-child(2) {
+  top: calc(200 * var(--u));
+}
+
+.holes span:nth-child(3) {
+  top: calc(330 * var(--u));
+}
+
+.title,
+.phrase,
+.translation {
+  position: absolute;
+  font-family: var(--font-hand);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.title {
+  top: calc(34 * var(--u));
+  left: calc(76 * var(--u));
+  font-size: calc(34 * var(--u));
+  font-weight: 700;
+  color: var(--color-brand-primary-strong);
+}
+
+/* Each phrase and its translation: phrases at y 94, 162, 230, translations 32px below. */
+.phrases {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phrase {
+  z-index: 0;
+  top: calc((94 + 68 * var(--row)) * var(--u));
+  left: calc(76 * var(--u));
+  font-size: calc(32 * var(--u));
+  font-weight: 700;
+  color: var(--color-brand-primary);
+}
+
+.translation {
+  top: calc((126 + 68 * var(--row)) * var(--u));
+  left: calc(78 * var(--u));
+  font-size: calc(22 * var(--u));
+  font-weight: 400;
+  color: var(--color-brand-primary-strong);
+  opacity: 0.8;
+}
+
+/* The sand highlighter behind the lower part of the phrase, tilted 1°. */
+.highlighted::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(12 * var(--u));
+  right: calc(-4 * var(--u));
+  left: calc(-4 * var(--u));
+  height: calc(26 * var(--u));
+  background: var(--color-brand-accent);
+  transform: rotate(1deg);
+}
+
+/* The flag sticker, 104px at −8°, centred on (443.5, 63.9). */
+.stage .flag {
+  position: absolute;
+  top: calc(11.89 * var(--u));
+  left: calc(391.48 * var(--u));
+  width: calc(104 * var(--u));
+  transform: rotate(-8deg);
+}
+
+/* 118 × 32 at −40°, centred on (74, 44). */
+.art .tape {
+  top: calc(28 * var(--u));
+  left: calc(15 * var(--u));
+  width: calc(118 * var(--u));
+  height: calc(32 * var(--u));
+  transform: rotate(-40deg);
+}
+
+/* Sticky note (Show note): 150 × 138 at −6°, centred on (491.8, 360.8). */
+.note {
+  position: absolute;
+  top: calc(291.78 * var(--u));
+  left: calc(416.8 * var(--u));
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--u));
+  width: calc(150 * var(--u));
+  height: calc(138 * var(--u));
+  padding: calc(12 * var(--u)) calc(10 * var(--u)) 0 calc(14 * var(--u));
+  overflow: hidden;
+  background: var(--color-brand-accent);
+  box-shadow: 0 calc(12 * var(--u)) calc(30 * var(--u)) rgb(var(--shadow-rgb) / 0.14);
+  font-family: var(--font-hand);
+  color: var(--color-brand-primary-strong);
+  transform: rotate(-6deg);
+}
+
+.noteTitle {
+  margin: 0;
+  font-size: calc(24 * var(--u));
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--u));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps li {
+  display: flex;
+  gap: calc(8 * var(--u));
+  align-items: center;
+  font-size: calc(21 * var(--u));
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+/* The boxes lean 4°, −3°, 4°. */
+.box {
+  position: relative;
+  flex: none;
+  width: calc(14 * var(--u));
+  height: calc(14 * var(--u));
+  border: calc(1.6 * var(--u)) solid var(--color-brand-primary-strong);
+  border-radius: calc(2 * var(--u));
+  transform: rotate(4deg);
+}
+
+.steps li:nth-child(2) .box {
+  transform: rotate(-3deg);
+}
+
+.done .box {
+  border-color: transparent;
+}
+
+.tick {
+  position: absolute;
+  top: calc(-4.2 * var(--u) - 1.6 * var(--u));
+  left: calc(-0.2 * var(--u) - 1.6 * var(--u));
+  width: calc(19.4 * var(--u));
+  height: calc(18.4 * var(--u));
+  overflow: visible;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.tick rect {
+  stroke: var(--color-brand-primary-strong);
+  stroke-width: 1.6;
+}
+
+.tick path {
+  stroke: var(--color-brand-primary);
+  stroke-width: 2.4;
+}

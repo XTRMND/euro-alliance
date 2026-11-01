@@ -1,0 +1,52 @@
+/* Course visual (86:416) at Pose=A. Figma's frame is 400 × 540; positions are percentages of it,
+   so the visual scales with its column. */
+.visual {
+  --halftone-opacity: 0.36;
+
+  position: relative;
+  aspect-ratio: 400 / 540;
+  border-radius: var(--radius-card);
+  background: var(--color-bg-warm);
+}
+
+/* 420 × 420 at (−10, 70): it overflows the panel a little on both sides. */
+.visual .sticker {
+  position: absolute;
+  top: 12.928%;
+  left: -2.548%;
+  width: 105.097%;
+}
+
+/* 120 × 34 at 38°, centred on (332.8, 38.3). */
+.visual .tape {
+  top: 7.1%;
+  left: 83.205%;
+  width: 30%;
+  height: auto;
+  aspect-ratio: 120 / 34;
+  transform: translate(-50%, -50%) rotate(38deg);
+}
+
+/* Pose=Intro → Pose=A. Intro has the sticker at 504px centred 160px higher, and the tape at 34°
+   centred 3.4px further right and 2.7px higher; the offsets are percentages of each element. */
+@media (prefers-reduced-motion: no-preference) {
+  .visual.landing .sticker {
+    animation: sticker-drop var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .visual.landing .tape {
+    animation: tape-settle var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+}
+
+@keyframes sticker-drop {
+  from {
+    transform: translateY(-38.06%) scale(1.199);
+  }
+}
+
+@keyframes tape-settle {
+  from {
+    transform: translate(-47.15%, -57.93%) rotate(34deg);
+  }
+}
