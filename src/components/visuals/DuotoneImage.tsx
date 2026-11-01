@@ -14,7 +14,8 @@ type DuotoneImageProps = {
   /** next/image `sizes`; the image fills its positioned parent. */
   sizes: string
   clearOnHover?: boolean
-  priority?: boolean
+  /** Above the fold: load at once, at high priority (Next 16 replaced `priority`). */
+  eager?: boolean
   className?: string
 }
 
@@ -29,11 +30,16 @@ export function DuotoneImage({
   tint,
   sizes,
   clearOnHover = false,
-  priority = false,
+  eager = false,
   className,
 }: DuotoneImageProps) {
   const tinted = tintOf(media, tint)
   if (!media.url) return null
+  // The focal point set in the admin decides which part of a cropped photo stays in view.
+  const style =
+    typeof media.focalX === 'number' && typeof media.focalY === 'number'
+      ? { objectPosition: `${media.focalX}% ${media.focalY}%` }
+      : undefined
 
   return (
     <span className={[styles.frame, className].filter(Boolean).join(' ')}>
@@ -43,8 +49,9 @@ export function DuotoneImage({
           alt={tinted?.url ? '' : media.alt}
           fill
           sizes={sizes}
+          style={style}
           className={styles.image}
-          priority={priority && !tinted?.url}
+          {...(eager && !tinted?.url && ({ loading: 'eager', fetchPriority: 'high' } as const))}
         />
       )}
       {tinted?.url && (
@@ -53,7 +60,8 @@ export function DuotoneImage({
           alt={media.alt}
           fill
           sizes={sizes}
-          priority={priority}
+          style={style}
+          {...(eager && ({ loading: 'eager', fetchPriority: 'high' } as const))}
           className={[styles.image, clearOnHover && styles.clears].filter(Boolean).join(' ')}
         />
       )}

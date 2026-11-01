@@ -14,8 +14,10 @@
   transition: opacity var(--motion-news) var(--ease-out);
 }
 
-/* Hover clears the tint; keyboard focus on the card's link does the same (docs/motion.md § 5). */
+/* Hover clears the tint; keyboard focus on the card's link does the same (docs/motion.md § 5),
+   and so does ClearOnCentre on touch screens. */
 :global(.duotone-hover):focus-within .clears,
+:global(.duotone-hover[data-clear]) .clears,
 .frame:focus-within .clears {
   opacity: 0;
 }

@@ -1,0 +1,89 @@
+/* Program card (56:280): 294px wide in Figma, 6px corners, tape 92 × 26 at 3°. */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 22px 22px;
+  border-radius: 6px;
+  background: var(--color-bg-page);
+  box-shadow: 0 6px 9px rgb(var(--shadow-rgb) / 0.1);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform var(--motion-card) var(--ease-out);
+}
+
+.card .tape {
+  top: -12px;
+  left: 52%;
+  width: 92px;
+  height: 26px;
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.index {
+  font: 800 1.375rem / 1.2 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.top .sticker {
+  width: 132px;
+  margin: 5.5px;
+  rotate: -5deg;
+}
+
+.title {
+  font: 800 2.25rem / 0.96 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: 6px;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.text {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+.more {
+  font: 600 0.9375rem / normal var(--font-body);
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-underline-position: from-font;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card:focus-within {
+    transform: rotate(0deg);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    transform: rotate(0deg);
+  }
+}

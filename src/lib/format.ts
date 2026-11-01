@@ -23,3 +23,35 @@ export function currentYear(now = new Date()): number {
 export function telHref(phone: string): string {
   return `tel:${phone.replace(/[^\d+]/g, '')}`
 }
+
+/** 3 ноември 2026, as course cards and news dates write it (Intl's bg-BG adds « г.»). */
+export function formatDateLong(value: string | Date): string {
+  const parts = new Intl.DateTimeFormat('bg-BG', {
+    timeZone,
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).formatToParts(new Date(value))
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value
+  return `${part('day')} ${part('month')} ${part('year')}`
+}
+
+/** 495 € or 460,16 €: cents only when there are any. Never converts between currencies. */
+export function formatPrice(amount: number, currency: 'EUR' | 'BGN' = 'EUR'): string {
+  return new Intl.NumberFormat('bg-BG', {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : 2,
+    maximumFractionDigits: 2,
+  }).format(amount)
+}
+
+/** Midnight at the start of today in Bulgaria, as an ISO string, for «from today on» queries. */
+export function startOfTodayInSofia(now = new Date()): string {
+  const day = new Intl.DateTimeFormat('en-CA', { timeZone }).format(now)
+  const offset = new Intl.DateTimeFormat('en', { timeZone, timeZoneName: 'longOffset' })
+    .formatToParts(now)
+    .find((p) => p.type === 'timeZoneName')
+    ?.value.replace('GMT', '')
+  return new Date(`${day}T00:00:00${offset || '+00:00'}`).toISOString()
+}

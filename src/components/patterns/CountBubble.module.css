@@ -22,3 +22,34 @@
   text-transform: uppercase;
   color: var(--color-text-on-brand);
 }
+
+/* Level bubble on the Course card (132:420): 62px, label 9.5px. */
+.small {
+  width: 62px;
+  height: 62px;
+  box-shadow: var(--shadow-bubble);
+}
+
+.small .number {
+  font: 800 1.375rem / 1 var(--font-display);
+}
+
+.small .label {
+  font: 700 0.59375rem / 1 var(--font-display);
+  letter-spacing: 0.08em;
+}
+
+/* «7 ЕЗИКА» on the Home hero (57:324): 124px, Black. Scales with the collage through --u. */
+.large {
+  width: calc(124 * var(--u, 1px));
+  height: calc(124 * var(--u, 1px));
+}
+
+.large .number {
+  font: 900 calc(56 * var(--u, 1px)) / 0.85 var(--font-display);
+}
+
+.large .label {
+  font: 900 calc(24 * var(--u, 1px)) / 0.9 var(--font-display);
+  letter-spacing: 0;
+}

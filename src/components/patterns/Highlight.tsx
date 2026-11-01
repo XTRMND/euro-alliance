@@ -3,8 +3,8 @@ import styles from './Highlight.module.css'
 
 // The sand highlighter (CLAUDE.md § 6): one phrase per headline, never more.
 
-export function Highlight({ children }: { children: ReactNode }) {
-  return <span className={styles.highlight}>{children}</span>
+export function Highlight({ children, className }: { children: ReactNode; className?: string }) {
+  return <span className={[styles.highlight, className].filter(Boolean).join(' ')}>{children}</span>
 }
 
 /** Renders `text` with `phrase` highlighted, if the phrase appears in it. */

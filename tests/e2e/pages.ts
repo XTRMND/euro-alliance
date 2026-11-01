@@ -7,4 +7,5 @@ export const pages = [
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },
   { name: 'Visuals (dev)', path: devRoutes.visuals },
+  { name: 'Cards (dev)', path: devRoutes.cards },
 ]

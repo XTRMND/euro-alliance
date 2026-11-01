@@ -7,11 +7,11 @@ import styles from './TornWindow.module.css'
 
 type TornWindowProps = {
   photo: Media
-  priority?: boolean
+  eager?: boolean
   className?: string
 }
 
-export function TornWindow({ photo, priority, className }: TornWindowProps) {
+export function TornWindow({ photo, eager, className }: TornWindowProps) {
   return (
     <div className={[styles.window, className].filter(Boolean).join(' ')}>
       <div className={styles.photo}>
@@ -19,7 +19,7 @@ export function TornWindow({ photo, priority, className }: TornWindowProps) {
           media={photo}
           tint="about"
           sizes="(min-width: 768px) 600px, 92vw"
-          priority={priority}
+          eager={eager}
         />
       </div>
     </div>

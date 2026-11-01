@@ -44,6 +44,8 @@ describe('URL scheme', () => {
     [queryParams.page, 'Страница'],
     [queryParams.topic, 'Тема'],
     [queryParams.category, 'Категория'],
+    [queryParams.from, 'От'],
+    [queryParams.to, 'На'],
     [courseCategories.languages, 'Езици'],
     [anchors.certificates, 'Сертификати'],
     [aboutSections.history, 'История'],
@@ -88,6 +90,9 @@ describe('routes', () => {
   it('preselects the contact topic only when one is given', () => {
     expect(routes.contact()).toBe('/kontakti')
     expect(routes.contact('prevodi')).toBe('/kontakti?tema=prevodi')
+    expect(routes.contact('prevodi', { from: 'balgarski', to: 'nemski' })).toBe(
+      '/kontakti?tema=prevodi&ot=balgarski&na=nemski',
+    )
     expect(routes.contactLocation('sofia')).toBe('/kontakti#sofia')
   })
 

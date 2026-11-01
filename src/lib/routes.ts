@@ -56,6 +56,9 @@ export const queryParams = {
   topic: 'tema',
   search: 'q',
   category: 'kategoria',
+  /** The language pair of «Изпратете документ», read by the contact wizard (PR 11). */
+  from: 'ot',
+  to: 'na',
 } as const
 
 /** Course listing filters (PR 9 reads them). */
@@ -91,6 +94,7 @@ export const devRoutes = {
   components: '/dev/components',
   patterns: '/dev/patterns',
   visuals: '/dev/visuals',
+  cards: '/dev/cards',
 } as const
 
 function withQuery(path: string, name: string, value: string | undefined): string {
@@ -116,7 +120,12 @@ export const routes = {
   about: (section?: AboutSection) =>
     section ? `/${segments.about}#${aboutSections[section]}` : `/${segments.about}`,
   /** `topic` preselects the contact wizard; PR 11 narrows it to the wizard's topics. */
-  contact: (topic?: string) => withQuery(`/${segments.contact}`, queryParams.topic, topic),
+  contact: (topic?: string, pair?: { from: string; to: string }) => {
+    const path = withQuery(`/${segments.contact}`, queryParams.topic, topic)
+    if (!pair) return path
+    const query = new URLSearchParams({ [queryParams.from]: pair.from, [queryParams.to]: pair.to })
+    return `${path}${path.includes('?') ? '&' : '?'}${query}`
+  },
   contactLocation: (location: ContactLocation) =>
     `/${segments.contact}#${contactLocations[location]}`,
   privacy: () => `/${segments.privacy}`,

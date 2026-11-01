@@ -1,0 +1,46 @@
+/* The parent may set --row-space: room above and below the cards for tape, tilt and shadow. */
+.row {
+  --row-gap: var(--gap-cards);
+  --column-gap: var(--gap-cards);
+
+  display: flex;
+  gap: var(--column-gap);
+  margin-inline: calc(-1 * var(--page-margin));
+  padding: var(--row-space, 8px) var(--page-margin);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--page-margin);
+  scrollbar-width: none;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  display: flex;
+  flex: 0 0 min(var(--item-width), 100%);
+  scroll-snap-align: start;
+}
+
+.item > * {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .row {
+    display: grid;
+    grid-template-columns: repeat(min(var(--columns), 2), minmax(0, 1fr));
+    gap: var(--row-gap) var(--column-gap);
+    margin-inline: 0;
+    padding: var(--row-space, 8px) 0;
+    overflow: visible;
+  }
+}
+
+@media (min-width: 1024px) {
+  .row {
+    grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  }
+}

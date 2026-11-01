@@ -1,7 +1,9 @@
 {
   "common": {
     "pauseAnimation": "Спри движението",
-    "playAnimation": "Пусни движението"
+    "playAnimation": "Пусни движението",
+    "level": "Ниво",
+    "languagesCount": "{count, plural, one {език} other {езика}}"
   },
   "header": {
     "skipLink": "Към съдържанието",
@@ -35,5 +37,42 @@
     "italian": "Italiano",
     "russian": "Русский",
     "bulgarian": "Български"
+  },
+  "course": {
+    "startsOn": "Старт: {date}",
+    "enrol": "Запиши се"
+  },
+  "courses": {
+    "audience": {
+      "students": "Ученици",
+      "adults": "Възрастни",
+      "companies": "Фирми"
+    },
+    "format": {
+      "inPerson": "Присъствено",
+      "online": "Онлайн"
+    },
+    "voucher": "С ваучер"
+  },
+  "home": {
+    "allCourses": "Всички <long>курсове</long>",
+    "allNews": "Всички <long>новини</long>",
+    "upcoming": {
+      "filterLabel": "Покажи курсове",
+      "filters": {
+        "all": "Всички",
+        "students": "За ученици",
+        "adults": "За възрастни",
+        "voucher": "С ваучер",
+        "online": "Онлайн"
+      }
+    }
+  },
+  "sendDocument": {
+    "from": "от",
+    "to": "на",
+    "dropTitle": "Пуснете документа тук",
+    "dropHint": "PDF, Word или снимка от телефона",
+    "chooseFile": "Избери файл"
   }
 }

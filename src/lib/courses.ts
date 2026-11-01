@@ -64,3 +64,28 @@ export function matchesUpcomingFilter(course: FilterableCourse, filter: Upcoming
       return course.format === 'online'
   }
 }
+
+type TaggedCourse = FilterableCourse & {
+  audienceNote?: string | null
+  cardTag?: string | null
+}
+
+export type CourseTagLabels = {
+  audience: Record<CourseAudience, string>
+  format: Record<CourseFormat, string>
+  voucher: string
+}
+
+/**
+ * The tags above a course card's title («Възрастни • Онлайн»): the audience with its note, then
+ * the card tag if set, else «С ваучер» for a voucher course, else the format.
+ */
+export function courseTags(course: TaggedCourse, labels: CourseTagLabels): string[] {
+  const audience = course.audience
+    ? [labels.audience[course.audience], course.audienceNote].filter(Boolean).join(' ')
+    : undefined
+  const second =
+    course.cardTag ||
+    (course.voucherEligible ? labels.voucher : course.format && labels.format[course.format])
+  return [audience, second].filter((tag): tag is string => Boolean(tag))
+}

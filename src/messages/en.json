@@ -1,7 +1,9 @@
 {
   "common": {
     "pauseAnimation": "Pause animation",
-    "playAnimation": "Play animation"
+    "playAnimation": "Play animation",
+    "level": "Level",
+    "languagesCount": "{count, plural, one {language} other {languages}}"
   },
   "header": {
     "skipLink": "Skip to content",
@@ -35,5 +37,42 @@
     "italian": "Italiano",
     "russian": "Русский",
     "bulgarian": "Български"
+  },
+  "course": {
+    "startsOn": "Starts: {date}",
+    "enrol": "Enrol"
+  },
+  "courses": {
+    "audience": {
+      "students": "Students",
+      "adults": "Adults",
+      "companies": "Companies"
+    },
+    "format": {
+      "inPerson": "In person",
+      "online": "Online"
+    },
+    "voucher": "With a voucher"
+  },
+  "home": {
+    "allCourses": "All <long>courses</long>",
+    "allNews": "All <long>news</long>",
+    "upcoming": {
+      "filterLabel": "Show courses",
+      "filters": {
+        "all": "All",
+        "students": "For students",
+        "adults": "For adults",
+        "voucher": "With a voucher",
+        "online": "Online"
+      }
+    }
+  },
+  "sendDocument": {
+    "from": "from",
+    "to": "to",
+    "dropTitle": "Drop your document here",
+    "dropHint": "PDF, Word or a photo from your phone",
+    "chooseFile": "Choose a file"
   }
 }
