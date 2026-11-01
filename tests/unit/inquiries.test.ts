@@ -12,14 +12,13 @@ import {
 
 describe('inquiry routing (docs/cms-schema.md § 5)', () => {
   it.each([
-    [{ topic: 'courses' as const }, 'office@euro-alliance.net'],
-    [{ topic: 'translations' as const, office: 'plovdiv' as const }, 'prevod@euro-alliance.net'],
-    [{ topic: 'translations' as const, office: 'sofia' as const }, 'trans@euro-alliance.net'],
-    [{ topic: 'vouchers' as const }, 'office@euro-alliance.net'],
-    [{ topic: 'professions' as const }, 'office@euro-alliance.net'],
-    [{ topic: 'teachers' as const }, 'office@euro-alliance.net'],
-    [{ topic: 'farmers' as const }, 'office@euro-alliance.net'],
-    [{ topic: 'computer' as const }, 'office@euro-alliance.net'],
+    [{ topic: 'course' as const }, 'office@euro-alliance.net'],
+    [{ topic: 'translation' as const, office: 'plovdiv' as const }, 'prevod@euro-alliance.net'],
+    [{ topic: 'translation' as const, office: 'sofia' as const }, 'trans@euro-alliance.net'],
+    [{ topic: 'voucher' as const }, 'office@euro-alliance.net'],
+    [{ topic: 'levelTest' as const }, 'office@euro-alliance.net'],
+    [{ topic: 'corporate' as const }, 'office@euro-alliance.net'],
+    [{ topic: 'other' as const }, 'office@euro-alliance.net'],
     [{}, 'office@euro-alliance.net'],
   ])('routes %o to %s', (inquiry, inbox) => {
     expect(routeInquiry(inquiry, defaultRouting)).toBe(inbox)
@@ -33,17 +32,18 @@ describe('inquiry routing (docs/cms-schema.md § 5)', () => {
 
   it('follows a changed table', () => {
     const table = defaultRouting.map((rule) =>
-      rule.topic === 'farmers' ? { ...rule, email: 'farm@example.com' } : rule,
+      rule.topic === 'corporate' ? { ...rule, email: 'corporate@example.com' } : rule,
     )
-    expect(routeInquiry({ topic: 'farmers' }, table)).toBe('farm@example.com')
+    expect(routeInquiry({ topic: 'corporate' }, table)).toBe('corporate@example.com')
   })
 })
 
 describe('the wizard link', () => {
   it('preselects the topic from ?tema=', () => {
-    expect(topicFromQuery('prevodi')).toBe('translations')
-    expect(topicFromQuery('kursove')).toBe('courses')
-    expect(topicFromQuery(['vaucheri'])).toBe('vouchers')
+    expect(topicFromQuery('prevodi')).toBe('translation')
+    expect(topicFromQuery('kursove')).toBe('course')
+    expect(topicFromQuery(['vaucheri'])).toBe('voucher')
+    expect(topicFromQuery('test-za-nivo')).toBe('levelTest')
     expect(topicFromQuery('nyakakva')).toBeUndefined()
     expect(topicFromQuery(undefined)).toBeUndefined()
   })

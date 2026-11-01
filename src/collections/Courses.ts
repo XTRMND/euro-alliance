@@ -180,6 +180,19 @@ export const Courses: CollectionConfig = {
         },
         { name: 'duration', type: 'textarea', label: 'Хорариум', localized: true },
         { name: 'schedule', type: 'textarea', label: 'График (бележка)', localized: true },
+        {
+          name: 'schedules',
+          type: 'array',
+          label: 'Графици за записване',
+          labels: { singular: 'График', plural: 'Графици' },
+          admin: {
+            description:
+              'Например «пн и ср, 18:00–20:50». При записване посетителят избира един; с един или без графици въпросът не се задава.',
+          },
+          fields: [
+            { name: 'label', type: 'text', label: 'График', required: true, localized: true },
+          ],
+        },
       ],
     },
     {
@@ -199,6 +212,15 @@ export const Courses: CollectionConfig = {
       type: 'collapsible',
       label: 'Какво получавате',
       fields: [
+        {
+          name: 'entryLevel',
+          type: 'text',
+          label: 'Входно ниво',
+          admin: {
+            description:
+              'Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».',
+          },
+        },
         {
           name: 'levelName',
           type: 'text',

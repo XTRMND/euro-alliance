@@ -3,7 +3,16 @@ import path from 'node:path'
 import type { Payload } from 'payload'
 import type { Media } from '@/payload-types'
 import { defaultRouting } from '@/lib/inquiries'
-import { company, fundingLogo, home, homePhoto, navigation, offices, partners } from './data'
+import {
+  company,
+  contact,
+  fundingLogo,
+  home,
+  homePhoto,
+  navigation,
+  offices,
+  partners,
+} from './data'
 
 function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined || value === '') return true
@@ -30,6 +39,8 @@ export async function seed(payload: Payload) {
 
   await seedFundingLogo(payload)
   await seedHome(payload)
+
+  await seedContact(payload)
 
   const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
   if (isEmpty(routing.rules)) {
@@ -110,6 +121,24 @@ async function seedHome(payload: Payload) {
   if (Object.keys(data).length === 0) return
   await payload.updateGlobal({ slug: 'home', locale: 'bg', data })
   payload.logger.info(`Seeded the homepage: ${Object.keys(data).join(', ')}.`)
+}
+
+/** The contact page's copy and location cards, with their map snapshots. */
+async function seedContact(payload: Payload) {
+  const current = await payload.findGlobal({ slug: 'contact', locale: 'bg', depth: 0 })
+  const data: Record<string, unknown> = {}
+  if (isEmpty(current.hero?.title)) data.hero = contact.hero
+  if (isEmpty(current.locations)) {
+    const locations = []
+    for (const { map, ...location } of contact.locations) {
+      const media = await uploadOnce(payload, { ...map, mimetype: 'image/png', kind: 'art' })
+      locations.push({ ...location, map: media.id })
+    }
+    data.locations = locations
+  }
+  if (Object.keys(data).length === 0) return
+  await payload.updateGlobal({ slug: 'contact', locale: 'bg', data })
+  payload.logger.info(`Seeded the contact page: ${Object.keys(data).join(', ')}.`)
 }
 
 type SeedFile = {

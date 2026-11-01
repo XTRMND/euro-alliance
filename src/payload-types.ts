@@ -111,6 +111,7 @@ export interface Config {
     home: Home;
     translation: Translation;
     'inquiry-routing': InquiryRouting;
+    contact: Contact;
     'payload-jobs-stats': PayloadJobsStat;
   };
   globalsSelect: {
@@ -119,6 +120,7 @@ export interface Config {
     home: HomeSelect<false> | HomeSelect<true>;
     translation: TranslationSelect<false> | TranslationSelect<true>;
     'inquiry-routing': InquiryRoutingSelect<false> | InquiryRoutingSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
     'payload-jobs-stats': PayloadJobsStatsSelect<false> | PayloadJobsStatsSelect<true>;
   };
   locale: 'bg' | 'en';
@@ -354,8 +356,21 @@ export interface Course {
   hours?: string | null;
   duration?: string | null;
   schedule?: string | null;
+  /**
+   * Например «пн и ср, 18:00–20:50». При записване посетителят избира един; с един или без графици въпросът не се задава.
+   */
+  schedules?:
+    | {
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
   venue?: string | null;
   city?: string | null;
+  /**
+   * Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».
+   */
+  entryLevel?: string | null;
   /**
    * Например «B2 Upper-Intermediate». Празно: показва се нивото.
    */
@@ -440,7 +455,7 @@ export interface News {
 export interface Inquiry {
   id: number;
   status: 'new' | 'in-progress' | 'contract' | 'closed';
-  topic?: ('courses' | 'vouchers' | 'professions' | 'teachers' | 'farmers' | 'computer' | 'translations') | null;
+  topic?: ('course' | 'voucher' | 'translation' | 'levelTest' | 'corporate' | 'other') | null;
   office?: ('plovdiv' | 'sofia') | null;
   notes?: string | null;
   name?: string | null;
@@ -811,8 +826,15 @@ export interface CoursesSelect<T extends boolean = true> {
   hours?: T;
   duration?: T;
   schedule?: T;
+  schedules?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
   venue?: T;
   city?: T;
+  entryLevel?: T;
   levelName?: T;
   program?: T;
   document?: T;
@@ -1278,9 +1300,44 @@ export interface InquiryRouting {
    */
   rules?:
     | {
-        topic: 'courses' | 'vouchers' | 'professions' | 'teachers' | 'farmers' | 'computer' | 'translations';
+        topic: 'course' | 'voucher' | 'translation' | 'levelTest' | 'corporate' | 'other';
         office?: ('plovdiv' | 'sofia') | null;
         email: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  hero?: {
+    title?: string | null;
+    /**
+     * Част от заглавието.
+     */
+    highlight?: string | null;
+    lead?: string | null;
+  };
+  locations?:
+    | {
+        /**
+         * Връзките «Пловдив» и «София» в долния колонтитул водят тук.
+         */
+        anchor: 'plovdiv' | 'sofia';
+        kicker?: string | null;
+        street: string;
+        address?: string | null;
+        latitude: number;
+        longitude: number;
+        /**
+         * Снимка на картата около офиса (OpenStreetMap), 800 × 460.
+         */
+        map?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -1528,6 +1585,34 @@ export interface InquiryRoutingSelect<T extends boolean = true> {
         topic?: T;
         office?: T;
         email?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        highlight?: T;
+        lead?: T;
+      };
+  locations?:
+    | T
+    | {
+        anchor?: T;
+        kicker?: T;
+        street?: T;
+        address?: T;
+        latitude?: T;
+        longitude?: T;
+        map?: T;
         id?: T;
       };
   updatedAt?: T;

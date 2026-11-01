@@ -14,6 +14,7 @@ import { MediaTints } from './collections/MediaTints'
 import { News } from './collections/News'
 import { Offices } from './collections/Offices'
 import { Users } from './collections/Users'
+import { Contact } from './globals/Contact'
 import { Home } from './globals/Home'
 import { InquiryRouting } from './globals/InquiryRouting'
 import { Navigation } from './globals/Navigation'
@@ -34,7 +35,7 @@ export default buildConfig({
   },
   i18n: { supportedLanguages: { bg, en }, fallbackLanguage: 'bg' },
   collections: [Users, Media, MediaTints, Offices, Courses, News, Inquiries, InquiryFiles],
-  globals: [Site, Navigation, Home, Translation, InquiryRouting],
+  globals: [Site, Navigation, Home, Translation, InquiryRouting, Contact],
   jobs,
   localization: {
     locales: [

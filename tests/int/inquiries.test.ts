@@ -53,10 +53,10 @@ afterAll(async () => {
 
 describe('submitting an inquiry', () => {
   it.each([
-    ['courses', undefined, 'office@euro-alliance.net'],
-    ['translations', 'plovdiv', 'prevod@euro-alliance.net'],
-    ['translations', 'sofia', 'trans@euro-alliance.net'],
-    ['farmers', undefined, 'office@euro-alliance.net'],
+    ['course', undefined, 'office@euro-alliance.net'],
+    ['translation', 'plovdiv', 'prevod@euro-alliance.net'],
+    ['translation', 'sofia', 'trans@euro-alliance.net'],
+    ['corporate', undefined, 'office@euro-alliance.net'],
   ])('routes %s (%s) to %s', async (topic, office, inbox) => {
     const result = await submitInquiry(payload, { ...visitor, topic, office }, [])
     expect(result.ok).toBe(true)
@@ -75,7 +75,7 @@ describe('submitting an inquiry', () => {
   it('names the missing and invalid fields', async () => {
     const result = await submitInquiry(
       payload,
-      { topic: 'translations', email: 'not-an-email', phone: 'call me', startedAt: started },
+      { topic: 'translation', email: 'not-an-email', phone: 'call me', startedAt: started },
       [],
     )
     expect(result).toEqual({
@@ -94,7 +94,7 @@ describe('submitting an inquiry', () => {
     const fake = { name: 'x.pdf', type: 'application/pdf', data: Buffer.from('<html>') }
     const result = await submitInquiry(
       payload,
-      { ...visitor, topic: 'translations', office: 'sofia' },
+      { ...visitor, topic: 'translation', office: 'sofia' },
       [fake],
     )
     expect(result).toEqual({ ok: false, errors: { files: 'fileType' } })
@@ -103,10 +103,10 @@ describe('submitting an inquiry', () => {
   it('stores nothing for a bot, and answers as if it had', async () => {
     const before = (await payload.count({ collection: 'inquiries', overrideAccess: true }))
       .totalDocs
-    const filled = await submitInquiry(payload, { ...visitor, topic: 'courses', website: 'x' }, [])
+    const filled = await submitInquiry(payload, { ...visitor, topic: 'course', website: 'x' }, [])
     const fast = await submitInquiry(
       payload,
-      { ...visitor, topic: 'courses', startedAt: Date.now() },
+      { ...visitor, topic: 'course', startedAt: Date.now() },
       [],
     )
     expect([filled, fast]).toEqual([
@@ -121,7 +121,7 @@ describe('submitting an inquiry', () => {
   it('keeps the uploaded files away from anyone not logged in', async () => {
     const result = await submitInquiry(
       payload,
-      { ...visitor, topic: 'translations', office: 'plovdiv' },
+      { ...visitor, topic: 'translation', office: 'plovdiv' },
       [pdf],
     )
     const inquiry = await payload.findByID({

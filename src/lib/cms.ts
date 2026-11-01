@@ -189,3 +189,16 @@ export function getRelatedCourses(course: {
     startOfTodayInSofia(),
   )
 }
+
+/** The contact page global with its location maps. */
+export const getContact = unstable_cache(
+  async () =>
+    (await payload()).findGlobal({
+      slug: 'contact',
+      locale: 'bg',
+      depth: 1,
+      overrideAccess: false,
+    }),
+  ['contact'],
+  { tags: [tags.global('contact'), tags.collection('media')] },
+)

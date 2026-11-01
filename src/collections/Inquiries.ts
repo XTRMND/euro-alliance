@@ -9,13 +9,12 @@ import { inquiryOffices, inquiryTopics } from '@/lib/inquiries'
 const visitorData: FieldAccess = () => false
 
 const topicLabels = {
-  courses: 'Курсове',
-  vouchers: 'Ваучери',
-  professions: 'Професионално обучение',
-  teachers: 'Педагогически специалисти',
-  farmers: 'Земеделски производители',
-  computer: 'Компютърни курсове',
-  translations: 'Преводи',
+  course: 'Курс',
+  voucher: 'Обучение с ваучер',
+  translation: 'Превод',
+  levelTest: 'Тест за ниво',
+  corporate: 'Фирмено обучение',
+  other: 'Друго',
 }
 
 const readOnly = { readOnly: true }

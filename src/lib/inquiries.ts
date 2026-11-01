@@ -4,25 +4,23 @@ import { segments } from './routes'
 // links that open the wizard (/kontakti?tema=prevodi), so a link preselects its topic.
 
 export const inquiryTopics = [
-  'courses',
-  'vouchers',
-  'professions',
-  'teachers',
-  'farmers',
-  'computer',
-  'translations',
+  'course',
+  'voucher',
+  'translation',
+  'levelTest',
+  'corporate',
+  'other',
 ] as const
 export type InquiryTopic = (typeof inquiryTopics)[number]
 
-/** The `tema` value of each topic in the URL. */
+/** The `tema` value of each topic in the URL (the options of Step 1, 100:260). */
 export const topicSegments: Record<InquiryTopic, string> = {
-  courses: segments.courses,
-  vouchers: segments.vouchers,
-  professions: segments.professions,
-  teachers: segments.teachers,
-  farmers: segments.farmers,
-  computer: segments.computerCourses,
-  translations: segments.translations,
+  course: segments.courses,
+  voucher: segments.vouchers,
+  translation: segments.translations,
+  levelTest: 'test-za-nivo',
+  corporate: 'firmeno-obuchenie',
+  other: 'drugo',
 }
 
 export function topicFromQuery(value: string | string[] | undefined): InquiryTopic | undefined {
@@ -36,19 +34,18 @@ export type InquiryOffice = (typeof inquiryOffices)[number]
 export type RoutingRule = { topic: InquiryTopic; office?: InquiryOffice | null; email: string }
 
 /**
- * The routing table the `inquiryRouting` global is seeded with (docs/cms-schema.md § 5).
- * Vouchers, professions, teachers, farmers and computer courses go to office@: a proposed
- * default for the client to confirm.
+ * The routing table the `inquiryRouting` global is seeded with (docs/cms-schema.md § 5): every
+ * topic to office@ except translations, which go to the chosen office. Vouchers, corporate
+ * training, level tests and «Друго» going to office@ is a proposed default for the client.
  */
 export const defaultRouting: RoutingRule[] = [
-  { topic: 'courses', email: 'office@euro-alliance.net' },
-  { topic: 'translations', office: 'plovdiv', email: 'prevod@euro-alliance.net' },
-  { topic: 'translations', office: 'sofia', email: 'trans@euro-alliance.net' },
-  { topic: 'vouchers', email: 'office@euro-alliance.net' },
-  { topic: 'professions', email: 'office@euro-alliance.net' },
-  { topic: 'teachers', email: 'office@euro-alliance.net' },
-  { topic: 'farmers', email: 'office@euro-alliance.net' },
-  { topic: 'computer', email: 'office@euro-alliance.net' },
+  { topic: 'course', email: 'office@euro-alliance.net' },
+  { topic: 'voucher', email: 'office@euro-alliance.net' },
+  { topic: 'translation', office: 'plovdiv', email: 'prevod@euro-alliance.net' },
+  { topic: 'translation', office: 'sofia', email: 'trans@euro-alliance.net' },
+  { topic: 'levelTest', email: 'office@euro-alliance.net' },
+  { topic: 'corporate', email: 'office@euro-alliance.net' },
+  { topic: 'other', email: 'office@euro-alliance.net' },
 ]
 
 export const fallbackInbox = 'office@euro-alliance.net'

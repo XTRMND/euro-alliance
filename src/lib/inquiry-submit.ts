@@ -59,7 +59,7 @@ export function validateInquiry(input: InquiryInput, files: InquiryFileInput[]) 
   const phone = text(input.phone, 40)
 
   if (!topic) errors.topic = 'required'
-  if (topic === 'translations' && !office) errors.office = 'required'
+  if (topic === 'translation' && !office) errors.office = 'required'
   if (!text(input.name, 120)) errors.name = 'required'
   if (!email) errors.email = 'required'
   else if (!emailPattern.test(email)) errors.email = 'email'
@@ -108,7 +108,7 @@ export async function submitInquiry(
     : undefined
 
   const stored = []
-  for (const file of topic === 'translations' ? files : []) {
+  for (const file of topic === 'translation' ? files : []) {
     const clean = await stripMetadata(file)
     stored.push(
       await payload.create({
@@ -129,7 +129,7 @@ export async function submitInquiry(
     collection: 'inquiries',
     data: {
       topic,
-      office: topic === 'translations' ? office : undefined,
+      office: topic === 'translation' ? office : undefined,
       course: course?.id,
       name: text(input.name, 120),
       email,

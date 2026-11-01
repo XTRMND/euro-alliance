@@ -234,3 +234,41 @@ export const partners = [
   },
   { file: 'gateway-school-of-english.png', name: 'Gateway School of English' },
 ] as const
+
+/**
+ * The contact page (119:1795): copy and the two location cards (125:302) from Figma, with the
+ * coordinates of Figma's map links and its OpenStreetMap snapshots.
+ */
+export const contact = {
+  hero: {
+    title: 'Свържете се с нас',
+    highlight: 'с нас',
+    lead: 'Изберете с какво можем да помогнем и ще ви отговорим по телефон или имейл. Предпочитате да се обадите? Телефоните на офисите са вдясно.',
+  },
+  locations: [
+    {
+      anchor: 'plovdiv',
+      kicker: 'Пловдив · курсове и преводи',
+      street: 'ул. Самара №13',
+      address: 'Образователен бизнес център ЕВРО-АЛИАНС, 4003 Пловдив',
+      latitude: 42.1585573,
+      longitude: 24.7394618,
+      map: {
+        file: 'src/seed/contact/plovdiv-map.png',
+        alt: 'Карта на района около ул. Самара №13, Пловдив',
+      },
+    },
+    {
+      anchor: 'sofia',
+      kicker: 'София · преводи и легализация',
+      street: 'ул. Георги С. Раковски 125',
+      address: '1000 София, център',
+      latitude: 42.6940008,
+      longitude: 23.3288525,
+      map: {
+        file: 'src/seed/contact/sofia-map.png',
+        alt: 'Карта на района около ул. Георги С. Раковски 125, София',
+      },
+    },
+  ],
+} as const
