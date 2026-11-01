@@ -25,12 +25,16 @@ const paths = [
 // request started before it, the notebook's 127 KB handwriting font among them.
 // '/vaucheri': the LCP element is the hero's sticker, painted one frame after the first paint;
 // by then the scripts have arrived, and the simulated LCP counts them.
+// The other course-page heroes ('/profesionalno-obuchenie/…'): the same sticker, preloaded; they
+// pass on a laptop (2.4 s) but not on CI's slower runners (2.86–2.94 s).
 const lcpFlagged = new Set([
   '/',
   '/kursove',
   '/kontakti',
   '/ezitsi/angliyski/vazrastni',
   '/vaucheri',
+  '/profesionalno-obuchenie/profesii',
+  '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
 ])
 
 const url = (path) => `http://localhost:${port}${path}`
