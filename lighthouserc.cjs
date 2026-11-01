@@ -13,7 +13,7 @@ const paths = ['/', '/kursove', '/kontakti']
 // in the notes of the commit that adds it.
 // '/': the placeholder homepage sits on the edge (CI medians 2.38 s and 2.65 s on the same code);
 // the framework's JavaScript lands in the simulated LCP whenever it runs before the first paint.
-const lcpFlagged = new Set(['/', '/kursove'])
+const lcpFlagged = new Set(['/', '/kursove', '/kontakti'])
 
 const url = (path) => `http://localhost:${port}${path}`
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
