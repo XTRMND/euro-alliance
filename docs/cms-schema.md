@@ -69,41 +69,44 @@ Disable GraphQL if nothing uses it. Lock down the REST API to what the site need
 
 ### Programs
 
+Built in PR 12 (`src/collections/Programs.ts`, blocks in `src/blocks/index.ts`). Drafts and versions as for Courses.
+
 | Field | Type | Notes |
 |---|---|---|
+| `title`, `slug` | text | `title` is the browser title |
 | `type` | select, required | `language` / `vocational` / `vouchers` / `teachers` / `farmers` / `computer` |
-| `language` | select | *(proposed)* For `language` only: the 7 languages |
-| `audience` | select | *(proposed)* For `language` only: adults / students. Feeds Audience tabs (129:321). |
-| `title`, `slug` | text | |
-| `hero` | group | Hero content: `heading`, `highlight` (the one phrase to highlight; validated to be a substring of `heading`), `lead`, `sticker` (select from the sticker set), `countBubble` { `value`, `label` }, `ctas` (array of { label, link }) |
+| `language`, `audience` | select | For `language` only: the 7 languages; adults / students. One page per language and audience (a hook rejects a second one); no Russian for adults. The page lives at `/ezitsi/<language>/<audience>` (`routes.languageProgram`), and the pair feeds Audience tabs (129:321). |
+| `hero` | group | `kicker`, `heading`, `highlight` (part of the heading), `lead`, `ctas` (up to 2 × { label, destination }), `sticker` and `countBubble` { value, label } (course-page hero only) |
+| `upcoming` | group | For `language` only: the heading and link label of «Предстоящи курсове». The section lists published courses of this language and audience and hides when there are none. |
+| `notebook` | group | For `language` only: Program hero art 131:311. `title`, `phrases` (array of { phrase, translation }), `highlight` (1–4: the highlighted phrase), `note` { title, steps, done } (the optional sticky note) |
 | `sections` | blocks | See below |
 
-`type: language` renders the notebook hero (Program hero art 131:311) with the flag sticker for `language`. Every other type renders the course-page hero (halftone panel, sticker, tape, count bubble).
+`type: language` renders the notebook hero with the flag sticker for `language`. Every other type renders the course-page hero (halftone panel, sticker, tape, count bubble; PR 13).
 
-**Section blocks** (each maps to a component on page 03):
+Hero buttons and block links pick a destination from `src/lib/destinations.ts`. On a language page, `languageCourses` goes to the page's own «Предстоящи курсове» when it has courses and to the course listing filtered to the language and audience otherwise.
+
+**Section blocks** (each maps to a component on page 03). Every block has `heading`, `highlight` and `lead`; an empty heading hides the heading, an empty list hides the section.
 
 | Block | Component | Data |
 |---|---|---|
-| `features` | Feature card 129:348 | array of { title, text, link } |
-| `levels` | Level card 129:357 | array of { level, title, text } |
-| `steps` | Steps 129:385 | array of { title, text } |
-| `textbookSystems` | System card 135:389 | relationship → Textbook systems; `columns` (two / one) |
-| `certificates` | Certificate card 145:364 | relationship → Certificates. The block's anchor is `sertifikati` (homepage «Изпити и сертификати» links here). |
-| `faq` | FAQ item 129:335 | array of { question, answer } |
-| `professions` | Data table 259:621 | relationship → Professions, grouped by direction |
-| `teacherProgrammes` | Index card 264:448 / List row 259:2318 | relationship → Teacher programmes, grouped by theme |
-| `figures` | Figure card 259:410 | array of { figure, label }. Only official numbers. |
-| `callout` | Callout band 259:449 | { layout (row / stack), heading, text, cta } |
-| `projects` | Project card 259:574 | relationship → Funded projects |
+| `features` | Feature card 129:348 | `items` { title, text } |
+| `levels` | Level card 129:357 | `items` { level, title, text } |
+| `steps` | Steps 129:385 | `items` { title, text } |
+| `textbookSystems` | System card 135:389 | `systems` → Textbook systems; `columns` (two / one); `link` { label, destination } under the cards |
+| `certificates` | Certificate card 145:364 | `certificates` → Certificates. The section's anchor is `sertifikati` (homepage «Изпити и сертификати» links here). |
+| `faq` | FAQ item 129:335 | `items` { question, answer (rich text, may hold links) } |
+| `figures` | Figure card 259:410 | `items` { figure, label }. Only official numbers. |
+| `callout` | Callout band 259:449 | `layout` (row / stack), `heading`, `text`, `cta` |
 | `richText` | Section heading 259:2319 + prose | heading + rich text |
+| `professions`, `teacherProgrammes`, `projects` | Data table 259:621, Index card 264:448 / List row 259:2318, Project card 259:574 | Arrive with their collections in PR 13 |
 
 ### Textbook systems
 
-`name` (text), `levels` (array of text).
+System card 135:389: `name`, `kicker` (the publisher chip, e.g. LONGMAN), `count` and `countLabel` (the level bubble), `description`, `levels` (array of { level }; numbered in order on the card), `strip` { label, note } (the navy «Включено» strip). Seeded from Figma: New Total English, SpeakOut, Team Together, Wider World, Gold Experience.
 
 ### Certificates
 
-The brief lists no fields. Build the fields from Certificate card 145:364 (read with `get_design_context`), likely `name`, `language`, `levels`, `description`. List them in the PR for the user to confirm.
+Certificate card 145:364: `name`, `issuer` (the line above the name, e.g. CAMBRIDGE ESOL), `code` (on the seal: FCE, CAE …), `prep` (the textbook it prepares with). Seeded from Figma: FCE, CAE, CPE, IELTS.
 
 ### Professions
 

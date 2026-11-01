@@ -9,6 +9,7 @@ const englishAdults = routes.languageProgram('english', 'adults')
 
 export const destinations = {
   courses: { label: 'Курсове', href: routes.courses() },
+  /** On a language page: its own upcoming courses, or the listing filtered to the language. */
   languageCourses: { label: 'Курсове: езици', href: routes.courses('languages') },
   languagesStudents: {
     label: 'Езици за ученици',
@@ -26,6 +27,7 @@ export const destinations = {
   computerCourses: { label: 'Компютърни курсове', href: routes.computerCourses() },
   translations: { label: 'Преводи', href: routes.translations() },
   sendDocument: { label: 'Изпрати документ за превод', href: routes.contact('prevodi') },
+  levelTest: { label: 'Входен тест (запитване)', href: routes.contact('test-za-nivo') },
   news: { label: 'Новини', href: routes.news() },
   about: { label: 'За нас', href: routes.about() },
   contact: { label: 'Контакти', href: routes.contact() },

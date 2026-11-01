@@ -13,6 +13,7 @@ import {
   offices,
   partners,
 } from './data'
+import { certificates, englishPrograms, systemsBlock, textbookSystems } from './programs'
 
 function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined || value === '') return true
@@ -41,6 +42,7 @@ export async function seed(payload: Payload) {
   await seedHome(payload)
 
   await seedContact(payload)
+  await seedPrograms(payload)
 
   const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
   if (isEmpty(routing.rules)) {
@@ -121,6 +123,80 @@ async function seedHome(payload: Payload) {
   if (Object.keys(data).length === 0) return
   await payload.updateGlobal({ slug: 'home', locale: 'bg', data })
   payload.logger.info(`Seeded the homepage: ${Object.keys(data).join(', ')}.`)
+}
+
+/** Textbook systems and certificates by name, then the English programs that use them. */
+async function seedPrograms(payload: Payload) {
+  const systemIds = new Map<string, number>()
+  for (const { levels, ...system } of textbookSystems) {
+    const found = await payload.find({
+      collection: 'textbook-systems',
+      where: { name: { equals: system.name } },
+      depth: 0,
+      limit: 1,
+      draft: true,
+    })
+    const doc =
+      found.docs[0] ??
+      (await payload.create({
+        collection: 'textbook-systems',
+        locale: 'bg',
+        data: { ...system, levels: levels.map((level) => ({ level })), _status: 'published' },
+      }))
+    systemIds.set(system.name, doc.id)
+  }
+
+  const certificateIds: number[] = []
+  for (const certificate of certificates) {
+    const found = await payload.find({
+      collection: 'certificates',
+      where: { code: { equals: certificate.code } },
+      depth: 0,
+      limit: 1,
+      draft: true,
+    })
+    const doc =
+      found.docs[0] ??
+      (await payload.create({
+        collection: 'certificates',
+        locale: 'bg',
+        data: { ...certificate, _status: 'published' },
+      }))
+    certificateIds.push(doc.id)
+  }
+
+  for (const { systems, sections, ...program } of englishPrograms) {
+    const { totalDocs } = await payload.count({
+      collection: 'programs',
+      where: {
+        and: [
+          { type: { equals: program.type } },
+          { language: { equals: program.language } },
+          { audience: { equals: program.audience } },
+        ],
+      },
+    })
+    if (totalDocs > 0) continue
+    await payload.create({
+      collection: 'programs',
+      locale: 'bg',
+      data: {
+        ...program,
+        sections: sections.map((section) =>
+          section === 'systems'
+            ? {
+                ...systemsBlock(systems.map((name) => systemIds.get(name)!) as never),
+                systems: systems.map((name) => systemIds.get(name)!),
+              }
+            : section.blockType === 'certificates'
+              ? { ...section, certificates: certificateIds }
+              : section,
+        ),
+        _status: 'published',
+      } as never,
+    })
+    payload.logger.info(`Seeded the program «${program.title}».`)
+  }
 }
 
 /** The contact page's copy and location cards, with their map snapshots. */

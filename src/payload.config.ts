@@ -6,6 +6,7 @@ import { bg } from '@payloadcms/translations/languages/bg'
 import { en } from '@payloadcms/translations/languages/en'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
+import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
@@ -13,6 +14,8 @@ import { Media } from './collections/Media'
 import { MediaTints } from './collections/MediaTints'
 import { News } from './collections/News'
 import { Offices } from './collections/Offices'
+import { Programs } from './collections/Programs'
+import { TextbookSystems } from './collections/TextbookSystems'
 import { Users } from './collections/Users'
 import { Contact } from './globals/Contact'
 import { Home } from './globals/Home'
@@ -34,7 +37,19 @@ export default buildConfig({
     meta: { titleSuffix: ' · Евро Алианс' },
   },
   i18n: { supportedLanguages: { bg, en }, fallbackLanguage: 'bg' },
-  collections: [Users, Media, MediaTints, Offices, Courses, News, Inquiries, InquiryFiles],
+  collections: [
+    Users,
+    Media,
+    MediaTints,
+    Offices,
+    Courses,
+    News,
+    Programs,
+    TextbookSystems,
+    Certificates,
+    Inquiries,
+    InquiryFiles,
+  ],
   globals: [Site, Navigation, Home, Translation, InquiryRouting, Contact],
   jobs,
   localization: {

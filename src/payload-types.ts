@@ -73,6 +73,9 @@ export interface Config {
     offices: Office;
     courses: Course;
     news: News;
+    programs: Program;
+    'textbook-systems': TextbookSystem;
+    certificates: Certificate;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -93,6 +96,9 @@ export interface Config {
     offices: OfficesSelect<false> | OfficesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    programs: ProgramsSelect<false> | ProgramsSelect<true>;
+    'textbook-systems': TextbookSystemsSelect<false> | TextbookSystemsSelect<true>;
+    certificates: CertificatesSelect<false> | CertificatesSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -447,6 +453,387 @@ export interface News {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs".
+ */
+export interface Program {
+  id: number;
+  title: string;
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  type: 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer';
+  language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
+  audience?: ('adults' | 'students') | null;
+  hero: {
+    kicker?: string | null;
+    heading: string;
+    /**
+     * Част от заглавието, с пясъчен маркер.
+     */
+    highlight?: string | null;
+    lead?: string | null;
+    /**
+     * На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.
+     */
+    ctas?:
+      | {
+          label: string;
+          destination:
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'levelTest'
+            | 'news'
+            | 'about'
+            | 'contact';
+          id?: string | null;
+        }[]
+      | null;
+    sticker?:
+      | (
+          | 'english'
+          | 'german'
+          | 'french'
+          | 'italian'
+          | 'spanish'
+          | 'russian'
+          | 'exam-prep'
+          | 'exams'
+          | 'student'
+          | 'teaching'
+          | 'professional'
+          | 'corporate'
+          | 'computer'
+          | 'farming'
+          | 'translation'
+        )
+      | null;
+    countBubble?: {
+      value?: string | null;
+      label?: string | null;
+    };
+  };
+  /**
+   * Курсовете по езика за тази аудитория, от «Курсове». Без курсове секцията не се показва.
+   */
+  upcoming?: {
+    heading?: string | null;
+    linkLabel?: string | null;
+  };
+  notebook?: {
+    title?: string | null;
+    /**
+     * Коя фраза е с маркер; празно: без маркер.
+     */
+    highlight?: number | null;
+    phrases?:
+      | {
+          phrase: string;
+          translation?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    note?: {
+      title?: string | null;
+      steps?:
+        | {
+            text: string;
+            id?: string | null;
+          }[]
+        | null;
+      done?: number | null;
+    };
+  };
+  sections?:
+    | (
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'features';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  level: string;
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'levels';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'steps';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            systems?: (number | TextbookSystem)[] | null;
+            link?: {
+              label?: string | null;
+              destination?:
+                | (
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'news'
+                    | 'about'
+                    | 'contact'
+                  )
+                | null;
+            };
+            columns?: ('two' | 'one') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textbookSystems';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            certificates?: (number | Certificate)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'certificates';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            /**
+             * Само официални числа.
+             */
+            items?:
+              | {
+                  figure: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'figures';
+          }
+        | {
+            layout?: ('row' | 'stack') | null;
+            heading: string;
+            text?: string | null;
+            cta?: {
+              label?: string | null;
+              destination?:
+                | (
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'news'
+                    | 'about'
+                    | 'contact'
+                  )
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'callout';
+          }
+        | {
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "textbook-systems".
+ */
+export interface TextbookSystem {
+  id: number;
+  name: string;
+  /**
+   * Издател или възраст, например «Longman» или «III–VII клас».
+   */
+  kicker?: string | null;
+  /**
+   * Например 6 или C1.
+   */
+  count?: string | null;
+  /**
+   * Например «нива» или «до ниво».
+   */
+  countLabel?: string | null;
+  description?: string | null;
+  levels?:
+    | {
+        level: string;
+        id?: string | null;
+      }[]
+    | null;
+  strip?: {
+    /**
+     * Например «Включено», «Фокус», «Цел».
+     */
+    label?: string | null;
+    note?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certificates".
+ */
+export interface Certificate {
+  id: number;
+  name: string;
+  issuer?: string | null;
+  /**
+   * Например FCE.
+   */
+  code?: string | null;
+  /**
+   * Учебникът, с който се подготвяме. Празно: редът не се показва.
+   */
+  prep?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * Пазят се 1 година, освен ако не са довели до договор.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -647,6 +1034,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'programs';
+        value: number | Program;
+      } | null)
+    | ({
+        relationTo: 'textbook-systems';
+        value: number | TextbookSystem;
+      } | null)
+    | ({
+        relationTo: 'certificates';
+        value: number | Certificate;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -864,6 +1263,249 @@ export interface NewsSelect<T extends boolean = true> {
   related?: T;
   legacyId?: T;
   legacyUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "programs_select".
+ */
+export interface ProgramsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  type?: T;
+  language?: T;
+  audience?: T;
+  hero?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        highlight?: T;
+        lead?: T;
+        ctas?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+              id?: T;
+            };
+        sticker?: T;
+        countBubble?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+            };
+      };
+  upcoming?:
+    | T
+    | {
+        heading?: T;
+        linkLabel?: T;
+      };
+  notebook?:
+    | T
+    | {
+        title?: T;
+        highlight?: T;
+        phrases?:
+          | T
+          | {
+              phrase?: T;
+              translation?: T;
+              id?: T;
+            };
+        note?:
+          | T
+          | {
+              title?: T;
+              steps?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              done?: T;
+            };
+      };
+  sections?:
+    | T
+    | {
+        features?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        levels?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    level?: T;
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        steps?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        textbookSystems?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              systems?: T;
+              link?:
+                | T
+                | {
+                    label?: T;
+                    destination?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
+        certificates?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              certificates?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        figures?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    figure?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        callout?:
+          | T
+          | {
+              layout?: T;
+              heading?: T;
+              text?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    destination?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "textbook-systems_select".
+ */
+export interface TextbookSystemsSelect<T extends boolean = true> {
+  name?: T;
+  kicker?: T;
+  count?: T;
+  countLabel?: T;
+  description?: T;
+  levels?:
+    | T
+    | {
+        level?: T;
+        id?: T;
+      };
+  strip?:
+    | T
+    | {
+        label?: T;
+        note?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "certificates_select".
+ */
+export interface CertificatesSelect<T extends boolean = true> {
+  name?: T;
+  issuer?: T;
+  code?: T;
+  prep?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1133,6 +1775,7 @@ export interface Home {
             | 'computerCourses'
             | 'translations'
             | 'sendDocument'
+            | 'levelTest'
             | 'news'
             | 'about'
             | 'contact'
@@ -1155,6 +1798,7 @@ export interface Home {
             | 'computerCourses'
             | 'translations'
             | 'sendDocument'
+            | 'levelTest'
             | 'news'
             | 'about'
             | 'contact'
@@ -1215,6 +1859,7 @@ export interface Home {
             | 'computerCourses'
             | 'translations'
             | 'sendDocument'
+            | 'levelTest'
             | 'news'
             | 'about'
             | 'contact';
@@ -1247,6 +1892,7 @@ export interface Home {
             | 'computerCourses'
             | 'translations'
             | 'sendDocument'
+            | 'levelTest'
             | 'news'
             | 'about'
             | 'contact'

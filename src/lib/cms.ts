@@ -202,3 +202,34 @@ export const getContact = unstable_cache(
   ['contact'],
   { tags: [tags.global('contact'), tags.collection('media')] },
 )
+
+/** The published language program for a language and audience, with its related cards. */
+export const getLanguageProgram = unstable_cache(
+  async (language: string, audience: string) =>
+    (
+      await (
+        await payload()
+      ).find({
+        collection: 'programs',
+        locale: 'bg',
+        depth: 2,
+        where: {
+          and: [
+            { type: { equals: 'language' } },
+            { language: { equals: language } },
+            { audience: { equals: audience } },
+          ],
+        },
+        limit: 1,
+        overrideAccess: false,
+      })
+    ).docs[0] ?? null,
+  ['language-program'],
+  {
+    tags: [
+      tags.collection('programs'),
+      tags.collection('certificates'),
+      tags.collection('textbook-systems'),
+    ],
+  },
+)
