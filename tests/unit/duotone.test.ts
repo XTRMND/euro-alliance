@@ -36,6 +36,11 @@ describe('hero blend tint', () => {
   it('treats each pixel independently', () => {
     expect(tint([0, 0, 0, 255, 255, 255], 'blend', 88)).toEqual([19, 37, 70, 233, 219, 193])
   })
+
+  it('desaturates first, as Figma renders the hero photo', () => {
+    // Pure red and a grey of the same luma come out the same.
+    expect(tint([255, 0, 0], 'blend', 88)).toEqual(tint([76, 76, 76], 'blend', 88))
+  })
 })
 
 describe('tintImage', () => {

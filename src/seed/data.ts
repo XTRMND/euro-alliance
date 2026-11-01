@@ -127,16 +127,13 @@ export const navigation = {
 }
 
 // The homepage (48:184): copy from Figma. The classroom photo is the client's own (Figma layer
-// «Classroom (their photo, duotone 88%)», 261:4025), exported from the image fill; Photo B in the
-// same collage is stock and is never seeded. Courses and news are never seeded: they come from
-// the client or the import (PR 21).
+// «Classroom (their photo, duotone 88%)», 261:4025): Figma's crop of its image fill (x 306,
+// y 204, 666 × 796 of 1360 × 1020). Photo B in the same collage is stock and is never seeded.
+// Courses and news are never seeded: they come from the client or the import (PR 21).
 export const homePhoto = {
   file: 'src/seed/home/classroom.jpg',
   mimetype: 'image/jpeg',
   alt: 'Деца в класна стая на Евро Алианс вдигат чанти с логото на школата',
-  // Focus of Figma's crop of the photo.
-  focalX: 47,
-  focalY: 59,
 }
 
 export const home = {

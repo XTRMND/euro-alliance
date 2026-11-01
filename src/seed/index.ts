@@ -111,8 +111,6 @@ type SeedFile = {
   alt: string
   kind: Media['kind']
   altReviewed?: boolean
-  focalX?: number
-  focalY?: number
 }
 
 /** The media document for a seed file: the one uploaded before, or a new upload. */

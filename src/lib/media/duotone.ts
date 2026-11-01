@@ -27,7 +27,10 @@ const ramp = buildRamp()
 /**
  * Tints raw RGB pixels in place.
  * - `duotone`: the colour photo with the duotone layer on top at `percent` opacity.
- * - `blend`: Figma's screen and multiply layers, each at `percent` opacity.
+ * - `blend`: the photo in greyscale under Figma's screen and multiply layers, each at `percent`
+ *   opacity. Figma's render of the Home hero (57:301) is desaturated before the layers (a filter
+ *   on the image fill that design context doesn't report); measured in PR 8, mean colour within
+ *   1/255 of Figma's.
  */
 export function tintPixels(pixels: Uint8Array, method: TintMethod, percent: number): Uint8Array {
   const a = percent / 100
@@ -41,8 +44,9 @@ export function tintPixels(pixels: Uint8Array, method: TintMethod, percent: numb
         pixels[i + c] = Math.round(pixels[i + c] + (ramp[luma * 3 + c] - pixels[i + c]) * a)
       }
     } else {
+      const grey = (0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2]) / 255
       for (let c = 0; c < 3; c++) {
-        const x = pixels[i + c] / 255
+        const x = grey
         const screened = x + (1 - (1 - x) * (1 - screen[c]) - x) * a
         pixels[i + c] = Math.round((screened + (screened * multiply[c] - screened) * a) * 255)
       }
