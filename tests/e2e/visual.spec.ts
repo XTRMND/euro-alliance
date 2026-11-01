@@ -20,6 +20,13 @@ for (const { name, path } of snapshots) {
       await page.setViewportSize({ width, height: 900 })
       await page.goto(path, { waitUntil: 'networkidle' })
       await page.evaluate(() => document.fonts.ready)
+      // A full-page shot doesn't scroll, so lazy images far down a long page may not have loaded
+      // yet: load and decode them all first.
+      await page.evaluate(async () => {
+        const images = [...document.images]
+        for (const image of images) image.loading = 'eager'
+        await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
+      })
 
       await expect(page).toHaveScreenshot(`${name}-${width}.png`, { fullPage: true })
     })
