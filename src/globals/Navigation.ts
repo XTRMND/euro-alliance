@@ -3,27 +3,61 @@ import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
 
 // Header, mobile menu and footer links (docs/cms-schema.md § 7). Labels are content, so they live
-// here, not in messages/*.json.
+// here, not in messages/*.json. A header or menu link with sub-links is a disclosure button that
+// opens them (e.g. «Професионално обучение»); it has no address of its own.
+
+const hrefPattern = /^(\/|#|https:\/\/|tel:|mailto:)/
+const hrefHint = 'Започва с /, #, https://, tel: или mailto:'
 
 function validateHref(value: unknown): true | string {
-  return typeof value === 'string' && /^(\/|#|https:\/\/|tel:|mailto:)/.test(value)
-    ? true
-    : 'Започва с /, #, https://, tel: или mailto:'
+  return typeof value === 'string' && hrefPattern.test(value) ? true : hrefHint
 }
 
-const links = (name: string, label: string, extra: Field[] = []): Field => ({
+const label: Field = {
+  name: 'label',
+  type: 'text',
+  label: 'Текст',
+  required: true,
+  localized: true,
+}
+
+const links = (name: string, title: string, extra: Field[] = []): Field => ({
   name,
   type: 'array',
-  label,
+  label: title,
   fields: [
     {
       type: 'row',
       fields: [
-        { name: 'label', type: 'text', label: 'Текст', required: true, localized: true },
+        label,
         { name: 'href', type: 'text', label: 'Адрес', required: true, validate: validateHref },
         ...extra,
       ],
     },
+  ],
+})
+
+// A link that may instead open a group of sub-links.
+const linksWithGroups = (name: string, title: string): Field => ({
+  name,
+  type: 'array',
+  label: title,
+  fields: [
+    {
+      type: 'row',
+      fields: [
+        label,
+        {
+          name: 'href',
+          type: 'text',
+          label: 'Адрес',
+          admin: { description: 'Празно, ако връзката отваря подвръзки.' },
+          validate: (value: unknown, { siblingData }: { siblingData: { children?: unknown[] } }) =>
+            siblingData.children?.length && !value ? true : validateHref(value),
+        },
+      ],
+    },
+    links('children', 'Подвръзки'),
   ],
 })
 
@@ -37,9 +71,12 @@ export const Navigation: GlobalConfig = {
       name: 'header',
       type: 'group',
       label: 'Горна лента (компютър)',
-      fields: [links('left', 'Вляво от логото'), links('right', 'Вдясно от логото')],
+      fields: [
+        linksWithGroups('left', 'Вляво от логото'),
+        linksWithGroups('right', 'Вдясно от логото'),
+      ],
     },
-    links('menu', 'Мобилно меню'),
+    linksWithGroups('menu', 'Мобилно меню'),
     {
       name: 'footer',
       type: 'array',

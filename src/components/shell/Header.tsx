@@ -5,6 +5,7 @@ import type { Navigation, Office } from '@/payload-types'
 import styles from './Header.module.css'
 import { LogoLink } from './LogoLink'
 import { MobileMenu } from './MobileMenu'
+import { NavDisclosure } from './NavDisclosure'
 import { NavLink } from './NavLink'
 
 // Header (79:784) from 1024px up; Header Mobile (114:295) with the menu below. White with a torn
@@ -25,11 +26,7 @@ export async function Header({ navigation, office }: HeaderProps) {
         <nav aria-label={t('navLabel')} className={styles.desktopNav}>
           <ul className={styles.links}>
             {left?.map((link) => (
-              <li key={link.id}>
-                <NavLink href={link.href} className={styles.link}>
-                  {link.label}
-                </NavLink>
-              </li>
+              <HeaderItem key={link.id} link={link} />
             ))}
           </ul>
         </nav>
@@ -53,16 +50,33 @@ export async function Header({ navigation, office }: HeaderProps) {
         <div className={styles.end}>
           <ul className={styles.links}>
             {right?.map((link) => (
-              <li key={link.id}>
-                <NavLink href={link.href} className={styles.link}>
-                  {link.label}
-                </NavLink>
-              </li>
+              <HeaderItem key={link.id} link={link} />
             ))}
           </ul>
           <Button href={routes.contact()}>{t('cta')}</Button>
         </div>
       </div>
     </header>
+  )
+}
+
+type HeaderLink = NonNullable<NonNullable<Navigation['header']>['left']>[number]
+
+/** A link, or a disclosure when it has sub-links. */
+function HeaderItem({ link }: { link: HeaderLink }) {
+  if (link.children?.length) {
+    return (
+      <li>
+        <NavDisclosure label={link.label} links={link.children} variant="dropdown" />
+      </li>
+    )
+  }
+  if (!link.href) return null
+  return (
+    <li>
+      <NavLink href={link.href} className={styles.link}>
+        {link.label}
+      </NavLink>
+    </li>
   )
 }

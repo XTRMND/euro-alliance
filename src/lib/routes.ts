@@ -55,7 +55,14 @@ export const queryParams = {
   page: 'stranitsa',
   topic: 'tema',
   search: 'q',
+  category: 'kategoria',
 } as const
+
+/** Course listing filters (PR 9 reads them). */
+export const courseCategories = {
+  languages: 'ezitsi',
+} as const
+export type CourseCategory = keyof typeof courseCategories
 
 export const anchors = {
   certificates: 'sertifikati',
@@ -91,7 +98,8 @@ function withQuery(path: string, name: string, value: string | undefined): strin
 
 export const routes = {
   home: () => '/',
-  courses: () => `/${segments.courses}`,
+  courses: (category?: CourseCategory) =>
+    withQuery(`/${segments.courses}`, queryParams.category, category && courseCategories[category]),
   course: (slug: string) => `/${segments.courses}/${slug}`,
   languageProgram: <L extends Language>(language: L, audience: AudienceFor<L>) =>
     `/${segments.languages}/${languageSegments[language]}/${audienceSegments[audience]}`,

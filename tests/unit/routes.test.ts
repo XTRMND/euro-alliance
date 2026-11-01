@@ -6,6 +6,7 @@ import {
   anchors,
   audienceSegments,
   contactLocations,
+  courseCategories,
   devRoutes,
   languageSegments,
   queryParams,
@@ -42,6 +43,8 @@ describe('URL scheme', () => {
     [audienceSegments.students, 'Ученици'],
     [queryParams.page, 'Страница'],
     [queryParams.topic, 'Тема'],
+    [queryParams.category, 'Категория'],
+    [courseCategories.languages, 'Езици'],
     [anchors.certificates, 'Сертификати'],
     [aboutSections.history, 'История'],
     [aboutSections.team, 'Екип'],
@@ -58,6 +61,8 @@ describe('URL scheme', () => {
 describe('routes', () => {
   it('builds the agreed paths', () => {
     expect(routes.home()).toBe('/')
+    expect(routes.courses()).toBe('/kursove')
+    expect(routes.courses('languages')).toBe('/kursove?kategoria=ezitsi')
     expect(routes.course('angliyski-b1')).toBe('/kursove/angliyski-b1')
     expect(routes.languageProgram('english', 'adults')).toBe('/ezitsi/angliyski/vazrastni')
     expect(routes.languageProgram('russian', 'students')).toBe('/ezitsi/ruski/uchenitsi')

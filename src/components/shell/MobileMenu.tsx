@@ -8,6 +8,7 @@ import { routes } from '@/lib/routes'
 import type { Navigation } from '@/payload-types'
 import { LogoLink } from './LogoLink'
 import styles from './MobileMenu.module.css'
+import { NavDisclosure } from './NavDisclosure'
 import { NavLink } from './NavLink'
 
 // Mobile menu (121:1399): a modal <dialog>, so focus stays inside, Esc closes it and the page
@@ -83,9 +84,15 @@ export function MobileMenu({ links, labels, phone, email, className }: MobileMen
           <ul>
             {links.map((link) => (
               <li key={link.id}>
-                <NavLink href={link.href} className={styles.link}>
-                  {link.label}
-                </NavLink>
+                {link.children?.length ? (
+                  <NavDisclosure label={link.label} links={link.children} variant="inline" />
+                ) : (
+                  link.href && (
+                    <NavLink href={link.href} className={styles.link}>
+                      {link.label}
+                    </NavLink>
+                  )
+                )}
               </li>
             ))}
           </ul>

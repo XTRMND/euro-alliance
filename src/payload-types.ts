@@ -543,14 +543,34 @@ export interface Navigation {
     left?:
       | {
           label: string;
-          href: string;
+          /**
+           * Празно, ако връзката отваря подвръзки.
+           */
+          href?: string | null;
+          children?:
+            | {
+                label: string;
+                href: string;
+                id?: string | null;
+              }[]
+            | null;
           id?: string | null;
         }[]
       | null;
     right?:
       | {
           label: string;
-          href: string;
+          /**
+           * Празно, ако връзката отваря подвръзки.
+           */
+          href?: string | null;
+          children?:
+            | {
+                label: string;
+                href: string;
+                id?: string | null;
+              }[]
+            | null;
           id?: string | null;
         }[]
       | null;
@@ -558,7 +578,17 @@ export interface Navigation {
   menu?:
     | {
         label: string;
-        href: string;
+        /**
+         * Празно, ако връзката отваря подвръзки.
+         */
+        href?: string | null;
+        children?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -637,6 +667,13 @@ export interface NavigationSelect<T extends boolean = true> {
           | {
               label?: T;
               href?: T;
+              children?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
               id?: T;
             };
         right?:
@@ -644,6 +681,13 @@ export interface NavigationSelect<T extends boolean = true> {
           | {
               label?: T;
               href?: T;
+              children?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
               id?: T;
             };
       };
@@ -652,6 +696,13 @@ export interface NavigationSelect<T extends boolean = true> {
     | {
         label?: T;
         href?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
         id?: T;
       };
   footer?:

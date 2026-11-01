@@ -40,6 +40,24 @@ test.describe('desktop', () => {
     expect(new URL(page.url()).pathname).toBe('/')
   })
 
+  test('«Професионално обучение» is a disclosure with its three programmes', async ({ page }) => {
+    await page.goto('/')
+    const nav = page.getByRole('navigation', { name: 'Основна навигация' })
+    const button = nav.getByRole('button', { name: 'Професионално обучение' })
+    await expect(button).toHaveAttribute('aria-expanded', 'false')
+
+    await button.click()
+    await expect(button).toHaveAttribute('aria-expanded', 'true')
+    for (const name of ['ЦПО професии', 'Педагогически специалисти', 'Земеделски производители']) {
+      await expect(nav.getByRole('link', { name })).toBeVisible()
+    }
+
+    await page.keyboard.press('Escape')
+    await expect(button).toHaveAttribute('aria-expanded', 'false')
+    await expect(button).toBeFocused()
+    await expect(nav.getByRole('link', { name: 'ЦПО професии' })).toBeHidden()
+  })
+
   test('the cookie settings button asks the consent dialog to open', async ({ page }) => {
     await page.goto('/')
     const opened = page.evaluate(
@@ -89,6 +107,25 @@ test.describe('mobile menu', () => {
     await expect(dialog).toBeHidden()
     await expect(button).toBeFocused()
     await expect(button).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  test('opens «Професионално обучение» as a group; Esc closes only the group', async ({ page }) => {
+    await page.goto('/')
+    await page.getByRole('button', { name: 'Меню', exact: true }).click()
+    const dialog = page.getByRole('dialog', { name: 'Меню' })
+    const group = dialog.getByRole('button', { name: 'Професионално обучение' })
+
+    await group.click()
+    await expect(group).toHaveAttribute('aria-expanded', 'true')
+    await expect(dialog.getByRole('link', { name: 'Земеделски производители' })).toBeVisible()
+
+    await page.keyboard.press('Escape')
+    await expect(group).toHaveAttribute('aria-expanded', 'false')
+    await expect(dialog).toBeVisible()
+    await expect(dialog.getByRole('link', { name: 'Езици' })).toHaveAttribute(
+      'href',
+      '/kursove?kategoria=ezitsi',
+    )
   })
 
   test('closes with its close button', async ({ page }) => {

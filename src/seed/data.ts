@@ -20,6 +20,13 @@ export const company = {
   },
 }
 
+/** The official EU logo strip, supplied by the client and stored byte for byte (publicity rules). */
+export const fundingLogo = {
+  file: 'public/logos/eu-pkip-logo-strip.jpg',
+  mimetype: 'image/jpeg',
+  alt: 'Съфинансирано от Европейския съюз. Програма „Конкурентоспособност и иновации в предприятията“',
+}
+
 export const offices = [
   {
     role: 'courses',
@@ -47,25 +54,34 @@ export const offices = [
   },
 ] as const
 
-// Link targets are proposals where the plan has no page of that name (CLAUDE.md § 12). Left out
-// until they have a destination: «Ценоразпис» (translation prices were dropped) and «Екип» (the
-// team section stays hidden until photos exist).
+// Targets as decided by the user (CLAUDE.md § 12): «Езици» opens the course listing filtered to
+// language courses; «Професионално обучение» opens its three programmes. Left out: «Ценоразпис»
+// (no official price list) and «Екип» (until the client sends team photos).
 const englishAdults = routes.languageProgram('english', 'adults')
+
+const vocational = {
+  label: 'Професионално обучение',
+  children: [
+    { label: 'ЦПО професии', href: routes.professions() },
+    { label: 'Педагогически специалисти', href: routes.teachers() },
+    { label: 'Земеделски производители', href: routes.farmers() },
+  ],
+}
 
 export const navigation = {
   header: {
     left: [
       { label: 'Курсове', href: routes.courses() },
-      { label: 'Професионално обучение', href: routes.professions() },
+      vocational,
       { label: 'Преводи', href: routes.translations() },
     ],
     right: [{ label: 'За нас', href: routes.about() }],
   },
   menu: [
     { label: 'Курсове', href: routes.courses() },
-    { label: 'Езици', href: englishAdults },
+    { label: 'Езици', href: routes.courses('languages') },
     { label: 'Изпити и сертификати', href: `${englishAdults}#${anchors.certificates}` },
-    { label: 'Професионално обучение', href: routes.professions() },
+    vocational,
     { label: 'Преводи', href: routes.translations() },
     { label: 'Новини', href: routes.news() },
     { label: 'За нас', href: routes.about() },

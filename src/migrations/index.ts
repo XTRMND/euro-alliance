@@ -1,6 +1,7 @@
 import * as migration_20261031_201223_initial from './20261031_201223_initial';
 import * as migration_20261031_213643_navigation_and_funding from './20261031_213643_navigation_and_funding';
 import * as migration_20261031_213646_drop_footer_legal from './20261031_213646_drop_footer_legal';
+import * as migration_20261101_073529_navigation_groups from './20261101_073529_navigation_groups';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20261031_213646_drop_footer_legal.up,
     down: migration_20261031_213646_drop_footer_legal.down,
-    name: '20261031_213646_drop_footer_legal'
+    name: '20261031_213646_drop_footer_legal',
+  },
+  {
+    up: migration_20261101_073529_navigation_groups.up,
+    down: migration_20261101_073529_navigation_groups.down,
+    name: '20261101_073529_navigation_groups'
   },
 ];

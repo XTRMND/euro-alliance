@@ -1,0 +1,123 @@
+/*
+ * Not in Figma (a decision in CLAUDE.md § 12): the button looks like its neighbouring links, the
+ * caret is the ▾ used in Figma's selects, and the panels use the card tokens.
+ */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.caret {
+  font-size: 0.75em;
+  transition: transform var(--motion-button) var(--ease-out);
+}
+
+.button[aria-expanded='true'] .caret {
+  transform: rotate(180deg);
+}
+
+.panel {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+}
+
+/* Desktop header: a dropdown panel under the button. */
+.dropdown {
+  position: relative;
+}
+
+.dropdown .button {
+  font: var(--type-label);
+  color: var(--color-text-primary);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--color-brand-accent);
+}
+
+.dropdown .button[data-current],
+.dropdown .button:focus-visible {
+  text-decoration-line: underline;
+}
+
+.dropdown .panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -14px;
+  z-index: 20;
+  min-width: 270px;
+  padding: 8px;
+  border-radius: 12px;
+  background: var(--color-bg-page);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.dropdown .link {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font: var(--type-label);
+  color: var(--color-text-primary);
+}
+
+.dropdown .link:focus-visible,
+.dropdown .link[aria-current='page'] {
+  background: var(--color-bg-warm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dropdown .button:hover {
+    text-decoration-line: underline;
+  }
+
+  .dropdown .link:hover {
+    background: var(--color-bg-warm);
+  }
+}
+
+/* Mobile menu: an expandable group, styled like the menu's links. */
+.inline .button {
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-brand-primary);
+  font: 800 2.125rem / 0.96 var(--font-display);
+  color: var(--color-text-on-brand);
+  text-align: left;
+}
+
+.inline .button[data-current] {
+  color: var(--color-brand-accent);
+}
+
+.inline .panel {
+  padding: 4px 0 8px 16px;
+  border-bottom: 1px solid var(--color-brand-primary);
+}
+
+.inline .link {
+  padding: 8px 0;
+  font: 600 1.25rem / 1.3 var(--font-body);
+  color: var(--color-text-on-brand);
+}
+
+.inline .link[aria-current='page'] {
+  color: var(--color-brand-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    transition: none;
+  }
+}
