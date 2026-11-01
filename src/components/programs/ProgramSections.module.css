@@ -66,6 +66,20 @@
   color: var(--color-text-muted);
 }
 
+/* Figure cards two by two on a phone (249:3949), 12px apart; CardGrid's columns above. */
+@media (max-width: 767px) {
+  .figures {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+.figuresNote {
+  max-width: 900px;
+  font: 600 1.0625rem / 1.55 var(--font-body);
+  color: var(--color-brand-primary);
+}
+
 .note {
   max-width: 820px;
   font: 400 1.0625rem / 1.55 var(--font-body);

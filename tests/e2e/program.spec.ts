@@ -161,6 +161,39 @@ test.describe('professions (ЦПО)', () => {
   })
 })
 
+test.describe('pedagogical specialists', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('lists the 29 programmes by theme with their official numbers', async ({ page }) => {
+    await page.goto(routes.teachers())
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Педагогически специалисти')
+    await page.getByRole('link', { name: 'Всички 29 програми' }).click()
+    const list = page.locator('#programi')
+    await expect(list).toBeInViewport()
+    await expect(list.getByRole('heading', { level: 3 })).toHaveCount(5)
+    await expect(list.getByRole('listitem')).toHaveCount(29)
+    const languages = list.locator('article', {
+      has: page.getByRole('heading', { name: 'Чужди езици' }),
+    })
+    await expect(languages.getByRole('listitem')).toHaveCount(4)
+    await expect(languages.getByRole('listitem').first()).toContainText('04')
+  })
+
+  test('shows the figures with their note, and the formats', async ({ page }) => {
+    await page.goto(routes.teachers())
+    const figures = page.locator('section', {
+      has: page.getByRole('heading', { name: 'Как протичат обученията' }),
+    })
+
+    for (const figure of ['29', '10–25', '16–48', '1–3']) {
+      await expect(figures.getByText(figure, { exact: true })).toBeVisible()
+    }
+    await expect(figures.getByText(/удостоверение с присъдения брой кредити/)).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Безплатно обучение' })).toBeVisible()
+  })
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

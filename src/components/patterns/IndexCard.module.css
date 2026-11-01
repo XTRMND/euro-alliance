@@ -16,7 +16,7 @@
 .title {
   flex: 1;
   min-width: 0;
-  font: 800 1.875rem / 1.1 var(--font-display);
+  font: 800 clamp(1.625rem, 1.53rem + 0.381vw, 1.875rem) / 1.1 var(--font-display); /* 26 → 30 */
   color: var(--color-brand-primary-strong);
 }
 

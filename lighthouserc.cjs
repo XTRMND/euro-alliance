@@ -13,6 +13,7 @@ const paths = [
   '/ezitsi/angliyski/vazrastni',
   '/vaucheri',
   '/profesionalno-obuchenie/profesii',
+  '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
 ]
 
 // Pages flagged for missing the LCP budget: still measured against 2,500 ms, but reported as a

@@ -15,6 +15,7 @@ const snapshots = [
   { name: 'english-students', path: routes.languageProgram('english', 'students') },
   { name: 'vouchers', path: routes.vouchers() },
   { name: 'professions', path: routes.professions() },
+  { name: 'teachers', path: routes.teachers() },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },

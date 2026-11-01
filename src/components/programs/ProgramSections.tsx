@@ -5,9 +5,9 @@ import { FigureCard } from '@/components/patterns/FigureCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { Button } from '@/components/ui/Button'
-import { getProfessions } from '@/lib/cms'
+import { getProfessions, getTeacherProgrammes } from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
-import { groupByDirection } from '@/lib/programs'
+import { groupByDirection, groupInOrder } from '@/lib/programs'
 import { anchors } from '@/lib/routes'
 import type { Certificate, Program, TextbookSystem } from '@/payload-types'
 import { CertificateCard } from './CertificateCard'
@@ -17,6 +17,7 @@ import { FeatureCard } from './FeatureCard'
 import { ProfessionsList } from './ProfessionsList'
 import styles from './ProgramSections.module.css'
 import { SystemCard, type SystemCardData } from './SystemCard'
+import { TeacherProgrammesList } from './TeacherProgrammesList'
 import { VoucherApplyButton } from './VoucherApplyButton'
 
 // A program page's sections, from its blocks (docs/cms-schema.md, Programs). Each is a paper
@@ -56,6 +57,18 @@ async function ProfessionsSection({ section, id }: { section: Section; id: strin
     <Wrap section={section} id={id}>
       {'heading' in section && <Head section={section} id={id} />}
       <ProfessionsList directions={directions} />
+    </Wrap>
+  )
+}
+
+/** The programmes for pedagogical specialists by theme; without any, no section. */
+async function TeacherProgrammesSection({ section, id }: { section: Section; id: string }) {
+  const themes = groupInOrder(await getTeacherProgrammes(), (programme) => programme.theme)
+  if (themes.length === 0) return null
+  return (
+    <Wrap section={section} id={id}>
+      {'heading' in section && <Head section={section} id={id} />}
+      <TeacherProgrammesList themes={themes} />
     </Wrap>
   )
 }
@@ -168,6 +181,8 @@ function SectionContent({ section, index }: { section: Section; index: number })
     }
     case 'professions':
       return <ProfessionsSection section={section} id={id} />
+    case 'teacherProgrammes':
+      return <TeacherProgrammesSection section={section} id={id} />
     case 'exams':
       return (
         <Wrap section={section} id={id}>
@@ -196,11 +211,15 @@ function SectionContent({ section, index }: { section: Section; index: number })
       return (
         <Wrap section={section} id={id}>
           <Head section={section} id={id} />
-          <CardGrid columns={Math.min(Math.max(items.length, 2), 4) as 2 | 3 | 4}>
+          <CardGrid
+            columns={Math.min(Math.max(items.length, 2), 4) as 2 | 3 | 4}
+            className={styles.figures}
+          >
             {items.map((item, i) => (
               <FigureCard key={item.id ?? i} figure={item.figure} label={item.label} />
             ))}
           </CardGrid>
+          {section.note && <p className={styles.figuresNote}>{section.note}</p>}
         </Wrap>
       )
     }
