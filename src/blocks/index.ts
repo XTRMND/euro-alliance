@@ -211,6 +211,104 @@ export const TeacherProgrammesBlock: Block = {
   fields: [...heading],
 }
 
+export const IndexCardsBlock: Block = {
+  slug: 'indexCards',
+  labels: { singular: 'Карти със списъци', plural: 'Карти със списъци' },
+  fields: [
+    ...heading,
+    {
+      name: 'cards',
+      type: 'array',
+      label: 'Карти',
+      maxRows: 3,
+      admin: { description: 'Номерираните редове се номерират подред през всички карти.' },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+            {
+              name: 'marker',
+              type: 'select',
+              label: 'Редове',
+              defaultValue: 'number',
+              options: [
+                { value: 'number', label: 'Номерирани' },
+                { value: 'check', label: 'С отметка' },
+              ],
+            },
+          ],
+        },
+        {
+          type: 'row',
+          fields: [
+            {
+              name: 'count',
+              type: 'select',
+              label: 'Брой редове',
+              defaultValue: 'chip',
+              options: [
+                { value: 'chip', label: 'На етикет до заглавието' },
+                { value: 'bubble', label: 'В тъмно балонче' },
+                { value: 'none', label: 'Без брой' },
+              ],
+            },
+            {
+              name: 'countLabel',
+              type: 'text',
+              label: 'Надпис в балончето',
+              localized: true,
+              admin: {
+                condition: (_, siblingData) => siblingData?.count === 'bubble',
+                description: 'Например «предмета» или «условия».',
+              },
+            },
+          ],
+        },
+        {
+          name: 'rows',
+          type: 'array',
+          label: 'Редове',
+          maxRows: 10,
+          fields: [{ name: 'text', type: 'text', label: 'Текст', required: true, localized: true }],
+        },
+      ],
+    },
+    {
+      name: 'checklist',
+      type: 'group',
+      label: 'Тъмен списък за отметки (по избор)',
+      admin: { description: 'Например документите, които се носят преди старта.' },
+      fields: [
+        { name: 'title', type: 'text', label: 'Заглавие', localized: true },
+        {
+          name: 'items',
+          type: 'array',
+          label: 'Редове',
+          fields: [{ name: 'text', type: 'text', label: 'Текст', required: true, localized: true }],
+        },
+      ],
+    },
+  ],
+}
+
+export const ProjectsBlock: Block = {
+  slug: 'projects',
+  labels: { singular: 'Проекти', plural: 'Проекти' },
+  admin: { group: 'Списъци от колекциите' },
+  fields: [
+    ...heading,
+    {
+      name: 'projects',
+      type: 'relationship',
+      relationTo: 'funded-projects',
+      hasMany: true,
+      label: 'Проекти',
+      admin: { description: 'Заглавието вляво, картите на проектите вдясно.' },
+    },
+  ],
+}
+
 export const FaqBlock: Block = {
   slug: 'faq',
   labels: { singular: 'Въпроси', plural: 'Въпроси' },
@@ -294,6 +392,8 @@ export const programBlocks = [
   ProfessionsBlock,
   ExamsBlock,
   TeacherProgrammesBlock,
+  IndexCardsBlock,
+  ProjectsBlock,
   FaqBlock,
   FiguresBlock,
   CalloutBlock,

@@ -16,6 +16,8 @@ import {
 import {
   certificates,
   englishPrograms,
+  farmersLogoStrip,
+  farmersProject,
   professions,
   singlePrograms,
   systemsBlock,
@@ -233,6 +235,26 @@ async function seedPrograms(payload: Payload) {
     payload.logger.info(`Seeded ${teacherProgrammes.length} programmes for teachers.`)
   }
 
+  // The farmers' funded project and its EU logo strip (uploaded as is), by title.
+  const found = await payload.find({
+    collection: 'funded-projects',
+    where: { title: { equals: farmersProject.title } },
+    depth: 0,
+    limit: 1,
+    draft: true,
+  })
+  const project =
+    found.docs[0] ??
+    (await payload.create({
+      collection: 'funded-projects',
+      locale: 'bg',
+      data: {
+        ...farmersProject,
+        logoStrip: (await uploadOnce(payload, { ...farmersLogoStrip, kind: 'logo' })).id,
+        _status: 'published',
+      },
+    }))
+
   for (const program of singlePrograms) {
     const { totalDocs } = await payload.count({
       collection: 'programs',
@@ -242,7 +264,13 @@ async function seedPrograms(payload: Payload) {
     await payload.create({
       collection: 'programs',
       locale: 'bg',
-      data: { ...program, _status: 'published' } as never,
+      data: {
+        ...program,
+        sections: program.sections.map((section) =>
+          section.blockType === 'projects' ? { ...section, projects: [project.id] } : section,
+        ),
+        _status: 'published',
+      } as never,
     })
     payload.logger.info(`Seeded the program «${program.title}».`)
   }

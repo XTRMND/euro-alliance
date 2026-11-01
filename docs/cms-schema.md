@@ -102,7 +102,8 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `professions` | Direction card (236:3760) | heading only: every published profession, by direction |
 | `exams` | Data table 259:621 | heading only: the exams from 60 days ago on |
 | `teacherProgrammes` | Index card 264:448 with numbered List rows 259:2318 | heading only: every published programme, a card per theme |
-| `projects` | Project card 259:574 | Arrives with its collection in PR 13 |
+| `indexCards` | Index card 264:448 | `cards` (up to 3: title, rows numbered or checked, the count on a chip or a navy bubble with its label); numbered rows run on from card to card; optional navy `checklist` { title, items } (the farmers' documents) |
+| `projects` | Project card 259:574 | `projects` → Funded projects; the heading beside the cards from 1024px |
 
 ### Textbook systems
 
@@ -150,7 +151,7 @@ Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official prog
 
 ### Funded projects
 
-`title`, `code` (e.g. BG16RFPR001-1.004-1004), `facts` (array of { label, value }), `goals` (rich text or array), `logoStrip` (upload → media, `kind: logo`).
+Built in PR 13 (`src/collections/FundedProjects.ts`): `title`, `code` (e.g. BG16RFPR001-1.004-1004; not shown on the card), `facts` (array of { label, value }), `goals` (array of text, shown as chips), `logoStrip` (upload → media, `kind: logo`). Seeded with the farmers' project from Figma 237:4189 and its EU logo strip.
 
 - Amounts are stored as the official text from the contract (e.g. «175 958 лв»), not as a number to format. **Open item:** since 01.01.2026 Bulgaria uses the euro; ask the client whether to show лв, € or both.
 - The logo strip is rendered exactly as uploaded (§ 4).

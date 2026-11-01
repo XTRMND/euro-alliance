@@ -79,6 +79,7 @@ export interface Config {
     professions: Profession;
     exams: Exam;
     'teacher-programmes': TeacherProgramme;
+    'funded-projects': FundedProject;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -105,6 +106,7 @@ export interface Config {
     professions: ProfessionsSelect<false> | ProfessionsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
     'teacher-programmes': TeacherProgrammesSelect<false> | TeacherProgrammesSelect<true>;
+    'funded-projects': FundedProjectsSelect<false> | FundedProjectsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -859,6 +861,73 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
+            /**
+             * Номерираните редове се номерират подред през всички карти.
+             */
+            cards?:
+              | {
+                  title: string;
+                  marker?: ('number' | 'check') | null;
+                  count?: ('chip' | 'bubble' | 'none') | null;
+                  /**
+                   * Например «предмета» или «условия».
+                   */
+                  countLabel?: string | null;
+                  rows?:
+                    | {
+                        text: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Например документите, които се носят преди старта.
+             */
+            checklist?: {
+              title?: string | null;
+              items?:
+                | {
+                    text: string;
+                    id?: string | null;
+                  }[]
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'indexCards';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            /**
+             * Заглавието вляво, картите на проектите вдясно.
+             */
+            projects?: (number | FundedProject)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'projects';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
             items?:
               | {
                   question: string;
@@ -1035,6 +1104,41 @@ export interface Certificate {
    * Учебникът, с който се подготвяме. Празно: редът не се показва.
    */
   prep?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "funded-projects".
+ */
+export interface FundedProject {
+  id: number;
+  title: string;
+  /**
+   * Например BG16RFPR001-1.004-1004. Не се показва в картата.
+   */
+  code?: string | null;
+  /**
+   * Сумите както са в договора, без преобразуване.
+   */
+  facts?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  goals?:
+    | {
+        goal: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Файлът точно както е предоставен: без изрязване и промени.
+   */
+  logoStrip?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1322,6 +1426,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'teacher-programmes';
         value: number | TeacherProgramme;
+      } | null)
+    | ({
+        relationTo: 'funded-projects';
+        value: number | FundedProject;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -1773,6 +1881,53 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        indexCards?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    marker?: T;
+                    count?: T;
+                    countLabel?: T;
+                    rows?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              checklist?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        projects?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              projects?: T;
+              id?: T;
+              blockName?: T;
+            };
         faq?:
           | T
           | {
@@ -1919,6 +2074,31 @@ export interface TeacherProgrammesSelect<T extends boolean = true> {
   title?: T;
   hours?: T;
   credits?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "funded-projects_select".
+ */
+export interface FundedProjectsSelect<T extends boolean = true> {
+  title?: T;
+  code?: T;
+  facts?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  goals?:
+    | T
+    | {
+        goal?: T;
+        id?: T;
+      };
+  logoStrip?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

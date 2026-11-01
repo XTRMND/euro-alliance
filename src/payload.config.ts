@@ -9,6 +9,7 @@ import sharp from 'sharp'
 import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
 import { Exams } from './collections/Exams'
+import { FundedProjects } from './collections/FundedProjects'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
 import { Media } from './collections/Media'
@@ -53,6 +54,7 @@ export default buildConfig({
     Professions,
     Exams,
     TeacherProgrammes,
+    FundedProjects,
     Inquiries,
     InquiryFiles,
   ],
