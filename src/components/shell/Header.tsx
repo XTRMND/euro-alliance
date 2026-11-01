@@ -74,7 +74,7 @@ function HeaderItem({ link }: { link: HeaderLink }) {
   if (!link.href) return null
   return (
     <li>
-      <NavLink href={link.href} className={styles.link}>
+      <NavLink href={link.href} placement="header" className={styles.link}>
         {link.label}
       </NavLink>
     </li>

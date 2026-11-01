@@ -45,7 +45,7 @@ export async function Footer({ navigation, site }: FooterProps) {
                 <ul className={styles.links}>
                   {column.links?.map((link) => (
                     <li key={link.id}>
-                      <NavLink href={link.href} className={styles.link}>
+                      <NavLink href={link.href} placement="footer" className={styles.link}>
                         {link.icon === 'facebook' ? (
                           <>
                             <span className={styles.icon} aria-hidden="true">
