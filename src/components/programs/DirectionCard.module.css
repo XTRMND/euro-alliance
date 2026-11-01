@@ -1,0 +1,85 @@
+/* Direction card (236:3760 …): white, 8px radius, 26 / 28 / 18 padding, tape at the top left. */
+.card {
+  position: relative;
+  padding: 26px 20px 18px;
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  box-shadow: var(--shadow-paper);
+}
+
+.card .tape {
+  left: 38px;
+  width: 100px;
+  height: 26px;
+}
+
+.head {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding-bottom: 12px;
+}
+
+.chip {
+  flex: none;
+  padding: 1px 6px 2px;
+  background: var(--color-brand-accent);
+  font: 700 0.9375rem / 1.55 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.name {
+  font: 800 clamp(1.625rem, 1.53rem + 0.381vw, 1.875rem) / 1.2 var(--font-display); /* 26 → 30 */
+  color: var(--color-brand-primary-strong);
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Name, code and degrees in a row; on a phone the name takes its own line (Figma's mobile rows
+   squeeze the name until words break, CLAUDE.md § 12). */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  align-items: center;
+  padding: 11px 0;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.profession {
+  flex: 1 1 100%;
+  font: 600 1rem / 1.55 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.code {
+  font: 500 0.8125rem / 1.55 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.degrees {
+  padding: 2px 8px 3px;
+  border-radius: 6px;
+  background: var(--color-bg-warm);
+  font: 700 0.8125rem / 1.55 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  white-space: nowrap;
+}
+
+@media (min-width: 520px) {
+  .card {
+    padding-inline: 28px;
+  }
+
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  .profession {
+    flex: 1 1 auto;
+  }
+}

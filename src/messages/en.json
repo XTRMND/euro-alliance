@@ -354,6 +354,30 @@
       "teachers": "Pedagogical specialists",
       "farmers": "Training for farmers",
       "computer": "Computer courses"
+    },
+    "professions": {
+      "code": "Code",
+      "degrees": "degree {degrees}"
+    },
+    "exams": {
+      "columns": {
+        "kind": "Exam",
+        "subject": "Profession / speciality",
+        "part": "Theory / practice",
+        "date": "Date and time",
+        "place": "Place",
+        "results": "Results"
+      },
+      "part": {
+        "theory": "Theory",
+        "practice": "Practice",
+        "both": "Theory and practice"
+      },
+      "results": "Results",
+      "empty": {
+        "title": "No exams are announced at the moment.",
+        "text": "New dates are published here."
+      }
     }
   }
 }

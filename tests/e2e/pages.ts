@@ -8,6 +8,7 @@ export const pages = [
   { name: 'English for adults', path: routes.languageProgram('english', 'adults') },
   { name: 'English for students', path: routes.languageProgram('english', 'students') },
   { name: 'Vouchers', path: routes.vouchers() },
+  { name: 'Professions', path: routes.professions() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },

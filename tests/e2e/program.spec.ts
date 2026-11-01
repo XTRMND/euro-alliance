@@ -127,6 +127,40 @@ test.describe('vouchers', () => {
   })
 })
 
+test.describe('professions (ЦПО)', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('lists the twenty professions in their five directions', async ({ page }) => {
+    await page.goto(routes.professions())
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Професии и специалности')
+    const list = page.locator('section', {
+      has: page.getByRole('heading', { name: 'Нов списък с професии от 2026 г.' }),
+    })
+    await expect(list.getByRole('heading', { level: 3 })).toHaveCount(5)
+    await expect(list.getByRole('listitem')).toHaveCount(20)
+    await expect(
+      list.getByRole('heading', { name: '041 Бизнес администрация', level: 3 }),
+    ).toBeVisible()
+    await expect(list.getByRole('listitem').first()).toContainText('Оперативно счетоводство')
+    await expect(list.getByRole('listitem').first()).toContainText('II, III степен')
+  })
+
+  test('the hero links the exams, which show their empty state', async ({ page }) => {
+    await page.goto(routes.professions())
+
+    await expect(page.getByRole('link', { name: 'Попитайте за професия' })).toHaveAttribute(
+      'href',
+      routes.contact('drugo'),
+    )
+    await page.getByRole('link', { name: 'Изпити за квалификация' }).click()
+    const exams = page.locator('#izpiti')
+    await expect(exams).toBeInViewport()
+    await expect(exams.getByRole('table')).toContainText('В момента няма обявени изпити.')
+    await expect(exams.getByRole('columnheader')).toHaveCount(6)
+  })
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

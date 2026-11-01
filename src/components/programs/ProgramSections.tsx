@@ -5,12 +5,16 @@ import { FigureCard } from '@/components/patterns/FigureCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { Button } from '@/components/ui/Button'
+import { getProfessions } from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
+import { groupByDirection } from '@/lib/programs'
 import { anchors } from '@/lib/routes'
 import type { Certificate, Program, TextbookSystem } from '@/payload-types'
 import { CertificateCard } from './CertificateCard'
+import { ExamsTable } from './ExamsTable'
 import { FaqList } from './FaqList'
 import { FeatureCard } from './FeatureCard'
+import { ProfessionsList } from './ProfessionsList'
 import styles from './ProgramSections.module.css'
 import { SystemCard, type SystemCardData } from './SystemCard'
 import { VoucherApplyButton } from './VoucherApplyButton'
@@ -41,6 +45,18 @@ function Head({
       highlight={section.highlight}
       lead={section.lead}
     />
+  )
+}
+
+/** The ЦПО professions; without any, no section. */
+async function ProfessionsSection({ section, id }: { section: Section; id: string }) {
+  const directions = groupByDirection(await getProfessions())
+  if (directions.length === 0) return null
+  return (
+    <Wrap section={section} id={id}>
+      {'heading' in section && <Head section={section} id={id} />}
+      <ProfessionsList directions={directions} />
+    </Wrap>
   )
 }
 
@@ -150,6 +166,15 @@ function SectionContent({ section, index }: { section: Section; index: number })
         </Wrap>
       )
     }
+    case 'professions':
+      return <ProfessionsSection section={section} id={id} />
+    case 'exams':
+      return (
+        <Wrap section={section} id={id}>
+          <Head section={section} id={id} />
+          <ExamsTable caption={section.heading ?? ''} />
+        </Wrap>
+      )
     case 'faq': {
       const items = section.items ?? []
       if (items.length === 0) return null

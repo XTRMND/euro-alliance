@@ -1,0 +1,23 @@
+.columns {
+  padding-top: 18px;
+}
+
+/* Inline blocks, so each card's tape (above the card) stays in the card's column. */
+.columns > * {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 28px;
+  vertical-align: top;
+  break-inside: avoid;
+}
+
+@media (min-width: 1024px) {
+  .columns {
+    column-count: 2;
+    column-gap: 32px;
+  }
+
+  .columns > * {
+    margin-bottom: 32px;
+  }
+}
