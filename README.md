@@ -84,6 +84,10 @@ Inquiry emails are sent right after an inquiry is stored; a failed send is retri
 
   For example: `* * * * * curl -fsS -H "Authorization: Bearer $CRON_SECRET" https://<site>/api/payload-jobs/run`.
 
+### Analytics
+
+Set `GA4_MEASUREMENT_ID` to the GA4 property's measurement ID (`G-…`); it's read when a page is served, so changing it needs a restart, not a build. Without it, or with the placeholder `G-XXXXXXXXXX`, no tag loads. With it, gtag.js still loads only after a visitor allows statistics cookies (Consent Mode basic), and its cookies expire within 12 months. In the GA4 property, mark `wizard_submit` as a key event (Admin → Data display → Events). The events and their parameters are in [`docs/measurement.md`](docs/measurement.md).
+
 ## Working on the project
 
 - [`docs/pr-plan.md`](docs/pr-plan.md) is the build order. Each step is pushed to `main` once every check passes locally, and CI runs again on `main`.

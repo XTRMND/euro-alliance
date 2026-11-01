@@ -1,7 +1,9 @@
-// Analytics events (docs/measurement.md § 1). Components call track() from PR 8 on; until PR 20
-// connects GA4 behind statistics consent it does nothing. Event names and their params are typed,
-// so a typo fails the build. Never put personal data in an event: no names, emails, phone numbers,
-// file names or message text.
+import { readConsent } from './consent'
+
+// Analytics events (docs/measurement.md § 1), sent to GA4 through gtag.js only with statistics
+// consent (Consent Mode basic). Event names and their params are typed, so a typo fails the
+// build. Never put personal data in an event: no names, emails, phone numbers, file names or
+// message text.
 
 type Placement = 'header' | 'footer' | 'page' | 'contact'
 
@@ -47,8 +49,23 @@ export function cleanSearchTerm(query: string): string {
     .slice(0, 100)
 }
 
+type Gtag = (...args: unknown[]) => void
+
+/** The page's `gtag`, defined by the consent head script (src/lib/consent.ts). */
+export function gtag(...args: unknown[]): void {
+  ;(window as unknown as { gtag?: Gtag }).gtag?.(...args)
+}
+
+/** A GA4 measurement ID, or undefined for a missing or placeholder one (G-XXXXXXXXXX). */
+export function measurementIdOf(value: string | undefined): string | undefined {
+  return value && /^G-[A-Z0-9]{4,}$/.test(value) && !/^G-X+$/.test(value) ? value : undefined
+}
+
+/**
+ * Sends an event to GA4, only with statistics consent. Queued in `dataLayer` until gtag.js has
+ * loaded (src/components/shell/GoogleAnalytics.tsx); nothing reaches Google before consent.
+ */
 export function track<E extends AnalyticsEvent>(event: E, params: AnalyticsEvents[E]): void {
-  // PR 20: send to GA4 once statistics consent is granted and gtag has loaded.
-  void event
-  void params
+  if (typeof window === 'undefined' || !readConsent()?.statistics) return
+  gtag('event', event, params)
 }

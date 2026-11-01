@@ -257,7 +257,7 @@ Waiting on the client:
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist).
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
 - English content.
-- Viewer access to GA4 and Search Console.
+- Viewer access to GA4 and Search Console, and the GA4 measurement ID for the new site (PR 20).
 - The classroom photo in the homepage hero: seeded from Figma's crop of its image fill (666 × 796). A full-resolution original would serve large screens better.
 - The translation agency's languages (the `translation` global): Figma shows only Български and Немски. Until the list exists, the language pair of «Изпратете документ» is hidden.
 - Courses and news: never seeded, so the homepage's «Предстоящи курсове» and «Новини и проекти» stay hidden until the client adds them or the import (PR 21) brings them in.
@@ -441,13 +441,18 @@ From the 404 page and the redirects (PR 19):
 - 404 on a phone: Figma sets the scrap's «404» at 88 px, off-centre, not scaled with the scrap. [as Figma] The search placeholder wraps to two lines in the frame; a text field can't, so it's cut short on a phone. The scrap's shadow is CSS (in Figma's SVG it was cut off at the file's edges, as on the About photo).
 - No Lighthouse on the 404 page: a 404 status stops the audit.
 
+From the analytics (PR 20):
+- GA4 needs the measurement ID (`GA4_MEASUREMENT_ID`): the client's existing property or a new one. Until it's set, no tag loads. The property's owner marks `wizard_submit` as the key event (README).
+- Built as proposed in `docs/measurement.md`: gtag.js (not GTM), Consent Mode basic, no Facebook Pixel. The anonymous consent counter isn't built.
+- Phone and email links in the CMS navigation report `tel_click` / `mailto_click` with the header's or footer's placement; their office is «other» (none are in the navigation today).
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.
 - Inquiry routing for non-language programmes (default: office@).
 - Upload limits for translation documents.
-- gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`; PR 17 built basic).
+- gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`; PR 17 and 20 built gtag.js, no Pixel, basic).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
 - Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning (PR 19 uses the proposals; see above).
 - Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.

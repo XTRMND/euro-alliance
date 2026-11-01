@@ -5,17 +5,18 @@ import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
 import { Tape } from '@/components/visuals/Tape'
 import type bg from '@/messages/bg.json'
-import { track } from '@/lib/analytics'
+import { gtag, track } from '@/lib/analytics'
 import {
   type Consent,
   type ConsentCategory,
   consentCategories,
+  consentChangeEvent,
   consentChoice,
   consentCookie,
   consentMaxAge,
   consentMode,
   makeConsent,
-  parseConsent,
+  readConsent,
   serializeConsent,
   siteCookies,
   withdrawnCookies,
@@ -32,28 +33,13 @@ import styles from './CookieConsent.module.css'
 /** The `consent` messages, passed as they are: no next-intl runtime on every page for them. */
 type ConsentLabels = typeof bg.consent
 
-type Gtag = (...args: unknown[]) => void
 const all = { functional: true, statistics: true, marketing: true }
 const none = { functional: false, statistics: false, marketing: false }
-
-function readConsent(): Consent | null {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${consentCookie}=([^;]*)`))
-  return parseConsent(match?.[1])
-}
 
 function store(consent: Consent) {
   const secure = location.protocol === 'https:' ? '; Secure' : ''
   document.cookie = `${consentCookie}=${serializeConsent(consent)}; Max-Age=${consentMaxAge}; Path=/; SameSite=Lax${secure}`
   document.documentElement.setAttribute('data-consent', 'set')
-  const page = window as unknown as { gtag?: Gtag; dataLayer?: unknown[] }
-  const dataLayer = (page.dataLayer ??= [])
-  const gtag: Gtag =
-    page.gtag ??
-    function () {
-      // gtag's own convention: the `arguments` object, not an array.
-      // eslint-disable-next-line prefer-rest-params
-      dataLayer.push(arguments)
-    }
   gtag('consent', 'update', consentMode(consent))
   // A withdrawn category's cookies go with it.
   for (const category of consentCategories) {
@@ -68,6 +54,8 @@ function store(consent: Consent) {
       }
     }
   }
+  // GA4 loads or stops first (GoogleAnalytics), so its config is queued before this event.
+  window.dispatchEvent(new Event(consentChangeEvent))
   track('cookie_consent', {
     choice: consentChoice(consent),
     functional: consent.functional,

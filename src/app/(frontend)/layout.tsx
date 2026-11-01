@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import { getMessages } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
+import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
 import { Footer } from '@/components/shell/Footer'
 import { Header } from '@/components/shell/Header'
 import { SkipLink } from '@/components/shell/SkipLink'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
+import { measurementIdOf } from '@/lib/analytics'
 import { consentHeadScript } from '@/lib/consent'
 import { fontVariables } from '@/styles/fonts'
 import '@/styles/tokens.css'
@@ -30,6 +32,8 @@ export const metadata: Metadata = {
 }
 
 export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
+  // Read when the page is served, so the ID can change without a new build.
+  const measurementId = measurementIdOf(process.env.GA4_MEASUREMENT_ID)
   const [navigation, site, offices, messages] = await Promise.all([
     getNavigation(),
     getSite(),
@@ -49,6 +53,7 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
       <body>
         <SkipLink />
         <CookieConsent labels={messages.consent} />
+        {measurementId && <GoogleAnalytics measurementId={measurementId} />}
         <Header navigation={navigation} office={office} />
         <main id="main" tabIndex={-1}>
           {children}

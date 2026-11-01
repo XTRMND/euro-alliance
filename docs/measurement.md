@@ -4,22 +4,26 @@ Two jobs: analytics events on the new site (behind consent), and the before/afte
 
 ## 1. Analytics on the new site
 
-### Decisions for the user (before PR 20)
+### Decisions (PR 20)
 
-| Question | Proposal |
+| Question | Built |
 |---|---|
-| GA4 property | Reuse the client's existing GA4 property if the client grants access, so history stays in one place; otherwise a new property. |
+| GA4 property | The client's existing property if they grant access, so history stays in one place; otherwise a new one. The measurement ID goes in `GA4_MEASUREMENT_ID` (open item). |
 | gtag.js or GTM | **gtag.js** directly: fewer scripts, a tighter Content Security Policy. GTM only if the client's marketing needs it. |
-| Facebook Pixel | Drop it unless the client confirms they use it. If kept, it loads only with marketing consent. |
+| Facebook Pixel | Not added. If the client uses it, it loads only with marketing consent (its cookies are already removed on withdrawal). |
 | Consent Mode | **Basic**: no Google tag loads until statistics consent (`docs/motion.md` § 7). |
+| Consent counter | The anonymous per-choice counter below isn't built: the user decides. |
 
 ### Implementation
 
-- `src/lib/analytics.ts` exports `track(event, params)`. It does nothing unless statistics consent is granted and the analytics script has loaded. Components call `track()` from PR 8 onwards; PR 20 connects it to GA4.
+- `src/lib/analytics.ts` exports `track(event, params)`. It sends nothing without statistics consent; with it, the event is queued in `dataLayer` (the head script defines `gtag`) until gtag.js has loaded.
+- `src/components/shell/GoogleAnalytics.tsx` loads gtag.js when statistics is granted, at the first visit or later from the banner or the settings, and sets `ga-disable-<id>` when it's withdrawn (the `_ga` cookies are deleted then). The measurement ID is read on the server when a page is served: no tag without it or with the placeholder.
 - Typed events: a TypeScript union of the event names and their params, so a typo fails the build.
-- **No personal data in events.** Never send names, emails, phone numbers, file names or message text. The `search` term is cleaned first: anything that looks like an email address, a phone number or a long digit sequence is replaced with `[redacted]`.
-- GA4 cookie expiry: `cookie_expires` at most 31536000 seconds (no cookie lives longer than 12 months).
-- Mark `wizard_submit` as the key event (conversion) in GA4. `tel_click`, `mailto_click`, `enrol_click` and `voucher_apply_click` are secondary.
+- **No personal data in events.** Never send names, emails, phone numbers, file names or message text. The `search` term is cleaned first (`cleanSearchTerm`): anything that looks like an email address, a phone number or a long digit sequence is replaced with `[redacted]`.
+- GA4 cookie expiry: `cookie_expires` 31536000 seconds (no cookie lives longer than 12 months).
+- Page views on client navigation come from GA4's enhanced measurement (browser history changes, on by default).
+- **For the owner of the GA4 property:** mark `wizard_submit` as the key event (Admin → Data display → Events). `tel_click`, `mailto_click`, `enrol_click` and `voucher_apply_click` are secondary.
+- Tests: `tests/e2e/analytics.spec.ts` runs the server with a test ID and a stubbed gtag.js: nothing reaches Google before consent or with essential cookies only; with statistics the config (12-month cookies) is queued before the events; withdrawing stops GA.
 
 ### Events
 

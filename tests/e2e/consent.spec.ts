@@ -12,6 +12,13 @@ const stored = async (page: Page) =>
 
 const banner = (page: Page) => page.getByRole('region', { name: 'Бисквитки' })
 
+// gtag.js loads once statistics is granted («Приеми всички»): stubbed, nothing leaves the machine.
+test.beforeEach(async ({ page }) => {
+  await page.route('https://www.googletagmanager.com/**', (route) =>
+    route.fulfill({ contentType: 'text/javascript', body: '' }),
+  )
+})
+
 test('a first visit sets no cookie and asks nobody else', async ({ page, baseURL }) => {
   const hosts = new Set<string>()
   page.on('request', (request) => hosts.add(new URL(request.url()).host))

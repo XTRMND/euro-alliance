@@ -5,6 +5,9 @@
 // doesn't set.
 
 export const consentCookie = 'ea_consent'
+/** Dispatched on `window` when the visitor makes or changes a choice. */
+export const consentChangeEvent = 'ea:consent-change'
+
 /** Raise it when the categories change: everyone is asked again. */
 export const consentVersion = 1
 /** 180 days: «Избора ви за бисквитките помним 6 месеца». */
@@ -93,9 +96,16 @@ export const siteCookies: Record<'essential' | ConsentCategory, string[]> = {
 }
 
 /**
- * The inline script that runs before anything else: Consent Mode's defaults, the stored choice
- * applied, and `data-consent` on <html> so the banner is hidden from the first paint.
+ * The inline script that runs before anything else: `gtag` (a queue in `dataLayer` until gtag.js
+ * loads), Consent Mode's defaults, the stored choice applied, and `data-consent` on <html> so the
+ * banner is hidden from the first paint.
  */
 export function consentHeadScript(): string {
-  return `(function(){window.dataLayer=window.dataLayer||[];function g(){dataLayer.push(arguments)}g('consent','default',${JSON.stringify({ ...consentModeDefaults, wait_for_update: 500 })});var m=document.cookie.match(/(?:^|; )${consentCookie}=([^;]*)/);if(!m)return;try{var c=JSON.parse(decodeURIComponent(m[1]));if(c.v!==${consentVersion})return;document.documentElement.setAttribute('data-consent','set');var s=function(o){return o?'granted':'denied'};g('consent','update',{analytics_storage:s(c.statistics),ad_storage:s(c.marketing),ad_user_data:s(c.marketing),ad_personalization:s(c.marketing),functionality_storage:s(c.functional),personalization_storage:s(c.functional)})}catch(e){}})()`
+  return `(function(){window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};var g=window.gtag;g('consent','default',${JSON.stringify({ ...consentModeDefaults, wait_for_update: 500 })});var m=document.cookie.match(/(?:^|; )${consentCookie}=([^;]*)/);if(!m)return;try{var c=JSON.parse(decodeURIComponent(m[1]));if(c.v!==${consentVersion})return;document.documentElement.setAttribute('data-consent','set');var s=function(o){return o?'granted':'denied'};g('consent','update',{analytics_storage:s(c.statistics),ad_storage:s(c.marketing),ad_user_data:s(c.marketing),ad_personalization:s(c.marketing),functionality_storage:s(c.functional),personalization_storage:s(c.functional)})}catch(e){}})()`
+}
+
+/** The choice stored in this browser (client only). */
+export function readConsent(): Consent | null {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${consentCookie}=([^;]*)`))
+  return parseConsent(match?.[1])
 }

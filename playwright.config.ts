@@ -25,7 +25,14 @@ export default defineConfig({
     : {
         command: 'pnpm start',
         // The server reads DATABASE_URL and PAYLOAD_SECRET from the environment or .env.
-        env: { ...process.env, PORT: String(port), DEV_PAGES: 'true' } as Record<string, string>,
+        // A test GA4 ID: analytics.spec.ts checks the tag loads only with consent (gtag.js is
+        // stubbed in the tests that grant it).
+        env: {
+          ...process.env,
+          PORT: String(port),
+          DEV_PAGES: 'true',
+          GA4_MEASUREMENT_ID: 'G-TEST123456',
+        } as Record<string, string>,
         url: baseURL,
       },
 })
