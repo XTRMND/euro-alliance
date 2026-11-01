@@ -1,0 +1,111 @@
+/* The strip sets --marquee-gap (between items and after the last one), --marquee-bg,
+   --marquee-control (the pause button's colour) and, on navy, --marquee-focus-ring. */
+.marquee {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--marquee-bg, transparent);
+}
+
+.viewport {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.set {
+  display: flex;
+  flex: none;
+  gap: var(--marquee-gap);
+  align-items: center;
+  margin: 0;
+  padding: 0 var(--marquee-gap) 0 0;
+  list-style: none;
+}
+
+.marquee[data-ready] .track {
+  animation: strip var(--strip-duration) linear infinite;
+}
+
+.marquee[data-ready]:not([data-offscreen]) .track {
+  will-change: transform;
+}
+
+.marquee:is([data-offscreen], [data-paused]) .track,
+.viewport:is(:hover, :focus-within) .track {
+  animation-play-state: paused;
+}
+
+@keyframes strip {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Pause / play (not in Figma; docs/motion.md § 3): a 32px ring at the end of the strip, over the
+   moving items, with the strip's own background behind it. */
+.toggle {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  background: var(--marquee-bg, var(--color-bg-warm));
+  color: var(--marquee-control);
+  cursor: pointer;
+  transform: translateY(-50%);
+}
+
+.toggle:focus-visible {
+  outline: var(--marquee-focus-ring, var(--focus-ring));
+}
+
+.toggle::before {
+  content: '';
+  width: 10px;
+  height: 12px;
+  background: currentColor;
+  clip-path: polygon(0 0, 35% 0, 35% 100%, 0 100%, 0 0, 65% 0, 100% 0, 100% 100%, 65% 100%, 65% 0);
+}
+
+.marquee[data-paused] .toggle::before {
+  clip-path: polygon(15% 0, 100% 50%, 15% 100%);
+}
+
+/* Reduced motion: one still set, wrapping if it doesn't fit, and nothing to pause. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee[data-ready] .track {
+    animation: none;
+  }
+
+  .viewport {
+    overflow: visible;
+  }
+
+  .track {
+    width: auto;
+  }
+
+  .set {
+    flex-wrap: wrap;
+    flex: 1;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .set ~ .set,
+  .toggle {
+    display: none;
+  }
+}

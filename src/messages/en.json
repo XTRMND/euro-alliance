@@ -1,4 +1,8 @@
 {
+  "common": {
+    "pauseAnimation": "Pause animation",
+    "playAnimation": "Play animation"
+  },
   "header": {
     "skipLink": "Skip to content",
     "logoLabel": "Euro Alliance, home",
@@ -22,5 +26,14 @@
   },
   "projectCard": {
     "goals": "Project goals"
+  },
+  "languageStrip": {
+    "english": "English",
+    "german": "Deutsch",
+    "french": "Français",
+    "spanish": "Español",
+    "italian": "Italiano",
+    "russian": "Русский",
+    "bulgarian": "Български"
   }
 }

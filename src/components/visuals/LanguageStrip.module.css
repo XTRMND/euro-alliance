@@ -1,0 +1,37 @@
+/* Marquee / Languages (63:524): 56px navy strip, Extra Condensed ExtraBold 29px, 22px between a
+   name and its 4.8px sand dot and between the dot and the next name. Sand on navy is 5.5:1. */
+.strip {
+  --marquee-gap: 22px;
+  --marquee-bg: var(--color-brand-primary-strong);
+  --marquee-control: var(--color-text-on-brand);
+  --marquee-focus-ring: var(--focus-ring-on-brand);
+
+  min-height: var(--strip-height);
+}
+
+.item {
+  display: flex;
+  gap: var(--marquee-gap);
+  align-items: center;
+  font: 800 1.8125rem / normal var(--font-display);
+  color: var(--color-text-on-brand);
+  white-space: nowrap;
+}
+
+.item:nth-child(even) {
+  color: var(--color-brand-accent);
+}
+
+.item::after {
+  content: '';
+  width: 4.8px;
+  height: 4.8px;
+  border-radius: 50%;
+  background: var(--color-brand-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strip {
+    padding-block: 10px;
+  }
+}

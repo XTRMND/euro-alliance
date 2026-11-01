@@ -1,4 +1,8 @@
 {
+  "common": {
+    "pauseAnimation": "Спри движението",
+    "playAnimation": "Пусни движението"
+  },
   "header": {
     "skipLink": "Към съдържанието",
     "logoLabel": "Евро Алианс, начало",
@@ -22,5 +26,14 @@
   },
   "projectCard": {
     "goals": "Цели на проекта"
+  },
+  "languageStrip": {
+    "english": "English",
+    "german": "Deutsch",
+    "french": "Français",
+    "spanish": "Español",
+    "italian": "Italiano",
+    "russian": "Русский",
+    "bulgarian": "Български"
   }
 }
