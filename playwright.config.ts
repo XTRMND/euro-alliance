@@ -15,6 +15,9 @@ export default defineConfig({
   use: {
     baseURL,
     trace: 'retain-on-failure',
+    // A stored «Само задължителни» choice, so the cookie banner covers no page under test;
+    // tests/e2e/consent.spec.ts starts without it.
+    storageState: 'tests/e2e/consented.json',
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: process.env.E2E_BASE_URL

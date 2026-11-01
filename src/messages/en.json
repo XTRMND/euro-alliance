@@ -438,5 +438,44 @@
       "open": "View full size: {title}",
       "close": "Close"
     }
+  },
+  "consent": {
+    "title": "Cookies",
+    "text": "We use essential cookies so the site works. With your consent we also use cookies for statistics and a better experience.",
+    "essentialOnly": "Essential only",
+    "acceptAll": "Accept all",
+    "settings": "Settings",
+    "settingsTitle": "Cookie settings",
+    "settingsText": "Choose which cookies we may use. You can change your choice at any time.",
+    "save": "Save my choice",
+    "close": "Close",
+    "alwaysOn": "Always on",
+    "category": {
+      "essential": {
+        "name": "Essential",
+        "description": "Needed for the site to work: session, form security, remembering your cookie choice."
+      },
+      "functional": {
+        "name": "Functional",
+        "description": "Remember settings such as the language."
+      },
+      "statistics": {
+        "name": "Statistics",
+        "description": "Help us understand how the site is used. The data is aggregated."
+      },
+      "marketing": {
+        "name": "Marketing",
+        "description": "Used only if we show ads or content from social networks."
+      }
+    },
+    "cookies": "Cookies in this category",
+    "noCookies": "The site sets no such cookies at the moment.",
+    "cookie": {
+      "ea_consent": {
+        "provider": "ЕВРО-АЛИАНС",
+        "purpose": "Remembers your cookie choice.",
+        "duration": "6 months"
+      }
+    }
   }
 }

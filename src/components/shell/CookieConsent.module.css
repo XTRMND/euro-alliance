@@ -1,0 +1,196 @@
+/* Cookie consent (223:398): a white card, 18px radius, taped, floating 28px above the bottom
+   (16 on a phone), at most 980 wide; no backdrop. The settings dialog is 560 wide. */
+.banner {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  z-index: 30;
+  display: grid;
+  gap: 16px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  border-radius: 18px;
+  background: var(--color-bg-page);
+  box-shadow: 0 16px 20px rgb(var(--shadow-rgb) / 0.18);
+}
+
+/* Hidden from the first paint when a choice is stored (the head script sets data-consent). */
+:global(html[data-consent]) .banner {
+  display: none;
+}
+
+.tape {
+  left: 38px;
+  width: 100px;
+  height: 26px;
+  rotate: 4deg;
+  transform: none;
+}
+
+.text {
+  display: grid;
+  gap: 4px;
+}
+
+.title {
+  font: 800 1.625rem / 1.5 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.lead {
+  font: 400 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* On a phone the two choices first, full width, «Настройки» under them. */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.settings {
+  order: 3;
+  align-self: center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .banner {
+    animation: banner-in var(--motion-landing) var(--ease-out) 600ms both;
+  }
+}
+
+@keyframes banner-in {
+  from {
+    opacity: 0;
+    translate: 0 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .banner {
+    bottom: 28px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: center;
+    padding: 24px 28px;
+  }
+
+  .actions {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .settings {
+    order: 0;
+  }
+}
+
+/* Settings (223:365). */
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  padding: 24px 20px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--color-bg-page);
+  box-shadow: 0 16px 20px rgb(var(--shadow-rgb) / 0.18);
+  overflow: visible auto;
+}
+
+.dialog[open] {
+  display: grid;
+  gap: 16px;
+}
+
+.dialog::backdrop {
+  background: rgb(var(--shadow-rgb) / 0.4);
+}
+
+.dialogHead {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.dialogTitle {
+  font: 800 1.875rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.close {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-bg-warm);
+  font: 800 1.5rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  cursor: pointer;
+}
+
+.categories {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.category {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.categoryText {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  font: 400 0.875rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.categoryName {
+  font: 600 1rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.cookies {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.cookies code {
+  font: 600 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.dialogActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+@media (max-width: 767px) {
+  .dialogActions > * {
+    flex: 1 1 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .dialog {
+    padding: 24px 28px;
+  }
+}

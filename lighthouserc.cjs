@@ -80,6 +80,14 @@ module.exports = {
       startServerCommand: `PORT=${port} pnpm start`,
       url: paths.map(url),
       numberOfRuns: 3,
+      // A stored cookie choice, so the consent banner isn't measured as part of every page
+      // (tests/e2e/consented.json).
+      settings: {
+        extraHeaders: JSON.stringify({
+          Cookie:
+            'ea_consent=%7B%22v%22%3A1%2C%22ts%22%3A1798761600000%2C%22functional%22%3Afalse%2C%22statistics%22%3Afalse%2C%22marketing%22%3Afalse%7D',
+        }),
+      },
     },
     assert: { assertMatrix: assertMatrix({ performance: 0.9 }) },
     upload: {
