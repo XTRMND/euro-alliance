@@ -22,8 +22,11 @@
   flex: none;
 }
 
+/* No width of its own (a text field's default is about 20 characters): it takes what's left, so
+   the field never widens its column on a phone. */
 .input {
   flex: 1;
+  width: 0;
   min-width: 0;
   height: 100%;
   border: 0;
