@@ -477,5 +477,10 @@
         "duration": "6 месеца"
       }
     }
+  },
+  "legal": {
+    "contents": "Съдържание",
+    "updated": "Последна актуализация: {date}",
+    "downloadPdf": "Изтегли като PDF"
   }
 }

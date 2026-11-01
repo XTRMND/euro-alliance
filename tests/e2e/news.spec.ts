@@ -4,7 +4,9 @@ import { devRoutes, routes } from '@/lib/routes'
 // The news pages (PR 15). CI's database has no news, so the listing shows its hero and empty
 // line, and the article's parts are checked on the dev gallery's fake article.
 
-test.use({ viewport: { width: 1440, height: 900 } })
+// Reduced motion: anchors jump instead of scrolling smoothly, which under a busy CPU can outlast
+// the assertion's timeout (the tests are about where the links lead, not the motion).
+test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })
 
 test('the listing has its hero, and a page past the last is not found', async ({ page }) => {
   await page.goto(routes.news())
@@ -21,6 +23,14 @@ test('the article’s contents rail links its sections and follows the reading',
   await rail.getByRole('link', { name: 'Тестов раздел две' }).click()
   await expect(page.locator('#testov-razdel-dve')).toBeInViewport()
   await expect(rail.getByRole('link', { name: 'Тестов раздел две' })).toHaveAttribute(
+    'aria-current',
+    'location',
+  )
+
+  // Scrolling by hand: the section at the top of the screen again.
+  await page.mouse.move(720, 450)
+  await page.mouse.wheel(0, 400)
+  await expect(rail.getByRole('link', { name: 'Тестов раздел три' })).toHaveAttribute(
     'aria-current',
     'location',
   )

@@ -89,4 +89,23 @@
     text-transform: uppercase;
     color: var(--color-text-muted);
   }
+
+  /* Without the labels (226:2834): the values one under the other, 4px apart, a rule above
+     every row. */
+  .plain {
+    padding: 8px 22px;
+  }
+
+  .plain .row td {
+    display: block;
+    padding: 2px 0;
+  }
+
+  .plain .row td::before {
+    content: none;
+  }
+
+  .plain tbody > .row:first-child {
+    border-top: 1px solid var(--color-border-default);
+  }
 }

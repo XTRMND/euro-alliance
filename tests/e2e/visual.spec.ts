@@ -21,6 +21,8 @@ const snapshots = [
   { name: 'translations', path: routes.translations() },
   { name: 'news', path: routes.news() },
   { name: 'about', path: routes.about() },
+  { name: 'privacy', path: routes.privacy() },
+  { name: 'cookies', path: routes.cookies() },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },

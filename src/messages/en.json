@@ -477,5 +477,10 @@
         "duration": "6 months"
       }
     }
+  },
+  "legal": {
+    "contents": "Contents",
+    "updated": "Last updated: {date}",
+    "downloadPdf": "Download as PDF"
   }
 }

@@ -3,7 +3,9 @@ import { aboutSections, routes } from '@/lib/routes'
 
 // The About page (PR 16), from the seeded `about` global.
 
-test.use({ viewport: { width: 1440, height: 900 } })
+// Reduced motion: anchors jump instead of scrolling smoothly, which under a busy CPU can outlast
+// the assertion's timeout (the tests are about where the links lead, not the motion).
+test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' })
 
 test('the subnav links the sections and marks the one in view', async ({ page }) => {
   await page.goto(routes.about())

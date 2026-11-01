@@ -1,0 +1,131 @@
+/* Legal hero (218:2858 / 226:2612): breadcrumb, H1 72 (44 on a phone) at line height 1, then the
+   company line. 44px above (24 on a phone), as on the Page hero: with the site's header that puts
+   the breadcrumb where Figma's frame has it (its padding says 56). 32 below, 14 between rows. */
+.hero {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(24px, 16.57px + 1.905vw, 44px) var(--page-margin) 32px; /* 24 → 44 */
+}
+
+.title {
+  font: 800 clamp(2.75rem, 2.1rem + 2.667vw, 4.5rem) / 1 var(--font-display); /* 44 → 72 */
+  color: var(--color-brand-primary-strong);
+}
+
+.title > span {
+  padding: 0 0.167em 0.056em;
+  transform: rotate(1.5deg);
+}
+
+.kicker {
+  font: 700 1rem / 1.65 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Body (218:2870 / 226:2724): the contents rail (240) and the text (720), 64px apart from 1024px;
+   on a phone the contents box above the text. */
+.body {
+  display: grid;
+  gap: 16px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-margin) 48px;
+}
+
+.contents {
+  min-width: 0;
+}
+
+/* The text (218:2888): 18px between blocks, and 10 more above each H2 but the first. */
+.text {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  min-width: 0;
+  padding-top: 10px;
+}
+
+.section {
+  display: grid;
+  gap: 18px;
+}
+
+.section + .section {
+  margin-top: 28px;
+}
+
+.h2 {
+  font: 800 clamp(1.75rem, 1.611rem + 0.571vw, 2.125rem) / 1.04 var(--font-display); /* 28 → 34 */
+  color: var(--color-brand-primary-strong);
+  scroll-margin-top: 16px;
+}
+
+.section > p {
+  font: 400 clamp(1.0625rem, 1.039rem + 0.095vw, 1.125rem) / 1.65 var(--font-body); /* 17 → 18 */
+  color: var(--color-text-primary);
+}
+
+.section a:not([class]) {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  overflow-wrap: anywhere;
+}
+
+/* Numbered lists (222:3165): the List pattern, its text regular with a semibold lead. */
+.list > li > span:first-child {
+  font-size: clamp(1.0625rem, 0.947rem + 0.476vw, 1.375rem); /* 17 → 22 */
+}
+
+.itemText {
+  font: 400 1.0625rem / 1.55 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.itemText strong {
+  font-weight: 600;
+}
+
+.button {
+  justify-self: start;
+}
+
+/* The cookie table (224:3350): navy text, the first column semibold. */
+.cell,
+.cellFirst {
+  font: 400 1rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.cellFirst {
+  font-weight: 600;
+}
+
+/* «Последна актуализация» and «Изтегли като PDF» (222:3196): one row, the button below the date
+   on a phone. */
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.updated {
+  font: 500 0.875rem / 1.65 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: 240px minmax(0, 720px);
+    gap: 64px;
+    padding-top: 24px;
+    padding-bottom: 80px;
+  }
+}

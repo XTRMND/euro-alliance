@@ -15,6 +15,8 @@ export const pages = [
   { name: 'Translations', path: routes.translations() },
   { name: 'News', path: routes.news() },
   { name: 'About', path: routes.about() },
+  { name: 'Privacy', path: routes.privacy() },
+  { name: 'Cookies', path: routes.cookies() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },

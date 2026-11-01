@@ -409,13 +409,28 @@ From the About page (PR 16):
 - The Details ticket is now a shared pattern (`src/components/patterns/Ticket`), used by the course page and the About page's «Какво ви гарантираме».
 - Landing (216:3278): the copy fades up; the torn window turns in from −3° without fading (the LCP element); the logo bubble turns in from 40°.
 
+From the legal pages and the cookie consent (PR 17):
+- The policies' «Последна актуализация» date isn't seeded: there's no verified date. Ask the client for the date each text took effect; the line shows once it's set in the admin. «Изтегли като PDF» shows when a PDF is uploaded to the page (no PDF in Figma), as a download link.
+- The policies' texts promise what the site must do; to confirm with the client: «сесия, сигурност на формите» as essential cookies (the site sets neither: `ea_consent` is its only cookie); «Документите за превод пазим до приключване на поръчката» (the retention job never deletes the files of an inquiry marked as a contract: what is «приключване» in the admin?); «до една година след последния контакт» (the job counts from the inquiry's creation); «нашия хостинг доставчик» (the servers are the user's own; no retention period for the logs); the SMTP provider and the CDN aren't named as recipients; «www.euro-alliance.net» holds only if the new site keeps the domain.
+- The contents rail uses Figma's shorter labels, stored per section; the H2 ids come from them (`#vashite-prava`). No reading time or progress bar, as in Figma. [as described]
+- The cookie page's kicker says «Администратор на лични данни», copied from the privacy page in Figma. [Figma's text]
+- List numbers navy, not sand (the sand-on-navy rule). The mobile table stacks without per-cell labels, as in Figma (Data table's `stackLabels={false}`). The legal hero is 72/44 at line height 1 with the company line, not the Page hero's 76/52 and lead.
+- In-text mentions of «Настройки на бисквитките» stay text, as in Figma; the footer button opens the settings.
+- Banner buttons: Figma's screenshot has «Само задължителни» as Secondary (outline) and «Приеми всички» as Primary (filled); the description and `docs/motion.md` § 7 say equal weight. [Figma: same size and height, different fill] Make both the same style?
+- The mobile banner in Figma (View=Mobile) is broken: a fixed 2665 px row clips the actions. [the intended layout: the two buttons full width, «Настройки» under them] Settings on a phone has no design. [the 560 card as a near-full-width dialog; the list scrolls]
+- Settings: Figma has no close button. [a × with «Затвори»; Esc closes; closing without saving stores nothing] The locked essential toggle reads «Винаги включени» (proposed).
+- The cookie policy promises the full cookie list in Settings; Figma's Settings has none. [each category lists its cookies with provider, purpose and duration: today only `ea_consent`; empty categories say so]
+- No saved state in Figma. [the banner disappears] No banner motion in Figma. [it fades up 20 px after the page's landing; none with reduced motion]
+- Consent Mode v2, basic (proposed in `docs/motion.md` § 7): defaults denied, `security_storage` granted, and no Google tag loads before statistics consent (GA4 arrives in PR 20). Withdrawing statistics or marketing deletes their cookies.
+- Lighthouse and the e2e suite run with a stored choice (`tests/e2e/consented.json`), so the banner isn't measured on every page; `tests/e2e/consent.spec.ts` covers the first visit.
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.
 - Inquiry routing for non-language programmes (default: office@).
 - Upload limits for translation documents.
-- gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`).
+- gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`; PR 17 built basic).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
 - Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning.
 - Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.
