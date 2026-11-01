@@ -73,6 +73,17 @@ docs/                 the build brief: plan, Figma map, CMS schema, motion, i18n
 
 On start, the app applies any pending migrations and seeds an empty database. Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
 
+### Background jobs
+
+Inquiry emails are sent right after an inquiry is stored; a failed send is retried by a job, and a nightly job deletes inquiries older than a year that didn't lead to a contract. Run the jobs one of two ways:
+
+- **In the app:** `JOBS_AUTORUN=true`. Only with a single app server, or the servers would race.
+- **System cron:** set `CRON_SECRET` (32+ random characters) and call, with `Authorization: Bearer $CRON_SECRET`:
+  - every minute: `GET /api/payload-jobs/run`
+  - nightly: `GET /api/payload-jobs/handle-schedules`, then `GET /api/payload-jobs/run?queue=nightly`
+
+  For example: `* * * * * curl -fsS -H "Authorization: Bearer $CRON_SECRET" https://<site>/api/payload-jobs/run`.
+
 ## Working on the project
 
 - [`docs/pr-plan.md`](docs/pr-plan.md) is the build order. Each step is pushed to `main` once every check passes locally, and CI runs again on `main`.

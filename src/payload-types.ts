@@ -73,7 +73,10 @@ export interface Config {
     offices: Office;
     courses: Course;
     news: News;
+    inquiries: Inquiry;
+    'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
+    'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -90,7 +93,10 @@ export interface Config {
     offices: OfficesSelect<false> | OfficesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
+    inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
+    'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
+    'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -104,12 +110,16 @@ export interface Config {
     navigation: Navigation;
     home: Home;
     translation: Translation;
+    'inquiry-routing': InquiryRouting;
+    'payload-jobs-stats': PayloadJobsStat;
   };
   globalsSelect: {
     site: SiteSelect<false> | SiteSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
     translation: TranslationSelect<false> | TranslationSelect<true>;
+    'inquiry-routing': InquiryRoutingSelect<false> | InquiryRoutingSelect<true>;
+    'payload-jobs-stats': PayloadJobsStatsSelect<false> | PayloadJobsStatsSelect<true>;
   };
   locale: 'bg' | 'en';
   widgets: {
@@ -117,7 +127,15 @@ export interface Config {
   };
   user: User;
   jobs: {
-    tasks: unknown;
+    tasks: {
+      sendInquiryNotification: TaskSendInquiryNotification;
+      sendInquiryConfirmation: TaskSendInquiryConfirmation;
+      deleteExpiredInquiries: TaskDeleteExpiredInquiries;
+      inline: {
+        input: unknown;
+        output: unknown;
+      };
+    };
     workflows: unknown;
   };
 }
@@ -414,6 +432,59 @@ export interface News {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Пазят се 1 година, освен ако не са довели до договор.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries".
+ */
+export interface Inquiry {
+  id: number;
+  status: 'new' | 'in-progress' | 'contract' | 'closed';
+  topic?: ('courses' | 'vouchers' | 'professions' | 'teachers' | 'farmers' | 'computer' | 'translations') | null;
+  office?: ('plovdiv' | 'sofia') | null;
+  notes?: string | null;
+  name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  message?: string | null;
+  course?: (number | null) | Course;
+  /**
+   * Въпросите на съветника и отговорите, както са видени.
+   */
+  answers?:
+    | {
+        question?: string | null;
+        answer?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  files?: (number | InquiryFile)[] | null;
+  privacyAck: boolean;
+  sourcePage?: string | null;
+  routedTo?: string | null;
+  emailStatus?: ('pending' | 'sent' | 'failed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiry-files".
+ */
+export interface InquiryFile {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -429,6 +500,107 @@ export interface PayloadKv {
     | number
     | boolean
     | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs".
+ */
+export interface PayloadJob {
+  id: number;
+  /**
+   * Input data provided to the job
+   */
+  input?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  taskStatus?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  completedAt?: string | null;
+  totalTried?: number | null;
+  /**
+   * If hasError is true this job will not be retried
+   */
+  hasError?: boolean | null;
+  /**
+   * If hasError is true, this is the error that caused it
+   */
+  error?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Task execution log
+   */
+  log?:
+    | {
+        executedAt: string;
+        completedAt: string;
+        taskSlug: 'inline' | 'sendInquiryNotification' | 'sendInquiryConfirmation' | 'deleteExpiredInquiries';
+        taskID: string;
+        input?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        output?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        state: 'failed' | 'succeeded';
+        error?:
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+          | string
+          | number
+          | boolean
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  taskSlug?: ('inline' | 'sendInquiryNotification' | 'sendInquiryConfirmation' | 'deleteExpiredInquiries') | null;
+  queue?: string | null;
+  waitUntil?: string | null;
+  processing?: boolean | null;
+  meta?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -460,6 +632,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'news';
         value: number | News;
+      } | null)
+    | ({
+        relationTo: 'inquiries';
+        value: number | Inquiry;
+      } | null)
+    | ({
+        relationTo: 'inquiry-files';
+        value: number | InquiryFile;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -668,11 +848,89 @@ export interface NewsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiries_select".
+ */
+export interface InquiriesSelect<T extends boolean = true> {
+  status?: T;
+  topic?: T;
+  office?: T;
+  notes?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  course?: T;
+  answers?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  files?: T;
+  privacyAck?: T;
+  sourcePage?: T;
+  routedTo?: T;
+  emailStatus?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiry-files_select".
+ */
+export interface InquiryFilesSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
   key?: T;
   data?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs_select".
+ */
+export interface PayloadJobsSelect<T extends boolean = true> {
+  input?: T;
+  taskStatus?: T;
+  completedAt?: T;
+  totalTried?: T;
+  hasError?: T;
+  error?: T;
+  log?:
+    | T
+    | {
+        executedAt?: T;
+        completedAt?: T;
+        taskSlug?: T;
+        taskID?: T;
+        input?: T;
+        output?: T;
+        state?: T;
+        error?: T;
+        id?: T;
+      };
+  taskSlug?: T;
+  queue?: T;
+  waitUntil?: T;
+  processing?: T;
+  meta?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1011,6 +1269,44 @@ export interface Translation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiry-routing".
+ */
+export interface InquiryRouting {
+  id: number;
+  /**
+   * Тема (и офис за преводите) → пощенска кутия. Без правило запитването отива на office@.
+   */
+  rules?:
+    | {
+        topic: 'courses' | 'vouchers' | 'professions' | 'teachers' | 'farmers' | 'computer' | 'translations';
+        office?: ('plovdiv' | 'sofia') | null;
+        email: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs-stats".
+ */
+export interface PayloadJobsStat {
+  id: number;
+  stats?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site_select".
  */
 export interface SiteSelect<T extends boolean = true> {
@@ -1223,6 +1519,33 @@ export interface TranslationSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inquiry-routing_select".
+ */
+export interface InquiryRoutingSelect<T extends boolean = true> {
+  rules?:
+    | T
+    | {
+        topic?: T;
+        office?: T;
+        email?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "payload-jobs-stats_select".
+ */
+export interface PayloadJobsStatsSelect<T extends boolean = true> {
+  stats?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "collections_widget".
  */
 export interface CollectionsWidget {
@@ -1230,6 +1553,34 @@ export interface CollectionsWidget {
     [k: string]: unknown;
   };
   width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskSendInquiryNotification".
+ */
+export interface TaskSendInquiryNotification {
+  input: {
+    inquiry: number;
+  };
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskSendInquiryConfirmation".
+ */
+export interface TaskSendInquiryConfirmation {
+  input: {
+    inquiry: number;
+  };
+  output?: unknown;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskDeleteExpiredInquiries".
+ */
+export interface TaskDeleteExpiredInquiries {
+  input?: unknown;
+  output?: unknown;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

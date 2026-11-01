@@ -4,6 +4,7 @@ import * as migration_20261031_213646_drop_footer_legal from './20261031_213646_
 import * as migration_20261101_073529_navigation_groups from './20261101_073529_navigation_groups';
 import * as migration_20261101_111922_home_courses_news from './20261101_111922_home_courses_news';
 import * as migration_20261101_124621_course_page from './20261101_124621_course_page';
+import * as migration_20261101_130035_inquiries from './20261101_130035_inquiries';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20261101_124621_course_page.up,
     down: migration_20261101_124621_course_page.down,
-    name: '20261101_124621_course_page'
+    name: '20261101_124621_course_page',
+  },
+  {
+    up: migration_20261101_130035_inquiries.up,
+    down: migration_20261101_130035_inquiries.down,
+    name: '20261101_130035_inquiries'
   },
 ];

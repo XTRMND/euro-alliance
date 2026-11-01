@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import type { Payload } from 'payload'
 import type { Media } from '@/payload-types'
+import { defaultRouting } from '@/lib/inquiries'
 import { company, fundingLogo, home, homePhoto, navigation, offices, partners } from './data'
 
 function isEmpty(value: unknown): boolean {
@@ -29,6 +30,12 @@ export async function seed(payload: Payload) {
 
   await seedFundingLogo(payload)
   await seedHome(payload)
+
+  const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
+  if (isEmpty(routing.rules)) {
+    await payload.updateGlobal({ slug: 'inquiry-routing', data: { rules: defaultRouting } })
+    payload.logger.info('Seeded the inquiry routing.')
+  }
 
   const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {

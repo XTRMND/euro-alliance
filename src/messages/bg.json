@@ -158,5 +158,33 @@
     "italian": "Италиански",
     "bulgarian": "Български",
     "russian": "Руски"
+  },
+  "inquiryEmail": {
+    "topic": "Тема",
+    "office": "Офис",
+    "course": "Курс",
+    "name": "Име",
+    "email": "Имейл",
+    "phone": "Телефон",
+    "message": "Съобщение",
+    "files": "Прикачени файлове",
+    "open": "Запитването в администрацията",
+    "notificationSubject": "Ново запитване: {topic}, {name}",
+    "confirmationSubject": "Получихме запитването ви",
+    "confirmationText": "Здравейте, {name}!\n\nБлагодарим ви. Получихме запитването ви и ще се свържем с вас.\n\nЕвро Алианс",
+    "topics": {
+      "courses": "Курсове",
+      "vouchers": "Ваучери",
+      "professions": "Професионално обучение",
+      "teachers": "Педагогически специалисти",
+      "farmers": "Земеделски производители",
+      "computer": "Компютърни курсове",
+      "translations": "Преводи",
+      "none": "без тема"
+    },
+    "offices": {
+      "plovdiv": "Пловдив",
+      "sofia": "София"
+    }
   }
 }

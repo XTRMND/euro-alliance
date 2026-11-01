@@ -11,6 +11,8 @@ const root = path.resolve(/* turbopackIgnore: true */ process.env.MEDIA_DIR ?? '
 export const uploadDirs = {
   media: path.join(root, 'media'),
   tints: path.join(root, 'tints'),
+  /** Translation documents from inquiries: private, served only to logged-in staff. */
+  inquiries: path.join(root, 'inquiries'),
 }
 
 export function readUpload(dir: keyof typeof uploadDirs, filename: string): Promise<Buffer> {
