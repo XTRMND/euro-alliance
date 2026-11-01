@@ -1,0 +1,138 @@
+/* Mobile menu (121:1399) and the menu button from Header Mobile (114:295). */
+
+.open {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-button);
+  background: transparent;
+  cursor: pointer;
+}
+
+/* Three 22 × 2.5px bars, 5px apart. */
+.bars,
+.bars::before,
+.bars::after {
+  display: block;
+  width: 22px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--color-brand-primary-strong);
+}
+
+.bars {
+  position: relative;
+}
+
+.bars::before,
+.bars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+}
+
+.bars::before {
+  top: -7.5px;
+}
+
+.bars::after {
+  top: 7.5px;
+}
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog :focus-visible {
+  outline: var(--focus-ring-on-brand);
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  padding: 10px 12px;
+}
+
+.close {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text-on-brand);
+  font: 600 1.375rem / 1.5 var(--font-body);
+  cursor: pointer;
+}
+
+.logo {
+  justify-self: center;
+  display: block;
+  width: 127px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.nav {
+  padding: 16px 24px 8px;
+}
+
+.nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+  font: 800 2.125rem / 0.96 var(--font-display);
+  text-decoration: none;
+}
+
+.link[aria-current='page'] {
+  color: var(--color-brand-accent);
+}
+
+.bottom {
+  display: grid;
+  gap: 12px;
+  margin-top: auto;
+  padding: 8px 24px 32px;
+}
+
+.cta {
+  width: 100%;
+}
+
+.contact {
+  font: 400 0.875rem / 1.5 var(--font-body);
+}
+
+.contact a {
+  color: inherit;
+  text-decoration: none;
+}

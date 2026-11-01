@@ -1,8 +1,11 @@
-// Empty app for the scaffold. PR 8 replaces this with the homepage.
+import { InquiryBand } from '@/components/shell/InquiryBand'
+
+// Stub until PR 8 builds the homepage; the inquiry band is here so the shell checks cover it.
 export default function HomePage() {
   return (
-    <main>
-      <h1>Евро Алианс</h1>
-    </main>
+    <>
+      <h1 className="sr-only">Евро Алианс</h1>
+      <InquiryBand />
+    </>
   )
 }

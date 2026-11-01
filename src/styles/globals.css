@@ -12,6 +12,9 @@ html {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   margin: 0;
   background: var(--color-bg-warm);
   color: var(--color-text-primary);
@@ -50,6 +53,20 @@ textarea {
 :focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-offset);
+}
+
+/* An open modal (the mobile menu) keeps the page behind it still. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* <main> takes focus from the skip link and the logo; the content shows where you are. */
+main {
+  flex: 1;
+}
+
+main:focus {
+  outline: none;
 }
 
 /* Read by screen readers, not shown. */

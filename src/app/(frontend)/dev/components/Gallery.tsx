@@ -22,7 +22,7 @@ export function Gallery() {
   const count = () => setClicks((n) => n + 1)
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1 className={styles.title}>Компоненти</h1>
 
       <section aria-labelledby="button" className={styles.section}>
@@ -140,6 +140,6 @@ export function Gallery() {
           />
         </div>
       </section>
-    </main>
+    </div>
   )
 }

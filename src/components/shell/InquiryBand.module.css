@@ -1,0 +1,53 @@
+/* Inquiry band (79:822) from 1024px; Inquiry band Mobile (114:306) below. */
+
+.band {
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+.band :focus-visible {
+  outline: var(--focus-ring-on-brand);
+}
+
+.inner {
+  display: grid;
+  gap: 14px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 40px var(--page-margin);
+}
+
+.copy {
+  display: grid;
+  gap: 14px;
+  max-width: 760px;
+}
+
+.heading {
+  font: 800 clamp(2.25rem, 1.879rem + 1.524vw, 3.25rem) / 0.96 var(--font-display); /* 36 → 52 */
+}
+
+.text {
+  font: 400 clamp(1rem, 0.907rem + 0.381vw, 1.25rem) / 1.55 var(--font-body); /* 16 → 20 */
+}
+
+.cta {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 40px;
+    padding-block: 64px;
+  }
+
+  .copy {
+    gap: 12px;
+  }
+
+  .cta {
+    width: auto;
+  }
+}

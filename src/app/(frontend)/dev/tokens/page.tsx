@@ -68,7 +68,7 @@ export default function TokensPage() {
   if (process.env.DEV_PAGES !== 'true') notFound()
 
   return (
-    <main className={styles.page}>
+    <div className={styles.page}>
       <h1 className={styles.title}>Дизайн токени</h1>
 
       <section aria-labelledby="colours" className={styles.section}>
@@ -157,6 +157,6 @@ export default function TokensPage() {
           )}
         </dl>
       </section>
-    </main>
+    </div>
   )
 }

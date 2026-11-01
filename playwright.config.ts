@@ -21,7 +21,8 @@ export default defineConfig({
     ? undefined
     : {
         command: 'pnpm start',
-        env: { PORT: String(port), DEV_PAGES: 'true' },
+        // The server reads DATABASE_URL and PAYLOAD_SECRET from the environment or .env.
+        env: { ...process.env, PORT: String(port), DEV_PAGES: 'true' } as Record<string, string>,
         url: baseURL,
       },
 })

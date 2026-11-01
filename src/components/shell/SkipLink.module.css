@@ -1,0 +1,18 @@
+.skip {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 100;
+  padding: 12px 18px;
+  border-radius: var(--radius-button);
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+  font: var(--type-label);
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip:focus-visible {
+  transform: none;
+  outline: var(--focus-ring-on-brand);
+}

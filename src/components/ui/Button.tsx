@@ -18,8 +18,9 @@ export function Button({ variant = 'primary', className, children, ...rest }: As
   const classes = [styles.button, styles[variant], className].filter(Boolean).join(' ')
 
   if (rest.href !== undefined) {
+    // No prefetch by default: pages render on request (see NavLink).
     return (
-      <Link className={classes} {...(rest as Omit<AsLink, keyof Common>)}>
+      <Link className={classes} prefetch={false} {...(rest as Omit<AsLink, keyof Common>)}>
         {children}
       </Link>
     )

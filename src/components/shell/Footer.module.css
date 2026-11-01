@@ -1,0 +1,239 @@
+/* Footer (79:887) from 1024px; Footer Mobile (114:311) below. */
+
+.footer {
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+.footer :focus-visible {
+  outline: var(--focus-ring-on-brand);
+}
+
+.main {
+  display: grid;
+  gap: 32px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 44px var(--page-margin) 32px;
+}
+
+.columns {
+  display: grid;
+  gap: 32px;
+}
+
+.brand {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: 32px;
+}
+
+.logo {
+  display: block;
+  width: 142px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.licence {
+  font: 400 0.875rem / 1.5 var(--font-body);
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 24px;
+}
+
+.column {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.heading {
+  font: 700 1.125rem / 1.5 var(--font-display);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-brand-accent);
+}
+
+.links {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font: 400 0.9375rem / 1.5 var(--font-body);
+  text-decoration: none;
+}
+
+.link[aria-current='page'],
+.link:focus-visible {
+  text-decoration: underline;
+}
+
+/* The Facebook link: text on mobile, a sand circle with «f» from 1024px. */
+.icon {
+  display: none;
+}
+
+.funding {
+  display: grid;
+  gap: 14px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-brand-primary);
+}
+
+/* Official logos sit on white, as the publicity rules require. */
+.fundingLogos {
+  justify-self: start;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--color-bg-page);
+}
+
+.fundingLogos img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+.statement {
+  font: 400 0.78125rem / 1.5 var(--font-body);
+}
+
+.credit {
+  display: grid;
+  gap: 4px;
+  padding: 12px var(--page-margin);
+  background: var(--color-text-primary);
+  font: 400 0.78125rem / 1.2 var(--font-body);
+}
+
+.legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 18px;
+}
+
+.copyright {
+  opacity: 0.7;
+}
+
+.legalLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  opacity: 0.85;
+  cursor: pointer;
+}
+
+.studio {
+  color: var(--color-brand-accent);
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .legalLink:hover {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main {
+    gap: 40px;
+    padding: 64px var(--page-margin) 56px;
+  }
+
+  .columns {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  .brand {
+    gap: 16px;
+  }
+
+  .logo {
+    width: 170px;
+  }
+
+  .licence {
+    max-width: 280px;
+    line-height: 1.45;
+  }
+
+  .nav {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 56px;
+  }
+
+  .heading {
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+
+  .link {
+    line-height: 1.45;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--color-brand-accent);
+    color: var(--color-brand-primary-strong);
+    font: 800 1.25rem / 1 var(--font-display);
+  }
+
+  .icon + .iconLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .funding {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding-top: 28px;
+  }
+
+  .fundingLogos img {
+    height: 44px;
+  }
+
+  .statement {
+    font-size: 0.8125rem;
+  }
+
+  .credit {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding-block: 11px;
+  }
+}

@@ -102,6 +102,21 @@ jobs:
   e2e:
     needs: build
     runs-on: ubuntu-latest
+    # Pages read the CMS; the server migrates and seeds this database on its first request.
+    services:
+      postgres:
+        image: postgres:18.6-alpine
+        env:
+          POSTGRES_USER: euro_alliance
+          POSTGRES_PASSWORD: euro_alliance
+          POSTGRES_DB: euro_alliance
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U euro_alliance -d euro_alliance"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
@@ -139,6 +154,21 @@ jobs:
   lighthouse:
     needs: build
     runs-on: ubuntu-latest
+    # Pages read the CMS; the server migrates and seeds this database on its first request.
+    services:
+      postgres:
+        image: postgres:18.6-alpine
+        env:
+          POSTGRES_USER: euro_alliance
+          POSTGRES_PASSWORD: euro_alliance
+          POSTGRES_DB: euro_alliance
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U euro_alliance -d euro_alliance"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup

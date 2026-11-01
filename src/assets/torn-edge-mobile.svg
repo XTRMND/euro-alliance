@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="398" height="18.5" viewBox="0 0 398 18.5" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Torn edge" filter="url(#filter0_d_0_7)">
+<path d="M4 1H394V5V11.5L384.3 4.7L370.5 5.4L356.3 6.4L341.7 10.7L332 7.2L319.7 5.8L311.7 9.5L301.8 7.1L289.5 8.6L279.1 9.9H271.6L263.8 9.5L249.1 6.6L235 8.2L225.3 10.2L211 8.5L197.3 5.9L185.8 5.5L174.2 10.2L165.6 8.8L150.2 4.2L141.6 6.5L131.6 4.5L117 8L109.3 9.2L98 8.7L86.7 4.7L75.6 10.9L60.9 9.4L53.2 10L41.1 8.6L27.7 8.1L12.4 4.6L4 6V1Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_0_7" x="0" y="0" width="398" height="18.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="3"/>
+<feGaussianBlur stdDeviation="2"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.09 0 0 0 0 0.19 0 0 0 0 0.41 0 0 0 0.1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_7"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_7" result="shape"/>
+</filter>
+</defs>
+</svg>
