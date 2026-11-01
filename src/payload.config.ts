@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { MediaTints } from './collections/MediaTints'
 import { Offices } from './collections/Offices'
 import { Users } from './collections/Users'
+import { Navigation } from './globals/Navigation'
 import { Site } from './globals/Site'
 import { emailAdapter } from './lib/email'
 import { migrations } from './migrations'
@@ -25,7 +26,7 @@ export default buildConfig({
   },
   i18n: { supportedLanguages: { bg, en }, fallbackLanguage: 'bg' },
   collections: [Users, Media, MediaTints, Offices],
-  globals: [Site],
+  globals: [Site, Navigation],
   localization: {
     locales: [
       { code: 'bg', label: 'Български' },

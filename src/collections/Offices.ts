@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminField, isStaff, publishedOrStaff } from '@/access'
+import { revalidateCollection } from '@/hooks/revalidate'
 
 // docs/cms-schema.md § 3. The map and location fields arrive with the Location card (PR 11).
 export const Offices: CollectionConfig = {
@@ -8,6 +9,7 @@ export const Offices: CollectionConfig = {
   admin: { useAsTitle: 'name', defaultColumns: ['name', 'department', 'role'] },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
+  hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },
   fields: [
     { name: 'name', type: 'text', label: 'Име', required: true, localized: true },
     { name: 'department', type: 'text', label: 'Направление', localized: true },

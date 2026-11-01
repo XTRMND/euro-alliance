@@ -61,6 +61,13 @@ export const anchors = {
   certificates: 'sertifikati',
 } as const
 
+/** Location cards on the contact page. */
+export const contactLocations = {
+  plovdiv: 'plovdiv',
+  sofia: 'sofia',
+} as const
+export type ContactLocation = keyof typeof contactLocations
+
 /** Provisional: PR 16 takes the final ids from the About Subnav items (189:349). */
 export const aboutSections = {
   history: 'istoria',
@@ -100,6 +107,8 @@ export const routes = {
     section ? `/${segments.about}#${aboutSections[section]}` : `/${segments.about}`,
   /** `topic` preselects the contact wizard; PR 11 narrows it to the wizard's topics. */
   contact: (topic?: string) => withQuery(`/${segments.contact}`, queryParams.topic, topic),
+  contactLocation: (location: ContactLocation) =>
+    `/${segments.contact}#${contactLocations[location]}`,
   privacy: () => `/${segments.privacy}`,
   cookies: () => `/${segments.cookies}`,
   search: (query?: string) => withQuery(`/${segments.search}`, queryParams.search, query),

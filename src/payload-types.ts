@@ -93,9 +93,11 @@ export interface Config {
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('bg' | 'en') | ('bg' | 'en')[];
   globals: {
     site: Site;
+    navigation: Navigation;
   };
   globalsSelect: {
     site: SiteSelect<false> | SiteSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: 'bg' | 'en';
   widgets: {
@@ -491,6 +493,7 @@ export interface Site {
   name?: string | null;
   legalName?: string | null;
   companyId?: string | null;
+  facebook?: string | null;
   foundedOn?: string | null;
   foundedIn?: string | null;
   licence?: {
@@ -510,7 +513,62 @@ export interface Site {
     bic?: string | null;
   };
   seoImage?: (number | null) | Media;
-  footerLegal?: string | null;
+  funding?: {
+    statement?: string | null;
+    /**
+     * Точно както е предоставена: без изрязване и промяна на цветовете.
+     */
+    logos?: (number | null) | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  header?: {
+    left?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+    right?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  menu?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  footer?:
+    | {
+        heading: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              /**
+               * На компютър връзката се показва като икона.
+               */
+              icon?: 'facebook' | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -522,6 +580,7 @@ export interface SiteSelect<T extends boolean = true> {
   name?: T;
   legalName?: T;
   companyId?: T;
+  facebook?: T;
   foundedOn?: T;
   foundedIn?: T;
   licence?:
@@ -545,7 +604,60 @@ export interface SiteSelect<T extends boolean = true> {
         bic?: T;
       };
   seoImage?: T;
-  footerLegal?: T;
+  funding?:
+    | T
+    | {
+        statement?: T;
+        logos?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        left?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+        right?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  menu?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  footer?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              icon?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

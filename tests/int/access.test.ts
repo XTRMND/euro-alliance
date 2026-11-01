@@ -116,13 +116,17 @@ describe('site', () => {
     expect(site.companyId).toBe('115302753')
 
     await expect(
-      payload.updateGlobal({ slug: 'site', data: { footerLegal: 'X' }, ...anonymous }),
+      payload.updateGlobal({
+        slug: 'site',
+        data: { facebook: 'https://example.com/x' },
+        ...anonymous,
+      }),
     ).rejects.toThrow()
     const updated = await payload.updateGlobal({
       slug: 'site',
-      data: { footerLegal: 'Test' },
+      data: { facebook: 'https://example.com/test' },
       ...asUser(editor),
     })
-    expect(updated.footerLegal).toBe('Test')
+    expect(updated.facebook).toBe('https://example.com/test')
   })
 })

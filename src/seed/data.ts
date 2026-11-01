@@ -1,15 +1,23 @@
-// Verified client facts (CLAUDE.md § 3) and the office copy from the approved Figma Contact page
-// (119:1875). Nothing here may be invented: leave a value out rather than guess it.
+import { anchors, routes } from '@/lib/routes'
+
+// Verified client facts (CLAUDE.md § 3) and copy from the approved Figma file: offices from the
+// Contact page (119:1875), navigation from the Header (79:784), Mobile menu (121:1399) and Footer
+// (79:887). Nothing here may be invented: leave a value out rather than guess it.
 
 export const company = {
   name: 'Евро Алианс',
   legalName: 'ЕВРО-АЛИАНС ООД',
   companyId: '115302753',
+  facebook: 'https://www.facebook.com/EvroAlians',
   foundedOn: '1999-02-08T12:00:00.000Z',
   foundedIn: 'Пловдив',
   licence: { issuer: 'НАПОО', number: '200312088', issuedOn: '2003-11-15T12:00:00.000Z' },
   certifications: [{ standard: 'ISO 9001:2015' }, { standard: 'ISO 17100:2015' }],
   bank: { name: 'Инвестбанк', iban: 'BG58 IORT 8129 1003 0255 00', bic: 'IORTBGSF' },
+  funding: {
+    statement:
+      'Проект № BG16RFPR001-1.004-1004-C01 «Подобряване на производствения капацитет на ЕВРО-АЛИАНС ООД», финансиран по програма «Конкурентоспособност и иновации в предприятията» 2021–2027.',
+  },
 }
 
 export const offices = [
@@ -38,3 +46,66 @@ export const offices = [
     emails: [{ email: 'trans@euro-alliance.net' }],
   },
 ] as const
+
+// Link targets are proposals where the plan has no page of that name (CLAUDE.md § 12). Left out
+// until they have a destination: «Ценоразпис» (translation prices were dropped) and «Екип» (the
+// team section stays hidden until photos exist).
+const englishAdults = routes.languageProgram('english', 'adults')
+
+export const navigation = {
+  header: {
+    left: [
+      { label: 'Курсове', href: routes.courses() },
+      { label: 'Професионално обучение', href: routes.professions() },
+      { label: 'Преводи', href: routes.translations() },
+    ],
+    right: [{ label: 'За нас', href: routes.about() }],
+  },
+  menu: [
+    { label: 'Курсове', href: routes.courses() },
+    { label: 'Езици', href: englishAdults },
+    { label: 'Изпити и сертификати', href: `${englishAdults}#${anchors.certificates}` },
+    { label: 'Професионално обучение', href: routes.professions() },
+    { label: 'Преводи', href: routes.translations() },
+    { label: 'Новини', href: routes.news() },
+    { label: 'За нас', href: routes.about() },
+  ],
+  footer: [
+    {
+      heading: 'Обучение',
+      links: [
+        { label: 'Курсове', href: routes.courses() },
+        { label: 'Езици за ученици', href: routes.languageProgram('english', 'students') },
+        { label: 'Езици за възрастни', href: englishAdults },
+        { label: 'Професионално обучение', href: routes.professions() },
+        { label: 'Ваучери', href: routes.vouchers() },
+      ],
+    },
+    {
+      heading: 'Преводи',
+      links: [
+        { label: 'Писмени преводи', href: routes.translations() },
+        { label: 'Устни преводи', href: routes.translations() },
+        { label: 'Изпрати документ', href: routes.contact('prevodi') },
+      ],
+    },
+    {
+      heading: 'За нас',
+      links: [
+        { label: 'История', href: routes.about('history') },
+        { label: 'Проекти', href: routes.about('projects') },
+        { label: 'Документи', href: routes.about('documents') },
+        { label: 'Защита на данните', href: routes.privacy() },
+      ],
+    },
+    {
+      heading: 'Контакти',
+      links: [
+        { label: 'Форма за контакти', href: routes.contact() },
+        { label: 'Facebook', href: company.facebook, icon: 'facebook' as const },
+        { label: 'Пловдив', href: routes.contactLocation('plovdiv') },
+        { label: 'София', href: routes.contactLocation('sofia') },
+      ],
+    },
+  ],
+}

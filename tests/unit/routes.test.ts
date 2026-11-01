@@ -5,6 +5,7 @@ import {
   aboutSections,
   anchors,
   audienceSegments,
+  contactLocations,
   devRoutes,
   languageSegments,
   queryParams,
@@ -47,6 +48,8 @@ describe('URL scheme', () => {
     [aboutSections.standards, 'Стандарти'],
     [aboutSections.documents, 'Документи'],
     [aboutSections.projects, 'Проекти'],
+    [contactLocations.plovdiv, 'Пловдив'],
+    [contactLocations.sofia, 'София'],
   ])('%s is the slug of «%s»', (segment, word) => {
     expect(segment).toBe(slugify(word))
   })
@@ -80,6 +83,7 @@ describe('routes', () => {
   it('preselects the contact topic only when one is given', () => {
     expect(routes.contact()).toBe('/kontakti')
     expect(routes.contact('prevodi')).toBe('/kontakti?tema=prevodi')
+    expect(routes.contactLocation('sofia')).toBe('/kontakti#sofia')
   })
 
   it('encodes the search query', () => {
