@@ -313,7 +313,8 @@ export const englishPrograms = [
 export { systemsBlock }
 
 // The programs that have one page each, with the course-page hero: copy from the approved Figma
-// frames (Vouchers 236:3391, Professions 236:3667, Teachers 237:3686, Farmers 237:3973). Their course cards in Figma are example data: the pages list real
+// frames (Vouchers 236:3391, Professions 236:3667, Teachers 237:3686, Farmers 237:3973, Computer
+// courses 258:3937). Their course cards in Figma are example data: the pages list real
 // courses from the Courses collection.
 
 const voucherCard = (card: {
@@ -586,6 +587,74 @@ export const singlePrograms = [
         heading: 'Финансиране',
         lead: 'Обученията са безплатни за участниците. Финансират се по проект на ЕВРО-АЛИАНС към Стратегическия план за развитие на земеделието и селските райони 2023–2027, със 100% безвъзмездна помощ.',
         projects: 'farmersProject',
+      },
+    ],
+  },
+  {
+    title: 'Компютърни курсове',
+    type: 'computer',
+    hero: {
+      heading: 'Компютърно обучение',
+      highlight: 'обучение',
+      lead: 'Професионални компютърни курсове и индивидуално обучение за възрастни: офис програми, интернет, уеб и графичен дизайн и специализиран софтуер.',
+      ctas: [
+        { label: 'Запишете се', destination: 'otherInquiry' },
+        { label: 'Програмите', anchor: 'programi' },
+      ],
+      sticker: 'computer',
+      countBubble: { value: '8', label: 'програми' },
+    },
+    sections: [
+      {
+        blockType: 'indexCards',
+        anchor: 'programi',
+        heading: 'Програми по информационни технологии',
+        lead: 'Курсовете включват широко използвани програмни продукти за офис работа, графична обработка, работа в интернет и специализирани програми.',
+        cards: [
+          {
+            title: 'Офис програми',
+            marker: 'number',
+            count: 'chip',
+            rows: [
+              { text: 'Текстообработка' },
+              { text: 'Електронни таблици' },
+              { text: 'Презентации' },
+              { text: 'Бази данни' },
+            ],
+          },
+          {
+            title: 'Интернет и дизайн',
+            marker: 'number',
+            count: 'chip',
+            rows: [{ text: 'Интернет и e-mail клиенти' }, { text: 'Web и графичен дизайн' }],
+          },
+          {
+            title: 'Техника и софтуер',
+            marker: 'number',
+            count: 'chip',
+            rows: [{ text: 'Компютри, периферия и мрежи' }, { text: 'Специализиран софтуер' }],
+          },
+        ],
+      },
+      {
+        blockType: 'features',
+        heading: 'Как протичат курсовете',
+        items: [
+          {
+            title: 'Присъствено и смесено',
+            text: 'Малки групи от 8 до 12 души, всеки със собствен компютър, в съвременно оборудвани кабинети.',
+          },
+          { title: 'Дистанционно', text: 'Онлайн компютърни курсове в Google Classroom.' },
+          {
+            title: 'Преподаватели',
+            text: 'С дългогодишен опит в обучението, професионална квалификация и сертификати.',
+          },
+        ],
+        callout: {
+          heading: 'Безплатно с ваучер',
+          text: 'Курсове по дигитални умения (DigComp), базово и средно ниво, с ваучер от Агенцията по заетостта.',
+          cta: { label: 'Обучение с ваучери', destination: 'vouchers' },
+        },
       },
     ],
   },

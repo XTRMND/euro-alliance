@@ -89,7 +89,7 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 
 | Block | Component | Data |
 |---|---|---|
-| `features` | Feature card 129:348 | `items` { title, text } |
+| `features` | Feature card 129:348 | `items` { title, text }; optional `callout` { heading, text, cta } under the cards (the computer courses' «Безплатно с ваучер») |
 | `levels` | Level card 129:357 | `items` { level, title, text } |
 | `steps` | Steps 129:372 (vertical) | `items` { title, text }; optional `callout` { heading, text, cta } above the steps (Callout band 259:449) and a `note` below them (the vouchers page) |
 | `textbookSystems` | System card 135:389 | `systems` → Textbook systems; `columns` (two / one); `link` { label, destination } under the cards |

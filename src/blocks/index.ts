@@ -53,46 +53,6 @@ const link = (name: string, label: string): Field => ({
   ],
 })
 
-export const FeaturesBlock: Block = {
-  slug: 'features',
-  labels: { singular: 'Предимства', plural: 'Предимства' },
-  fields: [
-    ...heading,
-    {
-      name: 'items',
-      type: 'array',
-      label: 'Карти',
-      fields: [
-        { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
-        { name: 'text', type: 'textarea', label: 'Текст', localized: true },
-      ],
-    },
-  ],
-}
-
-export const LevelsBlock: Block = {
-  slug: 'levels',
-  labels: { singular: 'Нива', plural: 'Нива' },
-  fields: [
-    ...heading,
-    {
-      name: 'items',
-      type: 'array',
-      label: 'Нива',
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'level', type: 'text', label: 'Ниво', required: true },
-            { name: 'title', type: 'text', label: 'Заглавие', localized: true },
-          ],
-        },
-        { name: 'text', type: 'textarea', label: 'Текст', localized: true },
-      ],
-    },
-  ],
-}
-
 const levelColumns = (defaultValue: 'one' | 'two'): Field => ({
   name: 'columns',
   type: 'select',
@@ -120,6 +80,47 @@ const callout = (name: string, label: string): Field => ({
     link('cta', 'Бутон'),
   ],
 })
+
+export const FeaturesBlock: Block = {
+  slug: 'features',
+  labels: { singular: 'Предимства', plural: 'Предимства' },
+  fields: [
+    ...heading,
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Карти',
+      fields: [
+        { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+        { name: 'text', type: 'textarea', label: 'Текст', localized: true },
+      ],
+    },
+    callout('callout', 'Покана под картите (по избор)'),
+  ],
+}
+
+export const LevelsBlock: Block = {
+  slug: 'levels',
+  labels: { singular: 'Нива', plural: 'Нива' },
+  fields: [
+    ...heading,
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Нива',
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'level', type: 'text', label: 'Ниво', required: true },
+            { name: 'title', type: 'text', label: 'Заглавие', localized: true },
+          ],
+        },
+        { name: 'text', type: 'textarea', label: 'Текст', localized: true },
+      ],
+    },
+  ],
+}
 
 export const StepsBlock: Block = {
   slug: 'steps',

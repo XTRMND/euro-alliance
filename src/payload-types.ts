@@ -589,6 +589,38 @@ export interface Program {
                   id?: string | null;
                 }[]
               | null;
+            callout?: {
+              heading?: string | null;
+              /**
+               * Телефоните и имейлите в текста стават връзки.
+               */
+              text?: string | null;
+              cta?: {
+                label?: string | null;
+                destination?:
+                  | (
+                      | 'courses'
+                      | 'languageCourses'
+                      | 'languagesStudents'
+                      | 'languagesAdults'
+                      | 'certificates'
+                      | 'professions'
+                      | 'vouchers'
+                      | 'voucherInquiry'
+                      | 'teachers'
+                      | 'farmers'
+                      | 'computerCourses'
+                      | 'translations'
+                      | 'sendDocument'
+                      | 'levelTest'
+                      | 'otherInquiry'
+                      | 'news'
+                      | 'about'
+                      | 'contact'
+                    )
+                  | null;
+              };
+            };
             id?: string | null;
             blockName?: string | null;
             blockType: 'features';
@@ -1731,6 +1763,18 @@ export interface ProgramsSelect<T extends boolean = true> {
                     title?: T;
                     text?: T;
                     id?: T;
+                  };
+              callout?:
+                | T
+                | {
+                    heading?: T;
+                    text?: T;
+                    cta?:
+                      | T
+                      | {
+                          label?: T;
+                          destination?: T;
+                        };
                   };
               id?: T;
               blockName?: T;

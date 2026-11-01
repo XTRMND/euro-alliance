@@ -11,6 +11,7 @@ import * as migration_20261101_161108_programs_vouchers from './20261101_161108_
 import * as migration_20261101_162829_programs_professions from './20261101_162829_programs_professions';
 import * as migration_20261101_164315_programs_teachers from './20261101_164315_programs_teachers';
 import * as migration_20261101_170930_programs_farmers from './20261101_170930_programs_farmers';
+import * as migration_20261101_172522_programs_computer from './20261101_172522_programs_computer';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20261101_170930_programs_farmers.up,
     down: migration_20261101_170930_programs_farmers.down,
-    name: '20261101_170930_programs_farmers'
+    name: '20261101_170930_programs_farmers',
+  },
+  {
+    up: migration_20261101_172522_programs_computer.up,
+    down: migration_20261101_172522_programs_computer.down,
+    name: '20261101_172522_programs_computer'
   },
 ];
