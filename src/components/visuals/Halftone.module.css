@@ -1,0 +1,22 @@
+.halftone {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-brand-primary-strong);
+  opacity: var(--halftone-opacity);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}
+
+.panel {
+  mask-image: url('../../assets/halftone/panel.svg');
+}
+
+.courseCard {
+  mask-image: url('../../assets/halftone/course-card.svg');
+}
+
+.notebookShadow {
+  mask-image: url('../../assets/halftone/notebook-shadow.svg');
+}
