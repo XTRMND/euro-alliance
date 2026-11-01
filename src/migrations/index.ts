@@ -7,6 +7,7 @@ import * as migration_20261101_124621_course_page from './20261101_124621_course
 import * as migration_20261101_130035_inquiries from './20261101_130035_inquiries';
 import * as migration_20261101_132146_contact_and_topics from './20261101_132146_contact_and_topics';
 import * as migration_20261101_151145_programs from './20261101_151145_programs';
+import * as migration_20261101_161108_programs_vouchers from './20261101_161108_programs_vouchers';
 
 export const migrations = [
   {
@@ -52,6 +53,11 @@ export const migrations = [
   {
     up: migration_20261101_151145_programs.up,
     down: migration_20261101_151145_programs.down,
-    name: '20261101_151145_programs'
+    name: '20261101_151145_programs',
+  },
+  {
+    up: migration_20261101_161108_programs_vouchers.up,
+    down: migration_20261101_161108_programs_vouchers.down,
+    name: '20261101_161108_programs_vouchers'
   },
 ];

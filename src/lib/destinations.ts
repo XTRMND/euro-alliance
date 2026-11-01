@@ -22,6 +22,8 @@ export const destinations = {
   },
   professions: { label: 'ЦПО професии', href: routes.professions() },
   vouchers: { label: 'Ваучери', href: routes.vouchers() },
+  /** Reports `voucher_apply_click` (docs/measurement.md). */
+  voucherInquiry: { label: 'Запитване за ваучер', href: routes.contact('vaucheri') },
   teachers: { label: 'Педагогически специалисти', href: routes.teachers() },
   farmers: { label: 'Земеделски производители', href: routes.farmers() },
   computerCourses: { label: 'Компютърни курсове', href: routes.computerCourses() },

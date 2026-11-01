@@ -4,6 +4,8 @@ import {
   hasLanguagePage,
   languageFromSegment,
   otherAudience,
+  programCtaHref,
+  programCourseFilters,
 } from '@/lib/programs'
 
 describe('language program URLs', () => {
@@ -19,5 +21,52 @@ describe('language program URLs', () => {
     expect(hasLanguagePage('russian', 'adults')).toBe(false)
     expect(otherAudience('russian', 'students')).toBeUndefined()
     expect(otherAudience('english', 'adults')).toBe('students')
+  })
+})
+
+describe('upcoming courses of a program page', () => {
+  it('lists a language page its language and audience', () => {
+    const filters = programCourseFilters({
+      type: 'language',
+      language: 'german',
+      audience: 'students',
+    })
+    expect(filters.language).toEqual(['german'])
+    expect(filters.audience).toEqual(['students'])
+    expect(filters.category).toEqual([])
+  })
+
+  it('lists the vouchers page the courses payable with a voucher', () => {
+    const filters = programCourseFilters({ type: 'vouchers' })
+    expect(filters.voucher).toBe(true)
+    expect(filters.category).toEqual([])
+  })
+
+  it('lists every other page its category', () => {
+    expect(programCourseFilters({ type: 'farmers' }).category).toEqual(['farmers'])
+    expect(programCourseFilters({ type: 'vocational' }).category).toEqual(['vocational'])
+  })
+})
+
+describe('hero buttons of a program page', () => {
+  const listing = '/kursove?ezik=angliyski'
+
+  it('go to a section of the page by its anchor', () => {
+    expect(programCtaHref({ anchor: 'kak-da-kandidatstvate' }, { shown: false, listing })).toBe(
+      '#kak-da-kandidatstvate',
+    )
+  })
+
+  it('go to the upcoming courses when they show, else to the listing', () => {
+    const cta = { destination: 'languageCourses' }
+    expect(programCtaHref(cta, { shown: true, listing })).toBe('#predstoyashti-kursove')
+    expect(programCtaHref(cta, { shown: false, listing })).toBe(listing)
+  })
+
+  it('go to a fixed destination, and nowhere for an unknown one', () => {
+    expect(programCtaHref({ destination: 'levelTest' }, { shown: false, listing })).toBe(
+      '/kontakti?tema=test-za-nivo',
+    )
+    expect(programCtaHref({ destination: 'nowhere' }, { shown: false, listing })).toBeUndefined()
   })
 })

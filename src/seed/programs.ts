@@ -311,3 +311,90 @@ export const englishPrograms = [
 ] as const
 
 export { systemsBlock }
+
+// The programs that have one page each, with the course-page hero: copy from the approved Figma
+// frames (Vouchers 236:3391). Their course cards in Figma are example data: the pages list real
+// courses from the Courses collection.
+
+const voucherCard = (card: {
+  kicker: string
+  name: string
+  count: string
+  description: string
+  levels: string[]
+  strip: { label: string; note: string }
+}) => ({
+  ...card,
+  countLabel: 'курса',
+  levels: card.levels.map((level) => ({ level })),
+})
+
+export const singlePrograms = [
+  {
+    title: 'Обучение с ваучери',
+    type: 'vouchers',
+    hero: {
+      heading: 'Обучение с ваучери',
+      highlight: 'ваучери',
+      lead: 'По програма на Агенцията по заетостта: «Развитие на човешките ресурси» 2021–2027, Национален план за възстановяване и устойчивост и Фонд за справедлив преход. Споразумение № ДОб-3-00501 #3 от 6 ноември 2025 г.',
+      ctas: [
+        { label: 'Съгласувайте обучението', destination: 'voucherInquiry' },
+        { label: 'Как да кандидатствате', anchor: 'kak-da-kandidatstvate' },
+      ],
+      sticker: 'corporate',
+      countBubble: { value: '6', label: 'курса' },
+    },
+    upcoming: { heading: 'Предстоящи курсове с ваучер' },
+    sections: [
+      {
+        blockType: 'systemCards',
+        heading: 'Предлагани обучения',
+        lead: 'Обученията с ваучер, одобрени по споразумението с Агенцията по заетостта.',
+        columns: 'one',
+        cards: [
+          voucherCard({
+            kicker: 'Ключова компетентност 2',
+            name: 'Многоезикова компетентност',
+            count: '4',
+            description: 'Английски език, 300 учебни часа, учебна система Roadmap (Pearson).',
+            levels: [
+              'Нива A1, A2, B1 · присъствено, Пловдив, ул. Самара №13',
+              'Нива A1, A2, B1 · дистанционно синхронно',
+              'Нива A2, B1, B2 · дистанционно синхронно',
+              'Нива B1, B2, C1 · дистанционно синхронно',
+            ],
+            strip: { label: 'Учебник', note: 'Roadmap (Pearson)' },
+          }),
+          voucherCard({
+            kicker: 'Ключова компетентност 4',
+            name: 'Цифрова компетентност',
+            count: '2',
+            description:
+              'Общи дигитални умения по европейската рамка DigComp, дистанционно синхронно обучение.',
+            levels: [
+              'Базово ниво (DigComp 1 и 2) · 55 учебни часа',
+              'Средно ниво (DigComp 3 и 4) · 45 учебни часа',
+            ],
+            strip: { label: 'Форма', note: 'дистанционно синхронно' },
+          }),
+        ],
+      },
+      {
+        blockType: 'steps',
+        anchor: 'kak-da-kandidatstvate',
+        heading: 'Как да кандидатствате за безплатен ваучер',
+        callout: {
+          heading: 'Преди да кандидатствате, първо се свържете с нас',
+          text: 'за да съгласуваме вашето обучение: 0886 601 108, office@euro-alliance.net',
+          cta: { label: 'Свържете се', destination: 'voucherInquiry' },
+        },
+        items: [
+          { title: 'На сайта на Агенцията натиснете «Заяви ваучер за обучение тук!»' },
+          { title: 'За доставчик на обучение изберете ЕВРО-АЛИАНС ООД' },
+          { title: 'Попълнете полетата и подайте заявлението' },
+        ],
+        note: 'В срока, определен от Агенцията по заетостта, ще получите одобрение или отказ за издаването на ваучер.',
+      },
+    ],
+  },
+] as const

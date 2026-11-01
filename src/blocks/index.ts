@@ -1,10 +1,27 @@
 import type { Block, Field } from 'payload'
+import { systemCardFields } from '@/fields/system-card'
 import { destinationOptions } from '@/lib/destinations'
 
 // Program page sections (docs/cms-schema.md § 3, Programs): each block is one component of
-// page 03. Every block has its section heading; empty optional fields hide their element.
+// page 03. Every block has its section heading; empty optional fields hide their element. A
+// section with an anchor can be linked from the hero's buttons («Как да кандидатствате»).
+
+export const anchorPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+
+export const anchorField: Field = {
+  name: 'anchor',
+  type: 'text',
+  label: 'Котва',
+  admin: {
+    description:
+      'По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.',
+  },
+  validate: (value: string | null | undefined) =>
+    !value || anchorPattern.test(value) || 'Само малки латински букви, цифри и тирета.',
+}
 
 const heading: Field[] = [
+  anchorField,
   {
     type: 'row',
     fields: [
@@ -76,11 +93,40 @@ export const LevelsBlock: Block = {
   ],
 }
 
+const levelColumns = (defaultValue: 'one' | 'two'): Field => ({
+  name: 'columns',
+  type: 'select',
+  label: 'Нивата в картите',
+  defaultValue,
+  options: [
+    { value: 'two', label: 'В две колони' },
+    { value: 'one', label: 'В една колона' },
+  ],
+})
+
+const callout = (name: string, label: string): Field => ({
+  name,
+  type: 'group',
+  label,
+  fields: [
+    { name: 'heading', type: 'text', label: 'Заглавие', localized: true },
+    {
+      name: 'text',
+      type: 'textarea',
+      label: 'Текст',
+      localized: true,
+      admin: { description: 'Телефоните и имейлите в текста стават връзки.' },
+    },
+    link('cta', 'Бутон'),
+  ],
+})
+
 export const StepsBlock: Block = {
   slug: 'steps',
   labels: { singular: 'Стъпки', plural: 'Стъпки' },
   fields: [
     ...heading,
+    callout('callout', 'Покана над стъпките (по избор)'),
     {
       name: 'items',
       type: 'array',
@@ -90,6 +136,7 @@ export const StepsBlock: Block = {
         { name: 'text', type: 'textarea', label: 'Текст', localized: true },
       ],
     },
+    { name: 'note', type: 'textarea', label: 'Бележка под стъпките', localized: true },
   ],
 }
 
@@ -106,16 +153,24 @@ export const TextbookSystemsBlock: Block = {
       label: 'Системи',
     },
     link('link', 'Връзка под картите'),
+    levelColumns('two'),
+  ],
+}
+
+export const SystemCardsBlock: Block = {
+  slug: 'systemCards',
+  labels: { singular: 'Карти с нива', plural: 'Карти с нива' },
+  fields: [
+    ...heading,
     {
-      name: 'columns',
-      type: 'select',
-      label: 'Нивата в картите',
-      defaultValue: 'two',
-      options: [
-        { value: 'two', label: 'В две колони' },
-        { value: 'one', label: 'В една колона' },
-      ],
+      name: 'cards',
+      type: 'array',
+      label: 'Карти',
+      admin: { description: 'Като учебните системи, но само за тази страница.' },
+      fields: systemCardFields({ localizedName: true }),
     },
+    link('link', 'Връзка под картите'),
+    levelColumns('one'),
   ],
 }
 
@@ -190,7 +245,13 @@ export const CalloutBlock: Block = {
       ],
     },
     { name: 'heading', type: 'text', label: 'Заглавие', required: true, localized: true },
-    { name: 'text', type: 'textarea', label: 'Текст', localized: true },
+    {
+      name: 'text',
+      type: 'textarea',
+      label: 'Текст',
+      localized: true,
+      admin: { description: 'Телефоните и имейлите в текста стават връзки.' },
+    },
     link('cta', 'Бутон'),
   ],
 }
@@ -206,6 +267,7 @@ export const programBlocks = [
   LevelsBlock,
   StepsBlock,
   TextbookSystemsBlock,
+  SystemCardsBlock,
   CertificatesBlock,
   FaqBlock,
   FiguresBlock,

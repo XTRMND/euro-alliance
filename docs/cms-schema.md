@@ -75,9 +75,9 @@ Built in PR 12 (`src/collections/Programs.ts`, blocks in `src/blocks/index.ts`).
 |---|---|---|
 | `title`, `slug` | text | `title` is the browser title |
 | `type` | select, required | `language` / `vocational` / `vouchers` / `teachers` / `farmers` / `computer` |
-| `language`, `audience` | select | For `language` only: the 7 languages; adults / students. One page per language and audience (a hook rejects a second one); no Russian for adults. The page lives at `/ezitsi/<language>/<audience>` (`routes.languageProgram`), and the pair feeds Audience tabs (129:321). |
-| `hero` | group | `kicker`, `heading`, `highlight` (part of the heading), `lead`, `ctas` (up to 2 × { label, destination }), `sticker` and `countBubble` { value, label } (course-page hero only) |
-| `upcoming` | group | For `language` only: the heading and link label of «Предстоящи курсове». The section lists published courses of this language and audience and hides when there are none. |
+| `language`, `audience` | select | For `language` only: the 7 languages; adults / students. One page per language and audience (a hook rejects a second one); no Russian for adults. The page lives at `/ezitsi/<language>/<audience>` (`routes.languageProgram`), and the pair feeds Audience tabs (129:321). Every other type has one page (a hook rejects a second one) at its route: `/vaucheri`, `/profesionalno-obuchenie/profesii` … |
+| `hero` | group | `kicker`, `heading`, `highlight` (part of the heading; on the course-page hero it sits on its own line), `lead`, `ctas` (up to 2 × { label, destination or anchor }: an anchor links a section of the page), `sticker` and `countBubble` { value, label } (course-page hero only) |
+| `upcoming` | group | The heading and link label of «Предстоящи курсове» (`src/lib/programs.ts`): a language page lists its language and audience, the vouchers page the courses payable with a voucher (`voucherEligible`), every other page its course category. Hidden without a heading or without courses. |
 | `notebook` | group | For `language` only: Program hero art 131:311. `title`, `phrases` (array of { phrase, translation }), `highlight` (1–4: the highlighted phrase), `note` { title, steps, done } (the optional sticky note) |
 | `sections` | blocks | See below |
 
@@ -85,18 +85,19 @@ Built in PR 12 (`src/collections/Programs.ts`, blocks in `src/blocks/index.ts`).
 
 Hero buttons and block links pick a destination from `src/lib/destinations.ts`. On a language page, `languageCourses` goes to the page's own «Предстоящи курсове» when it has courses and to the course listing filtered to the language and audience otherwise.
 
-**Section blocks** (each maps to a component on page 03). Every block has `heading`, `highlight` and `lead`; an empty heading hides the heading, an empty list hides the section.
+**Section blocks** (each maps to a component on page 03). Every block but `callout` has `anchor`, `heading`, `highlight` and `lead`; an empty heading hides the heading, an empty list hides the section, and the anchor (lowercase Latin, digits, hyphens) becomes the section's id for the hero's buttons.
 
 | Block | Component | Data |
 |---|---|---|
 | `features` | Feature card 129:348 | `items` { title, text } |
 | `levels` | Level card 129:357 | `items` { level, title, text } |
-| `steps` | Steps 129:385 | `items` { title, text } |
+| `steps` | Steps 129:372 (vertical) | `items` { title, text }; optional `callout` { heading, text, cta } above the steps (Callout band 259:449) and a `note` below them (the vouchers page) |
 | `textbookSystems` | System card 135:389 | `systems` → Textbook systems; `columns` (two / one); `link` { label, destination } under the cards |
+| `systemCards` | System card 240:662 | `cards`: inline cards with the fields of a textbook system, for one page (the voucher programmes, the farmers' courses); `columns`; `link` |
 | `certificates` | Certificate card 145:364 | `certificates` → Certificates. The section's anchor is `sertifikati` (homepage «Изпити и сертификати» links here). |
 | `faq` | FAQ item 129:335 | `items` { question, answer (rich text, may hold links) } |
 | `figures` | Figure card 259:410 | `items` { figure, label }. Only official numbers. |
-| `callout` | Callout band 259:449 | `layout` (row / stack), `heading`, `text`, `cta` |
+| `callout` | Callout band 259:449 | `layout` (row / stack), `heading`, `text`, `cta`. Phone numbers and email addresses in a callout's text become links (`src/lib/linkify.ts`); a button into the voucher inquiry reports `voucher_apply_click`. |
 | `richText` | Section heading 259:2319 + prose | heading + rich text |
 | `professions`, `teacherProgrammes`, `projects` | Data table 259:621, Index card 264:448 / List row 259:2318, Project card 259:574 | Arrive with their collections in PR 13 |
 

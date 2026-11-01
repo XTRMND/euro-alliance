@@ -475,28 +475,33 @@ export interface Program {
     highlight?: string | null;
     lead?: string | null;
     /**
-     * На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.
+     * Към страница или към секция на тази страница (котвата ѝ). На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.
      */
     ctas?:
       | {
           label: string;
-          destination:
-            | 'courses'
-            | 'languageCourses'
-            | 'languagesStudents'
-            | 'languagesAdults'
-            | 'certificates'
-            | 'professions'
-            | 'vouchers'
-            | 'teachers'
-            | 'farmers'
-            | 'computerCourses'
-            | 'translations'
-            | 'sendDocument'
-            | 'levelTest'
-            | 'news'
-            | 'about'
-            | 'contact';
+          destination?:
+            | (
+                | 'courses'
+                | 'languageCourses'
+                | 'languagesStudents'
+                | 'languagesAdults'
+                | 'certificates'
+                | 'professions'
+                | 'vouchers'
+                | 'voucherInquiry'
+                | 'teachers'
+                | 'farmers'
+                | 'computerCourses'
+                | 'translations'
+                | 'sendDocument'
+                | 'levelTest'
+                | 'news'
+                | 'about'
+                | 'contact'
+              )
+            | null;
+          anchor?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -525,7 +530,7 @@ export interface Program {
     };
   };
   /**
-   * Курсовете по езика за тази аудитория, от «Курсове». Без курсове секцията не се показва.
+   * Курсовете от «Курсове»: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.
    */
   upcoming?: {
     heading?: string | null;
@@ -558,6 +563,10 @@ export interface Program {
   sections?:
     | (
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -576,6 +585,10 @@ export interface Program {
             blockType: 'features';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -595,12 +608,47 @@ export interface Program {
             blockType: 'levels';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
              */
             highlight?: string | null;
             lead?: string | null;
+            callout?: {
+              heading?: string | null;
+              /**
+               * Телефоните и имейлите в текста стават връзки.
+               */
+              text?: string | null;
+              cta?: {
+                label?: string | null;
+                destination?:
+                  | (
+                      | 'courses'
+                      | 'languageCourses'
+                      | 'languagesStudents'
+                      | 'languagesAdults'
+                      | 'certificates'
+                      | 'professions'
+                      | 'vouchers'
+                      | 'voucherInquiry'
+                      | 'teachers'
+                      | 'farmers'
+                      | 'computerCourses'
+                      | 'translations'
+                      | 'sendDocument'
+                      | 'levelTest'
+                      | 'news'
+                      | 'about'
+                      | 'contact'
+                    )
+                  | null;
+              };
+            };
             items?:
               | {
                   title: string;
@@ -608,11 +656,16 @@ export interface Program {
                   id?: string | null;
                 }[]
               | null;
+            note?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'steps';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -631,6 +684,7 @@ export interface Program {
                     | 'certificates'
                     | 'professions'
                     | 'vouchers'
+                    | 'voucherInquiry'
                     | 'teachers'
                     | 'farmers'
                     | 'computerCourses'
@@ -649,6 +703,85 @@ export interface Program {
             blockType: 'textbookSystems';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            /**
+             * Като учебните системи, но само за тази страница.
+             */
+            cards?:
+              | {
+                  name: string;
+                  /**
+                   * Издател или възраст, например «Longman» или «III–VII клас».
+                   */
+                  kicker?: string | null;
+                  /**
+                   * Например 6 или C1.
+                   */
+                  count?: string | null;
+                  /**
+                   * Например «нива» или «до ниво».
+                   */
+                  countLabel?: string | null;
+                  description?: string | null;
+                  levels?:
+                    | {
+                        level: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  strip?: {
+                    /**
+                     * Например «Включено», «Фокус», «Цел».
+                     */
+                    label?: string | null;
+                    note?: string | null;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            link?: {
+              label?: string | null;
+              destination?:
+                | (
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'voucherInquiry'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'news'
+                    | 'about'
+                    | 'contact'
+                  )
+                | null;
+            };
+            columns?: ('two' | 'one') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'systemCards';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -661,6 +794,10 @@ export interface Program {
             blockType: 'certificates';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -693,6 +830,10 @@ export interface Program {
             blockType: 'faq';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -716,6 +857,9 @@ export interface Program {
         | {
             layout?: ('row' | 'stack') | null;
             heading: string;
+            /**
+             * Телефоните и имейлите в текста стават връзки.
+             */
             text?: string | null;
             cta?: {
               label?: string | null;
@@ -728,6 +872,7 @@ export interface Program {
                     | 'certificates'
                     | 'professions'
                     | 'vouchers'
+                    | 'voucherInquiry'
                     | 'teachers'
                     | 'farmers'
                     | 'computerCourses'
@@ -745,6 +890,10 @@ export interface Program {
             blockType: 'callout';
           }
         | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
             heading?: string | null;
             /**
              * Част от заглавието.
@@ -1289,6 +1438,7 @@ export interface ProgramsSelect<T extends boolean = true> {
           | {
               label?: T;
               destination?: T;
+              anchor?: T;
               id?: T;
             };
         sticker?: T;
@@ -1336,6 +1486,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         features?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1352,6 +1503,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         levels?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1369,9 +1521,22 @@ export interface ProgramsSelect<T extends boolean = true> {
         steps?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
+              callout?:
+                | T
+                | {
+                    heading?: T;
+                    text?: T;
+                    cta?:
+                      | T
+                      | {
+                          label?: T;
+                          destination?: T;
+                        };
+                  };
               items?:
                 | T
                 | {
@@ -1379,12 +1544,14 @@ export interface ProgramsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
+              note?: T;
               id?: T;
               blockName?: T;
             };
         textbookSystems?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1399,9 +1566,49 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        systemCards?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              cards?:
+                | T
+                | {
+                    name?: T;
+                    kicker?: T;
+                    count?: T;
+                    countLabel?: T;
+                    description?: T;
+                    levels?:
+                      | T
+                      | {
+                          level?: T;
+                          id?: T;
+                        };
+                    strip?:
+                      | T
+                      | {
+                          label?: T;
+                          note?: T;
+                        };
+                    id?: T;
+                  };
+              link?:
+                | T
+                | {
+                    label?: T;
+                    destination?: T;
+                  };
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
         certificates?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1412,6 +1619,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         faq?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1428,6 +1636,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         figures?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1459,6 +1668,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         richText?:
           | T
           | {
+              anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
@@ -1770,6 +1980,7 @@ export interface Home {
             | 'certificates'
             | 'professions'
             | 'vouchers'
+            | 'voucherInquiry'
             | 'teachers'
             | 'farmers'
             | 'computerCourses'
@@ -1793,6 +2004,7 @@ export interface Home {
             | 'certificates'
             | 'professions'
             | 'vouchers'
+            | 'voucherInquiry'
             | 'teachers'
             | 'farmers'
             | 'computerCourses'
@@ -1854,6 +2066,7 @@ export interface Home {
             | 'certificates'
             | 'professions'
             | 'vouchers'
+            | 'voucherInquiry'
             | 'teachers'
             | 'farmers'
             | 'computerCourses'
@@ -1887,6 +2100,7 @@ export interface Home {
             | 'certificates'
             | 'professions'
             | 'vouchers'
+            | 'voucherInquiry'
             | 'teachers'
             | 'farmers'
             | 'computerCourses'

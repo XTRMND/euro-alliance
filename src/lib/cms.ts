@@ -5,7 +5,7 @@ import { tags } from '@/hooks/revalidate'
 import type { CourseFilters } from '@/lib/course-filters'
 import { findCourse, findCourseMonths, findCourses, findRelatedCourses } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
-import type { Media } from '@/payload-types'
+import type { Media, Program } from '@/payload-types'
 
 // Payload reads for the public site. They run as an anonymous visitor (overrideAccess: false), so
 // only published content comes back, and are cached in Next's data cache until a Payload hook
@@ -225,6 +225,31 @@ export const getLanguageProgram = unstable_cache(
       })
     ).docs[0] ?? null,
   ['language-program'],
+  {
+    tags: [
+      tags.collection('programs'),
+      tags.collection('certificates'),
+      tags.collection('textbook-systems'),
+    ],
+  },
+)
+
+/** The published program of a type that has one page (vouchers, professions, teachers …). */
+export const getProgram = unstable_cache(
+  async (type: Exclude<Program['type'], 'language'>) =>
+    (
+      await (
+        await payload()
+      ).find({
+        collection: 'programs',
+        locale: 'bg',
+        depth: 2,
+        where: { type: { equals: type } },
+        limit: 1,
+        overrideAccess: false,
+      })
+    ).docs[0] ?? null,
+  ['program'],
   {
     tags: [
       tags.collection('programs'),

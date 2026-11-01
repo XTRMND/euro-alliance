@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
-import { programBlocks } from '@/blocks'
+import { anchorPattern, programBlocks } from '@/blocks'
 import { topicOptions } from '@/collections/Courses'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
@@ -8,8 +8,9 @@ import { destinationOptions } from '@/lib/destinations'
 import { languages } from '@/lib/routes'
 
 // Program pages (docs/cms-schema.md § 3). A language program (one per language and audience,
-// /ezitsi/{language}/{audience}) gets the notebook hero with its flag; every other type gets the
-// course-page hero with a sticker and a count bubble. The sections are blocks.
+// /ezitsi/{language}/{audience}) gets the notebook hero with its flag; every other type has one
+// page (/vaucheri, /profesionalno-obuchenie/profesii …) with the course-page hero: a sticker and
+// a count bubble. The sections are blocks.
 
 const languageLabels = {
   english: 'Английски',
@@ -36,16 +37,23 @@ export const Programs: CollectionConfig = {
     afterChange: [revalidateCollection],
     afterDelete: [revalidateCollection],
     beforeValidate: [
-      // One language page per language and audience.
+      // One page per language and audience, and one per other type.
       async ({ data, req, originalDoc }) => {
-        if (!isLanguage(data) || !data?.language || !data.audience) return data
+        const type = data?.type ?? originalDoc?.type
+        if (!type) return data
+        const language = isLanguage({ type })
+        if (language && (!data?.language || !data.audience)) return data
         const { docs } = await req.payload.find({
           collection: 'programs',
           where: {
             and: [
-              { type: { equals: 'language' } },
-              { language: { equals: data.language } },
-              { audience: { equals: data.audience } },
+              { type: { equals: type } },
+              ...(language
+                ? [
+                    { language: { equals: data?.language } },
+                    { audience: { equals: data?.audience } },
+                  ]
+                : []),
               ...(originalDoc?.id ? [{ id: { not_equals: originalDoc.id } }] : []),
             ],
           },
@@ -54,7 +62,13 @@ export const Programs: CollectionConfig = {
           draft: true,
           req,
         })
-        if (docs.length > 0) throw new Error('Вече има програма за този език и аудитория.')
+        if (docs.length > 0) {
+          throw new Error(
+            language
+              ? 'Вече има програма за този език и аудитория.'
+              : 'Вече има програма от този вид.',
+          )
+        }
         return data
       },
     ],
@@ -120,7 +134,7 @@ export const Programs: CollectionConfig = {
           maxRows: 2,
           admin: {
             description:
-              'На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.',
+              'Към страница или към секция на тази страница (котвата ѝ). На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.',
           },
           fields: [
             {
@@ -131,8 +145,19 @@ export const Programs: CollectionConfig = {
                   name: 'destination',
                   type: 'select',
                   label: 'Води към',
-                  required: true,
                   options: destinationOptions,
+                },
+                {
+                  name: 'anchor',
+                  type: 'text',
+                  label: 'Или към секция (котва)',
+                  validate: (
+                    value: string | null | undefined,
+                    { siblingData }: { siblingData: { destination?: string | null } },
+                  ) =>
+                    value
+                      ? anchorPattern.test(value) || 'Само малки латински букви, цифри и тирета.'
+                      : Boolean(siblingData.destination) || 'Изберете страница или котва.',
                 },
               ],
             },
@@ -166,9 +191,8 @@ export const Programs: CollectionConfig = {
       type: 'group',
       label: 'Предстоящи курсове',
       admin: {
-        condition: isLanguage,
         description:
-          'Курсовете по езика за тази аудитория, от «Курсове». Без курсове секцията не се показва.',
+          'Курсовете от «Курсове»: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.',
       },
       fields: [
         {

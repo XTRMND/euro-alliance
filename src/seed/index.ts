@@ -13,7 +13,13 @@ import {
   offices,
   partners,
 } from './data'
-import { certificates, englishPrograms, systemsBlock, textbookSystems } from './programs'
+import {
+  certificates,
+  englishPrograms,
+  singlePrograms,
+  systemsBlock,
+  textbookSystems,
+} from './programs'
 
 function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined || value === '') return true
@@ -125,7 +131,10 @@ async function seedHome(payload: Payload) {
   payload.logger.info(`Seeded the homepage: ${Object.keys(data).join(', ')}.`)
 }
 
-/** Textbook systems and certificates by name, then the English programs that use them. */
+/**
+ * Textbook systems and certificates by name, then the English programs that use them and the
+ * programs with one page each.
+ */
 async function seedPrograms(payload: Payload) {
   const systemIds = new Map<string, number>()
   for (const { levels, ...system } of textbookSystems) {
@@ -194,6 +203,20 @@ async function seedPrograms(payload: Payload) {
         ),
         _status: 'published',
       } as never,
+    })
+    payload.logger.info(`Seeded the program «${program.title}».`)
+  }
+
+  for (const program of singlePrograms) {
+    const { totalDocs } = await payload.count({
+      collection: 'programs',
+      where: { type: { equals: program.type } },
+    })
+    if (totalDocs > 0) continue
+    await payload.create({
+      collection: 'programs',
+      locale: 'bg',
+      data: { ...program, _status: 'published' } as never,
     })
     payload.logger.info(`Seeded the program «${program.title}».`)
   }
