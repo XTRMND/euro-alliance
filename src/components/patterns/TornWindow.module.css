@@ -1,14 +1,18 @@
 /*
  * Torn window (259:588): a 640 × 470 rim around a 600 × 430 photo, both Figma SVGs, scaled
- * together. The rim's SVG reaches past the frame for its shadow (18px at the sides, 10px above,
- * 26px below), placed as in Figma.
+ * together and placed as in Figma.
  */
 .window {
   position: relative;
   width: min(100%, 640px);
   aspect-ratio: 640 / 470;
+  /* The shadow follows the torn paper's outline (it was a filter inside the rim's SVG, cut off at
+     the SVG's edges). It turns with the window's rotation, as before. */
+  filter: drop-shadow(0 8px 9px rgb(var(--shadow-rgb) / 0.2));
 }
 
+/* The paper: Figma's rim, with room around it where its shadow used to be (18px at the sides,
+   10px above, 26px below). */
 .window::before {
   content: '';
   position: absolute;
@@ -16,6 +20,8 @@
   background: url('../../assets/torn-window-rim.svg') center / 100% 100% no-repeat;
 }
 
+/* The photo through the torn hole: Figma's mask, without the four thin spikes its path ran out to
+   the box's corners (they showed as slivers of photo poking into the paper). */
 .photo {
   position: absolute;
   inset: 4.255% 3.125%; /* 20px of 470 and 640 */

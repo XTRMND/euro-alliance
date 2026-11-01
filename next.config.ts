@@ -18,6 +18,8 @@ const nextConfig: NextConfig = {
   images: {
     // Responsive widths in AVIF and WebP come from Next's optimizer, cached behind the CDN.
     formats: ['image/avif', 'image/webp'],
+    // 75 for everything; 90 for the About hero's team photo (TornWindow).
+    qualities: [75, 90],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/api/media-tints/file/**' }],
   },
   turbopack: { root: dirname },

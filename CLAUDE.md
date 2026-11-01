@@ -408,6 +408,7 @@ From the About page (PR 16):
 - Fixed from the frames: «ЦПО към НАПОО» breaks inside a word on the ticket (desktop) and is cut off (mobile); the mobile licence scans overflow their columns; the mobile polaroid and fan captions are 7–11 px (the collage and the fan scale with the column instead); the middle sample's caption is hidden under the next one (all captions show); the «Свидетелство» sample is cropped to its back page (shown from its right side).
 - The Details ticket is now a shared pattern (`src/components/patterns/Ticket`), used by the course page and the About page's «Какво ви гарантираме».
 - Landing (216:3278): the copy fades up; the torn window turns in from −3° without fading (the LCP element); the logo bubble turns in from 40°.
+- Torn window: Figma's photo mask (259:588) runs out to the box's four corners in thin spikes, which showed as slivers of photo in the paper; they're removed from `src/assets/torn-window-mask.svg`. The shadow is CSS on the window (the rim SVG's own shadow was cut off at its edges). [as described; mirror in Figma?]
 
 From the legal pages and the cookie consent (PR 17):
 - The policies' «Последна актуализация» date isn't seeded: there's no verified date. Ask the client for the date each text took effect; the line shows once it's set in the admin. «Изтегли като PDF» shows when a PDF is uploaded to the page (no PDF in Figma), as a download link.
