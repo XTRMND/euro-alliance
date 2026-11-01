@@ -40,7 +40,40 @@
   },
   "course": {
     "startsOn": "Starts: {date}",
-    "enrol": "Enrol"
+    "enrol": "Enrol",
+    "when": "When",
+    "where": "Where and for whom",
+    "what": "What you get",
+    "field": {
+      "start": "Start",
+      "days": "Days",
+      "hours": "Hours",
+      "duration": "Length",
+      "format": "Format",
+      "venue": "Venue",
+      "city": "City",
+      "participants": "Participants",
+      "level": "Level",
+      "program": "Course book",
+      "document": "Certificate",
+      "included": "Included",
+      "price": "Price"
+    },
+    "checkLevel": "Check your level",
+    "regularPrice": "Regular price <old>{price}</old>",
+    "voucherValue": "voucher value",
+    "voucherNote": "Can be paid in full with an Employment Agency voucher.",
+    "enrolVoucher": "Enrol with a voucher",
+    "closedNote": "enrolment closed",
+    "notify": "Tell me about the next course",
+    "noSeats": "No seats left",
+    "seats": "Seats left: {count}",
+    "fewSeats": "{count, plural, one {Only # seat left} other {Only # seats left}}",
+    "ask": "Ask a question",
+    "related": "Similar courses",
+    "allCourses": "All courses",
+    "previous": "Previous courses",
+    "next": "Next courses"
   },
   "courses": {
     "audience": {

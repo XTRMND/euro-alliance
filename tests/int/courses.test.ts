@@ -2,7 +2,7 @@ import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { emptyCourseFilters, type CourseFilters } from '@/lib/course-filters'
-import { findCourseMonths, findCourses } from '@/lib/course-query'
+import { findCourse, findCourseMonths, findCourses, findRelatedCourses } from '@/lib/course-query'
 import type { Course } from '@/payload-types'
 
 // The course listing's queries against a real database, with obviously fake courses (year
@@ -91,5 +91,18 @@ describe('course listing', () => {
 
   it('offers the months in which listed courses start', async () => {
     expect(await findCourseMonths(payload, today)).toEqual(['2099-01', '2099-02', '2099-03'])
+  })
+})
+
+describe('course page', () => {
+  it('finds a published course by its slug, and not a draft', async () => {
+    expect((await findCourse(payload, 'test-a'))?.title).toBe('Тест A')
+    expect(await findCourse(payload, 'test-chernova')).toBeNull()
+  })
+
+  it('suggests listed courses of the same category, the same language first', async () => {
+    const course = (await findCourse(payload, 'test-b'))!
+    const related = await findRelatedCourses(payload, course, today)
+    expect(related.map((c) => c.title)).toEqual(['Тест A', 'Тест D'])
   })
 })

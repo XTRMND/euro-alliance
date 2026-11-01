@@ -3,7 +3,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { tags } from '@/hooks/revalidate'
 import type { CourseFilters } from '@/lib/course-filters'
-import { findCourseMonths, findCourses } from '@/lib/course-query'
+import { findCourse, findCourseMonths, findCourses, findRelatedCourses } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import type { Media } from '@/payload-types'
 
@@ -162,4 +162,30 @@ const courseMonths = unstable_cache(
 /** The months in which listed courses start, for the «Начало» filter. */
 export function getCourseMonths() {
   return courseMonths(startOfTodayInSofia())
+}
+
+/** A published course by slug, or null. */
+export const getCourse = unstable_cache(
+  async (slug: string) => findCourse(await payload(), slug),
+  ['course'],
+  { tags: [tags.collection('courses')] },
+)
+
+const relatedCourses = unstable_cache(
+  async (course: { id: number; category: string; language?: string | null }, today: string) =>
+    findRelatedCourses(await payload(), course, today),
+  ['related-courses'],
+  { tags: [tags.collection('courses')] },
+)
+
+/** «Подобни курсове» for a course page. */
+export function getRelatedCourses(course: {
+  id: number
+  category: string
+  language?: string | null
+}) {
+  return relatedCourses(
+    { id: course.id, category: course.category, language: course.language },
+    startOfTodayInSofia(),
+  )
 }

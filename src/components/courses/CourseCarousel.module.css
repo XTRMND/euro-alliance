@@ -1,0 +1,105 @@
+/* «Подобни курсове» (81:1359): paper, 72px above and 88px below; cards 300px, 24px apart. */
+
+.section {
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 44px var(--page-margin) 48px;
+}
+
+.head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.title {
+  font: var(--type-h2);
+  color: var(--color-brand-primary-strong);
+}
+
+.controls {
+  display: none;
+}
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0 0 4px;
+  font: 400 2rem / 1 var(--font-body);
+  color: var(--color-brand-primary);
+  background: var(--color-bg-page);
+  border: 1.5px solid var(--color-brand-primary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background-color var(--motion-button) var(--ease-out),
+    color var(--motion-button) var(--ease-out);
+}
+
+.arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .arrow:not(:disabled):hover {
+    color: var(--color-text-on-brand);
+    background: var(--color-brand-primary);
+  }
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  margin-inline: calc(-1 * var(--page-margin));
+  padding: 8px var(--page-margin) 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--page-margin);
+  scrollbar-width: none;
+  list-style: none;
+}
+
+.row::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  display: flex;
+  flex: 0 0 min(280px, 100%);
+  scroll-snap-align: start;
+}
+
+.item > * {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    gap: 24px;
+    padding-block: 72px 88px;
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .row {
+    gap: 24px;
+  }
+
+  .item {
+    flex-basis: 300px;
+  }
+}

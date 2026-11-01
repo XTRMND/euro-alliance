@@ -40,3 +40,45 @@ export async function findCourseMonths(payload: Payload, today: string): Promise
   )
   return [...new Set(months)]
 }
+
+/** A published course by its slug, as an anonymous visitor. */
+export async function findCourse(payload: Payload, slug: string) {
+  const { docs } = await payload.find({
+    collection: 'courses',
+    locale: 'bg',
+    depth: 0,
+    where: { slug: { equals: slug } },
+    limit: 1,
+    overrideAccess: false,
+  })
+  return docs[0] ?? null
+}
+
+/**
+ * «Подобни курсове»: listed courses of the same category, the same language first, without the
+ * course itself; up to six.
+ */
+export async function findRelatedCourses(
+  payload: Payload,
+  course: { id: number; category: string; language?: string | null },
+  today: string,
+) {
+  const { docs } = await payload.find({
+    collection: 'courses',
+    locale: 'bg',
+    depth: 0,
+    where: {
+      and: [
+        { id: { not_equals: course.id } },
+        { category: { equals: course.category } },
+        { or: [{ startDate: { greater_than_equal: today } }, { startDate: { exists: false } }] },
+      ],
+    },
+    sort: ['startDate', 'title'],
+    limit: 24,
+    overrideAccess: false,
+  })
+  const same = docs.filter((doc) => course.language && doc.language === course.language)
+  const other = docs.filter((doc) => !same.includes(doc))
+  return [...same, ...other].slice(0, 6)
+}

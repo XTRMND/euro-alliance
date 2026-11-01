@@ -64,6 +64,8 @@ export const queryParams = {
   start: 'nachalo',
   sort: 'sortirane',
   shown: 'pokazani',
+  /** The course a visitor enrols in, read by the contact wizard (PR 11). */
+  course: 'kurs',
   /** The language pair of «Изпратете документ», read by the contact wizard (PR 11). */
   from: 'ot',
   to: 'na',
@@ -120,6 +122,7 @@ export const devRoutes = {
   patterns: '/dev/patterns',
   visuals: '/dev/visuals',
   cards: '/dev/cards',
+  course: '/dev/course',
 } as const
 
 function withQuery(path: string, name: string, value: string | undefined): string {
@@ -151,6 +154,12 @@ export const routes = {
     const query = new URLSearchParams({ [queryParams.from]: pair.from, [queryParams.to]: pair.to })
     return `${path}${path.includes('?') ? '&' : '?'}${query}`
   },
+  /** Enrolment in a course: the wizard on the courses topic, or the voucher topic. */
+  enrol: (course: string, voucher = false) =>
+    `/${segments.contact}?${new URLSearchParams({
+      [queryParams.topic]: voucher ? segments.vouchers : segments.courses,
+      [queryParams.course]: course,
+    })}`,
   contactLocation: (location: ContactLocation) =>
     `/${segments.contact}#${contactLocations[location]}`,
   privacy: () => `/${segments.privacy}`,

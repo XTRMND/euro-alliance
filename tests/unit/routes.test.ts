@@ -69,6 +69,7 @@ describe('URL scheme', () => {
     [queryParams.start, 'Начало'],
     [queryParams.sort, 'Сортиране'],
     [queryParams.shown, 'Показани'],
+    [queryParams.course, 'Курс'],
     [anchors.certificates, 'Сертификати'],
     [aboutSections.history, 'История'],
     [aboutSections.team, 'Екип'],
@@ -116,6 +117,10 @@ describe('routes', () => {
       '/kontakti?tema=prevodi&ot=balgarski&na=nemski',
     )
     expect(routes.contactLocation('sofia')).toBe('/kontakti#sofia')
+    expect(routes.enrol('angliyski-ezik-b2')).toBe('/kontakti?tema=kursove&kurs=angliyski-ezik-b2')
+    expect(routes.enrol('angliyski-ezik-b2', true)).toBe(
+      '/kontakti?tema=vaucheri&kurs=angliyski-ezik-b2',
+    )
   })
 
   it('encodes the search query', () => {

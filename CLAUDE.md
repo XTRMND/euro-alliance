@@ -318,6 +318,15 @@ From the course listing (PR 9):
 - Filters apply as soon as they change, in the sidebar and in the sheet; the sheet's «Покажи N курса» closes it. Empty state «Няма курсове с тези филтри.» with «Изчисти филтрите» isn't in Figma. [as described]
 - Content written to the database outside the running site (seed script, the import in PR 21) doesn't revalidate the site's cached reads: the import must call the revalidation tags or the cache must be cleared after it runs.
 
+From the course page (PR 10):
+- Course states (src/lib/course-state.ts; confirm the rules): enrolment closes when the course has started or has 0 seats («записването приключи», «Уведоми ме за следващия курс»); 1–2 seats are highlighted; a voucher course's price is the voucher value; a regular price above the price makes a promotion, shown struck through. Seats show only when the CMS has a number.
+- «Запишете се» with the embedded wizard and its side card (91:1462) arrives with the wizard in PR 11. Until then «Запиши се» opens `/kontakti?tema=kursove&kurs=<slug>` (`tema=vaucheri` for a voucher course); PR 11 aligns the wizard's topics with these.
+- The side card in Figma lists «Стара Загора: телефон на офиса», an office that isn't among the client's verified offices. It won't be shown; the card will use the offices in the CMS. Does the client have a Stara Zagora office?
+- «Подобни курсове»: listed courses of the same category, the same language first, up to six.
+- «Провери нивото си» goes to the certificates section of the course's language page, and only shows when that page exists.
+- Mobile: the price and «Запиши се» stay in a bar at the bottom of the screen («Sticky enrol bar», 117:1535).
+- No Lighthouse run on a course page yet: CI's database has no courses. The states are checked on /dev/course.
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.

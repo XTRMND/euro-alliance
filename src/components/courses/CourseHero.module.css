@@ -1,0 +1,116 @@
+/* Course hero (81:1241 / 117:907). Desktop: copy and actions on the left, the visual in a
+   420 × 500 box on the right. Mobile: copy, visual, then «Задай въпрос» (enrol is in the bar). */
+
+.hero {
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  grid-template-areas: 'copy' 'art' 'actions';
+  gap: 14px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 24px var(--page-margin) 32px;
+}
+
+.copy {
+  display: grid;
+  grid-area: copy;
+  gap: 14px;
+  justify-items: start;
+  max-width: 760px;
+}
+
+.kicker {
+  font: 700 clamp(1rem, 0.963rem + 0.152vw, 1.0625rem) / 1.5 var(--font-display); /* 16 → 17 */
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+
+.title {
+  font: 800 clamp(3rem, 2.443rem + 2.286vw, 4.75rem) / 0.96 var(--font-display); /* 48 → 76 */
+  color: var(--color-brand-primary-strong);
+}
+
+/* The level: 12px sides and 4px below at 76px, 1.5°. */
+.title > span {
+  padding: 0 0.158em 0.053em;
+  transform: rotate(1.5deg);
+}
+
+.lead {
+  max-width: 680px;
+  font: 400 clamp(1rem, 0.93rem + 0.286vw, 1.1875rem) / 1.5 var(--font-body); /* 16 → 19 */
+  color: var(--color-text-muted);
+}
+
+/* The visual: 344 of 420 wide, tilted −2°, with the level bubble on its lower left. */
+.art {
+  position: relative;
+  grid-area: art;
+  justify-self: center;
+  width: min(100%, 420px);
+  aspect-ratio: 420 / 500;
+  container-type: inline-size;
+}
+
+.art .visual {
+  position: absolute;
+  top: 2.4%;
+  left: 9.5%;
+  width: 81.9%;
+  rotate: -2deg;
+}
+
+.art .bubble {
+  position: absolute;
+  top: 66%;
+  left: -1%;
+  scale: 0.82;
+  transform-origin: top left;
+}
+
+.actions {
+  display: flex;
+  grid-area: actions;
+  flex-wrap: wrap;
+  gap: 16px 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.enrol {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 1fr) 420px;
+    grid-template-areas: 'copy art' 'actions art';
+    gap: 0 40px;
+    align-content: center;
+    min-height: 529px;
+    padding-block: 40px;
+  }
+
+  .copy {
+    gap: 18px;
+    align-self: end;
+  }
+
+  .actions {
+    align-self: start;
+    justify-content: flex-start;
+    padding-top: 36px;
+  }
+
+  .enrol {
+    display: contents;
+  }
+
+  .art .bubble {
+    scale: 1;
+  }
+}

@@ -52,9 +52,14 @@ Disable GraphQL if nothing uses it. Lock down the REST API to what the site need
 | `level` | text, optional | Drives the level bubble. Empty → no bubble (`Show level` off). |
 | `format` | select | In person / online (the «Формат» filter group) |
 | `startDate` | date, optional | |
-| `schedule` | text / rich text | |
+| `description` | textarea | *(PR 10)* The course page lead |
+| `days`, `hours`, `duration` | text | *(PR 10)* Учебни дни, Учебни часове, Хорариум |
+| `venue`, `city` | text | *(PR 10)* Учебна база, Град |
+| `levelName`, `program`, `document`, `included` | text | *(PR 10)* Какво получавате |
+| `schedule` | textarea | A note on the schedule |
 | `price` | number, optional | Empty → price hidden. Store with `currency` *(proposed)*, default EUR. **Never convert imported лв prices silently**; flag them. |
-| `priceNote` | text, optional | |
+| `priceNote` | text, optional | The chip beside the price («промоция», «за целия курс») |
+| `regularPrice` | number, optional | *(PR 10)* Above `price`, it marks a promotion and shows struck through |
 | `seats` | number, optional | |
 | `voucherEligible` | checkbox | Voucher flag |
 | `relatedProgram` | relationship → Programs | |

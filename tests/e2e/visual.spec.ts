@@ -15,6 +15,7 @@ const snapshots = [
   { name: 'patterns', path: devRoutes.patterns },
   { name: 'visuals', path: devRoutes.visuals },
   { name: 'cards', path: devRoutes.cards },
+  { name: 'course', path: devRoutes.course },
 ]
 
 for (const { name, path } of snapshots) {

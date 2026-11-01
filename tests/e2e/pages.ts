@@ -9,4 +9,5 @@ export const pages = [
   { name: 'Patterns (dev)', path: devRoutes.patterns },
   { name: 'Visuals (dev)', path: devRoutes.visuals },
   { name: 'Cards (dev)', path: devRoutes.cards },
+  { name: 'Course states (dev)', path: devRoutes.course },
 ]
