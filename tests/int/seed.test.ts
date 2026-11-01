@@ -59,6 +59,52 @@ describe('seed', () => {
     ])
   })
 
+  it('seeds the homepage from Figma, with the classroom photo and its tints', async () => {
+    const home = await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 2 })
+    const photo = home.hero.photo as Media
+
+    expect(home.hero.heading).toBe('Езиково и професионално обучение от 1999 г.')
+    expect(home.hero.highlight).toBe('от 1999 г.')
+    expect(photo.kind).toBe('photo')
+    expect(photo.altReviewed).toBe(false)
+    expect(home.hero.photoSecondary ?? null).toBeNull()
+    const { docs: tints } = await payload.find({
+      collection: 'media-tints',
+      where: { source: { equals: photo.id } },
+    })
+    expect(tints.map((tint) => tint.tint).sort()).toEqual(['about', 'hero', 'homeNews', 'news'])
+    expect(home.programs?.cards?.map((card) => card.destination)).toEqual([
+      'languagesStudents',
+      'languagesAdults',
+      'certificates',
+      'professions',
+      'vouchers',
+      'teachers',
+      'farmers',
+      'computerCourses',
+    ])
+  })
+
+  it('seeds the partner logos byte for byte, with their names as alt text', async () => {
+    const home = await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 1 })
+    const logos = home.partners?.logos ?? []
+
+    expect(logos).toHaveLength(8)
+    for (const { name, logo } of logos) {
+      const media = logo as Media
+      expect(media.kind).toBe('logo')
+      expect(media.alt).toBe(name)
+      const stored = await readFile(path.join(uploadDirs.media, media.filename!))
+      const original = await readFile(path.join('src/seed/partners', media.filename!))
+      expect(stored.equals(original)).toBe(true)
+    }
+  })
+
+  it('never seeds courses or news', async () => {
+    expect((await payload.count({ collection: 'courses' })).totalDocs).toBe(0)
+    expect((await payload.count({ collection: 'news' })).totalDocs).toBe(0)
+  })
+
   it('never duplicates or overwrites', async () => {
     const { docs } = await payload.find({ collection: 'offices', sort: 'id', limit: 1 })
     await payload.update({ collection: 'offices', id: docs[0].id, data: { name: 'Edited' } })
@@ -68,5 +114,13 @@ describe('seed', () => {
     const after = await payload.find({ collection: 'offices', sort: 'id' })
     expect(after.totalDocs).toBe(3)
     expect(after.docs[0].name).toBe('Edited')
+    expect(
+      (
+        await payload.count({
+          collection: 'media',
+          where: { filename: { equals: 'classroom.jpg' } },
+        })
+      ).totalDocs,
+    ).toBe(1)
   })
 })

@@ -130,3 +130,47 @@ describe('site', () => {
     expect(updated.facebook).toBe('https://example.com/test')
   })
 })
+
+describe('courses and news', () => {
+  it('show the public published documents only, and fill in the slug', async () => {
+    const draft = await payload.create({
+      collection: 'courses',
+      locale: 'bg',
+      data: { title: 'Тестов курс А', category: 'languages', topic: 'english', _status: 'draft' },
+      ...asUser(editor),
+    })
+    const published = await payload.create({
+      collection: 'news',
+      locale: 'bg',
+      data: { title: 'Тестова новина А', date: '2026-01-01T12:00:00.000Z', _status: 'published' },
+      ...asUser(editor),
+    })
+
+    expect(draft.slug).toBe('testov-kurs-a')
+    expect(published.slug).toBe('testova-novina-a')
+    expect((await payload.find({ collection: 'courses', ...anonymous })).totalDocs).toBe(0)
+    expect(
+      (await payload.find({ collection: 'news', ...anonymous })).docs.map((n) => n.id),
+    ).toEqual([published.id])
+    await expect(
+      payload.create({
+        collection: 'news',
+        data: { title: 'X', date: '2026-01-01T12:00:00.000Z' },
+        ...anonymous,
+      }),
+    ).rejects.toThrow()
+  })
+})
+
+describe('home', () => {
+  it('rejects a highlight that is not part of the heading', async () => {
+    await expect(
+      payload.updateGlobal({
+        slug: 'home',
+        locale: 'bg',
+        data: { hero: { heading: 'Заглавие', highlight: 'друго' } },
+        ...asUser(editor),
+      }),
+    ).rejects.toThrow()
+  })
+})

@@ -1,7 +1,8 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import type { Payload } from 'payload'
-import { company, fundingLogo, navigation, offices } from './data'
+import type { Media } from '@/payload-types'
+import { company, fundingLogo, home, homePhoto, navigation, offices, partners } from './data'
 
 function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined || value === '') return true
@@ -27,6 +28,7 @@ export async function seed(payload: Payload) {
   }
 
   await seedFundingLogo(payload)
+  await seedHome(payload)
 
   const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {
@@ -60,30 +62,77 @@ async function seedFundingLogo(payload: Payload) {
   const site = await payload.findGlobal({ slug: 'site', locale: 'bg', depth: 0 })
   if (site.funding?.logos) return
 
-  const name = path.basename(fundingLogo.file)
-  const existing = await payload.find({
-    collection: 'media',
-    where: { filename: { equals: name } },
-    depth: 0,
-    limit: 1,
-  })
-  let media = existing.docs[0]
-  if (!media) {
-    // public/ ships with the build, so the production seed finds the file too.
-    const data = await readFile(
-      path.resolve(/* turbopackIgnore: true */ process.cwd(), fundingLogo.file),
-    )
-    media = await payload.create({
-      collection: 'media',
-      locale: 'bg',
-      data: { alt: fundingLogo.alt, kind: 'logo' },
-      file: { data, mimetype: fundingLogo.mimetype, name, size: data.length },
-    })
-  }
+  const media = await uploadOnce(payload, { ...fundingLogo, kind: 'logo' })
   await payload.updateGlobal({
     slug: 'site',
     locale: 'bg',
     data: { funding: { statement: site.funding?.statement, logos: media.id } },
   })
   payload.logger.info('Seeded the EU logo strip.')
+}
+
+/**
+ * The homepage copy from Figma, its classroom photo and the partner logos. Each part is filled in
+ * only while it's empty, so the client's edits always win.
+ */
+async function seedHome(payload: Payload) {
+  const current = await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 0 })
+  const data: Record<string, unknown> = {}
+
+  if (isEmpty(current.hero?.heading)) {
+    const photo = await uploadOnce(payload, { ...homePhoto, kind: 'photo', altReviewed: false })
+    data.hero = { ...home.hero, photo: photo.id }
+  }
+  for (const key of ['upcoming', 'programs', 'translations', 'news'] as const) {
+    if (isEmpty(current[key]?.title)) data[key] = home[key]
+  }
+  if (isEmpty(current.partners?.logos)) {
+    const logos = []
+    for (const partner of partners) {
+      const media = await uploadOnce(payload, {
+        file: `src/seed/partners/${partner.file}`,
+        mimetype: 'image/png',
+        alt: partner.name,
+        kind: 'logo',
+      })
+      logos.push({ name: partner.name, logo: media.id })
+    }
+    data.partners = { title: current.partners?.title || home.partners.title, logos }
+  }
+
+  if (Object.keys(data).length === 0) return
+  await payload.updateGlobal({ slug: 'home', locale: 'bg', data })
+  payload.logger.info(`Seeded the homepage: ${Object.keys(data).join(', ')}.`)
+}
+
+type SeedFile = {
+  file: string
+  mimetype: string
+  alt: string
+  kind: Media['kind']
+  altReviewed?: boolean
+  focalX?: number
+  focalY?: number
+}
+
+/** The media document for a seed file: the one uploaded before, or a new upload. */
+async function uploadOnce(payload: Payload, { file, mimetype, ...fields }: SeedFile) {
+  const name = path.basename(file)
+  const existing = await payload.find({
+    collection: 'media',
+    where: { filename: { equals: name } },
+    depth: 0,
+    limit: 1,
+  })
+  if (existing.docs[0]) return existing.docs[0]
+
+  // The build copies these files next to the standalone server (scripts/prepare-standalone.mjs),
+  // so the production seed finds them too.
+  const data = await readFile(path.resolve(/* turbopackIgnore: true */ process.cwd(), file))
+  return payload.create({
+    collection: 'media',
+    locale: 'bg',
+    data: fields,
+    file: { data, mimetype, name, size: data.length },
+  })
 }

@@ -125,3 +125,115 @@ export const navigation = {
     },
   ],
 }
+
+// The homepage (48:184): copy from Figma. The classroom photo is the client's own (Figma layer
+// «Classroom (their photo, duotone 88%)», 261:4025), exported from the image fill; Photo B in the
+// same collage is stock and is never seeded. Courses and news are never seeded: they come from
+// the client or the import (PR 21).
+export const homePhoto = {
+  file: 'src/seed/home/classroom.jpg',
+  mimetype: 'image/jpeg',
+  alt: 'Деца в класна стая на Евро Алианс вдигат чанти с логото на школата',
+  // Focus of Figma's crop of the photo.
+  focalX: 47,
+  focalY: 59,
+}
+
+export const home = {
+  hero: {
+    heading: 'Езиково и професионално обучение от 1999 г.',
+    highlight: 'от 1999 г.',
+    lead: 'Езикови курсове, професионално обучение, квалификации по програми на МОН и преводи с легализация.',
+    primary: { label: 'Виж предстоящите курсове', destination: 'courses' },
+    secondary: { label: 'Изпрати документ за превод', destination: 'sendDocument' },
+  },
+  upcoming: { title: 'Предстоящи курсове' },
+  programs: {
+    title: 'Какво предлагаме',
+    cards: [
+      {
+        title: 'Езици за ученици',
+        sticker: 'student',
+        text: 'От 1 до 12 клас, в малки групи и индивидуално, по училищните програми.',
+        linkLabel: 'Виж програмите',
+        destination: 'languagesStudents',
+      },
+      {
+        title: 'Езици за възрастни',
+        sticker: 'french',
+        text: 'Шест езика, нива по Общата европейска езикова рамка, групи и индивидуално.',
+        linkLabel: 'Виж курсовете',
+        destination: 'languagesAdults',
+      },
+      {
+        title: 'Изпити и сертификати',
+        sticker: 'exams',
+        text: 'Cambridge, ДЗИ и НВО, входни тестове за ниво и признаване на езикови умения.',
+        linkLabel: 'Провери нивото си',
+        destination: 'certificates',
+      },
+      {
+        title: 'Професионално и фирмено обучение',
+        sticker: 'professional',
+        text: 'Лицензиран ЦПО към НАПОО и програми, съобразени с нуждите на фирмата.',
+        linkLabel: 'Виж професиите',
+        destination: 'professions',
+      },
+      {
+        title: 'Обучение с ваучери',
+        sticker: 'corporate',
+        text: 'Езикови и професионални курсове, платени с ваучери от Агенцията по заетостта.',
+        linkLabel: 'Как работи',
+        destination: 'vouchers',
+      },
+      {
+        title: 'Педагогически специалисти',
+        sticker: 'teaching',
+        text: 'Програми, одобрени от МОН, с придобиване на квалификационни кредити.',
+        linkLabel: 'Виж програмите',
+        destination: 'teachers',
+      },
+      {
+        title: 'Обучение за земеделци',
+        sticker: 'farming',
+        text: 'Специализирани курсове за земеделски стопани и производители.',
+        linkLabel: 'Научи повече',
+        destination: 'farmers',
+      },
+      {
+        title: 'Компютърни курсове',
+        sticker: 'computer',
+        text: 'За ученици и възрастни, групово и индивидуално.',
+        linkLabel: 'Виж курсовете',
+        destination: 'computerCourses',
+      },
+    ],
+  },
+  translations: {
+    title: 'Преводи и легализация',
+    lead: 'Писмени и устни преводи, заверка и легализация на документи. Изпратете файла и получете оферта с цена и срок.',
+    steps: [
+      { text: 'Изпращате документа' },
+      { text: 'Получавате оферта' },
+      { text: 'Превод и легализация' },
+    ],
+    cta: { label: 'Изпрати документ за превод', destination: 'sendDocument' },
+  },
+  news: { title: 'Новини и проекти', count: 3 },
+  partners: { title: 'Партньори и акредитации' },
+} as const
+
+/** Partner logos as in Figma (Marquee / Logos 63:711), in order; open item: current list. */
+export const partners = [
+  { file: 'agentsia-po-zaetostta.png', name: 'Агенция по заетостта' },
+  { file: 'napoo.png', name: 'НАПОО' },
+  { file: 'agraren-universitet-plovdiv.png', name: 'Аграрен университет – Пловдив' },
+  { file: 'pearson-longman.png', name: 'Pearson Longman' },
+  { file: 'oxford-university-press.png', name: 'Oxford University Press' },
+  { file: 'tpk-plovdiv.png', name: 'Търговско-промишлена камара – Пловдив' },
+  {
+    file: 'pu-paisiy-hilendarski.png',
+    name: 'Пловдивски университет „Паисий Хилендарски“',
+  },
+  { file: 'gateway-school-of-english.png', name: 'Gateway School of English' },
+] as const

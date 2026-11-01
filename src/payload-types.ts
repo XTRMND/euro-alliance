@@ -71,6 +71,8 @@ export interface Config {
     media: Media;
     'media-tints': MediaTint;
     offices: Office;
+    courses: Course;
+    news: News;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +88,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     'media-tints': MediaTintsSelect<false> | MediaTintsSelect<true>;
     offices: OfficesSelect<false> | OfficesSelect<true>;
+    courses: CoursesSelect<false> | CoursesSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -98,10 +102,14 @@ export interface Config {
   globals: {
     site: Site;
     navigation: Navigation;
+    home: Home;
+    translation: Translation;
   };
   globalsSelect: {
     site: SiteSelect<false> | SiteSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
+    translation: TranslationSelect<false> | TranslationSelect<true>;
   };
   locale: 'bg' | 'en';
   widgets: {
@@ -268,6 +276,119 @@ export interface Office {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: number;
+  title: string;
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  category: 'languages' | 'exams' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer';
+  language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
+  /**
+   * Един стикер, едно значение: не ползвайте един стикер за различни неща.
+   */
+  topic:
+    | 'english'
+    | 'german'
+    | 'french'
+    | 'italian'
+    | 'spanish'
+    | 'russian'
+    | 'exam-prep'
+    | 'exams'
+    | 'student'
+    | 'teaching'
+    | 'professional'
+    | 'corporate'
+    | 'computer'
+    | 'farming'
+    | 'translation';
+  audience?: ('students' | 'adults' | 'companies') | null;
+  /**
+   * Например «12 клас». Показва се след аудиторията.
+   */
+  audienceNote?: string | null;
+  format?: ('in-person' | 'online') | null;
+  /**
+   * Например «Вечерна група». Ако е празно: «С ваучер» за курс с ваучер, иначе формата.
+   */
+  cardTag?: string | null;
+  /**
+   * Например B2 или A1–B1. Празно: без балонче за ниво.
+   */
+  level?: string | null;
+  startDate?: string | null;
+  seats?: number | null;
+  schedule?: string | null;
+  /**
+   * Празно: цената не се показва. Само официални цени.
+   */
+  price?: number | null;
+  currency?: ('EUR' | 'BGN') | null;
+  /**
+   * Например «за целия курс» или «промоция».
+   */
+  priceNote?: string | null;
+  voucherEligible?: boolean | null;
+  /**
+   * От стария сайт, за пренасочването.
+   */
+  legacyUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  title: string;
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  date: string;
+  /**
+   * Само истинска снимка. Без снимка картата е без изображение.
+   */
+  cover?: (number | null) | Media;
+  /**
+   * За картите и за описанието в търсачките.
+   */
+  excerpt?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  gallery?: (number | Media)[] | null;
+  related?: (number | News)[] | null;
+  /**
+   * От стария сайт, за пренасочването.
+   */
+  legacyId?: string | null;
+  legacyUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -305,6 +426,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'offices';
         value: number | Office;
+      } | null)
+    | ({
+        relationTo: 'courses';
+        value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -450,6 +579,52 @@ export interface OfficesSelect<T extends boolean = true> {
         id?: T;
       };
   routes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses_select".
+ */
+export interface CoursesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  language?: T;
+  topic?: T;
+  audience?: T;
+  audienceNote?: T;
+  format?: T;
+  cardTag?: T;
+  level?: T;
+  startDate?: T;
+  seats?: T;
+  schedule?: T;
+  price?: T;
+  currency?: T;
+  priceNote?: T;
+  voucherEligible?: T;
+  legacyUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  date?: T;
+  cover?: T;
+  excerpt?: T;
+  body?: T;
+  gallery?: T;
+  related?: T;
+  legacyId?: T;
+  legacyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -614,6 +789,191 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  hero: {
+    heading: string;
+    /**
+     * Част от заглавието, на нов ред с пясъчен маркер.
+     */
+    highlight?: string | null;
+    lead?: string | null;
+    primary?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'news'
+            | 'about'
+            | 'contact'
+          )
+        | null;
+    };
+    secondary?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'news'
+            | 'about'
+            | 'contact'
+          )
+        | null;
+    };
+    /**
+     * Истинска снимка, в синия тон (88%). Без снимка колажът остава с глобуса.
+     */
+    photo?: (number | null) | Media;
+    /**
+     * По желание, в цвят, под първата. Само истинска снимка, никога стокова.
+     */
+    photoSecondary?: (number | null) | Media;
+  };
+  /**
+   * Курсовете идват от «Курсове»: публикувани, с начало от днес нататък.
+   */
+  upcoming?: {
+    title?: string | null;
+  };
+  programs?: {
+    title?: string | null;
+    /**
+     * Номерата (01, 02 …) следват реда на картите.
+     */
+    cards?:
+      | {
+          title: string;
+          sticker:
+            | 'english'
+            | 'german'
+            | 'french'
+            | 'italian'
+            | 'spanish'
+            | 'russian'
+            | 'exam-prep'
+            | 'exams'
+            | 'student'
+            | 'teaching'
+            | 'professional'
+            | 'corporate'
+            | 'computer'
+            | 'farming'
+            | 'translation';
+          text?: string | null;
+          linkLabel: string;
+          destination:
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'news'
+            | 'about'
+            | 'contact';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  translations?: {
+    title?: string | null;
+    lead?: string | null;
+    steps?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    cta?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'news'
+            | 'about'
+            | 'contact'
+          )
+        | null;
+    };
+  };
+  news?: {
+    title?: string | null;
+    count?: number | null;
+  };
+  partners?: {
+    title?: string | null;
+    logos?:
+      | {
+          name: string;
+          logo: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translation".
+ */
+export interface Translation {
+  id: number;
+  /**
+   * Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».
+   */
+  languages?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site_select".
  */
 export interface SiteSelect<T extends boolean = true> {
@@ -717,6 +1077,107 @@ export interface NavigationSelect<T extends boolean = true> {
               icon?: T;
               id?: T;
             };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        heading?: T;
+        highlight?: T;
+        lead?: T;
+        primary?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+            };
+        secondary?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+            };
+        photo?: T;
+        photoSecondary?: T;
+      };
+  upcoming?:
+    | T
+    | {
+        title?: T;
+      };
+  programs?:
+    | T
+    | {
+        title?: T;
+        cards?:
+          | T
+          | {
+              title?: T;
+              sticker?: T;
+              text?: T;
+              linkLabel?: T;
+              destination?: T;
+              id?: T;
+            };
+      };
+  translations?:
+    | T
+    | {
+        title?: T;
+        lead?: T;
+        steps?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
+            };
+      };
+  news?:
+    | T
+    | {
+        title?: T;
+        count?: T;
+      };
+  partners?:
+    | T
+    | {
+        title?: T;
+        logos?:
+          | T
+          | {
+              name?: T;
+              logo?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "translation_select".
+ */
+export interface TranslationSelect<T extends boolean = true> {
+  languages?:
+    | T
+    | {
+        name?: T;
         id?: T;
       };
   updatedAt?: T;
