@@ -1,4 +1,3 @@
-import { Caveat } from 'next/font/google'
 import localFont from 'next/font/local'
 
 // Sofia Sans and Sofia Sans Extra Condensed are subset by scripts/build-fonts.sh: one variable
@@ -22,14 +21,8 @@ export const sofiaSansExtraCondensed = localFont({
   fallback: ['Arial Narrow', 'Arial', 'sans-serif'],
 })
 
-// Handwriting is decoration and rare, so it isn't preloaded. Self-hosted at build time.
-export const caveat = Caveat({
-  subsets: ['cyrillic', 'latin'],
-  display: 'swap',
-  variable: '--font-caveat',
-  preload: false,
-})
+// Caveat, the handwriting, is in ./font-hand.tsx: it loads only where it's used.
 
-export const fontVariables = [sofiaSans, sofiaSansExtraCondensed, caveat]
+export const fontVariables = [sofiaSans, sofiaSansExtraCondensed]
   .map((font) => font.variable)
   .join(' ')

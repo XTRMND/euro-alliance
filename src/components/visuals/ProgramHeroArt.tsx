@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { HandFontPreload } from '@/styles/font-hand'
 import { Flag, type FlagLanguage } from './Flag'
 import { Halftone } from './Halftone'
 import styles from './ProgramHeroArt.module.css'
@@ -41,6 +42,7 @@ export function ProgramHeroArt({
 }: ProgramHeroArtProps) {
   return (
     <div className={[styles.art, className].filter(Boolean).join(' ')}>
+      <HandFontPreload />
       <div className={styles.stage}>
         <Halftone pattern="notebook-shadow" className={styles.shadow} />
         <div className={styles.page}>

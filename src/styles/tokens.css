@@ -24,10 +24,11 @@
   --color-text-on-brand: #ffffff;
   --color-border-default: #dce1e7;
 
-  /* Type families (src/styles/fonts.ts sets the --font-sofia-* and --font-caveat variables) */
+  /* Type families (src/styles/fonts.ts sets the --font-sofia-* variables; Caveat is declared in
+     globals.css and preloaded by the components that use it, src/styles/font-hand.tsx) */
   --font-display: var(--font-sofia-sans-extra-condensed), 'Arial Narrow', sans-serif;
   --font-body: var(--font-sofia-sans), Arial, sans-serif;
-  --font-hand: var(--font-caveat), cursive;
+  --font-hand: Caveat, cursive;
 
   /* Type styles, for `font:` (weight size/line-height family) */
   --type-display-weight: 800; /* ExtraBold at 390, Black from 768 up */

@@ -1,5 +1,13 @@
 /* Global base styles for the public site. Component styles live in CSS Modules. */
 
+/* Caveat, the handwriting (src/styles/font-hand.tsx, which preloads the same URL). */
+@font-face {
+  font-family: Caveat;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/Caveat.woff2') format('woff2');
+}
+
 *,
 *::before,
 *::after {
