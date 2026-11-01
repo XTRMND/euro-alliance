@@ -3,6 +3,7 @@ import {
   currentYear,
   formatDateLong,
   formatDateNumeric,
+  formatMonth,
   formatPrice,
   startOfTodayInSofia,
   telHref,
@@ -57,5 +58,11 @@ describe('startOfTodayInSofia', () => {
     expect(startOfTodayInSofia(new Date('2026-11-01T10:00:00.000Z'))).toBe(
       '2026-10-31T22:00:00.000Z',
     )
+  })
+})
+
+describe('formatMonth', () => {
+  it('writes the month name and the year', () => {
+    expect(formatMonth('2026-11')).toBe('ноември 2026')
   })
 })

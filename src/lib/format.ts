@@ -55,3 +55,14 @@ export function startOfTodayInSofia(now = new Date()): string {
     ?.value.replace('GMT', '')
   return new Date(`${day}T00:00:00${offset || '+00:00'}`).toISOString()
 }
+
+/** «ноември 2026» for a month given as YYYY-MM (the «Начало» filter). */
+export function formatMonth(month: string): string {
+  const parts = new Intl.DateTimeFormat('bg-BG', {
+    timeZone,
+    month: 'long',
+    year: 'numeric',
+  }).formatToParts(new Date(`${month}-15T12:00:00Z`))
+  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value
+  return `${part('month')} ${part('year')}`
+}

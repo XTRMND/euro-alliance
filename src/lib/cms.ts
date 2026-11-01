@@ -2,6 +2,8 @@ import config from '@payload-config'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { tags } from '@/hooks/revalidate'
+import type { CourseFilters } from '@/lib/course-filters'
+import { findCourseMonths, findCourses } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import type { Media } from '@/payload-types'
 
@@ -139,3 +141,25 @@ export const getLatestNews = unstable_cache(
   ['latest-news'],
   { tags: [tags.collection('news'), tags.collection('media')] },
 )
+
+const listedCourses = unstable_cache(
+  async (filters: CourseFilters, today: string) => findCourses(await payload(), filters, today),
+  ['listed-courses'],
+  { tags: [tags.collection('courses')] },
+)
+
+/** The course listing for these filters. The filters and the day are part of the cache key. */
+export function getListedCourses(filters: CourseFilters) {
+  return listedCourses(filters, startOfTodayInSofia())
+}
+
+const courseMonths = unstable_cache(
+  async (today: string) => findCourseMonths(await payload(), today),
+  ['course-months'],
+  { tags: [tags.collection('courses')] },
+)
+
+/** The months in which listed courses start, for the «Начало» filter. */
+export function getCourseMonths() {
+  return courseMonths(startOfTodayInSofia())
+}

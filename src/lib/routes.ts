@@ -56,16 +56,41 @@ export const queryParams = {
   topic: 'tema',
   search: 'q',
   category: 'kategoria',
+  /** Course listing filters (PR 9). */
+  audience: 'auditoria',
+  language: 'ezik',
+  format: 'format',
+  funding: 'finansirane',
+  start: 'nachalo',
+  sort: 'sortirane',
+  shown: 'pokazani',
   /** The language pair of «Изпратете документ», read by the contact wizard (PR 11). */
   from: 'ot',
   to: 'na',
 } as const
 
-/** Course listing filters (PR 9 reads them). */
+/** Course listing filters (/kursove?kategoria=ezitsi&ezik=nemski …): URL values per option. */
 export const courseCategories = {
   languages: 'ezitsi',
+  exams: 'izpiti-i-sertifikati',
+  vocational: 'profesionalno-obuchenie',
+  vouchers: 'obuchenie-s-vaucheri',
+  teachers: 'pedagogicheski-spetsialisti',
+  farmers: 'obuchenie-za-zemedeltsi',
+  computer: 'kompyutarni-kursove',
 } as const
 export type CourseCategory = keyof typeof courseCategories
+
+export const courseAudienceSegments = { ...audienceSegments, companies: 'firmi' } as const
+
+export const courseFormatSegments = { 'in-person': 'prisastveno', online: 'onlayn' } as const
+
+/** «С ваучер от АЗ» (the only funding filter) and the sort orders. */
+export const courseFilterValues = {
+  voucher: 'vaucher',
+  sortSoonest: 'nay-skoro',
+  sortPrice: 'tsena',
+} as const
 
 export const anchors = {
   certificates: 'sertifikati',
