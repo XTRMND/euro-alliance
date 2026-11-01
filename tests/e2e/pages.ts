@@ -6,4 +6,5 @@ export const pages = [
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },
+  { name: 'Visuals (dev)', path: devRoutes.visuals },
 ]

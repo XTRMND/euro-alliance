@@ -90,6 +90,7 @@ export const devRoutes = {
   tokens: '/dev/tokens',
   components: '/dev/components',
   patterns: '/dev/patterns',
+  visuals: '/dev/visuals',
 } as const
 
 function withQuery(path: string, name: string, value: string | undefined): string {

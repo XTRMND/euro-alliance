@@ -1,0 +1,78 @@
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-section) var(--page-margin);
+  display: grid;
+  gap: var(--space-section);
+}
+
+.title {
+  font: var(--type-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.section {
+  display: grid;
+  gap: 32px;
+  min-width: 0;
+}
+
+/* Art that overflows its box (the Course visual's landing pose) stays inside the page. */
+.clip {
+  overflow-x: clip;
+  padding-top: 140px;
+}
+
+.globe {
+  width: min(440px, 100%);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 64px;
+  align-items: start;
+}
+
+.courseVisual {
+  width: min(400px, 100%);
+}
+
+.heroArt {
+  width: min(560px, 100%);
+}
+
+/* Course card image (62:229): 274 × 172, radius 10, halftone at 42%. */
+.cardImage {
+  --halftone-opacity: 0.42;
+
+  position: relative;
+  width: min(274px, 100%);
+  aspect-ratio: 274 / 172;
+  border-radius: var(--radius-button);
+  background: var(--color-bg-warm);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 32px 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grid li {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.grid li > span:first-child {
+  width: min(200px, 100%);
+}
+
+.caption {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}

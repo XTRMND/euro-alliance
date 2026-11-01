@@ -258,6 +258,7 @@ Waiting on the client:
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
 - English content.
 - Viewer access to GA4 and Search Console.
+- Partner logos: Figma has eight (Агенция по заетостта, НАПОО, Аграрен университет, Pearson Longman, Oxford University Press, ТПК Пловдив, ПУ «Паисий Хилендарски», Gateway School of English) as 150 px greyscale images. Is the list current, and are there sharper originals? They're in `src/seed/partners/` until then.
 
 Waiting on the user:
 - Which CDN (purge API for `docs/cms-schema.md` § 9).
@@ -286,6 +287,14 @@ Content questions from the shell (PR 5); the build uses the default in brackets:
 
 From the pattern components (PR 6):
 - Data table: `docs/pr-plan.md` says it scrolls in its own container on mobile; the Figma description says the header hides and rows stack. [Figma: rows stack with their labels, still a real table]
+
+From the visuals (PR 7):
+- Strip pause button: not in Figma, required by WCAG 2.2.2. [a 32 px ring with a pause/play glyph at the strip's right end, white on the navy strip and navy on paper; labels «Спри движението» / «Пусни движението»]
+- Partner logo strip: Figma's is 96 px tall (logos 110 × 88, 56 px apart, 80% opacity); § 7 and `docs/motion.md` say 56 px. [Figma; the language strip is 56 px]
+- Language strip: Figma has each language in its own name (English, Deutsch, Français …) with sand dots between, not the Bulgarian names or flag stickers in `docs/motion.md` § 3. [Figma]
+- Halftone: the Course visual uses 36% and the notebook's shadow 32% in Figma; the course card is 42% as in § 6. The 7% textbook halftone arrives with the textbook card. [Figma]
+- Notebook page: the rules (#E8EDF5) and punched holes (#E0E3E8) aren't Figma variables. [brand/primary-subtle and border/default, the nearest tokens]
+- Landing motion of other hero art: only the Course visual has a start pose (Pose=Intro). [`landing.art` fades in; each page PR reads its «Prototype · … landing» frame]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
