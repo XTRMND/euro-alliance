@@ -1,0 +1,4 @@
+/* Room above the row for the tape and the bubbles (padding-top 18 in Figma). */
+.grid {
+  padding-top: 18px;
+}

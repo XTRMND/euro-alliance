@@ -14,6 +14,7 @@ const paths = [
   '/vaucheri',
   '/profesionalno-obuchenie/profesii',
   '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
+  '/profesionalno-obuchenie/zemedeltsi',
 ]
 
 // Pages flagged for missing the LCP budget: still measured against 2,500 ms, but reported as a
@@ -35,6 +36,7 @@ const lcpFlagged = new Set([
   '/vaucheri',
   '/profesionalno-obuchenie/profesii',
   '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
+  '/profesionalno-obuchenie/zemedeltsi',
 ])
 
 const url = (path) => `http://localhost:${port}${path}`

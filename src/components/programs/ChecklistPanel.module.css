@@ -1,0 +1,35 @@
+/* Navy panel: 16px radius, 28 / 32 padding (24 / 20 on a phone), 14 between title and rows. */
+.panel {
+  display: grid;
+  gap: 14px;
+  padding: 24px 20px;
+  border-radius: 16px;
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+.title {
+  font: 800 clamp(1.625rem, 1.53rem + 0.381vw, 1.875rem) / 1.2 var(--font-display); /* 26 → 30 */
+  color: var(--color-text-on-brand);
+}
+
+.list {
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .panel {
+    padding: 28px 32px;
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 32px;
+  }
+
+  /* Both rows of the first line start without a rule. */
+  .list > :nth-child(2) {
+    border-top: 0;
+  }
+}

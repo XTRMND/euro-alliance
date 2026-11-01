@@ -194,6 +194,40 @@ test.describe('pedagogical specialists', () => {
   })
 })
 
+test.describe('farmers', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('who can take part: the curriculum, the conditions and the documents', async ({ page }) => {
+    await page.goto(routes.farmers())
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Обучение за земеделци')
+    await page.getByRole('link', { name: 'Кой може да участва' }).click()
+    const part = page.locator('#uchastie')
+    await expect(part).toBeInViewport()
+    const card = (name: string) =>
+      part.locator('article', { has: page.getByRole('heading', { name }) })
+    await expect(card('Учебна програма').getByRole('listitem')).toHaveCount(7)
+    await expect(card('Кой може да участва').getByRole('listitem')).toHaveCount(5)
+    await expect(
+      part.getByRole('heading', { name: 'Документи преди старта на обучението' }),
+    ).toBeVisible()
+  })
+
+  test('the funding shows the project with its EU logos', async ({ page }) => {
+    await page.goto(routes.farmers())
+
+    const project = page.locator('article', {
+      has: page.getByRole('heading', {
+        name: 'Повишаване знанията на земеделски стопани чрез професионални обучения',
+      }),
+    })
+    await expect(project).toContainText('808 140,00 лв (413 195,42 €)')
+    await expect(
+      project.getByRole('img', { name: /Съфинансирано от Европейския съюз/ }),
+    ).toBeVisible()
+  })
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

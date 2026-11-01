@@ -2,6 +2,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import { CalloutBand } from '@/components/patterns/CalloutBand'
 import { CardGrid } from '@/components/patterns/CardGrid'
 import { FigureCard } from '@/components/patterns/FigureCard'
+import { ProjectCard } from '@/components/patterns/ProjectCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { Button } from '@/components/ui/Button'
@@ -9,11 +10,13 @@ import { getProfessions, getTeacherProgrammes } from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
 import { groupByDirection, groupInOrder } from '@/lib/programs'
 import { anchors } from '@/lib/routes'
-import type { Certificate, Program, TextbookSystem } from '@/payload-types'
+import type { Certificate, FundedProject, Program, TextbookSystem } from '@/payload-types'
 import { CertificateCard } from './CertificateCard'
+import { ChecklistPanel } from './ChecklistPanel'
 import { ExamsTable } from './ExamsTable'
 import { FaqList } from './FaqList'
 import { FeatureCard } from './FeatureCard'
+import { IndexCardsGrid } from './IndexCardsGrid'
 import { ProfessionsList } from './ProfessionsList'
 import styles from './ProgramSections.module.css'
 import { SystemCard, type SystemCardData } from './SystemCard'
@@ -89,11 +92,13 @@ function Wrap({
   section,
   id,
   anchor,
+  className,
   children,
 }: {
   section: Section
   id: string
   anchor?: string
+  className?: string
   children: React.ReactNode
 }) {
   const target = anchor ?? ('anchor' in section ? section.anchor : null) ?? undefined
@@ -101,7 +106,7 @@ function Wrap({
   return (
     <section
       id={target}
-      className={[styles.section, target && styles.anchor].filter(Boolean).join(' ')}
+      className={[styles.section, target && styles.anchor, className].filter(Boolean).join(' ')}
       aria-labelledby={heading ? id : undefined}
     >
       {children}
@@ -181,6 +186,40 @@ function SectionContent({ section, index }: { section: Section; index: number })
     }
     case 'professions':
       return <ProfessionsSection section={section} id={id} />
+    case 'indexCards': {
+      const cards = (section.cards ?? []).filter((card) => (card.rows ?? []).length > 0)
+      const checklist = (section.checklist?.items ?? []).map((item) => item.text)
+      if (cards.length === 0 && checklist.length === 0) return null
+      return (
+        <Wrap section={section} id={id}>
+          <Head section={section} id={id} />
+          {cards.length > 0 && <IndexCardsGrid cards={cards} />}
+          {checklist.length > 0 && (
+            <ChecklistPanel title={section.checklist?.title} items={checklist} />
+          )}
+        </Wrap>
+      )
+    }
+    case 'projects': {
+      const projects = objects<FundedProject>(section.projects)
+      if (projects.length === 0) return null
+      return (
+        <Wrap section={section} id={id} className={styles.beside}>
+          <Head section={section} id={id} />
+          <div className={styles.projects}>
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                title={project.title}
+                facts={(project.facts ?? []).map(({ label, value }) => ({ label, value }))}
+                goals={(project.goals ?? []).map(({ goal }) => goal)}
+                logoStrip={typeof project.logoStrip === 'object' ? project.logoStrip : null}
+              />
+            ))}
+          </div>
+        </Wrap>
+      )
+    }
     case 'teacherProgrammes':
       return <TeacherProgrammesSection section={section} id={id} />
     case 'exams':
