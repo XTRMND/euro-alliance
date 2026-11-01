@@ -16,6 +16,8 @@ type DuotoneImageProps = {
   clearOnHover?: boolean
   /** Above the fold: preloaded and loaded at once at high priority (Next 16 dropped `priority`). */
   eager?: boolean
+  /** next/image quality; one of `images.qualities` in next.config.ts (75 by default). */
+  quality?: number
   className?: string
 }
 
@@ -31,6 +33,7 @@ export function DuotoneImage({
   sizes,
   clearOnHover = false,
   eager = false,
+  quality,
   className,
 }: DuotoneImageProps) {
   const tinted = tintOf(media, tint)
@@ -49,6 +52,7 @@ export function DuotoneImage({
           alt={tinted?.url ? '' : media.alt}
           fill
           sizes={sizes}
+          quality={quality}
           style={style}
           className={styles.image}
           {...(eager && !tinted?.url && ({ loading: 'eager', fetchPriority: 'high' } as const))}
@@ -60,6 +64,7 @@ export function DuotoneImage({
           alt={media.alt}
           fill
           sizes={sizes}
+          quality={quality}
           style={style}
           {...(eager && ({ loading: 'eager', fetchPriority: 'high', preload: true } as const))}
           className={[styles.image, clearOnHover && styles.clears].filter(Boolean).join(' ')}

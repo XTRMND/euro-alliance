@@ -3,7 +3,8 @@ import type { Media } from '@/payload-types'
 import styles from './TornWindow.module.css'
 
 // Torn window (259:588): the About hero's photo seen through a hole torn in the paper (the rim),
-// colour + 45% duotone. Figma's rim and mask are SVGs in src/assets.
+// colour + 45% duotone. Figma's rim and mask are SVGs in src/assets. The team photo is the hero's
+// art at 600px, so it's served at quality 90, not the default 75.
 
 type TornWindowProps = {
   photo: Media
@@ -19,6 +20,7 @@ export function TornWindow({ photo, eager, className }: TornWindowProps) {
           media={photo}
           tint="about"
           sizes="(min-width: 768px) 600px, 92vw"
+          quality={90}
           eager={eager}
         />
       </div>

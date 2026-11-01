@@ -68,7 +68,7 @@
   left: -2%;
   display: block;
   width: clamp(75px, 18vw, 104px);
-  aspect-ratio: 1;
+  height: clamp(75px, 18vw, 104px); /* not aspect-ratio: Safari adds the ring to the height */
   border: clamp(7px, 1.7vw, 10px) solid var(--color-bg-page);
   border-radius: 50%;
   overflow: hidden;
