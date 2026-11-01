@@ -1,6 +1,7 @@
 import type { Field, GlobalConfig } from 'payload'
 import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
+import { indexAbout } from '@/lib/search-index'
 import { destinationOptions } from '@/lib/destinations'
 
 // The About page (190:2677 / 210:2395): a fixed set of sections in the subnav's order, each a
@@ -48,7 +49,7 @@ export const About: GlobalConfig = {
   slug: 'about',
   label: 'За нас',
   access: { read: anyone, update: isStaff },
-  hooks: { afterChange: [revalidateGlobal] },
+  hooks: { afterChange: [revalidateGlobal, indexAbout] },
   fields: [
     {
       name: 'hero',

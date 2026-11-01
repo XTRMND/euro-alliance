@@ -3,6 +3,7 @@ import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { destinationOptions } from '@/lib/destinations'
 import { revalidateCollection } from '@/hooks/revalidate'
+import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 
 // Legal pages (docs/cms-schema.md § 3): the privacy policy (218:2842) and the cookie policy
 // (224:3208), one document each, at fixed addresses (routes.privacy(), routes.cookies()). The text
@@ -69,7 +70,10 @@ export const LegalPages: CollectionConfig = {
   admin: { useAsTitle: 'title', defaultColumns: ['title', 'page', 'updatedOn'] },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true, maxPerDoc: 50 },
-  hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },
+  hooks: {
+    afterChange: [revalidateCollection, indexAfterChange],
+    afterDelete: [revalidateCollection, indexAfterDelete],
+  },
   fields: [
     {
       name: 'page',

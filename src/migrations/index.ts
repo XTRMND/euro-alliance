@@ -16,6 +16,7 @@ import * as migration_20261101_180436_programs_translations from './20261101_180
 import * as migration_20261101_190504_news_article from './20261101_190504_news_article';
 import * as migration_20261101_195219_about from './20261101_195219_about';
 import * as migration_20261101_211203_legal_pages from './20261101_211203_legal_pages';
+import * as migration_20261101_214328_search_index from './20261101_214328_search_index';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20261101_211203_legal_pages.up,
     down: migration_20261101_211203_legal_pages.down,
-    name: '20261101_211203_legal_pages'
+    name: '20261101_211203_legal_pages',
+  },
+  {
+    up: migration_20261101_214328_search_index.up,
+    down: migration_20261101_214328_search_index.down,
+    name: '20261101_214328_search_index'
   },
 ];

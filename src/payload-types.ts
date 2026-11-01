@@ -83,6 +83,7 @@ export interface Config {
     documents: Document;
     team: Team;
     'legal-pages': LegalPage;
+    search: Search;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -113,6 +114,7 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
+    search: SearchSelect<false> | SearchSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -1444,6 +1446,29 @@ export interface LegalPage {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Попълва се автоматично от публикуваното съдържание.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search".
+ */
+export interface Search {
+  id: number;
+  type: 'course' | 'page' | 'news';
+  title: string;
+  path?: string | null;
+  excerpt?: string | null;
+  text?: string | null;
+  url: string;
+  /**
+   * Колекция и номер, например news:12.
+   */
+  source: string;
+  sourceId?: number | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Пазят се 1 година, освен ако не са довели до договор.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1684,6 +1709,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'legal-pages';
         value: number | LegalPage;
+      } | null)
+    | ({
+        relationTo: 'search';
+        value: number | Search;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2486,6 +2515,23 @@ export interface LegalPagesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "search_select".
+ */
+export interface SearchSelect<T extends boolean = true> {
+  type?: T;
+  title?: T;
+  path?: T;
+  excerpt?: T;
+  text?: T;
+  url?: T;
+  source?: T;
+  sourceId?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

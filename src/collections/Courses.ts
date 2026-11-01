@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
+import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { courseAudiences, courseCategoryValues, courseFormats, courseTopics } from '@/lib/courses'
 import { languages } from '@/lib/routes'
 
@@ -60,7 +61,10 @@ export const Courses: CollectionConfig = {
   defaultSort: 'startDate',
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
-  hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },
+  hooks: {
+    afterChange: [revalidateCollection, indexAfterChange],
+    afterDelete: [revalidateCollection, indexAfterDelete],
+  },
   fields: [
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
     slugField(),

@@ -4,6 +4,7 @@ import { anchorPattern, programBlocks } from '@/blocks'
 import { topicOptions } from '@/collections/Courses'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
+import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { destinationOptions } from '@/lib/destinations'
 import { languages } from '@/lib/routes'
 
@@ -34,8 +35,8 @@ export const Programs: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {
-    afterChange: [revalidateCollection],
-    afterDelete: [revalidateCollection],
+    afterChange: [revalidateCollection, indexAfterChange],
+    afterDelete: [revalidateCollection, indexAfterDelete],
     beforeValidate: [
       // One page per language and audience, and one per other type.
       async ({ data, req, originalDoc }) => {

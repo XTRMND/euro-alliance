@@ -482,5 +482,33 @@
     "contents": "Contents",
     "updated": "Last updated: {date}",
     "downloadPdf": "Download as PDF"
+  },
+  "search": {
+    "title": "Search",
+    "results": "Results for",
+    "placeholder": "Search for a course, a translation or news",
+    "label": "Search the site",
+    "submit": "Search",
+    "tabs": "Results by type",
+    "tab": {
+      "all": "All",
+      "courses": "Courses",
+      "pages": "Pages",
+      "news": "News"
+    },
+    "tabCount": "{label} ({count})",
+    "resultsCount": "{count, plural, one {# result} other {# results}}",
+    "noResults": "No results for «{query}». Try another word or browse:",
+    "suggestions": "Main sections",
+    "path": {
+      "courses": "Courses",
+      "languages": "Languages",
+      "vocational": "Vocational training",
+      "vouchers": "Vouchers",
+      "computer": "Computer courses",
+      "translations": "Translations",
+      "news": "News",
+      "about": "About"
+    }
   }
 }

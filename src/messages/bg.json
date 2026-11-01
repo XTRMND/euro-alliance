@@ -482,5 +482,33 @@
     "contents": "Съдържание",
     "updated": "Последна актуализация: {date}",
     "downloadPdf": "Изтегли като PDF"
+  },
+  "search": {
+    "title": "Търсене",
+    "results": "Резултати за",
+    "placeholder": "Търсете курс, превод или новина",
+    "label": "Търсене в сайта",
+    "submit": "Търси",
+    "tabs": "Резултати по вид",
+    "tab": {
+      "all": "Всичко",
+      "courses": "Курсове",
+      "pages": "Страници",
+      "news": "Новини"
+    },
+    "tabCount": "{label} ({count})",
+    "resultsCount": "{count, plural, one {# резултат} other {# резултата}}",
+    "noResults": "Няма резултати за «{query}». Опитайте с друга дума или разгледайте:",
+    "suggestions": "Основни раздели",
+    "path": {
+      "courses": "Курсове",
+      "languages": "Езици",
+      "vocational": "Професионално обучение",
+      "vouchers": "Ваучери",
+      "computer": "Компютърни курсове",
+      "translations": "Преводи",
+      "news": "Новини",
+      "about": "За нас"
+    }
   }
 }

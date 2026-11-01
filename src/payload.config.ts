@@ -12,6 +12,7 @@ import { Documents } from './collections/Documents'
 import { Exams } from './collections/Exams'
 import { FundedProjects } from './collections/FundedProjects'
 import { LegalPages } from './collections/LegalPages'
+import { SearchIndex } from './collections/SearchIndex'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
 import { Media } from './collections/Media'
@@ -62,6 +63,7 @@ export default buildConfig({
     Documents,
     Team,
     LegalPages,
+    SearchIndex,
     Inquiries,
     InquiryFiles,
   ],

@@ -273,9 +273,9 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 
 ## 8. Search
 
-- Payload's search plugin keeps a `search` collection in sync from Courses, Programs, News, Legal pages and the About page sections.
-- Each record: `title`, `excerpt`, `url`, `type` (`course` / `page` / `news`), `locale`, `publishedAt`.
-- Query with PostgreSQL full-text search plus `pg_trgm` for typo tolerance. Check whether a Bulgarian text-search dictionary is available on the user's Postgres; if not, use the `simple` configuration with `unaccent` and trigram similarity.
+- A `search` collection is the index (PR 18), kept in sync by hooks on Courses, Programs, News and Legal pages (afterChange, afterDelete; a draft save indexes the published version) and on the About global, and rebuilt from what's published on every start (`reindexSearch`, at the end of the seed). Not Payload's search plugin: it indexes collections only, and the About page is a global.
+- Each record: `type` (`course` / `page` / `news`), `title`, `path` (the section, «Езици › Английски»), `excerpt`, `text` (everything the page is found by), `url`, `source` (`news:12`, unique), `sourceId`, `publishedAt`. Bulgarian only until the English site exists.
+- Query (`src/lib/search.ts`): PostgreSQL full-text search with the `simple` configuration (there's no Bulgarian dictionary: words as written, lowercased), every word matched as a prefix, plus `pg_trgm` word similarity (0.5) on the title and excerpt for typos. Ranked by both, newest first on a tie. `unaccent` isn't used: Bulgarian has no accents to fold. The migration creates `pg_trgm` (a trusted extension: the database's owner can) and a GIN index on the indexed text.
 - The tabs map to `type`: Всичко (all), Курсове (`course`), Страници (`page`), Новини (`news`), each with a count.
 
 ## 9. Revalidation and caching
