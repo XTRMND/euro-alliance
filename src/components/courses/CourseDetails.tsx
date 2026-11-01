@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server'
 import type { ReactNode } from 'react'
+import { Ticket, ticket } from '@/components/patterns/Ticket'
 import { Button } from '@/components/ui/Button'
 import type { CourseState } from '@/lib/course-state'
 import { formatDateLong, formatPrice } from '@/lib/format'
@@ -23,6 +24,8 @@ type CourseDetailsProps = {
 }
 
 type Field = { label: string; value?: ReactNode }
+
+// The ticket's shell is the Ticket pattern; this fills its groups and its stub.
 
 export async function CourseDetails({
   course,
@@ -88,55 +91,43 @@ export async function CourseDetails({
       : course.priceNote
 
   return (
-    <div className={styles.ticket}>
-      {shown.length > 0 && (
-        <div className={styles.main}>
-          {shown.map((group) => (
-            <section key={group.title} className={styles.group}>
-              <h2 className={styles.groupTitle}>{group.title}</h2>
-              <dl className={styles.fields}>
-                {group.fields.map((field) => (
-                  <div key={field.label} className={styles.field}>
-                    <dt className={styles.label}>{field.label}</dt>
-                    <dd className={styles.value}>{field.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-          ))}
-        </div>
-      )}
-      <div className={styles.stub} data-closed={closed || undefined}>
-        {state.pricing !== 'none' && (
-          <>
-            <p className={styles.label}>{t('field.price')}</p>
-            <p className={styles.price}>
-              <span className={styles.amount}>{formatPrice(course.price!, currency)}</span>
-              {note && <span className={styles.note}>{note}</span>}
-            </p>
-            {!closed && state.pricing === 'promotion' && (
-              <p className={styles.extra}>
-                {t.rich('regularPrice', {
-                  price: formatPrice(course.regularPrice!, currency),
-                  old: (chunks) => <s>{chunks}</s>,
-                })}
+    <Ticket
+      groups={shown}
+      stubClassName={styles.stub}
+      stubProps={{ 'data-closed': closed || undefined }}
+      stub={
+        <>
+          {state.pricing !== 'none' && (
+            <>
+              <p className={ticket.label}>{t('field.price')}</p>
+              <p className={styles.price}>
+                <span className={styles.amount}>{formatPrice(course.price!, currency)}</span>
+                {note && <span className={styles.note}>{note}</span>}
               </p>
-            )}
-            {!closed && state.pricing === 'voucher' && (
-              <p className={styles.extra}>{t('voucherNote')}</p>
-            )}
-          </>
-        )}
-        {action}
-        {closed && state.seats === 0 && <p className={styles.seats}>{t('noSeats')}</p>}
-        {!closed && state.seats !== undefined && state.seats > 0 && (
-          <p className={[styles.seats, state.fewSeats && styles.few].filter(Boolean).join(' ')}>
-            {state.fewSeats
-              ? t('fewSeats', { count: state.seats })
-              : t('seats', { count: state.seats })}
-          </p>
-        )}
-      </div>
-    </div>
+              {!closed && state.pricing === 'promotion' && (
+                <p className={styles.extra}>
+                  {t.rich('regularPrice', {
+                    price: formatPrice(course.regularPrice!, currency),
+                    old: (chunks) => <s>{chunks}</s>,
+                  })}
+                </p>
+              )}
+              {!closed && state.pricing === 'voucher' && (
+                <p className={styles.extra}>{t('voucherNote')}</p>
+              )}
+            </>
+          )}
+          {action}
+          {closed && state.seats === 0 && <p className={styles.seats}>{t('noSeats')}</p>}
+          {!closed && state.seats !== undefined && state.seats > 0 && (
+            <p className={[styles.seats, state.fewSeats && styles.few].filter(Boolean).join(' ')}>
+              {state.fewSeats
+                ? t('fewSeats', { count: state.seats })
+                : t('seats', { count: state.seats })}
+            </p>
+          )}
+        </>
+      }
+    />
   )
 }
