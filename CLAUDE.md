@@ -310,6 +310,14 @@ From the homepage (PR 8):
 - Dropzone: a dropped or chosen file opens the contact wizard with the file in memory and the chosen languages in the link (`?tema=prevodi&ot=…&na=…`). Nothing is uploaded before the wizard. Dragging a file over it fills it with the sand tint (not in Figma). [as described; the wizard arrives in PR 11]
 - News card: on touch screens the photo clears to colour while the card is in the middle of the screen (from the component's Figma description). [built]
 
+From the course listing (PR 9):
+- The listing shows published courses starting today or later, soonest first, then courses without a start date (open enrolment). Courses that have started don't appear; PR 10's course states may refine this. [as described]
+- Sort: Figma shows only «най-скоро започващи». The second order, «Най-ниска цена», is proposed. Both use the short labels of the mobile select («Най-скоро»), so desktop reads «Сортиране: Най-скоро». [as described]
+- The page lead (Figma copy) says «Филтрирайте по аудитория, език, формат или град», but there is no city filter in Figma. Drop «или град», or add a city (office) filter? [Figma's text]
+- Language filter: the six languages of the Figma filters; БЕЛ courses are found under «Езици» with the students audience. [Figma]
+- Filters apply as soon as they change, in the sidebar and in the sheet; the sheet's «Покажи N курса» closes it. Empty state «Няма курсове с тези филтри.» with «Изчисти филтрите» isn't in Figma. [as described]
+- Content written to the database outside the running site (seed script, the import in PR 21) doesn't revalidate the site's cached reads: the import must call the revalidation tags or the cache must be cleared after it runs.
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.

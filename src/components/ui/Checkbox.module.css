@@ -21,6 +21,8 @@
 .box {
   position: relative;
   flex: none;
+  /* Drawn over the invisible input: clicks go through to it. */
+  pointer-events: none;
   width: 18px;
   height: 18px;
   border: 1.5px solid var(--color-border-default);

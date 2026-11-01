@@ -70,7 +70,7 @@ Transliterated Bulgarian slugs, following the official Bulgarian transliteration
 | Page | Proposed route |
 |---|---|
 | Home | `/` |
-| Course listing | `/kursove` |
+| Course listing | `/kursove`; filters in the query (PR 9): `auditoria`, `kategoria`, `ezik`, `format`, `finansirane=vaucher`, `nachalo=YYYY-MM`, `sortirane=tsena`, `pokazani=18` (values in `src/lib/routes.ts`) |
 | Course | `/kursove/{slug}` |
 | Language program | `/ezitsi/{language}/{audience}`, e.g. `/ezitsi/angliyski/vazrastni`, `/ezitsi/angliyski/uchenitsi` |
 | Languages | `angliyski`, `nemski`, `frenski`, `ispanski`, `italianski`, `balgarski`, `ruski` |

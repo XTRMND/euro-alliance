@@ -1,0 +1,337 @@
+/* Course listing body (80:908): filters 280px, results beside, 48px apart, from 1024px. Below,
+   the toolbar (116:579) with «Филтри» and sort, and the filters in a sheet (116:1190). */
+
+.body {
+  display: grid;
+  gap: 14px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 4px var(--page-margin) 64px;
+}
+
+/* Toolbar: «Филтри» with its count, and sort. */
+.toolbar {
+  display: flex;
+  gap: 10px;
+}
+
+.open {
+  display: inline-flex;
+  flex: 1;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 14px;
+  font: 600 1rem / 1.5 var(--font-body);
+  color: var(--color-text-on-brand);
+  background: var(--color-brand-primary-strong);
+  border: 0;
+  border-radius: var(--radius-button);
+  cursor: pointer;
+}
+
+.open:focus-visible {
+  outline: var(--focus-ring);
+}
+
+.badge {
+  padding: 0 7px;
+  font: 600 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+  background: var(--color-brand-accent);
+  border-radius: 10px;
+}
+
+/* Sort: «Сортиране:» shows on wide screens only; the select keeps it as its label. */
+.sortMobile,
+.sortDesktop {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  padding: 0 14px;
+  font: 500 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-button);
+}
+
+.sortMobile {
+  flex: 1;
+}
+
+.sortMobile .sortLabel {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.sortDesktop {
+  display: none;
+}
+
+.selectBox {
+  position: relative;
+  display: block;
+  flex: 1;
+}
+
+/* Figma's ▾. */
+.selectBox::after {
+  content: '▾';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font: 500 0.8125rem / 1 var(--font-body);
+  color: var(--color-text-muted);
+  translate: 0 -50%;
+  pointer-events: none;
+}
+
+.select {
+  width: 100%;
+  padding: 11px 20px 11px 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Filters in the sidebar: a white card with 16px corners. */
+.sidebar {
+  display: none;
+}
+
+.group {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  margin-bottom: 10px;
+  padding: 0;
+  font: 700 1.0625rem / 1.45 var(--font-display);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary-strong);
+}
+
+label.group .legend {
+  margin-bottom: 0;
+}
+
+.group .selectBox {
+  width: 100%;
+  padding: 0 14px;
+  background: var(--color-bg-warm);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-button);
+}
+
+.group .selectBox::after {
+  right: 14px;
+}
+
+.group .select {
+  font: 500 0.9375rem / 1.45 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.reset {
+  justify-self: start;
+}
+
+/* Results */
+.results {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  min-width: 0;
+  transition: opacity var(--motion-button) var(--ease-out);
+}
+
+.results[aria-busy='true'] {
+  opacity: 0.6;
+}
+
+.head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+}
+
+.count {
+  font: 800 clamp(1.875rem, 1.786rem + 0.381vw, 2.125rem) / 0.96 var(--font-display); /* 30 → 34 */
+  color: var(--color-brand-primary-strong);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.cell {
+  display: flex;
+}
+
+.cell > * {
+  flex: 1;
+}
+
+.empty {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  padding: 24px 0 48px;
+  font: var(--type-lead);
+  color: var(--color-text-muted);
+}
+
+/* «Покажи още курсове» and «Показани 9 от 24» (80:1260). */
+.more {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  padding-top: 8px;
+}
+
+.moreButton {
+  justify-self: stretch;
+}
+
+.shown {
+  font: 400 0.875rem / 1.45 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* The filters sheet (116:1191): a modal dialog from the bottom, 20px corners. */
+.sheet {
+  width: 100%;
+  max-width: none;
+  max-height: calc(100dvh - 72px);
+  margin: auto 0 0;
+  padding: 0;
+  color: inherit;
+  background: var(--color-bg-page);
+  border: 0;
+  border-radius: 20px 20px 0 0;
+}
+
+.sheet::backdrop {
+  background: color-mix(in srgb, var(--color-text-primary) 45%, transparent);
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100dvh - 72px);
+  padding-top: 10px;
+}
+
+.handle {
+  align-self: center;
+  width: 44px;
+  height: 5px;
+  background: var(--color-border-default);
+  border-radius: 3px;
+}
+
+.sheetHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px 6px;
+}
+
+.sheetTitle {
+  font: 800 2.125rem / 0.96 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.sheetGroups {
+  display: grid;
+  flex: 1;
+  gap: 26px;
+  min-height: 0;
+  padding: 8px 24px 24px;
+  overflow-y: auto;
+}
+
+.sheetBar {
+  display: flex;
+  padding: 14px 24px 28px;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.apply {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px;
+  }
+
+  .moreButton {
+    justify-self: center;
+  }
+
+  .sheet {
+    max-width: 480px;
+    margin: auto auto 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .body {
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 48px;
+    align-items: start;
+    padding-block: 16px 80px;
+  }
+
+  .toolbar,
+  .sheet {
+    display: none;
+  }
+
+  .sidebar {
+    display: grid;
+    gap: 26px;
+    padding: 24px;
+    background: var(--color-bg-page);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-card);
+  }
+
+  .head {
+    padding-top: 0;
+  }
+
+  .sortDesktop {
+    display: flex;
+  }
+}
+
+/* Three cards beside the sidebar once they get Figma's 300px. */
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
