@@ -1,0 +1,23 @@
+{
+  "header": {
+    "skipLink": "Skip to content",
+    "logoLabel": "Euro Alliance, home",
+    "navLabel": "Main navigation",
+    "menuOpen": "Menu",
+    "menuClose": "Close menu",
+    "cta": "Contact us"
+  },
+  "footer": {
+    "navLabel": "Footer links",
+    "licence": "Licensed vocational training centre, licence No. {number} of {date}",
+    "copyright": "© {year} {company}",
+    "privacy": "Privacy",
+    "cookieSettings": "Cookie settings",
+    "credit": "Website by <link>XTRMND</link>"
+  },
+  "inquiryBand": {
+    "heading": "Ask about a course, voucher or translation",
+    "text": "Start your language future now.",
+    "cta": "Start an inquiry"
+  }
+}

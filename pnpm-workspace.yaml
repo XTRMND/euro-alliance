@@ -2,3 +2,6 @@ allowBuilds:
   esbuild: true
   sharp: false
   unrs-resolver: false
+  # next-intl build tooling with prebuilt binaries; not used at runtime
+  '@swc/core': false
+  '@parcel/watcher': false
