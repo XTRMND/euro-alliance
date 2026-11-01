@@ -1,0 +1,84 @@
+/* Contact (119:1795): the wizard (760) beside the offices (472), 48px apart, from 1024px. */
+
+.sticker {
+  display: none;
+  width: 231px;
+  rotate: -6deg;
+}
+
+.body {
+  display: grid;
+  gap: 16px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 4px var(--page-margin) 48px;
+}
+
+.offices {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.officesTitle {
+  font: var(--type-h2);
+  color: var(--color-brand-primary-strong);
+}
+
+.locations {
+  background: var(--color-bg-warm);
+}
+
+.locationsInner {
+  display: grid;
+  gap: 22px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 24px var(--page-margin) 64px;
+}
+
+.locationsTitle {
+  font: var(--type-h2);
+  color: var(--color-brand-primary-strong);
+}
+
+.locationGrid {
+  display: grid;
+  gap: 28px;
+  padding-top: 10px;
+}
+
+@media (min-width: 1024px) {
+  .sticker {
+    display: block;
+  }
+
+  .body {
+    grid-template-columns: minmax(0, 760fr) minmax(0, 472fr);
+    gap: 48px;
+    padding-block: 16px 64px;
+  }
+
+  .offices {
+    gap: 11px;
+  }
+
+  /* The heading is for screen readers here; Figma shows it on mobile only. */
+  .officesTitle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .locationsInner {
+    padding-bottom: 96px;
+  }
+
+  .locationGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px;
+  }
+}

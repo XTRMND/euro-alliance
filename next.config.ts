@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/api/media-tints/file/**' }],
   },
   turbopack: { root: dirname },
+  experimental: {
+    // The contact wizard's server action carries translation documents: up to 10 files of 20 MB
+    // (src/lib/inquiries.ts), checked again on the server.
+    serverActions: { bodySizeLimit: '205mb' },
+  },
 }
 
 export default withPayload(withNextIntl(nextConfig), { devBundleServerPackages: false })

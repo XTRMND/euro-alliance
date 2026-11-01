@@ -266,7 +266,7 @@ Waiting on the client:
 Waiting on the user:
 - Which CDN (purge API for `docs/cms-schema.md` § 9).
 - SMTP provider and sender domain (PR 11).
-- How scheduled jobs run: Payload's job runner or system cron (PR 11).
+- How scheduled jobs run (PR 11 built both): `JOBS_AUTORUN=true` in the app (single server only), or a system cron calling `/api/payload-jobs/run` every minute and `/handle-schedules` plus `/run?queue=nightly` nightly with `CRON_SECRET` (README). Until one is set up, failed inquiry emails aren't retried and retention doesn't run.
 - Container registry and preview environments.
 - Backups.
 
@@ -326,6 +326,21 @@ From the course page (PR 10):
 - «Провери нивото си» goes to the certificates section of the course's language page, and only shows when that page exists.
 - Mobile: the price and «Запиши се» stay in a bar at the bottom of the screen («Sticky enrol bar», 117:1535).
 - No Lighthouse run on a course page yet: CI's database has no courses. The states are checked on /dev/course.
+
+From the contact wizard (PR 11):
+- Topics are Figma's six (Курс, Обучение с ваучер, Превод, Тест за ниво, Фирмено обучение, Друго), keyed by `?tema=` (kursove, vaucheri, prevodi, test-za-nivo, firmeno-obuchenie, drugo).
+- The translation step asks «Офис» (Пловдив / София), which isn't in Figma: routing needs it (prevod@ or trans@). [added]
+- «Удобен график» lists the course's `schedules`; with one or none the question is skipped (State: Един график). «Да, B1 или по-високо» uses the course's `entryLevel`; without one, «Да, знам нивото си». The level question shows for language and exam courses. [as described]
+- Step 3 requires name and email; phone is optional. The privacy label links to the privacy page (Figma's has no link). Done links «Към всички курсове» for course, voucher and level-test inquiries and «Към началната страница» for the others. [as described]
+- The corporate topics besides «Езиково обучение» (Компютърно, Професионално, Друго) are proposed. [as described]
+- The Contact sticker shows twice on the contact page (the hero and «Друго»), as in Figma; «one sticker, one meaning» holds if both mean contact. [Figma]
+- The location cards use Figma's OpenStreetMap snapshots and the coordinates from Figma's links, and Sofia's «1000» postcode; neither is among the verified facts. Confirm with the client. [Figma]
+
+From the contact wizard's server side (PR 11):
+- Upload limits as proposed: 10 files, 20 MB each, PDF, JPG, PNG, DOC, DOCX, ODT, the type checked from the content. No virus scan (ClamAV) unless the servers can run it.
+- Non-language programmes (vouchers, professions, teachers, farmers, computer courses) route to office@ as proposed; the table is editable in the admin («Маршрутизиране на запитвания»).
+- The visitor's confirmation email (`inquiryEmail.confirmationText`) promises only that we'll get back to them: no response time until the client gives one.
+- Spam protection: a hidden field and a 3-second minimum; a rate limit per IP in the server action (per app instance).
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).

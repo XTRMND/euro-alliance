@@ -7,19 +7,20 @@ import { CourseDetails } from '@/components/courses/CourseDetails'
 import { CourseHero } from '@/components/courses/CourseHero'
 import { EnrolBar } from '@/components/courses/EnrolBar'
 import { EnrolButton } from '@/components/courses/EnrolButton'
+import { EnrolSection, enrolAnchor } from '@/components/courses/EnrolSection'
 import { TrackCourseView } from '@/components/courses/TrackCourseView'
 import { InquiryBand } from '@/components/shell/InquiryBand'
 import { Button } from '@/components/ui/Button'
-import { getCourse, getRelatedCourses } from '@/lib/cms'
+import { getCourse, getOffices, getRelatedCourses } from '@/lib/cms'
 import { courseState } from '@/lib/course-state'
 import { courseTags } from '@/lib/courses'
 import { formatPrice, startOfTodayInSofia } from '@/lib/format'
 import { anchors, routes } from '@/lib/routes'
 import styles from './page.module.css'
 
-// Course (81:1226 / 117:895), in the states of board 126:1940 (src/lib/course-state.ts). The
-// enrolment section with the contact wizard (91:1462) arrives with the wizard in PR 11; until
-// then «Запиши се» opens the wizard's page with the course preselected.
+// Course (81:1226 / 117:895), in the states of board 126:1940 (src/lib/course-state.ts), with
+// «Запишете се» (91:1462): the contact wizard at Step 2 with the course chosen. The enrol buttons
+// scroll to it.
 
 export async function generateMetadata({
   params,
@@ -34,7 +35,11 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
   const course = await getCourse(slug)
   if (!course) notFound()
 
-  const [related, t] = await Promise.all([getRelatedCourses(course), getTranslations()])
+  const [related, offices, t] = await Promise.all([
+    getRelatedCourses(course),
+    getOffices(),
+    getTranslations(),
+  ])
   const state = courseState(course, startOfTodayInSofia())
   const closed = state.enrolment === 'closed'
   const voucher = state.pricing === 'voucher'
@@ -63,7 +68,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
   const enrol = (className?: string) =>
     closed ? (
       <EnrolButton
-        href={routes.enrol(slug)}
+        href={`#${enrolAnchor}`}
         label={t('course.notify')}
         event={null}
         variant="secondary"
@@ -71,7 +76,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
       />
     ) : (
       <EnrolButton
-        href={routes.enrol(slug, voucher)}
+        href={`#${enrolAnchor}`}
         label={voucher ? t('course.enrolVoucher') : t('course.enrol')}
         event={{
           course: slug,
@@ -104,7 +109,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
         topic={course.topic}
         enrol={closed ? null : enrol()}
         ask={
-          <Button href={routes.enrol(slug)} variant="link">
+          <Button href={`#${enrolAnchor}`} variant="link">
             {t('course.ask')}
           </Button>
         }
@@ -117,6 +122,11 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
           format={format || undefined}
           levelCheckHref={levelCheckHref}
           action={enrol()}
+        />
+        <EnrolSection
+          course={course}
+          office={offices.find((office) => office.role === 'courses')}
+          path={routes.course(slug)}
         />
       </div>
       {related.length > 0 && (

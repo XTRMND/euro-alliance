@@ -1,0 +1,54 @@
+/* Office card (119:1876): white, 16px corners. */
+.card {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding: 22px 20px;
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+}
+
+.kicker {
+  font: 700 0.875rem / 1.5 var(--font-display);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.name {
+  font: 800 1.75rem / 1.5 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.address {
+  font: 400 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.phone {
+  font: 600 1.125rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary);
+  text-decoration: none;
+}
+
+.email {
+  font: 500 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary);
+}
+
+.bank {
+  font: 400 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 1024px) {
+  .card {
+    gap: 3px;
+    padding: 13px 24px;
+  }
+
+  .name {
+    line-height: 1.5;
+  }
+}

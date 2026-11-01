@@ -156,10 +156,11 @@ The brief lists no fields. Build the fields from Certificate card 145:364 (read 
 
 | Field | Type | Notes |
 |---|---|---|
-| `topic` | select | From the wizard; values per the topic list in Contact wizard 100:518 |
+| `topic` | select | The six options of Step 1 (100:260): course, voucher, translation, level test, corporate, other |
 | `office` | select | Plovdiv / Sofia, for translations |
 | `routedTo` | email | Set by the server from the routing table (§ 5) |
-| `name`, `email`, `phone`, `message` | text | Per the wizard fields in Figma |
+| `name`, `email`, `phone`, `message` | text | Step 3: name and email required, phone and message optional |
+| `answers` | array of { question, answer } | *(PR 11)* Step 2's answers as the visitor saw them (schedule, level, voucher, document, languages, company …) |
 | `course` | relationship → Courses, optional | When the wizard was opened from a course |
 | `files` | relationship → inquiryFiles (has many) | Translation documents |
 | `privacyAck` | checkbox, required | Links to the privacy page |

@@ -1,0 +1,106 @@
+/* Location card (125:302): white, 18px corners, the map 290px tall with 12px corners. */
+.card {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  padding: 12px 12px 20px;
+  background: var(--color-bg-page);
+  border-radius: 18px;
+  box-shadow: 0 10px 14px rgb(var(--shadow-rgb) / 0.1);
+  scroll-margin-top: 96px;
+}
+
+.map {
+  position: relative;
+  display: block;
+  height: 220px;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+  border-radius: 12px;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* The pin's point marks the spot, the centre of the map. */
+.pin {
+  position: absolute;
+  top: calc(50% - 41px);
+  left: 50%;
+  width: 72px;
+  height: 90px;
+  translate: -50% -50%;
+  overflow: visible;
+}
+
+.attribution {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 6px;
+  font: 400 0.65625rem / 1.45 var(--font-body);
+  color: var(--color-text-muted);
+  background: var(--color-bg-page);
+  border-radius: 4px;
+}
+
+.card .tape {
+  top: -10px;
+  right: -8px;
+  left: auto;
+  width: 110px;
+  height: 30px;
+  transform: rotate(28deg);
+}
+
+.info {
+  display: grid;
+  gap: 16px;
+  padding: 0 10px;
+}
+
+.text {
+  display: grid;
+  gap: 4px;
+}
+
+.kicker {
+  font: 700 0.875rem / 1.45 var(--font-display);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.street {
+  font: 800 2rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.address {
+  font: 400 0.9375rem / 1.45 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .map {
+    height: 290px;
+  }
+
+  .info {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

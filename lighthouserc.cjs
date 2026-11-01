@@ -6,7 +6,7 @@
 const port = 3100
 
 // Key pages; each page PR adds its own.
-const paths = ['/', '/kursove']
+const paths = ['/', '/kursove', '/kontakti']
 
 // Pages flagged for missing the LCP budget: still measured against 2,500 ms, but reported as a
 // warning so main stays green until PR 23 fixes them and empties this list. Each entry is named

@@ -1,0 +1,99 @@
+/* «Запишете се» (91:1462): the wizard (760) and the side card (472), 48px apart. */
+.section {
+  display: grid;
+  gap: 20px;
+  scroll-margin-top: 96px;
+}
+
+.title {
+  font: 800 clamp(2.25rem, 2.1rem + 0.762vw, 2.5rem) / 0.96 var(--font-display); /* 36 → 40 */
+  color: var(--color-brand-primary-strong);
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+}
+
+.side {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: 24px 28px;
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border-default);
+  border-radius: 20px;
+}
+
+.sideTitle {
+  font: 800 1.875rem / 1.5 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.steps {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  font: 600 1.1875rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.number {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 50px;
+  height: 54px;
+  font: 800 2.25rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  background: var(--color-brand-accent);
+  transform: rotate(2deg);
+}
+
+.call {
+  display: grid;
+  gap: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.callTitle {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font: 800 1.5rem / 1.5 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.callSticker {
+  flex: none;
+  width: 62px;
+}
+
+.callLine {
+  font: 500 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.callLine a {
+  color: var(--color-brand-primary);
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: minmax(0, 760fr) minmax(0, 472fr);
+    gap: 48px;
+  }
+
+  .steps {
+    gap: 34px;
+    align-content: center;
+  }
+}

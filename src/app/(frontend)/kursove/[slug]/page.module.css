@@ -1,5 +1,7 @@
 /* Content (81:1267): paper, the ticket 64px below the hero (8px on mobile). */
 .content {
+  display: grid;
+  gap: 40px;
   max-width: var(--page-max);
   margin: 0 auto;
   padding: 8px var(--page-margin) 48px;
@@ -7,6 +9,7 @@
 
 @media (min-width: 1024px) {
   .content {
+    gap: 56px;
     padding-block: 64px 88px;
   }
 }
