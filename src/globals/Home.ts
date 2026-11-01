@@ -3,6 +3,7 @@ import { anyone, isStaff } from '@/access'
 import { topicOptions } from '@/collections/Courses'
 import { revalidateGlobal } from '@/hooks/revalidate'
 import { destinationOptions } from '@/lib/destinations'
+import { metaField } from '@/fields/meta'
 
 // The homepage (48:184 / 115:233; docs/cms-schema.md § 7). Courses and news come from their
 // collections; this global holds the hero, the section titles, the program cards and the partner
@@ -46,6 +47,7 @@ export const Home: GlobalConfig = {
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },
   fields: [
+    metaField(),
     {
       name: 'hero',
       type: 'group',

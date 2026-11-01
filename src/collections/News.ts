@@ -4,6 +4,7 @@ import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { metaField } from '@/fields/meta'
 
 // docs/cms-schema.md § 3. Added with the homepage, the first page that shows news; the news pages
 // arrive in PR 15. The cover is a photo, shown in its duotone tint (55% on the homepage, 30% on
@@ -66,6 +67,7 @@ export const News: CollectionConfig = {
     afterDelete: [revalidateCollection, indexAfterDelete],
   },
   fields: [
+    metaField(),
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
     {
       name: 'shortTitle',

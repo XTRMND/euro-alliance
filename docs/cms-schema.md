@@ -8,7 +8,7 @@ Payload runs inside the Next.js app on PostgreSQL. The client edits content in P
 
 - Add each collection in the PR of the first page that needs it (`docs/pr-plan.md`), with a migration.
 - Every user-facing text field is localized (`localization: { locales: ['bg', 'en'], defaultLocale: 'bg' }`). English stays empty until the client supplies it; templates fall back to Bulgarian only in development, never silently in production.
-- Content that appears on a page has `slug` *(proposed)*, SEO fields (`meta.title`, `meta.description`, `meta.image`) *(proposed)*, and drafts + versions enabled.
+- Content that appears on a page has `slug` *(proposed)*, SEO fields (`meta.title`, `meta.description`, `meta.image`; PR 22: on Courses, News, Programs, Legal pages and the Home, About and Contact globals, each falling back to the page's own title, lead and photo; the site's default image is `site.seoImage`), and drafts + versions enabled.
 - Imported documents keep `legacyUrl` *(proposed)* for the redirect map (`docs/content-import.md`).
 - An empty optional field hides its element in the template. Never render a placeholder.
 

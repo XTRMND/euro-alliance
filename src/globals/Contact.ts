@@ -2,6 +2,7 @@ import type { GlobalConfig } from 'payload'
 import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
 import { contactLocations } from '@/lib/routes'
+import { metaField } from '@/fields/meta'
 
 // The contact page (119:1795 / 121:1145): its hero and the «Как да ни намерите» location cards
 // (125:302). The office cards come from Offices. Map images are duotone OpenStreetMap snapshots;
@@ -13,6 +14,7 @@ export const Contact: GlobalConfig = {
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },
   fields: [
+    metaField(),
     {
       name: 'hero',
       type: 'group',

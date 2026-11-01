@@ -7,6 +7,7 @@ import { revalidateCollection } from '@/hooks/revalidate'
 import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { destinationOptions } from '@/lib/destinations'
 import { languages } from '@/lib/routes'
+import { metaField } from '@/fields/meta'
 
 // Program pages (docs/cms-schema.md § 3). A language program (one per language and audience,
 // /ezitsi/{language}/{audience}) gets the notebook hero with its flag; every other type has one
@@ -75,6 +76,7 @@ export const Programs: CollectionConfig = {
     ],
   },
   fields: [
+    metaField(),
     { name: 'title', type: 'text', label: 'Заглавие (в админа)', required: true, localized: true },
     slugField(),
     {

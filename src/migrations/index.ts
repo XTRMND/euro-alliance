@@ -18,6 +18,7 @@ import * as migration_20261101_195219_about from './20261101_195219_about';
 import * as migration_20261101_211203_legal_pages from './20261101_211203_legal_pages';
 import * as migration_20261101_214328_search_index from './20261101_214328_search_index';
 import * as migration_20261101_222512_redirects from './20261101_222512_redirects';
+import * as migration_20261101_224812_seo_meta from './20261101_224812_seo_meta';
 
 export const migrations = [
   {
@@ -118,6 +119,11 @@ export const migrations = [
   {
     up: migration_20261101_222512_redirects.up,
     down: migration_20261101_222512_redirects.down,
-    name: '20261101_222512_redirects'
+    name: '20261101_222512_redirects',
+  },
+  {
+    up: migration_20261101_224812_seo_meta.up,
+    down: migration_20261101_224812_seo_meta.down,
+    name: '20261101_224812_seo_meta'
   },
 ];

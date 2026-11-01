@@ -4,6 +4,7 @@ import { isStaff, publishedOrStaff } from '@/access'
 import { destinationOptions } from '@/lib/destinations'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { metaField } from '@/fields/meta'
 
 // Legal pages (docs/cms-schema.md § 3): the privacy policy (218:2842) and the cookie policy
 // (224:3208), one document each, at fixed addresses (routes.privacy(), routes.cookies()). The text
@@ -75,6 +76,7 @@ export const LegalPages: CollectionConfig = {
     afterDelete: [revalidateCollection, indexAfterDelete],
   },
   fields: [
+    metaField(),
     {
       name: 'page',
       type: 'select',

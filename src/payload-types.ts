@@ -326,6 +326,14 @@ export interface Office {
  */
 export interface Course {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   title: string;
   /**
    * Попълва се от заглавието, ако е празно.
@@ -432,6 +440,14 @@ export interface Course {
  */
 export interface News {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   title: string;
   /**
    * За пътечката над заглавието. Празно: цялото заглавие.
@@ -489,6 +505,14 @@ export interface News {
  */
 export interface Program {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   title: string;
   /**
    * Попълва се от заглавието, ако е празно.
@@ -1400,6 +1424,14 @@ export interface Team {
  */
 export interface LegalPage {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   page: 'privacy' | 'cookies';
   /**
    * Датата на последната промяна на политиката; показва се под текста. Празно: не се показва.
@@ -1899,6 +1931,13 @@ export interface OfficesSelect<T extends boolean = true> {
  * via the `definition` "courses_select".
  */
 export interface CoursesSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   title?: T;
   slug?: T;
   description?: T;
@@ -1944,6 +1983,13 @@ export interface CoursesSelect<T extends boolean = true> {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   title?: T;
   shortTitle?: T;
   slug?: T;
@@ -1965,6 +2011,13 @@ export interface NewsSelect<T extends boolean = true> {
  * via the `definition` "programs_select".
  */
 export interface ProgramsSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   title?: T;
   slug?: T;
   type?: T;
@@ -2522,6 +2575,13 @@ export interface TeamSelect<T extends boolean = true> {
  * via the `definition` "legal-pages_select".
  */
 export interface LegalPagesSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   page?: T;
   updatedOn?: T;
   pdf?: T;
@@ -2810,6 +2870,14 @@ export interface Navigation {
  */
 export interface Home {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   hero: {
     heading: string;
     /**
@@ -3035,6 +3103,14 @@ export interface InquiryRouting {
  */
 export interface Contact {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   hero?: {
     title?: string | null;
     /**
@@ -3070,6 +3146,14 @@ export interface Contact {
  */
 export interface About {
   id: number;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   hero?: {
     kicker?: string | null;
     title?: string | null;
@@ -3429,6 +3513,13 @@ export interface NavigationSelect<T extends boolean = true> {
  * via the `definition` "home_select".
  */
 export interface HomeSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   hero?:
     | T
     | {
@@ -3547,6 +3638,13 @@ export interface InquiryRoutingSelect<T extends boolean = true> {
  * via the `definition` "contact_select".
  */
 export interface ContactSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   hero?:
     | T
     | {
@@ -3575,6 +3673,13 @@ export interface ContactSelect<T extends boolean = true> {
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   hero?:
     | T
     | {

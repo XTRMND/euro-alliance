@@ -3,6 +3,7 @@ import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
 import { indexAbout } from '@/lib/search-index'
 import { destinationOptions } from '@/lib/destinations'
+import { metaField } from '@/fields/meta'
 
 // The About page (190:2677 / 210:2395): a fixed set of sections in the subnav's order, each a
 // group. An empty field hides its element; a section without content hides itself and its
@@ -51,6 +52,7 @@ export const About: GlobalConfig = {
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal, indexAbout] },
   fields: [
+    metaField(),
     {
       name: 'hero',
       type: 'group',
