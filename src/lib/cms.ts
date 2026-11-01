@@ -406,3 +406,45 @@ export const getLegalPage = unstable_cache(
   ['legal-page'],
   { tags: [tags.collection('legal-pages'), tags.collection('media')] },
 )
+
+/** Published courses by id, for the search results (in the given order). */
+export const getCoursesByIds = unstable_cache(
+  async (ids: number[]) => {
+    if (ids.length === 0) return []
+    const { docs } = await (
+      await payload()
+    ).find({
+      collection: 'courses',
+      locale: 'bg',
+      depth: 1,
+      where: { id: { in: ids } },
+      pagination: false,
+      overrideAccess: false,
+    })
+    return ids.flatMap((id) => docs.filter((course) => course.id === id))
+  },
+  ['courses-by-ids'],
+  { tags: [tags.collection('courses')] },
+)
+
+/** Published news by id with their covers' tints, for the search results (in the given order). */
+export const getNewsByIds = unstable_cache(
+  async (ids: number[]) => {
+    if (ids.length === 0) return []
+    const { docs } = await (
+      await payload()
+    ).find({
+      collection: 'news',
+      locale: 'bg',
+      depth: 1,
+      select: { title: true, slug: true, date: true, cover: true },
+      where: { id: { in: ids } },
+      pagination: false,
+      overrideAccess: false,
+    })
+    await attachTints(docs.map((news) => news.cover))
+    return ids.flatMap((id) => docs.filter((news) => news.id === id))
+  },
+  ['news-by-ids'],
+  { tags: [tags.collection('news'), tags.collection('media')] },
+)

@@ -1,0 +1,78 @@
+/* Search result (217:360): 4px apart, 18px above and below, a rule on top. On hover (217:364) a
+   white card with 18px around the text: the card reaches 18px beyond the column instead of moving
+   the text, and the rule is drawn inside so it doesn't. */
+.result {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  max-width: 896px; /* 860 in Figma, plus the card's 18px on each side */
+  margin-inline: -18px;
+  padding: 18px;
+  border-radius: 12px;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: background-color var(--motion-card) ease-out;
+}
+
+.result::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 18px;
+  left: 18px;
+  border-top: 1px solid var(--color-border-default);
+  transition: opacity var(--motion-card) ease-out;
+}
+
+.path {
+  font: 700 0.8125rem / 1.5 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title {
+  font: 800 clamp(1.375rem, 1.282rem + 0.381vw, 1.625rem) / 1.2 var(--font-display); /* 22 → 26 */
+  color: var(--color-brand-primary-strong);
+  transition: color var(--motion-card) ease-out;
+}
+
+.snippet {
+  font: 400 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* The query: no highlighter (one per headline, CLAUDE.md § 6); in the snippet the words are in
+   the text colour and semibold, in the title they stay as they are (Figma marks neither). */
+.mark {
+  background: none;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.snippet .mark {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+@media (hover: hover) {
+  .result:hover {
+    background: var(--color-bg-page);
+  }
+
+  .result:hover::before {
+    opacity: 0;
+  }
+
+  .result:hover .title {
+    color: var(--color-brand-primary);
+  }
+}
+
+.result:focus-visible {
+  background: var(--color-bg-page);
+}
+
+.result:focus-visible .title {
+  color: var(--color-brand-primary);
+}

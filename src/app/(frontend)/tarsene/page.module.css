@@ -1,0 +1,89 @@
+/* Search hero (219:2929 / 226:2947): no breadcrumb; the H1 at 64 (44 on a phone, the highlight
+   on its own row) and the field, 20px apart, 56px above (24 on a phone). The tabs follow, 8px
+   further down. */
+.hero {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(24px, 12.11px + 3.048vw, 56px) var(--page-margin) 20px; /* 24 → 56 */
+}
+
+.title {
+  font: 800 clamp(2.75rem, 2.286rem + 1.905vw, 4rem) / 0.96 var(--font-display); /* 44 → 64 */
+  color: var(--color-brand-primary-strong);
+}
+
+.title > span {
+  padding: 0 0.1875em 0.0625em;
+  transform: rotate(1.5deg);
+}
+
+/* Courses, Pages, News (219:2952, 219:3051, 219:3065): the heading 36 (28 on a phone), 20px above
+   the results; 32px above each section, 24 below. */
+.section {
+  display: grid;
+  gap: 20px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 32px var(--page-margin) 24px;
+}
+
+.heading {
+  font: 800 clamp(1.75rem, 1.564rem + 0.762vw, 2.25rem) / 0.96 var(--font-display); /* 28 → 36 */
+  color: var(--color-brand-primary-strong);
+}
+
+.results {
+  display: grid;
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* News cards: three in a row from 1024px (two from 768), one under the other on a phone. */
+.news {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* No results (not in Figma): the note, then the main sections as links. */
+.empty {
+  display: grid;
+  gap: 16px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 12px var(--page-margin) 64px;
+}
+
+.emptyText {
+  max-width: 640px;
+  font: 400 clamp(1.0625rem, 1.017rem + 0.19vw, 1.1875rem) / 1.5 var(--font-body); /* 17 → 19 */
+  color: var(--color-text-muted);
+}
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .news {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .news {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

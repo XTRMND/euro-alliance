@@ -23,6 +23,7 @@ const snapshots = [
   { name: 'about', path: routes.about() },
   { name: 'privacy', path: routes.privacy() },
   { name: 'cookies', path: routes.cookies() },
+  { name: 'search', path: routes.search('английски') },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },

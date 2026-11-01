@@ -55,6 +55,8 @@ export const queryParams = {
   page: 'stranitsa',
   topic: 'tema',
   search: 'q',
+  /** The search page's tab (PR 18). */
+  searchTab: 'vid',
   category: 'kategoria',
   /** Course listing filters (PR 9). */
   audience: 'auditoria',
@@ -170,5 +172,25 @@ export const routes = {
     `/${segments.contact}#${contactLocations[location]}`,
   privacy: () => `/${segments.privacy}`,
   cookies: () => `/${segments.cookies}`,
-  search: (query?: string) => withQuery(`/${segments.search}`, queryParams.search, query),
+  search: (query?: string, tab?: SearchTab) => {
+    const path = withQuery(`/${segments.search}`, queryParams.search, query)
+    if (!tab || tab === 'all') return path
+    return `${path}${path.includes('?') ? '&' : '?'}${queryParams.searchTab}=${searchTabs[tab]}`
+  },
+}
+
+/** The search page's tabs and their values in the address (?vid=kursove). */
+export const searchTabs = {
+  all: 'vsichko',
+  courses: 'kursove',
+  pages: 'stranitsi',
+  news: 'novini',
+} as const
+
+export type SearchTab = keyof typeof searchTabs
+
+/** The tab in the address, or «Всичко». */
+export function searchTabFromParam(value: string | undefined): SearchTab {
+  const entry = Object.entries(searchTabs).find(([, param]) => param === value)
+  return (entry?.[0] as SearchTab | undefined) ?? 'all'
 }

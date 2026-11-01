@@ -1,0 +1,66 @@
+/* The tabs (219:2939): Subnav items 28px apart (18 on a phone), 8px under the field; the row
+   scrolls sideways on a phone. Default: bold, muted; selected: extra bold, navy, a 5px sand line. */
+.tabs {
+  display: flex;
+  gap: clamp(18px, 14.29px + 0.952vw, 28px); /* 18 → 28 */
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 8px var(--page-margin) 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+/* The hero's 24px under the tabs. */
+.panel {
+  padding-top: 24px;
+}
+
+.tab {
+  display: inline-grid;
+  flex: none;
+  padding: 6px 4px 0;
+  border: 0;
+  border-bottom: 5px solid transparent;
+  background: none;
+  font: 700 1.25rem / 1.55 var(--font-display);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    color var(--motion-button) ease-out,
+    border-color var(--motion-button) ease-out;
+}
+
+/* The extra-bold width is reserved, so selecting a tab doesn't shift the row. */
+.tab::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  font-weight: 800;
+  visibility: hidden;
+}
+
+.tab[aria-selected='true'] {
+  border-bottom-color: var(--color-brand-accent);
+  font-weight: 800;
+  color: var(--color-brand-primary-strong);
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    color: var(--color-brand-primary-strong);
+  }
+}
+
+.tab:focus-visible {
+  color: var(--color-brand-primary-strong);
+}
+
+/* «Всичко» shows every section; a tab, its own. */
+.panel[data-show='courses'] > :not([data-type='courses']),
+.panel[data-show='pages'] > :not([data-type='pages']),
+.panel[data-show='news'] > :not([data-type='news']) {
+  display: none;
+}

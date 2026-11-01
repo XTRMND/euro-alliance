@@ -424,6 +424,15 @@ From the legal pages and the cookie consent (PR 17):
 - Consent Mode v2, basic (proposed in `docs/motion.md` § 7): defaults denied, `security_storage` granted, and no Google tag loads before statistics consent (GA4 arrives in PR 20). Withdrawing statistics or marketing deletes their cookies.
 - Lighthouse and the e2e suite run with a stored choice (`tests/e2e/consented.json`), so the banner isn't measured on every page; `tests/e2e/consent.spec.ts` covers the first visit.
 
+From the search (PR 18):
+- There's no search control in the header or the mobile menu frames, so the search page is reached only from the 404 page (PR 19) and by its address. Add a search icon to the header and a field to the mobile menu? [not added: they need a design]
+- Empty query (field only, H1 «Търсене») and no results (a note and links to the main sections) aren't in Figma. [as described]
+- Figma doesn't mark the query in the results. [in the snippet the words are semibold in the text colour; titles unmarked; no highlighter: one per headline]
+- A tab without results isn't shown («Всичко» always is). The tab is kept in the address (`?vid=kursove`), replaced so the back button goes to the previous search.
+- Search result hover (217:364) adds 18px of padding, which moves the text; the card grows outward instead and the text stays. Figma's search icon is a plain ring (the asset as supplied). The «Търси» hover isn't in Figma. [brand/primary]
+- Language pages in the results take the page's own title («Английски език за възрастни»): both heroes say «Английски език». The results page has `noindex`.
+- The index is ours, not Payload's search plugin (the About page is a global). The migration creates the `pg_trgm` extension: the production database's owner must be allowed to (it's a trusted extension from PostgreSQL 13).
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.

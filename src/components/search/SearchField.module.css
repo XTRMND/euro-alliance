@@ -1,0 +1,67 @@
+/* Search field (217:358): 60 high, white, a 1px rule, radius 14; the ring icon, the query and the
+   navy «Търси». Up to 640 wide. */
+.field {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: min(100%, 640px);
+  height: 60px;
+  padding: 0 8px 0 20px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 14px;
+  background: var(--color-bg-page);
+}
+
+/* Focused (217:348): a 2px navy border, the content where it was. */
+.field:focus-within {
+  border-color: var(--color-brand-primary-strong);
+  box-shadow: inset 0 0 0 1px var(--color-brand-primary-strong);
+}
+
+.icon {
+  flex: none;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: none;
+  font: 500 1.0625rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+  outline: none;
+}
+
+.input::placeholder {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+/* The browser's own clear button doesn't fit the field. */
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.submit {
+  flex: none;
+  padding: 11px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--color-brand-primary-strong);
+  font: 600 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-on-brand);
+  cursor: pointer;
+  transition: background-color var(--motion-button) ease-out;
+}
+
+@media (hover: hover) {
+  .submit:hover {
+    background: var(--color-brand-primary);
+  }
+}
+
+.submit:focus-visible {
+  background: var(--color-brand-primary);
+}

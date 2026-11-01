@@ -34,6 +34,19 @@ export function inboxOf(email: string): AnalyticsEvents['mailto_click']['inbox']
   return inboxes.find((inbox) => inbox === local)
 }
 
+/**
+ * The `search_term` param: the query without anything that could identify someone (an email
+ * address, a phone number, a long run of digits), at most 100 characters.
+ */
+export function cleanSearchTerm(query: string): string {
+  return query
+    .replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g, '[redacted]')
+    .replace(/\+?\d[\d\s().-]{5,}\d/g, '[redacted]')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 100)
+}
+
 export function track<E extends AnalyticsEvent>(event: E, params: AnalyticsEvents[E]): void {
   // PR 20: send to GA4 once statistics consent is granted and gtag has loaded.
   void event
