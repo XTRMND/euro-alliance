@@ -56,5 +56,13 @@ export const Media: CollectionConfig = {
       ],
     },
     { name: 'credit', type: 'text', label: 'Автор', localized: true },
+    {
+      // The four tints of a photo, so a page gets them with the photo (DuotoneImage).
+      name: 'tints',
+      type: 'join',
+      collection: 'media-tints',
+      on: 'source',
+      admin: { hidden: true },
+    },
   ],
 }

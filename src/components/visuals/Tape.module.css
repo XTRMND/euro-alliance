@@ -1,0 +1,11 @@
+/* Placed by the parent; 110 × 28 at 3°, as on Project card (259:574) and Index card (264:448). */
+.tape {
+  position: absolute;
+  top: -12px;
+  left: 40px;
+  width: 110px;
+  height: 28px;
+  background: var(--color-brand-accent);
+  transform: rotate(3deg);
+  pointer-events: none;
+}

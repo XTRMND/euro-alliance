@@ -76,7 +76,11 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsJoins: {};
+  collectionsJoins: {
+    media: {
+      tints: 'media-tints';
+    };
+  };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
@@ -171,6 +175,11 @@ export interface Media {
   altReviewed?: boolean | null;
   kind: 'photo' | 'art' | 'scan' | 'logo';
   credit?: string | null;
+  tints?: {
+    docs?: (number | MediaTint)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -373,6 +382,7 @@ export interface MediaSelect<T extends boolean = true> {
   altReviewed?: T;
   kind?: T;
   credit?: T;
+  tints?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

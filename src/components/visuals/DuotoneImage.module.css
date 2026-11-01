@@ -1,0 +1,28 @@
+.frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.clears {
+  transition: opacity var(--motion-news) var(--ease-out);
+}
+
+/* Hover clears the tint; keyboard focus on the card's link does the same (docs/motion.md § 5). */
+:global(.duotone-hover):focus-within .clears,
+.frame:focus-within .clears {
+  opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :global(.duotone-hover):hover .clears,
+  .frame:hover .clears {
+    opacity: 0;
+  }
+}
