@@ -128,6 +128,14 @@ function SectionContent({ section, index }: { section: Section; index: number })
               <FeatureCard key={item.id ?? i} index={i + 1} title={item.title} text={item.text} />
             ))}
           </CardGrid>
+          {section.callout?.heading && (
+            <CalloutBand
+              title={section.callout.heading}
+              text={section.callout.text}
+              headingLevel="h3"
+              {...calloutButton(section.callout.cta)}
+            />
+          )}
         </Wrap>
       )
     }

@@ -228,6 +228,34 @@ test.describe('farmers', () => {
   })
 })
 
+test.describe('computer courses', () => {
+  test.use({ viewport: { width: 1440, height: 900 } })
+
+  test('numbers the eight programmes on from card to card', async ({ page }) => {
+    await page.goto(routes.computerCourses())
+
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Компютърно обучение')
+    await page.getByRole('link', { name: 'Програмите' }).click()
+    const programmes = page.locator('#programi')
+    await expect(programmes).toBeInViewport()
+    await expect(programmes.getByRole('listitem')).toHaveCount(8)
+    const design = programmes.locator('article', {
+      has: page.getByRole('heading', { name: 'Интернет и дизайн' }),
+    })
+    await expect(design.getByRole('listitem').first()).toContainText('05')
+  })
+
+  test('the callout under the formats leads to the vouchers page', async ({ page }) => {
+    await page.goto(routes.computerCourses())
+
+    await expect(page.getByRole('heading', { name: 'Безплатно с ваучер' })).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Обучение с ваучери' })).toHaveAttribute(
+      'href',
+      routes.vouchers(),
+    )
+  })
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

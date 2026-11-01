@@ -11,6 +11,7 @@ export const pages = [
   { name: 'Professions', path: routes.professions() },
   { name: 'Teachers', path: routes.teachers() },
   { name: 'Farmers', path: routes.farmers() },
+  { name: 'Computer courses', path: routes.computerCourses() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },
