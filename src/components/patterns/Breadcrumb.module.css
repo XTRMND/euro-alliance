@@ -1,0 +1,26 @@
+.trail {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  font: 500 0.875rem / 1.45 var(--font-body);
+  color: var(--color-text-muted);
+  list-style: none;
+}
+
+/* «/» between the items. */
+.item + .item::before {
+  content: '/';
+  margin-right: 8px;
+}
+
+.link {
+  color: var(--color-brand-primary);
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration: underline;
+  }
+}

@@ -52,7 +52,45 @@
       "inPerson": "In person",
       "online": "Online"
     },
-    "voucher": "With a voucher"
+    "voucher": "With a voucher",
+    "title": "All courses",
+    "titleHighlight": "courses",
+    "lead": "Language courses, exam preparation, vocational and computer training. Filter by audience, language, format or city.",
+    "count": "{count, plural, one {# course} other {# courses}}",
+    "category": {
+      "languages": "Languages",
+      "exams": "Exams and certificates",
+      "vocational": "Vocational training",
+      "vouchers": "Training with vouchers",
+      "teachers": "Teaching professionals",
+      "farmers": "Training for farmers",
+      "computer": "Computer courses"
+    },
+    "filters": {
+      "title": "Filters",
+      "open": "Filters",
+      "selected": "selected: {count}",
+      "audience": "Audience",
+      "category": "Category",
+      "language": "Language",
+      "format": "Format",
+      "funding": "Funding",
+      "voucher": "With an Employment Agency voucher",
+      "start": "Start",
+      "anyMonth": "Any month",
+      "reset": "Clear filters",
+      "resetShort": "Clear",
+      "apply": "Show {count, plural, one {# course} other {# courses}}"
+    },
+    "sort": {
+      "label": "Sort:",
+      "soonest": "Soonest",
+      "price": "Lowest price"
+    },
+    "showMore": "Show more courses",
+    "shown": "Showing {shown} of {total}",
+    "empty": "No courses match these filters.",
+    "breadcrumb": "Courses"
   },
   "home": {
     "allCourses": "All <long>courses</long>",
@@ -74,5 +112,18 @@
     "dropTitle": "Drop your document here",
     "dropHint": "PDF, Word or a photo from your phone",
     "chooseFile": "Choose a file"
+  },
+  "breadcrumb": {
+    "label": "Breadcrumb",
+    "home": "Home"
+  },
+  "languages": {
+    "english": "English",
+    "german": "German",
+    "french": "French",
+    "spanish": "Spanish",
+    "italian": "Italian",
+    "bulgarian": "Bulgarian",
+    "russian": "Russian"
   }
 }
