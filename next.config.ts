@@ -9,6 +9,9 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
 
 const nextConfig: NextConfig = {
   output: 'standalone',
+  // The proxy handles trailing slashes, so an old address with one is still a single redirect
+  // (src/proxy.ts).
+  skipTrailingSlashRedirect: true,
   poweredByHeader: false,
   // Project rules live in CLAUDE.md; don't let `next dev` write AGENTS.md.
   agentRules: false,

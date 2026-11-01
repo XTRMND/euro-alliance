@@ -1,0 +1,57 @@
+import { type NextRequest, NextResponse } from 'next/server'
+import { Pool } from 'pg'
+import { isSitePath, normalizePath, staticRedirects } from '@/lib/redirects'
+
+// Old addresses (docs/content-import.md § 5): a single 301 to the new page, whatever the case and
+// with or without a trailing slash (next.config's redirects can't ignore case, and Next's own
+// trailing-slash redirect would add a hop: skipTrailingSlashRedirect is on). Pages of the new site
+// pass straight through; anything else is looked up in the fixed map, then in the `redirects`
+// collection, and otherwise gets the 404 page. The collection is read once a minute at most, with
+// its own small pool: the proxy doesn't load Payload.
+
+const pool = process.env.DATABASE_URL
+  ? new Pool({ connectionString: process.env.DATABASE_URL, max: 2 })
+  : null
+
+let stored: { at: number; map: Map<string, string> } | null = null
+
+async function storedRedirects(): Promise<Map<string, string>> {
+  if (stored && Date.now() - stored.at < 60_000) return stored.map
+  try {
+    const { rows } = await pool!.query<{ from: string; to: string }>(
+      'select "from", "to" from redirects',
+    )
+    stored = { at: Date.now(), map: new Map(rows.map((row) => [row.from, row.to])) }
+  } catch (error) {
+    // Without the table (before its migration) or the database, no stored redirects.
+    console.error('Redirects: could not read the collection.', error)
+    stored = { at: Date.now(), map: stored?.map ?? new Map() }
+  }
+  return stored.map
+}
+
+async function redirectFor(pathname: string): Promise<string | undefined> {
+  const path = normalizePath(pathname)
+  return staticRedirects[path] ?? (pool ? (await storedRedirects()).get(path) : undefined)
+}
+
+export async function proxy(request: NextRequest) {
+  const { pathname, search } = request.nextUrl
+  if (isSitePath(pathname)) return NextResponse.next()
+
+  const target = await redirectFor(pathname)
+  if (target) return NextResponse.redirect(new URL(target, request.url), 301)
+
+  // The new site's own addresses never end in a slash.
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    return NextResponse.redirect(new URL(pathname.replace(/\/+$/, '') + search, request.url), 308)
+  }
+  return NextResponse.next()
+}
+
+export const config = {
+  // Not the framework's files, Payload's admin and API, or the files in public/.
+  matcher: [
+    '/((?!_next/|api/|admin|fonts/|logos/|icon|apple-touch-icon|favicon|robots\\.txt|sitemap).*)',
+  ],
+}

@@ -137,5 +137,5 @@ Patterns from the old site, mapped to the proposed routes. **Derive the definiti
 - Match old paths **case-insensitively** and with or without a trailing slash.
 - A redirect target may include a fragment (`#sertifikati`); browsers keep it.
 - Unknown old URLs return the real 404 page (with search), never a redirect to the homepage. Log them for review after launch.
-- Static patterns go in `next.config` `redirects()`. Per-article and manual redirects come from the `redirects` collection, looked up server-side and cached.
+- Static patterns are in `src/lib/redirects.ts`, per-article and manual redirects in the `redirects` collection; the proxy (`src/proxy.ts`) answers both (PR 19). Not `next.config` `redirects()`: it can't ignore case, and Next's own trailing-slash redirect would add a hop (`skipTrailingSlashRedirect` is on, the proxy drops the slash).
 - **CI test (PR 19, extended in PR 21):** request every URL in `inventory.json` against the new build and assert a single 301 to a URL that returns 200.
