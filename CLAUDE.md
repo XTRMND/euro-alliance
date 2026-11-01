@@ -213,7 +213,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Migrate and seed | `pnpm migrate`, then `pnpm seed` (fills in missing company facts and offices; never overwrites) |
 | Dev server | `pnpm dev` (http://localhost:3000, admin at `/admin`; the first account created is the admin) |
 | Production build | `pnpm build` (standalone server in `.next/standalone`) |
-| Run the build | `pnpm start` |
+| Run the build | `pnpm start` (reads `.env` if present; pages need the database) |
 | Typecheck | `pnpm typecheck` |
 | Lint and format | `pnpm lint`, `pnpm format:check` (`pnpm format` fixes formatting) |
 | Unit tests | `pnpm test` (`pnpm test:watch` while working) |
@@ -222,7 +222,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
 | Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens` and `/dev/components` (never set in production) |
 | Visual snapshots | run in CI only (Linux renders). New ones are written on the first run and uploaded as the `visual-snapshots` artifact; commit them under `tests/e2e/__screenshots__/` |
-| E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100; first run: `pnpm exec playwright install chromium`) |
+| E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100 against the database in `.env`; first run: `pnpm exec playwright install chromium`) |
 | Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`). CI is the reference: a busy laptop runs slower than CI, and the simulated mobile LCP moves with it |
 | Rebuild fonts | `scripts/build-fonts.sh` (needs `pip install fonttools brotli`) |
 | Docker image | `docker build -t euro-alliance .` |
@@ -242,6 +242,7 @@ Decided:
 - Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
 - Planned steps are pushed straight to `main` (§ 10).
 - Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
+- Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
 Waiting on the client:
 - The tour operator certificate: its number and exact wording (not in the `site` global until supplied).
@@ -267,6 +268,16 @@ Design questions for the user (found in PR 3; the build follows the default in b
 - Control borders: the unchecked checkbox and radio and the off toggle use border/default (#DCE1E7), about 1.3:1 on white and paper. WCAG 1.4.11 asks 3:1 for the parts that show a control and its state, and axe doesn't check this. Proposal: a 1.5 px text/muted border on unchecked boxes and on the off track (5.8:1). [as in Figma, PR 4]
 - Buttons: Figma has Default and Hover only. [focus = Hover plus the focus ring; pressed = Hover; disabled = 50% opacity. Avoid disabled buttons where a validation message can explain instead]
 - Hover on Chip, Checkbox and Radio card isn't in Figma. [the border turns brand/primary]
+
+Content questions from the shell (PR 5); the build uses the default in brackets:
+- «Езици» (mobile menu) and «Професионално обучение» (header, menu, footer) have no page of their own in the plan. [English for adults; Professions (ЦПО)]
+- Footer «Ценоразпис»: translation prices were dropped, so there's nothing to link to. [left out]
+- Footer «Екип»: the team section stays hidden until photos exist. [left out until then]
+- Footer «Писмени преводи» and «Устни преводи» both go to the Translations page until it has sections to link to (PR 14).
+- «EN» in the header and menu: [hidden until English exists]
+- EU funding strip: the official logo strip is needed from the client (Figma has placeholders). The statement shows meanwhile. Figma's project number ends in «-C01»; § 3 has BG16RFPR001-1.004-1004. [Figma's text]
+- Facebook: facebook.com/EvroAlians, from the Figma layer name. [used as is; confirm]
+- Header link hover and current page: not in Figma. [sand underline]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
