@@ -24,6 +24,15 @@
   font: 400 1.0625rem / 1.55 var(--font-body);
 }
 
+/* Phone numbers and email addresses in the text. */
+.text a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-brand-accent);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+}
+
 .cta {
   justify-self: start;
 }

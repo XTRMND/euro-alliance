@@ -30,6 +30,11 @@ describe('telHref', () => {
   it('keeps the digits and the plus sign', () => {
     expect(telHref('+359 886 601 108')).toBe('tel:+359886601108')
   })
+
+  it('writes a Bulgarian number in its international form', () => {
+    expect(telHref('0886 601 108')).toBe('tel:+359886601108')
+    expect(telHref('02 915 3 518')).toBe('tel:+35929153518')
+  })
 })
 
 describe('formatDateLong', () => {

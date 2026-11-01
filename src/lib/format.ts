@@ -19,9 +19,13 @@ export function currentYear(now = new Date()): number {
   return Number(new Intl.DateTimeFormat('en', { timeZone, year: 'numeric' }).format(now))
 }
 
-/** A phone number as a tel: link (+359 886 601 108 → tel:+359886601108). */
+/**
+ * A phone number as a tel: link in international form (+359 886 601 108 and 0886 601 108 →
+ * tel:+359886601108).
+ */
 export function telHref(phone: string): string {
-  return `tel:${phone.replace(/[^\d+]/g, '')}`
+  const digits = phone.replace(/[^\d+]/g, '')
+  return `tel:${/^0[1-9]/.test(digits) ? `+359${digits.slice(1)}` : digits}`
 }
 
 /** 3 ноември 2026, as course cards and news dates write it (Intl's bg-BG adds « г.»). */
