@@ -201,7 +201,7 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 
 ### Redirects
 
-`from`, `to`, `type` (301), `source` (`import` / `manual`). Payload's redirects plugin fits. Admin-only.
+`from` (the old path, stored lowercase without a trailing slash; unique), `to` (a path or an https address; never an address that redirects again), `source` (`import` / `manual`). Every redirect is a 301, so there's no `type`. Our own collection (PR 19), not Payload's redirects plugin: the proxy (`src/proxy.ts`) reads it directly with `pg`, once a minute at most, without loading Payload. Editors read it; the admin edits it.
 
 ## 4. Media and the image pipeline
 

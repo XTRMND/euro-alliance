@@ -84,6 +84,7 @@ export interface Config {
     team: Team;
     'legal-pages': LegalPage;
     search: Search;
+    redirects: Redirect;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -115,6 +116,7 @@ export interface Config {
     team: TeamSelect<false> | TeamSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -1469,6 +1471,24 @@ export interface Search {
   createdAt: string;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects".
+ */
+export interface Redirect {
+  id: number;
+  /**
+   * Пътят от стария сайт, например /News/123/zaglavie.
+   */
+  from: string;
+  /**
+   * Път в новия сайт (/novini/…) или пълен адрес.
+   */
+  to: string;
+  source?: ('import' | 'manual') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Пазят се 1 година, освен ако не са довели до договор.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1713,6 +1733,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'search';
         value: number | Search;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2530,6 +2554,17 @@ export interface SearchSelect<T extends boolean = true> {
   source?: T;
   sourceId?: T;
   publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?: T;
+  source?: T;
   updatedAt?: T;
   createdAt?: T;
 }
