@@ -11,6 +11,7 @@ import { Courses } from './collections/Courses'
 import { Documents } from './collections/Documents'
 import { Exams } from './collections/Exams'
 import { FundedProjects } from './collections/FundedProjects'
+import { LegalPages } from './collections/LegalPages'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
 import { Media } from './collections/Media'
@@ -60,6 +61,7 @@ export default buildConfig({
     FundedProjects,
     Documents,
     Team,
+    LegalPages,
     Inquiries,
     InquiryFiles,
   ],

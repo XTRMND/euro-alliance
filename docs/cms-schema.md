@@ -197,7 +197,7 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 
 ### Legal pages
 
-`title`, `slug`, `body` (rich text), `updatedOn` (date). The approved privacy and cookie policy texts are seeded as given. Versions enabled so changes are traceable.
+`page` (`privacy` / `cookies`, unique: the addresses are fixed, `routes.privacy()` and `routes.cookies()`), `title` and `highlight`, `kicker`, `sections` (array: `heading`, `tocLabel` for the contents rail, which Figma keeps shorter than the heading, and `body` rich text with paragraphs, numbered lists, links, a table block and a link-button block), `updatedOn` (date, shown under the text; empty: hidden), `pdf` (optional upload, for «Изтегли като PDF»; empty: hidden). The approved privacy and cookie policy texts are seeded as given (PR 17). Versions enabled so changes are traceable.
 
 ### Redirects
 

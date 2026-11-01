@@ -34,6 +34,8 @@ export const destinations = {
   news: { label: 'Новини', href: routes.news() },
   about: { label: 'За нас', href: routes.about() },
   contact: { label: 'Контакти', href: routes.contact() },
+  privacy: { label: 'Защита на личните данни', href: routes.privacy() },
+  cookies: { label: 'Политика за бисквитките', href: routes.cookies() },
 } as const
 
 export type Destination = keyof typeof destinations

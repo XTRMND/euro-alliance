@@ -14,6 +14,7 @@ import {
   offices,
   partners,
 } from './data'
+import { legalBody, legalPages } from './legal'
 import {
   certificates,
   englishPrograms,
@@ -55,6 +56,7 @@ export async function seed(payload: Payload) {
   await seedContact(payload)
   await seedPrograms(payload)
   await seedAbout(payload)
+  await seedLegal(payload)
 
   const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
   if (isEmpty(routing.rules)) {
@@ -410,4 +412,25 @@ async function uploadOnce(payload: Payload, { file, mimetype, ...fields }: SeedF
     data: fields,
     file: { data, mimetype, name, size: data.length },
   })
+}
+
+/** The privacy and cookie policies, each when its page has no document yet. */
+async function seedLegal(payload: Payload) {
+  for (const { sections, ...page } of legalPages) {
+    const { totalDocs } = await payload.count({
+      collection: 'legal-pages',
+      where: { page: { equals: page.page } },
+    })
+    if (totalDocs > 0) continue
+    await payload.create({
+      collection: 'legal-pages',
+      locale: 'bg',
+      data: {
+        ...page,
+        sections: sections.map(({ body, ...section }) => ({ ...section, body: legalBody(body) })),
+        _status: 'published',
+      },
+    })
+    payload.logger.info(`Seeded the legal page «${page.title}».`)
+  }
 }

@@ -82,6 +82,7 @@ export interface Config {
     'funded-projects': FundedProject;
     documents: Document;
     team: Team;
+    'legal-pages': LegalPage;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -111,6 +112,7 @@ export interface Config {
     'funded-projects': FundedProjectsSelect<false> | FundedProjectsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -526,6 +528,8 @@ export interface Program {
                 | 'news'
                 | 'about'
                 | 'contact'
+                | 'privacy'
+                | 'cookies'
               )
             | null;
           anchor?: string | null;
@@ -635,6 +639,8 @@ export interface Program {
                       | 'news'
                       | 'about'
                       | 'contact'
+                      | 'privacy'
+                      | 'cookies'
                     )
                   | null;
               };
@@ -705,6 +711,8 @@ export interface Program {
                       | 'news'
                       | 'about'
                       | 'contact'
+                      | 'privacy'
+                      | 'cookies'
                     )
                   | null;
               };
@@ -755,6 +763,8 @@ export interface Program {
                     | 'news'
                     | 'about'
                     | 'contact'
+                    | 'privacy'
+                    | 'cookies'
                   )
                 | null;
             };
@@ -831,6 +841,8 @@ export interface Program {
                     | 'news'
                     | 'about'
                     | 'contact'
+                    | 'privacy'
+                    | 'cookies'
                   )
                 | null;
             };
@@ -1152,6 +1164,8 @@ export interface Program {
                     | 'news'
                     | 'about'
                     | 'contact'
+                    | 'privacy'
+                    | 'cookies'
                   )
                 | null;
             };
@@ -1372,6 +1386,59 @@ export interface Team {
   name: string;
   role?: string | null;
   photo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages".
+ */
+export interface LegalPage {
+  id: number;
+  page: 'privacy' | 'cookies';
+  /**
+   * Датата на последната промяна на политиката; показва се под текста. Празно: не се показва.
+   */
+  updatedOn?: string | null;
+  /**
+   * По избор: за бутона «Изтегли като PDF». Без файл бутонът не се показва.
+   */
+  pdf?: (number | null) | Media;
+  title: string;
+  /**
+   * Част от заглавието.
+   */
+  highlight?: string | null;
+  /**
+   * Показва се с главни букви.
+   */
+  kicker?: string | null;
+  sections?:
+    | {
+        heading: string;
+        /**
+         * По избор: по-кратко име за съдържанието отстрани.
+         */
+        tocLabel?: string | null;
+        body?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1613,6 +1680,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'legal-pages';
+        value: number | LegalPage;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2395,6 +2466,29 @@ export interface TeamSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "legal-pages_select".
+ */
+export interface LegalPagesSelect<T extends boolean = true> {
+  page?: T;
+  updatedOn?: T;
+  pdf?: T;
+  title?: T;
+  highlight?: T;
+  kicker?: T;
+  sections?:
+    | T
+    | {
+        heading?: T;
+        tocLabel?: T;
+        body?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiries_select".
  */
 export interface InquiriesSelect<T extends boolean = true> {
@@ -2664,6 +2758,8 @@ export interface Home {
             | 'news'
             | 'about'
             | 'contact'
+            | 'privacy'
+            | 'cookies'
           )
         | null;
     };
@@ -2689,6 +2785,8 @@ export interface Home {
             | 'news'
             | 'about'
             | 'contact'
+            | 'privacy'
+            | 'cookies'
           )
         | null;
     };
@@ -2751,7 +2849,9 @@ export interface Home {
             | 'otherInquiry'
             | 'news'
             | 'about'
-            | 'contact';
+            | 'contact'
+            | 'privacy'
+            | 'cookies';
           id?: string | null;
         }[]
       | null;
@@ -2787,6 +2887,8 @@ export interface Home {
             | 'news'
             | 'about'
             | 'contact'
+            | 'privacy'
+            | 'cookies'
           )
         | null;
     };
@@ -2918,6 +3020,8 @@ export interface About {
             | 'news'
             | 'about'
             | 'contact'
+            | 'privacy'
+            | 'cookies'
           )
         | null;
     };
@@ -2943,6 +3047,8 @@ export interface About {
             | 'news'
             | 'about'
             | 'contact'
+            | 'privacy'
+            | 'cookies'
           )
         | null;
     };
@@ -3058,6 +3164,8 @@ export interface About {
                 | 'news'
                 | 'about'
                 | 'contact'
+                | 'privacy'
+                | 'cookies'
               )
             | null;
           id?: string | null;

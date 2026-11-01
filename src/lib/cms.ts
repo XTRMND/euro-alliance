@@ -387,3 +387,22 @@ export const getAbout = unstable_cache(
     ],
   },
 )
+
+/** A published legal page (privacy or cookies), with its PDF, or null. */
+export const getLegalPage = unstable_cache(
+  async (page: 'privacy' | 'cookies') => {
+    const { docs } = await (
+      await payload()
+    ).find({
+      collection: 'legal-pages',
+      locale: 'bg',
+      depth: 1,
+      where: { page: { equals: page } },
+      limit: 1,
+      overrideAccess: false,
+    })
+    return docs[0] ?? null
+  },
+  ['legal-page'],
+  { tags: [tags.collection('legal-pages'), tags.collection('media')] },
+)
