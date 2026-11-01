@@ -14,7 +14,7 @@ type DuotoneImageProps = {
   /** next/image `sizes`; the image fills its positioned parent. */
   sizes: string
   clearOnHover?: boolean
-  /** Above the fold: load at once, at high priority (Next 16 replaced `priority`). */
+  /** Above the fold: preloaded and loaded at once at high priority (Next 16 dropped `priority`). */
   eager?: boolean
   className?: string
 }
@@ -61,7 +61,7 @@ export function DuotoneImage({
           fill
           sizes={sizes}
           style={style}
-          {...(eager && ({ loading: 'eager', fetchPriority: 'high' } as const))}
+          {...(eager && ({ loading: 'eager', fetchPriority: 'high', preload: true } as const))}
           className={[styles.image, clearOnHover && styles.clears].filter(Boolean).join(' ')}
         />
       )}

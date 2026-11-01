@@ -1,0 +1,8 @@
+/* The light sections below the first screen skip layout and paint until they near the viewport,
+   so the first screen renders and hydrates without laying out the whole page (Lighthouse TBT,
+   PR 8). Not the navy ones: axe and Lighthouse can't see the background of skipped content and
+   would test their light text against white. The height is a stand-in until a group renders. */
+.deferred {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 2400px;
+}
