@@ -14,6 +14,10 @@
   color: var(--color-brand-primary-strong);
 }
 
+.figure.words {
+  font-size: clamp(1.875rem, 1.734rem + 0.571vw, 2.375rem); /* 30 → 38 */
+}
+
 .label {
   font: 700 1rem / 1.55 var(--font-display);
   letter-spacing: 0.03em;

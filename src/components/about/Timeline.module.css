@@ -1,0 +1,68 @@
+/* Timeline (190:2742): five columns 24px apart from 1024px, the rail through the bubbles'
+   centres; one column 28px apart below. */
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 28px;
+  margin: 0;
+  padding: 12px 0 0;
+  list-style: none;
+}
+
+.item {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  justify-items: start;
+}
+
+.year {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: var(--color-brand-primary-strong);
+  box-shadow: 0 4px 12px rgb(var(--shadow-rgb) / 0.18);
+  font: 800 1.875rem / 1 var(--font-display);
+  color: var(--color-brand-accent);
+  rotate: 6deg;
+  transition:
+    rotate var(--motion-card) var(--ease-out),
+    box-shadow var(--motion-card) var(--ease-out);
+}
+
+.title {
+  font: 800 1.75rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.text {
+  font: 400 1rem / 1.55 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+@media (hover: hover) {
+  .item:hover .year {
+    rotate: -6deg;
+    box-shadow: 0 8px 12px rgb(var(--shadow-rgb) / 0.3);
+  }
+}
+
+@media (min-width: 1024px) {
+  .timeline {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  /* The dashed sand rail through the bubbles' centres. */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 58px;
+    right: 40px;
+    left: 20px;
+    border-top: 2px dashed var(--color-brand-accent);
+  }
+}

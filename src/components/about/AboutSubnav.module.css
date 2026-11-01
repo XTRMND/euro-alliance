@@ -1,0 +1,60 @@
+/* About subnav (190:2723): items 28px apart (20 on a phone) over a rule; labels 20px uppercase,
+   a 5px sand underline on the active one. */
+.subnav {
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.items {
+  display: flex;
+  gap: 20px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 8px var(--page-margin) 0;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-width: none;
+}
+
+.item {
+  display: inline-grid;
+  padding: 6px 4px 0;
+  border-bottom: 5px solid transparent;
+  font: 700 1.25rem / 1.55 var(--font-display);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition:
+    color var(--motion-button) var(--ease-out),
+    border-color var(--motion-button) var(--ease-out);
+}
+
+/* The ExtraBold label's width, reserved so the active item doesn't shift its neighbours. */
+.item::after {
+  content: attr(data-label);
+  height: 0;
+  overflow: hidden;
+  font-weight: 800;
+  visibility: hidden;
+}
+
+.item[aria-current],
+.item:focus-visible {
+  border-bottom-color: var(--color-brand-accent);
+  font-weight: 800;
+  color: var(--color-brand-primary-strong);
+}
+
+@media (hover: hover) {
+  .item:hover {
+    border-bottom-color: var(--color-brand-accent);
+    color: var(--color-brand-primary-strong);
+  }
+}
+
+@media (min-width: 768px) {
+  .items {
+    gap: 28px;
+  }
+}

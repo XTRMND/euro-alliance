@@ -422,5 +422,21 @@
     "shareFacebook": "Сподели във Facebook",
     "related": "Още новини",
     "newWindow": "отваря се в нов прозорец"
+  },
+  "about": {
+    "breadcrumb": "За нас",
+    "subnav": {
+      "label": "Раздели на страницата",
+      "history": "История",
+      "team": "Екип",
+      "standards": "Стандарти",
+      "documents": "Документи",
+      "projects": "Проекти",
+      "elearning": "Електронно обучение"
+    },
+    "document": {
+      "open": "Виж в цял размер: {title}",
+      "close": "Затвори"
+    }
   }
 }

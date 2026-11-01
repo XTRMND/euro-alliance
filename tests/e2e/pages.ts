@@ -14,6 +14,7 @@ export const pages = [
   { name: 'Computer courses', path: routes.computerCourses() },
   { name: 'Translations', path: routes.translations() },
   { name: 'News', path: routes.news() },
+  { name: 'About', path: routes.about() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },

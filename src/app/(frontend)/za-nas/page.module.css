@@ -1,0 +1,300 @@
+/* About (190:2677 / 210:2395): paper sections, 64px above and below (40 on a phone), 28px
+   between the heading and the content. */
+.section {
+  display: grid;
+  gap: 28px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 40px var(--page-margin);
+  scroll-margin-top: 16px;
+}
+
+.closing {
+  max-width: 900px;
+  font: 500 clamp(1.0625rem, 1.017rem + 0.19vw, 1.1875rem) / 1.6 var(--font-body); /* 17 → 19 */
+  color: var(--color-brand-primary-strong);
+}
+
+/* In numbers (194:2839): five cards in a row 18px apart, two columns on a phone. */
+.figures {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* Who we train (194:2858): the statement beside the polaroid collage. */
+.statement {
+  align-items: center;
+}
+
+.statementText {
+  display: grid;
+  gap: 22px;
+}
+
+.statementTitle {
+  max-width: 14ch;
+  font: 800 clamp(2.375rem, 1.857rem + 2.133vw, 3.75rem) / 1 var(--font-display); /* 38 → 60 */
+  color: var(--color-brand-primary-strong);
+}
+
+.statementTitle > span {
+  padding: 0 0.2em 0.067em;
+  transform: rotate(1.5deg);
+}
+
+.audiences {
+  font: 700 clamp(1.0625rem, 0.849rem + 0.876vw, 1.625rem) / 1.3 var(--font-display); /* 17 → 26 */
+  color: var(--color-brand-primary);
+}
+
+.note {
+  font: 400 1.0625rem / 1.6 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* Three polaroids tilted −3°, 4°, −2°, overlapping, the tape over the second. */
+.collage {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 520px);
+  aspect-ratio: 520 / 440;
+}
+
+.polaroid {
+  position: absolute;
+  width: 58%;
+}
+
+.polaroid:nth-child(1) {
+  top: 3%;
+  left: 0;
+  rotate: -3deg;
+}
+
+.polaroid:nth-child(2) {
+  top: 0;
+  left: 41%;
+  z-index: 1;
+  width: 47%;
+  rotate: 4deg;
+}
+
+.polaroid:nth-child(3) {
+  top: 51%;
+  left: 38%;
+  z-index: 2;
+  width: 41%;
+  rotate: -2deg;
+}
+
+.collage .collageTape {
+  top: -2%;
+  left: 56%;
+  z-index: 3;
+  width: 19%;
+  height: auto;
+  aspect-ratio: 100 / 28;
+  rotate: 20deg;
+  transform: none;
+}
+
+/* Team (194:2878): the quote on a 5px sand bar, then three values. */
+.quote {
+  display: flex;
+  gap: 20px;
+  padding: 4px 0;
+  font: 800 clamp(1.875rem, 1.639rem + 0.952vw, 2.5rem) / 1.04 var(--font-display); /* 30 → 40 */
+  color: var(--color-brand-primary);
+}
+
+.quote::before {
+  content: '';
+  flex: none;
+  width: 5px;
+  background: var(--color-brand-accent);
+}
+
+.values {
+  display: grid;
+  gap: 24px;
+}
+
+.valueTitle {
+  font: 800 clamp(1.0625rem, 0.849rem + 0.876vw, 1.625rem) / 1.6 var(--font-display); /* 17 → 26 */
+  color: var(--color-brand-primary-strong);
+}
+
+.valueText {
+  margin-top: 8px;
+  font: 400 1rem / 1.6 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+/* Standards (194:2900): the licence on the ticket's stub; its title never breaks in a word. */
+.stub > a {
+  justify-self: stretch;
+}
+
+.stubTitle {
+  font: 800 clamp(1.625rem, 1.578rem + 0.19vw, 1.75rem) / 0.96 var(--font-display); /* 26 → 28 */
+  color: var(--color-brand-primary-strong);
+}
+
+.stubChip {
+  padding: 1px 6px 2px;
+  background: var(--color-brand-accent);
+  font: 500 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.stubNote {
+  font: 600 0.875rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary);
+}
+
+/* Licences (196:2783): four documents, two by two on a phone. */
+.wall {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 14px;
+  justify-items: center;
+  padding-top: 20px;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  padding-top: 8px;
+}
+
+/* Documents and e-learning: the text beside the fan or the platforms card from 1024px. */
+.split {
+  align-items: center;
+}
+
+.splitText {
+  display: grid;
+  gap: 28px;
+}
+
+/* The navy fees box under the list (196:2810). */
+.fees {
+  display: grid;
+  gap: 10px;
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: var(--color-brand-primary-strong);
+  font: 400 0.9375rem / 1.6 var(--font-body);
+  color: var(--color-text-on-brand);
+}
+
+.feesText {
+  font: 600 1rem / 1.6 var(--font-body);
+}
+
+.feesNote {
+  font: 500 0.875rem / 1.6 var(--font-body);
+  color: var(--color-brand-accent);
+}
+
+/* The sample documents in a fan: −5°, 3°, −4°, overlapping, every caption in view. */
+.fan {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.fan > .fanItem {
+  width: 40%;
+  max-width: 200px;
+  margin-inline: -4%;
+}
+
+.fan > .fanItem:nth-child(1) {
+  rotate: -5deg;
+  translate: 0 12px;
+}
+
+.fan > .fanItem:nth-child(2) {
+  z-index: 1;
+  rotate: 3deg;
+}
+
+.fan > .fanItem:nth-child(3) {
+  z-index: 2;
+  rotate: -4deg;
+  translate: 0 10px;
+}
+
+/* Projects (196:2848): two cards of equal height, 32px apart. */
+.projects {
+  display: grid;
+  gap: 24px;
+  align-items: stretch;
+}
+
+/* E-learning (196:2908): the platforms card with filled chips. */
+.platforms {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  padding: 28px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 16px;
+  background: var(--color-bg-page);
+}
+
+.platformsTitle {
+  font: 800 1.75rem / 1.6 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-block: 64px;
+  }
+
+  .figures {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  .wall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .projects {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .statement,
+  .split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 520px);
+    gap: 64px;
+  }
+
+  .split.elearning {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+    gap: 48px;
+    align-items: start;
+  }
+}

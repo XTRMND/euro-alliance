@@ -422,5 +422,21 @@
     "shareFacebook": "Share on Facebook",
     "related": "More news",
     "newWindow": "opens in a new window"
+  },
+  "about": {
+    "breadcrumb": "About",
+    "subnav": {
+      "label": "Sections of the page",
+      "history": "History",
+      "team": "Team",
+      "standards": "Standards",
+      "documents": "Documents",
+      "projects": "Projects",
+      "elearning": "E-learning"
+    },
+    "document": {
+      "open": "View full size: {title}",
+      "close": "Close"
+    }
   }
 }

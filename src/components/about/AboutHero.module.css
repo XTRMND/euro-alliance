@@ -1,0 +1,122 @@
+/* About hero (190:2693): the copy in a 560 column, the torn window (640 × 470, 2°) beside it;
+   on a phone the window (342 wide) first. */
+.hero {
+  overflow-x: clip;
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  gap: 24px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 20px var(--page-margin) 32px;
+}
+
+.copy {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+  order: 2;
+}
+
+.kicker {
+  font: 700 1.0625rem / 1.5 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary);
+}
+
+.title {
+  font: 800 clamp(3.25rem, 2.795rem + 1.867vw, 4.75rem) / 0.96 var(--font-display); /* 52 → 76 */
+  color: var(--color-brand-primary-strong);
+}
+
+.title > span {
+  padding: 0 0.158em 0.053em;
+  transform: rotate(1.5deg);
+}
+
+.lead {
+  font: 400 clamp(1.0625rem, 1.017rem + 0.19vw, 1.1875rem) / 1.5 var(--font-body); /* 17 → 19 */
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  padding-top: 18px;
+}
+
+.art {
+  position: relative;
+  order: 1;
+  justify-self: center;
+  width: min(100%, 640px);
+}
+
+.window {
+  rotate: 2deg;
+}
+
+/* The logo mark in a white ring, 104px (75 on a phone), 8°, over the window's lower left. */
+.bubble {
+  position: absolute;
+  top: 72%;
+  left: -2%;
+  display: block;
+  width: clamp(75px, 18vw, 104px);
+  aspect-ratio: 1;
+  border: clamp(7px, 1.7vw, 10px) solid var(--color-bg-page);
+  border-radius: 50%;
+  overflow: hidden;
+  filter: drop-shadow(0 8px 9px rgb(var(--shadow-rgb) / 0.3));
+  rotate: 8deg;
+}
+
+.bubble img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .window {
+    animation: window-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .bubble {
+    animation: bubble-in var(--motion-landing) var(--ease-out) calc(2 * var(--landing-stagger)) both;
+  }
+}
+
+@keyframes window-in {
+  from {
+    rotate: -3deg;
+    translate: 0 -12px;
+  }
+}
+
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    rotate: 40deg;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    grid-template-columns: minmax(0, 560px) minmax(0, 640px);
+    justify-content: space-between;
+    align-items: center;
+    min-height: 560px;
+    padding-block: 72px 80px;
+  }
+
+  .copy,
+  .art {
+    order: 0;
+  }
+}
