@@ -322,3 +322,48 @@ export const getTeacherProgrammes = unstable_cache(
   ['teacher-programmes'],
   { tags: [tags.collection('teacher-programmes')] },
 )
+
+/**
+ * Every published news item, newest first, without its body: for the listing, «Актуални новини»
+ * and «Още новини». The covers come with their tints.
+ */
+export const getNewsList = unstable_cache(
+  async () => {
+    const { docs } = await (
+      await payload()
+    ).find({
+      collection: 'news',
+      locale: 'bg',
+      depth: 1,
+      select: { title: true, slug: true, date: true, cover: true, excerpt: true },
+      sort: '-date',
+      pagination: false,
+      overrideAccess: false,
+    })
+    await attachTints(docs.map((news) => news.cover))
+    return docs
+  },
+  ['news-list'],
+  { tags: [tags.collection('news'), tags.collection('media')] },
+)
+
+/** A published news article by slug, with its cover's tint, or null. */
+export const getNewsArticle = unstable_cache(
+  async (slug: string) => {
+    const { docs } = await (
+      await payload()
+    ).find({
+      collection: 'news',
+      locale: 'bg',
+      depth: 1,
+      where: { slug: { equals: slug } },
+      limit: 1,
+      overrideAccess: false,
+    })
+    const article = docs[0] ?? null
+    if (article) await attachTints([article.cover])
+    return article
+  },
+  ['news-article'],
+  { tags: [tags.collection('news'), tags.collection('media')] },
+)

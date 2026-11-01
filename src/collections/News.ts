@@ -1,5 +1,5 @@
-import { HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
-import type { CollectionConfig } from 'payload'
+import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
@@ -7,7 +7,51 @@ import { revalidateCollection } from '@/hooks/revalidate'
 // docs/cms-schema.md § 3. Added with the homepage, the first page that shows news; the news pages
 // arrive in PR 15. The cover is a photo, shown in its duotone tint (55% on the homepage, 30% on
 // the news pages). The body allows H2 and H3 only: the page H1 is the title, and the H2s feed the
-// contents rail.
+// contents rail (183:2574). Besides text, quotes and lists, the body takes two blocks from the
+// article frame: a row of figures with a caption, and a link card.
+
+/** A row of Figure cards (259:410) with a caption under it (186:2669). Only official numbers. */
+const NewsFigures: Block = {
+  slug: 'newsFigures',
+  labels: { singular: 'Числа', plural: 'Числа' },
+  fields: [
+    {
+      name: 'items',
+      type: 'array',
+      label: 'Числа',
+      minRows: 1,
+      maxRows: 4,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'figure', type: 'text', label: 'Число', required: true },
+            { name: 'label', type: 'text', label: 'Надпис', required: true, localized: true },
+          ],
+        },
+      ],
+    },
+    { name: 'caption', type: 'text', label: 'Надпис под числата', localized: true },
+  ],
+}
+
+/** The navy link card (186:2695): a label, the address and a button, one link. */
+const NewsLinkCard: Block = {
+  slug: 'newsLinkCard',
+  labels: { singular: 'Връзка', plural: 'Връзки' },
+  fields: [
+    { name: 'label', type: 'text', label: 'Надпис', localized: true },
+    {
+      name: 'url',
+      type: 'text',
+      label: 'Адрес',
+      required: true,
+      validate: (value: string | null | undefined) =>
+        /^https?:\/\//.test(value ?? '') || 'Пълен адрес, започващ с https://.',
+    },
+    { name: 'buttonLabel', type: 'text', label: 'Текст на бутона', localized: true },
+  ],
+}
 
 export const News: CollectionConfig = {
   slug: 'news',
@@ -19,6 +63,13 @@ export const News: CollectionConfig = {
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },
   fields: [
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+    {
+      name: 'shortTitle',
+      type: 'text',
+      label: 'Кратко заглавие',
+      localized: true,
+      admin: { description: 'За пътечката над заглавието. Празно: цялото заглавие.' },
+    },
     slugField(),
     {
       name: 'date',
@@ -46,6 +97,13 @@ export const News: CollectionConfig = {
       admin: { description: 'За картите и за описанието в търсачките.' },
     },
     {
+      name: 'lead',
+      type: 'textarea',
+      label: 'Въвеждащ абзац',
+      localized: true,
+      admin: { description: 'По избор: първият абзац на новината, с по-едър шрифт.' },
+    },
+    {
       name: 'body',
       type: 'richText',
       label: 'Текст',
@@ -54,6 +112,7 @@ export const News: CollectionConfig = {
         features: ({ defaultFeatures }) => [
           ...defaultFeatures.filter((feature) => feature.key !== 'heading'),
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
+          BlocksFeature({ blocks: [NewsFigures, NewsLinkCard] }),
         ],
       }),
     },
@@ -64,6 +123,7 @@ export const News: CollectionConfig = {
       hasMany: true,
       label: 'Галерия',
       filterOptions: { kind: { equals: 'photo' } },
+      admin: { description: 'Още не се показва: галерията няма дизайн.' },
     },
     {
       name: 'related',

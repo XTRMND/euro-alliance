@@ -134,11 +134,13 @@ Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official prog
 | Field | Type | Notes |
 |---|---|---|
 | `title`, `slug` | text | |
+| `shortTitle` | text | *(PR 15)* The breadcrumb's last crumb («Стажове по GreenHost»); empty: the title |
 | `date` | date, required | |
 | `cover` | upload → media (`kind: photo`) | Auto duotone (§ 4). Tint 30% on news pages, 55% on the homepage. |
-| `excerpt` | textarea | *(proposed)* for cards and meta description |
-| `body` | rich text (Lexical) | **H2 headings feed the contents rail** (TOC item 185:366). Give each H2 a stable id from its text. Allow H2 and H3 only; the page H1 is the title. |
-| `gallery` | array of uploads | |
+| `excerpt` | textarea | For the lead story, cards and the meta description |
+| `lead` | textarea | *(PR 15)* The article's first paragraph, set larger; optional |
+| `body` | rich text (Lexical) | **H2 headings feed the contents rail** (TOC item 185:366): each H2 gets an id from its text (`src/lib/news.ts`), the rail its text. H2 and H3 only; the page H1 is the title. Quotes are pull quotes. Two blocks: `newsFigures` (up to 4 Figure cards and a caption) and `newsLinkCard` (label, url, button: one link, in a new window). Reading time is computed (200 words a minute). |
+| `gallery` | array of uploads | Not shown yet: no design |
 | `related` | relationship → News, max 3 *(proposed)* | |
 | `legacyId`, `legacyUrl` | text | *(proposed)* `/News/{id}/{slug}` redirects |
 

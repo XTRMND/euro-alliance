@@ -422,6 +422,10 @@ export interface News {
   id: number;
   title: string;
   /**
+   * За пътечката над заглавието. Празно: цялото заглавие.
+   */
+  shortTitle?: string | null;
+  /**
    * Попълва се от заглавието, ако е празно.
    */
   slug?: string | null;
@@ -434,6 +438,10 @@ export interface News {
    * За картите и за описанието в търсачките.
    */
   excerpt?: string | null;
+  /**
+   * По избор: първият абзац на новината, с по-едър шрифт.
+   */
+  lead?: string | null;
   body?: {
     root: {
       type: string;
@@ -449,6 +457,9 @@ export interface News {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Още не се показва: галерията няма дизайн.
+   */
   gallery?: (number | Media)[] | null;
   related?: (number | News)[] | null;
   /**
@@ -1765,10 +1776,12 @@ export interface CoursesSelect<T extends boolean = true> {
  */
 export interface NewsSelect<T extends boolean = true> {
   title?: T;
+  shortTitle?: T;
   slug?: T;
   date?: T;
   cover?: T;
   excerpt?: T;
+  lead?: T;
   body?: T;
   gallery?: T;
   related?: T;

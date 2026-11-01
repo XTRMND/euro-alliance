@@ -13,6 +13,7 @@ import * as migration_20261101_164315_programs_teachers from './20261101_164315_
 import * as migration_20261101_170930_programs_farmers from './20261101_170930_programs_farmers';
 import * as migration_20261101_172522_programs_computer from './20261101_172522_programs_computer';
 import * as migration_20261101_180436_programs_translations from './20261101_180436_programs_translations';
+import * as migration_20261101_190504_news_article from './20261101_190504_news_article';
 
 export const migrations = [
   {
@@ -88,6 +89,11 @@ export const migrations = [
   {
     up: migration_20261101_180436_programs_translations.up,
     down: migration_20261101_180436_programs_translations.down,
-    name: '20261101_180436_programs_translations'
+    name: '20261101_180436_programs_translations',
+  },
+  {
+    up: migration_20261101_190504_news_article.up,
+    down: migration_20261101_190504_news_article.down,
+    name: '20261101_190504_news_article'
   },
 ];
