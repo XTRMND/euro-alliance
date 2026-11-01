@@ -220,7 +220,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Integration tests | `pnpm test:int` (Payload against `TEST_DATABASE_URL`, which is wiped and migrated on every run) |
 | Schema change | edit the config, then `pnpm migrate:create <name>`, `pnpm generate:types`, `pnpm generate:importmap`, and commit all of it; CI fails if any of them is stale |
 | Rebuild photo tints | `pnpm media:regen` (after changing `src/lib/media/tints.ts`) |
-| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens` and `/dev/components` (never set in production) |
+| Dev reference pages | `DEV_PAGES=true pnpm dev`, then `/dev/tokens`, `/dev/components` and `/dev/patterns` (never set in production) |
 | Visual snapshots | run in CI only (Linux renders). New ones are written on the first run and uploaded as the `visual-snapshots` artifact; commit them under `tests/e2e/__screenshots__/` |
 | E2E | `pnpm build && pnpm test:e2e` (serves the build on port 3100 against the database in `.env`; first run: `pnpm exec playwright install chromium`) |
 | Lighthouse | `pnpm build && pnpm lhci` (mobile and desktop budgets; reports in `lighthouse-reports/`). CI is the reference: a busy laptop runs slower than CI, and the simulated mobile LCP moves with it |
@@ -278,6 +278,11 @@ Content questions from the shell (PR 5); the build uses the default in brackets:
 - EU funding strip: the official logo strip is needed from the client (Figma has placeholders). The statement shows meanwhile. Figma's project number ends in «-C01»; § 3 has BG16RFPR001-1.004-1004. [Figma's text]
 - Facebook: facebook.com/EvroAlians, from the Figma layer name. [used as is; confirm]
 - Header link hover and current page: not in Figma. [sand underline]
+
+From the pattern components (PR 6):
+- Data table: `docs/pr-plan.md` says it scrolls in its own container on mobile; the Figma description says the header hides and rows stack. [Figma: rows stack with their labels, still a real table]
+- Figure card and numbered List row: numbers in brand/primary-strong instead of sand (see the contrast question above). [navy]
+- Project card: Figma holds an EU logo strip image («Съфинансирано от Европейския съюз» and the programme logo). Is it the official file? The site uses only what's uploaded in Payload, exactly as supplied.
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
