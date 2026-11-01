@@ -1,0 +1,22 @@
+/* A square sticker box; the parent sets its width. */
+.sticker {
+  position: relative;
+  display: block;
+  aspect-ratio: 1;
+  pointer-events: none;
+}
+
+.image {
+  object-fit: contain;
+}
+
+/* Flags (scripts/build-flags.mjs): the SVG is 224 × 224 around the 200 × 200 box, so the die-cut
+   shadow can spill 12px to the sides and below, 6px above. */
+.flag {
+  position: absolute;
+  top: -3%;
+  left: -6%;
+  width: 112%;
+  height: 112%;
+  max-width: none;
+}
