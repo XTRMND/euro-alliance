@@ -1,0 +1,29 @@
+.page {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-section) var(--page-margin);
+  display: grid;
+  gap: var(--space-section);
+}
+
+.title {
+  font: var(--type-display);
+  color: var(--color-brand-primary-strong);
+}
+
+.section {
+  display: grid;
+  gap: 32px;
+}
+
+.bubble {
+  display: grid;
+  place-items: center;
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 48px;
+}

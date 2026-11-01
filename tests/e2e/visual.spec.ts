@@ -10,6 +10,7 @@ test.skip(process.platform !== 'linux', 'Snapshots are Linux renders')
 const snapshots = [
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
+  { name: 'patterns', path: devRoutes.patterns },
 ]
 
 for (const { name, path } of snapshots) {

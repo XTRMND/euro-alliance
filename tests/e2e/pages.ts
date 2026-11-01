@@ -5,4 +5,5 @@ export const pages = [
   { name: 'Home', path: routes.home() },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
+  { name: 'Patterns (dev)', path: devRoutes.patterns },
 ]
