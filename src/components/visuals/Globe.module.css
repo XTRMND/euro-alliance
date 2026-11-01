@@ -1,0 +1,6 @@
+/* Fills its column as a square; the parent sets the width. */
+.globe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+}
