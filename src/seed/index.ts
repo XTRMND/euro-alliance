@@ -1,5 +1,7 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import type { Payload } from 'payload'
-import { company, navigation, offices } from './data'
+import { company, fundingLogo, navigation, offices } from './data'
 
 function isEmpty(value: unknown): boolean {
   if (value === null || value === undefined || value === '') return true
@@ -23,6 +25,8 @@ export async function seed(payload: Payload) {
     await payload.updateGlobal({ slug: 'site', locale: 'bg', data: missing })
     payload.logger.info(`Seeded company facts: ${Object.keys(missing).join(', ')}.`)
   }
+
+  await seedFundingLogo(payload)
 
   const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {
@@ -49,4 +53,37 @@ export async function seed(payload: Payload) {
       payload.logger.info(`Seeded the office «${office.name}».`)
     }
   }
+}
+
+/** Uploads the EU logo strip as a `logo` (stored as is) and links it from the footer notice. */
+async function seedFundingLogo(payload: Payload) {
+  const site = await payload.findGlobal({ slug: 'site', locale: 'bg', depth: 0 })
+  if (site.funding?.logos) return
+
+  const name = path.basename(fundingLogo.file)
+  const existing = await payload.find({
+    collection: 'media',
+    where: { filename: { equals: name } },
+    depth: 0,
+    limit: 1,
+  })
+  let media = existing.docs[0]
+  if (!media) {
+    // public/ ships with the build, so the production seed finds the file too.
+    const data = await readFile(
+      path.resolve(/* turbopackIgnore: true */ process.cwd(), fundingLogo.file),
+    )
+    media = await payload.create({
+      collection: 'media',
+      locale: 'bg',
+      data: { alt: fundingLogo.alt, kind: 'logo' },
+      file: { data, mimetype: fundingLogo.mimetype, name, size: data.length },
+    })
+  }
+  await payload.updateGlobal({
+    slug: 'site',
+    locale: 'bg',
+    data: { funding: { statement: site.funding?.statement, logos: media.id } },
+  })
+  payload.logger.info('Seeded the EU logo strip.')
 }

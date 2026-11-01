@@ -1,6 +1,10 @@
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { uploadDirs } from '@/lib/media/storage'
+import type { Media } from '@/payload-types'
 import { seed } from '@/seed'
 
 let payload: Payload
@@ -29,6 +33,29 @@ describe('seed', () => {
       ['courses', 'office@euro-alliance.net', 'published'],
       ['translations-plovdiv', 'prevod@euro-alliance.net', 'published'],
       ['translations-sofia', 'trans@euro-alliance.net', 'published'],
+    ])
+  })
+
+  it('stores the EU logo strip byte for byte, without tints, and links it from the footer', async () => {
+    const site = await payload.findGlobal({ slug: 'site', depth: 1 })
+    const logos = site.funding?.logos as Media
+
+    expect(logos.kind).toBe('logo')
+    const stored = await readFile(path.join(uploadDirs.media, logos.filename!))
+    const original = await readFile('public/logos/eu-pkip-logo-strip.jpg')
+    expect(stored.equals(original)).toBe(true)
+    expect(logos.tints?.docs ?? []).toEqual([])
+  })
+
+  it('seeds «Професионално обучение» as a group of three programmes', async () => {
+    const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg' })
+    const group = nav.header?.left?.find((link) => link.label === 'Професионално обучение')
+
+    expect(group?.href ?? null).toBeNull()
+    expect(group?.children?.map((link) => link.href)).toEqual([
+      '/profesionalno-obuchenie/profesii',
+      '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
+      '/profesionalno-obuchenie/zemedeltsi',
     ])
   })
 

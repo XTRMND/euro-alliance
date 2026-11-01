@@ -103,10 +103,12 @@
   background: var(--color-bg-page);
 }
 
+/* Sized to the width of Figma's placeholder pair (168px, 190px from 1024px), so the strip's own
+   text stays legible. */
 .fundingLogos img {
   display: block;
-  height: 40px;
-  width: auto;
+  width: 168px;
+  height: auto;
 }
 
 .statement {
@@ -224,7 +226,7 @@
   }
 
   .fundingLogos img {
-    height: 44px;
+    width: 190px;
   }
 
   .statement {
