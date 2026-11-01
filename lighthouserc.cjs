@@ -1,4 +1,6 @@
-// Lighthouse budget from CLAUDE.md § 9: mobile, lab, median of 3 runs.
+// Lighthouse budget from CLAUDE.md § 9: mobile, lab, 3 runs per URL, each metric asserted on its
+// median across the runs (the user's decision, 01.11.2026). Pages that miss it are flagged and
+// fixed in the performance pass (PR 23); the budget isn't relaxed.
 // lighthouserc.desktop.cjs reuses this with the desktop preset and a higher performance bar.
 
 const port = 3100
@@ -6,7 +8,7 @@ const port = 3100
 // Key pages; each page PR adds its own.
 const paths = ['/']
 
-const median = (options) => ['error', { ...options, aggregationMethod: 'median-run' }]
+const median = (options) => ['error', { ...options, aggregationMethod: 'median' }]
 
 module.exports = {
   ci: {
