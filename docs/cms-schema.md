@@ -96,12 +96,13 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `systemCards` | System card 240:662 | `cards`: inline cards with the fields of a textbook system, for one page (the voucher programmes, the farmers' courses); `columns`; `link` |
 | `certificates` | Certificate card 145:364 | `certificates` → Certificates. The section's anchor is `sertifikati` (homepage «Изпити и сертификати» links here). |
 | `faq` | FAQ item 129:335 | `items` { question, answer (rich text, may hold links) } |
-| `figures` | Figure card 259:410 | `items` { figure, label }. Only official numbers. |
+| `figures` | Figure card 259:410 | `items` { figure, label } (two by two on a phone); `note` under them. Only official numbers. |
 | `callout` | Callout band 259:449 | `layout` (row / stack), `heading`, `text`, `cta`. Phone numbers and email addresses in a callout's text become links (`src/lib/linkify.ts`); a button into the voucher inquiry reports `voucher_apply_click`. |
 | `richText` | Section heading 259:2319 + prose | heading + rich text |
 | `professions` | Direction card (236:3760) | heading only: every published profession, by direction |
 | `exams` | Data table 259:621 | heading only: the exams from 60 days ago on |
-| `teacherProgrammes`, `projects` | Index card 264:448 / List row 259:2318, Project card 259:574 | Arrive with their collections in PR 13 |
+| `teacherProgrammes` | Index card 264:448 with numbered List rows 259:2318 | heading only: every published programme, a card per theme |
+| `projects` | Project card 259:574 | Arrives with its collection in PR 13 |
 
 ### Textbook systems
 
@@ -121,7 +122,7 @@ Built in PR 13 (`src/collections/Exams.ts`), the ЦПО's qualification exams in
 
 ### Teacher programmes
 
-`number` (official programme number, kept as given), `title`, `theme` (select; grouping by theme is an editorial choice), `hours` (number), `credits` (number, 1–3). 29 programmes under Наредба 12.
+Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official programme number, kept as given, e.g. «01»), `theme` (text; the card the programme is in), `title`, `hours` and `credits` (1–3; optional, not on the page: Figma doesn't show them and they're never invented). Ordered by dragging in the admin (`orderable`); a theme's card comes where its first programme is, and its chip counts its programmes. Seeded with the 29 programmes of Figma 237:3823 in five themes.
 
 ### News
 

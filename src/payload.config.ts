@@ -17,6 +17,7 @@ import { News } from './collections/News'
 import { Offices } from './collections/Offices'
 import { Professions } from './collections/Professions'
 import { Programs } from './collections/Programs'
+import { TeacherProgrammes } from './collections/TeacherProgrammes'
 import { TextbookSystems } from './collections/TextbookSystems'
 import { Users } from './collections/Users'
 import { Contact } from './globals/Contact'
@@ -51,6 +52,7 @@ export default buildConfig({
     Certificates,
     Professions,
     Exams,
+    TeacherProgrammes,
     Inquiries,
     InquiryFiles,
   ],

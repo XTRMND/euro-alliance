@@ -204,6 +204,13 @@ export const ExamsBlock: Block = {
   fields: [...heading],
 }
 
+export const TeacherProgrammesBlock: Block = {
+  slug: 'teacherProgrammes',
+  labels: { singular: 'Програми за учители', plural: 'Програми за учители' },
+  admin: { group: 'Списъци от колекциите' },
+  fields: [...heading],
+}
+
 export const FaqBlock: Block = {
   slug: 'faq',
   labels: { singular: 'Въпроси', plural: 'Въпроси' },
@@ -241,6 +248,7 @@ export const FiguresBlock: Block = {
         },
       ],
     },
+    { name: 'note', type: 'textarea', label: 'Бележка под числата', localized: true },
   ],
 }
 
@@ -285,6 +293,7 @@ export const programBlocks = [
   CertificatesBlock,
   ProfessionsBlock,
   ExamsBlock,
+  TeacherProgrammesBlock,
   FaqBlock,
   FiguresBlock,
   CalloutBlock,

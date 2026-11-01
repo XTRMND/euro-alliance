@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest'
 import {
   audienceFromSegment,
   groupByDirection,
+  groupInOrder,
   hasLanguagePage,
   languageFromSegment,
   otherAudience,
@@ -89,5 +90,12 @@ describe('groupByDirection', () => {
     expect(groups.map((group) => group.code)).toEqual(['041', '103', '101'])
     expect(groups[0].professions.map((p) => p.code)).toEqual(['041101', '041102', '041603'])
     expect(groups[1].name).toBe('Direction 103')
+  })
+})
+
+describe('groupInOrder', () => {
+  it('keeps the groups in the order of their first item', () => {
+    const items = ['b1', 'a1', 'b2', 'c1', 'a2']
+    expect(groupInOrder(items, (item) => item[0])).toEqual([['b1', 'b2'], ['a1', 'a2'], ['c1']])
   })
 })

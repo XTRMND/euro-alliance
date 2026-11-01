@@ -78,6 +78,7 @@ export interface Config {
     certificates: Certificate;
     professions: Profession;
     exams: Exam;
+    'teacher-programmes': TeacherProgramme;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -103,6 +104,7 @@ export interface Config {
     certificates: CertificatesSelect<false> | CertificatesSelect<true>;
     professions: ProfessionsSelect<false> | ProfessionsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
+    'teacher-programmes': TeacherProgrammesSelect<false> | TeacherProgrammesSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -842,6 +844,21 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'teacherProgrammes';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
             items?:
               | {
                   question: string;
@@ -888,6 +905,7 @@ export interface Program {
                   id?: string | null;
                 }[]
               | null;
+            note?: string | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'figures';
@@ -1054,6 +1072,27 @@ export interface Exam {
    * Адрес на документа с резултатите, когато ги има.
    */
   results?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Програмите на страницата «Педагогически специалисти», по теми, в този ред (подреждат се с влачене).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teacher-programmes".
+ */
+export interface TeacherProgramme {
+  id: number;
+  _order?: string | null;
+  /**
+   * Номерът от официалния списък, както е даден (например 01).
+   */
+  number: string;
+  theme: string;
+  title: string;
+  hours?: number | null;
+  credits?: number | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1279,6 +1318,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'exams';
         value: number | Exam;
+      } | null)
+    | ({
+        relationTo: 'teacher-programmes';
+        value: number | TeacherProgramme;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -1720,6 +1763,16 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        teacherProgrammes?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              id?: T;
+              blockName?: T;
+            };
         faq?:
           | T
           | {
@@ -1751,6 +1804,7 @@ export interface ProgramsSelect<T extends boolean = true> {
                     label?: T;
                     id?: T;
                   };
+              note?: T;
               id?: T;
               blockName?: T;
             };
@@ -1850,6 +1904,21 @@ export interface ExamsSelect<T extends boolean = true> {
   date?: T;
   place?: T;
   results?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "teacher-programmes_select".
+ */
+export interface TeacherProgrammesSelect<T extends boolean = true> {
+  _order?: T;
+  number?: T;
+  theme?: T;
+  title?: T;
+  hours?: T;
+  credits?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

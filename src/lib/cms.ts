@@ -303,3 +303,22 @@ export function getExams() {
   since.setUTCDate(since.getUTCDate() - 60)
   return examsSince(since.toISOString())
 }
+
+/** The published programmes for pedagogical specialists, in the admin's order. */
+export const getTeacherProgrammes = unstable_cache(
+  async () =>
+    (
+      await (
+        await payload()
+      ).find({
+        collection: 'teacher-programmes',
+        locale: 'bg',
+        depth: 0,
+        sort: '_order',
+        limit: 200,
+        overrideAccess: false,
+      })
+    ).docs,
+  ['teacher-programmes'],
+  { tags: [tags.collection('teacher-programmes')] },
+)

@@ -75,22 +75,23 @@ export function programCtaHref(
   return hrefOf(cta.destination)
 }
 
-/**
- * The ЦПО professions grouped into their directions' cards, in the list's order: a direction
- * comes where its first profession is.
- */
+/** Items grouped by a key, in the list's order: a group comes where its first item is. */
+export function groupInOrder<T>(items: T[], keyOf: (item: T) => string): T[][] {
+  const groups = new Map<string, T[]>()
+  for (const item of items) {
+    const key = keyOf(item)
+    groups.set(key, [...(groups.get(key) ?? []), item])
+  }
+  return [...groups.values()]
+}
+
+/** The ЦПО professions in their directions' cards, in the list's order. */
 export function groupByDirection<P extends { directionCode: string; directionName: string }>(
   professions: P[],
 ): { code: string; name: string; professions: P[] }[] {
-  const directions = new Map<string, { code: string; name: string; professions: P[] }>()
-  for (const profession of professions) {
-    const direction = directions.get(profession.directionCode) ?? {
-      code: profession.directionCode,
-      name: profession.directionName,
-      professions: [],
-    }
-    direction.professions.push(profession)
-    directions.set(profession.directionCode, direction)
-  }
-  return [...directions.values()]
+  return groupInOrder(professions, (profession) => profession.directionCode).map((group) => ({
+    code: group[0].directionCode,
+    name: group[0].directionName,
+    professions: group,
+  }))
 }

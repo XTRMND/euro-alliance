@@ -19,6 +19,7 @@ import {
   professions,
   singlePrograms,
   systemsBlock,
+  teacherProgrammes,
   textbookSystems,
 } from './programs'
 
@@ -218,6 +219,18 @@ async function seedPrograms(payload: Payload) {
       })
     }
     payload.logger.info(`Seeded ${professions.length} professions.`)
+  }
+
+  // The programmes for pedagogical specialists, in order, while there are none.
+  if ((await payload.count({ collection: 'teacher-programmes' })).totalDocs === 0) {
+    for (const programme of teacherProgrammes) {
+      await payload.create({
+        collection: 'teacher-programmes',
+        locale: 'bg',
+        data: { ...programme, _status: 'published' },
+      })
+    }
+    payload.logger.info(`Seeded ${teacherProgrammes.length} programmes for teachers.`)
   }
 
   for (const program of singlePrograms) {
