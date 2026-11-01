@@ -8,7 +8,7 @@ import { MobileMenu } from './MobileMenu'
 import { NavDisclosure } from './NavDisclosure'
 import { NavLink } from './NavLink'
 
-// Header (79:784) from 1024px up; Header Mobile (114:295) with the menu below. White with a torn
+// Header (79:784) from 1200px up; Header Mobile (114:295) with the menu below. White with a torn
 // bottom edge and a soft navy shadow. «EN» stays hidden until English exists.
 
 type HeaderProps = {

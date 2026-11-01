@@ -73,6 +73,33 @@ test.describe('desktop', () => {
   })
 })
 
+// The header's controls never run into each other or the logo, on either side of the switch to
+// the desktop header (1200px).
+for (const width of [1440, 1200, 1199, 1024, 768, 390, 360]) {
+  test(`header controls don't overlap at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/')
+
+    const overlaps = await page.getByRole('banner').evaluate((header) => {
+      const boxes = [...header.querySelectorAll('a, button')]
+        .map((element) => ({ element, box: element.getBoundingClientRect() }))
+        .filter(({ box }) => box.width > 0 && box.height > 0)
+      const found: string[] = []
+      for (const [i, a] of boxes.entries()) {
+        for (const b of boxes.slice(i + 1)) {
+          if (a.element.contains(b.element) || b.element.contains(a.element)) continue
+          const x = Math.min(a.box.right, b.box.right) - Math.max(a.box.left, b.box.left)
+          const y = Math.min(a.box.bottom, b.box.bottom) - Math.max(a.box.top, b.box.top)
+          if (x > 0 && y > 0) found.push(`${a.element.textContent} × ${b.element.textContent}`)
+        }
+      }
+      return found
+    })
+
+    expect(overlaps).toEqual([])
+  })
+}
+
 test.describe('mobile menu', () => {
   test.use({ viewport: { width: 390, height: 844 } })
 

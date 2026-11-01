@@ -2,7 +2,8 @@
  * Header (79:784) and Header Mobile (114:295). The torn edge is Figma's SVG (white, navy shadow),
  * 2px into the header as in Figma. Figma draws it 4px wider on each side for the shadow; here it
  * spans the page exactly, since anything wider makes the page scroll sideways.
- * Desktop layout from 1024px; below that the menu button and the centred logo.
+ * Desktop layout from 1200px; below that the menu button and the centred logo. (At 1024px the
+ * three desktop links need about 390px beside the logo and only 369px are there.)
  */
 
 .header {
@@ -84,7 +85,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .header::after {
     height: 20.8px;
     background-image: url('../../assets/torn-edge.svg');
