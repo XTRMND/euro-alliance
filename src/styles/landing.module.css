@@ -1,0 +1,53 @@
+/* One-time landing motion (docs/motion.md § 2): CSS keyframes on the server-rendered hero, so it
+   plays once when the page first paints, with no JavaScript and no flash. Ease-out, 0.85 s:
+     .copy   the hero copy fades up 30px (0 ms)
+     .rise   the same rise without the fade, for copy that is the page's LCP element: never fade
+             the LCP element in from opacity 0
+     .art    the hero art settles in (120 ms); components with their own start pose (Course
+             visual's Pose=Intro) take a `landing` prop instead
+     .badge  the count bubble turns in from −40° to its resting tilt (240 ms)
+   None of it runs with reduced motion. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .copy {
+    animation: fade-up var(--motion-landing) var(--ease-out) both;
+  }
+
+  .rise {
+    animation: rise var(--motion-landing) var(--ease-out) both;
+  }
+
+  .art {
+    animation: fade-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  .badge {
+    animation: turn-in var(--motion-landing) var(--ease-out) calc(2 * var(--landing-stagger)) both;
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--landing-rise));
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(var(--landing-rise));
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes turn-in {
+  from {
+    opacity: 0;
+    transform: rotate(-40deg);
+  }
+}
