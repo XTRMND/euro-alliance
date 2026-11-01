@@ -162,7 +162,7 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 ### 23. Performance pass: `perf/performance`
 
 - Measure every template with Lighthouse (mobile and desktop). Fix what blocks the budget: LCP image priority and sizes, font loading, JavaScript per route (client components only where needed), third-party scripts after consent only, cache headers for static assets (`immutable`) and pages.
-- **Done when:** Lighthouse CI budget passes on every template.
+- **Done when:** Lighthouse CI budget passes on every template, and `lcpFlagged` in `lighthouserc.cjs` is empty.
 
 ### 24. Security headers: `feat/security-headers`
 
