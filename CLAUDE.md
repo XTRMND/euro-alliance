@@ -244,6 +244,14 @@ Decided:
 - Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
+Decided by the user on 01.11.2026:
+- Mobile LCP budget stays 2.5 s. Lighthouse CI runs 3 times per URL and asserts each metric on its median. A page that misses it is flagged in its commit notes and fixed in PR 23; the budget isn't relaxed.
+- Sand text only on navy (count bubble, inquiry band, footer). On paper and white, numbers are navy (Figure card, numbered List row); a design deviation the user will mirror in Figma.
+- «Езици» goes to the course listing filtered to language courses (`routes.courses('languages')`, `/kursove?kategoria=ezitsi`; PR 9 reads the filter). «Професионално обучение» is a disclosure button (aria-expanded, not a link) with ЦПО професии, Педагогически специалисти and Земеделски производители: a dropdown in the header, an expandable group in the mobile menu. The footer keeps its link to ЦПО професии.
+- «Ценоразпис» stays out: there's no official price list and prices are never invented. Add it only if the client supplies one.
+- «Екип» stays out until the client sends team photos; then it links to the About page's team section.
+- The EU logo strip in Figma (Project card 259:574) is the client's official file. It's in `public/logos/eu-pkip-logo-strip.jpg` byte for byte and seeded as a `logo` upload: never tinted, halftoned, recompressed or recoloured. It shows in the footer funding notice and, from PR 13, on the project card.
+
 Waiting on the client:
 - The tour operator certificate: its number and exact wording (not in the `site` global until supplied).
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist).
@@ -260,7 +268,6 @@ Waiting on the user:
 
 Design questions for the user (found in PR 3; the build follows the default in brackets until answered):
 - Page 02 Foundations is empty. Was it meant to hold the type and spacing scale? [tokens measured from the components]
-- Sand text on light backgrounds: Figure card numbers (259:410, about 2.3:1) and numbered List rows (259:2318) fail WCAG even as large text, against § 5. [build them in brand/primary-strong, and show Figma's sand version for approval in PR 6]
 - Card gap: Figma rows use 24 px, § 6 says 32 px. [24 px, `--gap-cards`]
 - Home's section titles are plain frames (52/0.96, 38 on mobile), not Section heading instances (52/1, 36 on mobile). [the component, PR 8]
 - The Course card description in Figma says "Image from filtered stock", which clashes with real photos only. The card shows sticker art. [sticker art, no photo, PR 9]
@@ -270,19 +277,15 @@ Design questions for the user (found in PR 3; the build follows the default in b
 - Hover on Chip, Checkbox and Radio card isn't in Figma. [the border turns brand/primary]
 
 Content questions from the shell (PR 5); the build uses the default in brackets:
-- «Езици» (mobile menu) and «Професионално обучение» (header, menu, footer) have no page of their own in the plan. [English for adults; Professions (ЦПО)]
-- Footer «Ценоразпис»: translation prices were dropped, so there's nothing to link to. [left out]
-- Footer «Екип»: the team section stays hidden until photos exist. [left out until then]
 - Footer «Писмени преводи» and «Устни преводи» both go to the Translations page until it has sections to link to (PR 14).
 - «EN» in the header and menu: [hidden until English exists]
-- EU funding strip: the official logo strip is needed from the client (Figma has placeholders). The statement shows meanwhile. Figma's project number ends in «-C01»; § 3 has BG16RFPR001-1.004-1004. [Figma's text]
+- Figma's funding statement has the project number ending in «-C01»; § 3 has BG16RFPR001-1.004-1004. [Figma's text]
 - Facebook: facebook.com/EvroAlians, from the Figma layer name. [used as is; confirm]
 - Header link hover and current page: not in Figma. [sand underline]
+- The «Професионално обучение» dropdown and mobile group aren't in Figma. [white panel with card shadow; ▾ as in Figma's selects]
 
 From the pattern components (PR 6):
 - Data table: `docs/pr-plan.md` says it scrolls in its own container on mobile; the Figma description says the header hides and rows stack. [Figma: rows stack with their labels, still a real table]
-- Figure card and numbered List row: numbers in brand/primary-strong instead of sand (see the contrast question above). [navy]
-- Project card: Figma holds an EU logo strip image («Съфинансирано от Европейския съюз» and the programme logo). Is it the official file? The site uses only what's uploaded in Payload, exactly as supplied.
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
@@ -292,7 +295,6 @@ Decisions this package proposes (confirm before the PR that needs them):
 - Upload limits for translation documents.
 - gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
-- Mobile LCP budget (2.5 s, simulated slow 4G): the shell on an empty page already lands at about 2.1–2.5 s. Most of that is the Next.js and React runtime (about 140 KB of JavaScript), which Lighthouse's simulation counts in full even though it doesn't block the text. Real pages add photos and more code. PR 23 trims what it can; keep 2.5 s, or set the mobile LCP budget higher and keep the field target (CrUX LCP ≤ 2.5 s) as the real goal?
 - Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning.
 - Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.
 
