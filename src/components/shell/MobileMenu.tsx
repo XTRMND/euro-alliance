@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { useEffect, useId, useRef, useState, type MouseEvent } from 'react'
 import { Button } from '@/components/ui/Button'
+import { inboxOf, track } from '@/lib/analytics'
 import { telHref } from '@/lib/format'
 import { routes } from '@/lib/routes'
 import type { Navigation } from '@/payload-types'
@@ -104,9 +105,26 @@ export function MobileMenu({ links, labels, phone, email, className }: MobileMen
           </Button>
           {(phone || email) && (
             <p className={styles.contact}>
-              {phone && <a href={telHref(phone)}>{phone}</a>}
+              {phone && (
+                <a
+                  href={telHref(phone)}
+                  onClick={() => track('tel_click', { office: 'courses', placement: 'header' })}
+                >
+                  {phone}
+                </a>
+              )}
               {phone && email && <span aria-hidden="true"> · </span>}
-              {email && <a href={`mailto:${email}`}>{email}</a>}
+              {email && (
+                <a
+                  href={`mailto:${email}`}
+                  onClick={() => {
+                    const inbox = inboxOf(email)
+                    if (inbox) track('mailto_click', { inbox, placement: 'header' })
+                  }}
+                >
+                  {email}
+                </a>
+              )}
             </p>
           )}
         </div>
