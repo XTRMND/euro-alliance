@@ -51,6 +51,14 @@ const lcpFlagged = new Set([
   '/za-nas',
 ])
 
+/** The Chrome that chrome-launcher (Lighthouse's) finds, for puppeteer-core. */
+function chromePath() {
+  const launcher = require.resolve('chrome-launcher', {
+    paths: [require.resolve('@lhci/cli/package.json')],
+  })
+  return require(launcher).Launcher.getInstallations()[0]
+}
+
 const url = (path) => `http://localhost:${port}${path}`
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
@@ -80,14 +88,10 @@ module.exports = {
       startServerCommand: `PORT=${port} pnpm start`,
       url: paths.map(url),
       numberOfRuns: 3,
-      // A stored cookie choice, so the consent banner isn't measured as part of every page
-      // (tests/e2e/consented.json).
-      settings: {
-        extraHeaders: JSON.stringify({
-          Cookie:
-            'ea_consent=%7B%22v%22%3A1%2C%22ts%22%3A1798761600000%2C%22functional%22%3Afalse%2C%22statistics%22%3Afalse%2C%22marketing%22%3Afalse%7D',
-        }),
-      },
+      // A stored cookie choice in the browser before each run (lighthouse-consent.cjs), through
+      // puppeteer-core with the Chrome that Lighthouse finds.
+      puppeteerScript: './lighthouse-consent.cjs',
+      chromePath: chromePath(),
     },
     assert: { assertMatrix: assertMatrix({ performance: 0.9 }) },
     upload: {

@@ -422,7 +422,7 @@ From the legal pages and the cookie consent (PR 17):
 - The cookie policy promises the full cookie list in Settings; Figma's Settings has none. [each category lists its cookies with provider, purpose and duration: today only `ea_consent`; empty categories say so]
 - No saved state in Figma. [the banner disappears] No banner motion in Figma. [it fades up 20 px after the page's landing; none with reduced motion]
 - Consent Mode v2, basic (proposed in `docs/motion.md` § 7): defaults denied, `security_storage` granted, and no Google tag loads before statistics consent (GA4 arrives in PR 20). Withdrawing statistics or marketing deletes their cookies.
-- Lighthouse and the e2e suite run with a stored choice (`tests/e2e/consented.json`), so the banner isn't measured on every page; `tests/e2e/consent.spec.ts` covers the first visit.
+- Lighthouse and the e2e suite run with a stored choice (`lighthouse-consent.cjs` sets the cookie in Lighthouse's browser through `puppeteer-core`; `tests/e2e/consented.json`), so the banner isn't measured on every page; `tests/e2e/consent.spec.ts` covers the first visit. Measured with the banner, first paint comes about 140 ms earlier (its text), which pulls the page's earlier long tasks into the blocking-time window.
 
 From the search (PR 18):
 - There's no search control in the header or the mobile menu frames, so the search page is reached only from the 404 page (PR 19) and by its address. Add a search icon to the header and a field to the mobile menu? [not added: they need a design]
