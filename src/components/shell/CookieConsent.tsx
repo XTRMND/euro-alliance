@@ -1,10 +1,10 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
 import { useEffect, useRef, useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Toggle } from '@/components/ui/Toggle'
 import { Tape } from '@/components/visuals/Tape'
+import type bg from '@/messages/bg.json'
 import { track } from '@/lib/analytics'
 import {
   type Consent,
@@ -28,6 +28,9 @@ import styles from './CookieConsent.module.css'
 // «Настройки». The settings are a dialog: the four categories with their toggles (essential
 // locked on) and the cookies each one sets. The footer's «Настройки на бисквитките» reopens it.
 // The banner is in the server's HTML; the head script hides it when a choice is stored.
+
+/** The `consent` messages, passed as they are: no next-intl runtime on every page for them. */
+type ConsentLabels = typeof bg.consent
 
 type Gtag = (...args: unknown[]) => void
 const all = { functional: true, statistics: true, marketing: true }
@@ -73,8 +76,7 @@ function store(consent: Consent) {
   })
 }
 
-export function CookieConsent() {
-  const t = useTranslations('consent')
+export function CookieConsent({ labels }: { labels: ConsentLabels }) {
   const dialog = useRef<HTMLDialogElement>(null)
   const opener = useRef<HTMLElement | null>(null)
   const [stored, setStored] = useState<Consent | null | undefined>(undefined)
@@ -108,9 +110,9 @@ export function CookieConsent() {
           <Tape className={styles.tape} />
           <div className={styles.text}>
             <h2 id="consent-title" className={styles.title}>
-              {t('title')}
+              {labels.title}
             </h2>
-            <p className={styles.lead}>{t('text')}</p>
+            <p className={styles.lead}>{labels.text}</p>
           </div>
           <div className={styles.actions}>
             <Button
@@ -118,12 +120,12 @@ export function CookieConsent() {
               className={styles.settings}
               onClick={() => window.dispatchEvent(new Event(openCookieSettingsEvent))}
             >
-              {t('settings')}
+              {labels.settings}
             </Button>
             <Button variant="secondary" onClick={() => decide(none)}>
-              {t('essentialOnly')}
+              {labels.essentialOnly}
             </Button>
-            <Button onClick={() => decide(all)}>{t('acceptAll')}</Button>
+            <Button onClick={() => decide(all)}>{labels.acceptAll}</Button>
           </div>
         </section>
       )}
@@ -136,33 +138,33 @@ export function CookieConsent() {
         <Tape className={styles.tape} />
         <div className={styles.dialogHead}>
           <h2 id="consent-settings-title" className={styles.dialogTitle}>
-            {t('settingsTitle')}
+            {labels.settingsTitle}
           </h2>
           <button
             type="button"
             className={styles.close}
-            aria-label={t('close')}
+            aria-label={labels.close}
             onClick={() => dialog.current?.close()}
           >
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <p className={styles.lead}>{t('settingsText')}</p>
+        <p className={styles.lead}>{labels.settingsText}</p>
         <ul className={styles.categories}>
           {(['essential', ...consentCategories] as const).map((category) => (
             <li key={category} className={styles.category}>
               <div className={styles.categoryText}>
-                <span className={styles.categoryName}>{t(`category.${category}.name`)}</span>
+                <span className={styles.categoryName}>{labels.category[category].name}</span>
                 <span id={`consent-${category}`} className={styles.categoryDescription}>
-                  {t(`category.${category}.description`)}
+                  {labels.category[category].description}
                 </span>
                 {siteCookies[category].length > 0 && (
-                  <ul className={styles.cookies} aria-label={t('cookies')}>
+                  <ul className={styles.cookies} aria-label={labels.cookies}>
                     {siteCookies[category].map((name) => (
                       <li key={name}>
-                        <code>{name}</code> · {t(`cookie.${name as 'ea_consent'}.provider`)} ·{' '}
-                        {t(`cookie.${name as 'ea_consent'}.duration`)}:{' '}
-                        {t(`cookie.${name as 'ea_consent'}.purpose`)}
+                        <code>{name}</code> · {labels.cookie[name as 'ea_consent'].provider} ·{' '}
+                        {labels.cookie[name as 'ea_consent'].duration}:{' '}
+                        {labels.cookie[name as 'ea_consent'].purpose}
                       </li>
                     ))}
                   </ul>
@@ -170,14 +172,14 @@ export function CookieConsent() {
               </div>
               {category === 'essential' ? (
                 <Toggle
-                  label={`${t(`category.${category}.name`)}: ${t('alwaysOn')}`}
+                  label={`${labels.category[category].name}: ${labels.alwaysOn}`}
                   hideLabel
                   locked
                   aria-describedby={`consent-${category}`}
                 />
               ) : (
                 <Toggle
-                  label={t(`category.${category}.name`)}
+                  label={labels.category[category].name}
                   hideLabel
                   checked={choice[category]}
                   onChange={(event) => setChoice({ ...choice, [category]: event.target.checked })}
@@ -189,9 +191,9 @@ export function CookieConsent() {
         </ul>
         <div className={styles.dialogActions}>
           <Button variant="secondary" onClick={() => decide(choice)}>
-            {t('save')}
+            {labels.save}
           </Button>
-          <Button onClick={() => decide(all)}>{t('acceptAll')}</Button>
+          <Button onClick={() => decide(all)}>{labels.acceptAll}</Button>
         </div>
       </dialog>
     </>

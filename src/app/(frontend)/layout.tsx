@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { Footer } from '@/components/shell/Footer'
@@ -49,9 +48,7 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
       </head>
       <body>
         <SkipLink />
-        <NextIntlClientProvider messages={{ consent: messages.consent }}>
-          <CookieConsent />
-        </NextIntlClientProvider>
+        <CookieConsent labels={messages.consent} />
         <Header navigation={navigation} office={office} />
         <main id="main" tabIndex={-1}>
           {children}
