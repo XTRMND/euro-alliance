@@ -12,7 +12,7 @@ type CourseVisualProps = {
   landing?: boolean
   /** next/image `sizes` for the sticker, which is 105% of the panel's width. */
   sizes?: string
-  /** Load the sticker at once: the visual is above the fold. */
+  /** Load the sticker at once and preload it: the visual is above the fold, often the LCP. */
   eager?: boolean
   className?: string
 }
@@ -29,7 +29,13 @@ export function CourseVisual({
       className={[styles.visual, landing && styles.landing, className].filter(Boolean).join(' ')}
     >
       <Halftone pattern="panel" />
-      <Sticker topic={topic} sizes={sizes} eager={eager} className={styles.sticker} />
+      <Sticker
+        topic={topic}
+        sizes={sizes}
+        eager={eager}
+        preload={eager}
+        className={styles.sticker}
+      />
       <Tape className={styles.tape} />
     </div>
   )

@@ -53,11 +53,13 @@ type StickerProps = {
   sizes: string
   /** Load at once: the sticker is above the fold or the LCP element. */
   eager?: boolean
+  /** Preload it from the <head> as well, so it's ready for the first paint (the LCP element). */
+  preload?: boolean
   className?: string
 }
 
 /** Fills a square box (200 × 200 in Figma), the photo fitted inside it. */
-export function Sticker({ topic, sizes, eager = false, className }: StickerProps) {
+export function Sticker({ topic, sizes, eager = false, preload = false, className }: StickerProps) {
   return (
     <span className={[styles.sticker, className].filter(Boolean).join(' ')}>
       <Img
@@ -66,6 +68,7 @@ export function Sticker({ topic, sizes, eager = false, className }: StickerProps
         fill
         sizes={sizes}
         loading={eager ? 'eager' : 'lazy'}
+        preload={preload}
         className={styles.image}
       />
     </span>
