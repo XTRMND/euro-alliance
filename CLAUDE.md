@@ -433,6 +433,14 @@ From the search (PR 18):
 - Language pages in the results take the page's own title («Английски език за възрастни»): both heroes say «Английски език». The results page has `noindex`.
 - The index is ours, not Payload's search plugin (the About page is a global). The migration creates the `pg_trgm` extension: the production database's owner must be allowed to (it's a trusted extension from PostgreSQL 13).
 
+From the 404 page and the redirects (PR 19):
+- Redirect targets for the open rows, as proposed in `docs/content-import.md` § 5: Language-Certificates → the English adults page's certificates (`/ezitsi/angliyski/vazrastni#sertifikati`), Entry-Level-Tests → the level-test inquiry (`/kontakti?tema=test-za-nivo`), Online-Education → About's e-learning (`/za-nas#elektronno-obuchenie`), Learning → `/za-nas`. Confirm against the old pages' content (the inventory, PR 21).
+- The old language pages other than English redirect to pages that have no content yet, so they end on the 404 page until the client adds those programs.
+- Unknown old addresses get the 404 page; they aren't logged by the app (the server's access log has them). Collect them after launch?
+- The redirects are answered by a proxy, not `next.config`, so they ignore case and stay one hop (`docs/content-import.md` § 5).
+- 404 on a phone: Figma sets the scrap's «404» at 88 px, off-centre, not scaled with the scrap. [as Figma] The search placeholder wraps to two lines in the frame; a text field can't, so it's cut short on a phone. The scrap's shadow is CSS (in Figma's SVG it was cut off at the file's edges, as on the About photo).
+- No Lighthouse on the 404 page: a 404 status stops the audit.
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.
@@ -441,7 +449,7 @@ Decisions this package proposes (confirm before the PR that needs them):
 - Upload limits for translation documents.
 - gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`; PR 17 built basic).
 - Map on the contact page: Google Maps embeds need consent; proposal is a static map image plus a link.
-- Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning.
+- Redirect targets for Language-Certificates, Entry-Level-Tests, Online-Education and Learning (PR 19 uses the proposals; see above).
 - Uploaded originals keep their EXIF (phone photos can carry GPS). Tints drop it, and `next/image` re-encodes everything it serves, but the original file stays reachable at `/api/media/file/…`. Proposal: strip EXIF from photo and scan originals on upload; logos stay byte-exact.
 
 ## 13. When in doubt

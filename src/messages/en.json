@@ -510,5 +510,19 @@
       "news": "News",
       "about": "About"
     }
+  },
+  "notFound": {
+    "title": "This page",
+    "highlight": "isn’t here",
+    "text": "It may have moved when the site was renewed. Search for it or start from one of these places.",
+    "linksLabel": "Main sections",
+    "links": {
+      "courses": "Courses",
+      "translations": "Translations",
+      "about": "About",
+      "contact": "Contact"
+    },
+    "code": "404",
+    "note": "page missing"
   }
 }

@@ -1,0 +1,150 @@
+/* 404 (219:3143): the copy (620) and the scrap (460 × 420) side by side from 1200px, 80px apart,
+   72px above and 96 below; on a phone (226:3281) the scrap first, then the copy, 16px above and
+   56 below. */
+.page {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 16px var(--page-margin) 56px;
+}
+
+.copy {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  order: 2;
+  width: min(100%, 620px);
+}
+
+/* «Тази страница», then «я няма» in the highlighter on its own row, 20px below. */
+.title {
+  display: grid;
+  gap: 20px;
+  justify-items: start;
+  font: 800 clamp(2.75rem, 2.193rem + 2.286vw, 4.25rem) / 0.96 var(--font-display); /* 44 → 68 */
+  color: var(--color-brand-primary-strong);
+}
+
+.title > span {
+  padding: 0 0.176em 0.059em;
+  transform: rotate(1.5deg);
+}
+
+.lead {
+  font: 400 clamp(1.0625rem, 1.017rem + 0.19vw, 1.1875rem) / 1.6 var(--font-body); /* 17 → 19 */
+  color: var(--color-text-muted);
+}
+
+.field {
+  width: 100%;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 6px 0 0;
+  list-style: none;
+}
+
+/* The scrap (219:3164): the torn paper turned 5° with six rules, the tape at 12°, «404» at 190
+   and «страницата липсва» in Caveat at 30, all scaled with its width (340 on a phone). Its
+   shadow is CSS: in Figma's SVG it was cut off at the file's edges. */
+.scrap {
+  position: relative;
+  order: 1;
+  width: min(100%, 460px);
+  aspect-ratio: 460 / 420;
+  container-type: inline-size;
+}
+
+.paper {
+  position: absolute;
+  top: 17.886%; /* 75 of 420 */
+  left: 7.878%; /* 36 of 460 */
+  width: 78.261%; /* 360 */
+  height: 71.429%; /* 300 */
+  rotate: 5deg;
+  filter: drop-shadow(0 2.609cqw 5.652cqw rgb(var(--shadow-rgb) / 0.14)); /* 0 12 26 at 460 */
+}
+
+/* Figma's SVG has room around the paper for its old shadow: 26px at the sides, 14 above, 38 below. */
+.paperImage {
+  position: absolute;
+  top: -4.667%;
+  left: -7.222%;
+  width: 114.444%;
+  height: 117.333%;
+  max-width: none;
+}
+
+/* Six rules, 34px apart, from 46px below the paper's top. */
+.rules {
+  position: absolute;
+  top: 20%;
+  left: 5.556%; /* 20 of 360 */
+  width: 94.444%; /* 340 */
+  height: calc(36.957cqw + 1px); /* 5 × 34, plus the last rule */
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--color-border-default) 0 1px,
+    transparent 1px 7.391cqw /* 34 */
+  );
+}
+
+.scrap .tape {
+  top: 12.381%; /* 52 of 420: the tape's centre at 68 */
+  left: 35.957%; /* 165 */
+  width: 26.087%; /* 120 */
+  height: 6.957cqw; /* 32 */
+  transform: none;
+  rotate: 12deg;
+}
+
+.code {
+  position: absolute;
+  top: 37.9%;
+  left: 37.4%;
+  font: 800 25.85cqw / 1 var(--font-display); /* 88 on the phone's 340 */
+  color: var(--color-brand-primary-strong);
+  translate: -50% -50%;
+  rotate: 5deg;
+}
+
+.note {
+  position: absolute;
+  top: 78.27%;
+  left: 50.09%;
+  font: 700 6.522cqw / 1.2 var(--font-hand); /* 30 */
+  white-space: nowrap;
+  color: var(--color-brand-primary);
+  translate: -50% -50%;
+  rotate: 5deg;
+}
+
+/* From 768px the «404» is Figma's desktop size, centred on the paper. */
+@media (min-width: 768px) {
+  .code {
+    top: 49.05%;
+    left: 43.72%;
+    font-size: 41.304cqw; /* 190 */
+  }
+}
+
+@media (min-width: 1200px) {
+  .page {
+    grid-template-columns: minmax(0, 620px) minmax(0, 460px);
+    gap: 80px;
+    justify-content: start;
+    align-items: center;
+    padding-block: 72px 96px;
+  }
+
+  .copy,
+  .scrap {
+    order: 0;
+  }
+}

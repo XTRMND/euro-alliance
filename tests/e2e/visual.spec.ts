@@ -24,6 +24,7 @@ const snapshots = [
   { name: 'privacy', path: routes.privacy() },
   { name: 'cookies', path: routes.cookies() },
   { name: 'search', path: routes.search('английски') },
+  { name: 'not-found', path: '/nyama-takava-stranitsa' },
   { name: 'tokens', path: devRoutes.tokens },
   { name: 'components', path: devRoutes.components },
   { name: 'patterns', path: devRoutes.patterns },
