@@ -8,6 +8,8 @@ import { getCourseMonths, getListedCourses } from '@/lib/cms'
 import { activeFilterCount, parseCourseFilters } from '@/lib/course-filters'
 import { courseAudiences, courseCategoryValues, courseFormats } from '@/lib/courses'
 import { formatMonth } from '@/lib/format'
+import { pageMetadata } from '@/lib/seo'
+import { routes } from '@/lib/routes'
 
 // Courses (80:880 / 116:557): the listing with its filters in the URL (src/lib/course-filters.ts).
 // The language filter lists the six languages of the Figma filters; БЕЛ courses are found under
@@ -17,7 +19,8 @@ const filterLanguages = ['english', 'german', 'french', 'spanish', 'italian', 'r
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('courses')
-  return { title: t('title'), description: t('lead') }
+  // Filtered listings point at the full listing.
+  return pageMetadata({ title: t('title'), description: t('lead'), path: routes.courses() })
 }
 
 export default async function CoursesPage({ searchParams }: PageProps<'/kursove'>) {

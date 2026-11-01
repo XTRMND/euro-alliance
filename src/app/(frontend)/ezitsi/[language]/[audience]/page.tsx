@@ -15,6 +15,7 @@ import {
   otherAudience,
 } from '@/lib/programs'
 import { routes } from '@/lib/routes'
+import { pageMetadata } from '@/lib/seo'
 
 // A language program (English adults 130:1993 / 147:1317, students 159:1993 / 166:1701): one
 // template for every language and audience, filled from the CMS. Unpublished or missing
@@ -34,7 +35,13 @@ async function load(params: Params['params']) {
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const found = await load(params)
   if (!found) return {}
-  return { title: found.program.title, description: found.program.hero.lead ?? undefined }
+  const { program, language, audience } = found
+  return pageMetadata({
+    title: program.title,
+    description: program.hero.lead,
+    path: routes.languageProgram(language, audience as never),
+    meta: program.meta,
+  })
 }
 
 export default async function LanguageProgramPage({ params }: Params) {

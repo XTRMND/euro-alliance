@@ -524,5 +524,9 @@
     },
     "code": "404",
     "note": "page missing"
+  },
+  "seo": {
+    "name": "Euro Alliance",
+    "description": "Language centre, licensed vocational training centre and translation agency in Plovdiv and Sofia since 1999."
   }
 }

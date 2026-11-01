@@ -446,6 +446,12 @@ From the analytics (PR 20):
 - Built as proposed in `docs/measurement.md`: gtag.js (not GTM), Consent Mode basic, no Facebook Pixel. The anonymous consent counter isn't built.
 - Phone and email links in the CMS navigation report `tel_click` / `mailto_click` with the header's or footer's placement; their office is «other» (none are in the navigation today).
 
+From SEO (PR 22):
+- Indexing is off unless `ALLOW_INDEXING=true` (production only; launch checklist): `robots.txt` disallows everything and every page is `noindex`.
+- Titles are «page | Евро Алианс»; descriptions are the page's lead (160 characters at most), unless the CMS `meta` fields say otherwise. The default sharing image is the homepage's classroom photo (seeded into `site.seoImage`); a dedicated 1200 × 630 image would look better in shares. Ask the client or design one?
+- JSON-LD: EducationalOrganization on the homepage (offices' addresses as written, the ЕИК as identifier), Course on course pages (only the fields the CMS has), NewsArticle on articles, BreadcrumbList wherever there's a breadcrumb. `hreflang` waits for English.
+- The sitemap lists the fixed pages and everything in the search index (what's published). The search page, the dev pages and old addresses aren't in it.
+
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.

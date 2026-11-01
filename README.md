@@ -71,7 +71,7 @@ docs/                 the build brief: plan, Figma map, CMS schema, motion, i18n
 - the SMTP settings, once email is configured
 - a volume mounted at `/app/media` for uploads
 
-On start, the app applies any pending migrations and seeds an empty database. Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
+Set `ALLOW_INDEXING=true` in production only: anywhere else `robots.txt` disallows everything and every page is `noindex`. On start, the app applies any pending migrations and seeds an empty database. Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
 
 ### Background jobs
 

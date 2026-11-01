@@ -1,9 +1,12 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { routes } from '@/lib/routes'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { breadcrumbLd } from '@/lib/structured-data'
 import styles from './Breadcrumb.module.css'
 
-// Breadcrumb (80:897): «Начало / Курсове». The current page is the last item, not a link.
+// Breadcrumb (80:897): «Начало / Курсове». The current page is the last item, not a link. Search
+// engines get the same trail as a BreadcrumbList.
 
 type BreadcrumbProps = {
   /** The pages after «Начало»; the last one is the current page. */
@@ -33,6 +36,7 @@ export async function Breadcrumb({ items, className }: BreadcrumbProps) {
           )
         })}
       </ol>
+      <JsonLd data={breadcrumbLd(trail)} />
     </nav>
   )
 }

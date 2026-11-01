@@ -10,6 +10,7 @@ import { topicFromQuery } from '@/lib/inquiries'
 import { queryParams, routes } from '@/lib/routes'
 import { slugify } from '@/lib/slug'
 import styles from './page.module.css'
+import { pageMetadata } from '@/lib/seo'
 
 // Contact (119:1795 / 121:1145): the hero, the wizard beside the offices, and «Как да ни
 // намерите». Links preselect the wizard: ?tema= (the topic), &kurs= (a course), &ot= / &na=
@@ -17,7 +18,12 @@ import styles from './page.module.css'
 
 export async function generateMetadata(): Promise<Metadata> {
   const contact = await getContact()
-  return { title: contact.hero?.title ?? undefined, description: contact.hero?.lead ?? undefined }
+  return pageMetadata({
+    title: contact.hero?.title ?? '',
+    description: contact.hero?.lead,
+    path: routes.contact(),
+    meta: contact.meta,
+  })
 }
 
 const first = (value: string | string[] | undefined) => (Array.isArray(value) ? value[0] : value)

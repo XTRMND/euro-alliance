@@ -10,6 +10,8 @@ import { getNewsList } from '@/lib/cms'
 import { newsPage, newsPageCount } from '@/lib/news'
 import landing from '@/styles/landing.module.css'
 import styles from './page.module.css'
+import { pageMetadata } from '@/lib/seo'
+import { routes } from '@/lib/routes'
 
 // News (183:2437 / 188:2196): the hero, the newest as the lead story (page 1), then «Всички
 // новини», six a page, with the pagination. A page past the last is a 404. The lead story lands
@@ -18,9 +20,15 @@ import styles from './page.module.css'
 
 type Params = PageProps<'/novini'>
 
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('news')
-  return { title: t('breadcrumb'), description: t('lead') }
+export async function generateMetadata({ searchParams }: Params): Promise<Metadata> {
+  const [t, { stranitsa }] = await Promise.all([getTranslations('news'), searchParams])
+  const page = Number(stranitsa ?? 1)
+  return pageMetadata({
+    title: t('breadcrumb'),
+    description: t('lead'),
+    // Each page of the listing is its own address.
+    path: routes.news(Number.isInteger(page) && page > 1 ? page : 1),
+  })
 }
 
 export default async function NewsPage({ searchParams }: Params) {

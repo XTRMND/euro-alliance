@@ -17,6 +17,9 @@ import { courseTags } from '@/lib/courses'
 import { formatPrice, startOfTodayInSofia } from '@/lib/format'
 import { anchors, routes } from '@/lib/routes'
 import styles from './page.module.css'
+import { pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { courseLd } from '@/lib/structured-data'
 
 // Course (81:1226 / 117:895), in the states of board 126:1940 (src/lib/course-state.ts), with
 // «Запишете се» (91:1462): the contact wizard at Step 2 with the course chosen. The enrol buttons
@@ -27,7 +30,12 @@ export async function generateMetadata({
 }: PageProps<'/kursove/[slug]'>): Promise<Metadata> {
   const course = await getCourse((await params).slug)
   if (!course) return {}
-  return { title: course.title, description: course.description ?? undefined }
+  return pageMetadata({
+    title: course.title,
+    description: course.description,
+    path: routes.course(course.slug ?? (await params).slug),
+    meta: course.meta,
+  })
 }
 
 export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'>) {
@@ -90,6 +98,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
 
   return (
     <>
+      <JsonLd data={courseLd(course)} />
       <TrackCourseView
         course={slug}
         language={course.language ?? undefined}

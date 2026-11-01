@@ -85,7 +85,8 @@ const assertMatrix = ({ performance }) =>
 module.exports = {
   ci: {
     collect: {
-      startServerCommand: `PORT=${port} pnpm start`,
+      // As in production: indexable, so the SEO audit checks the real <head>.
+      startServerCommand: `PORT=${port} ALLOW_INDEXING=true pnpm start`,
       url: paths.map(url),
       numberOfRuns: 3,
       // A stored cookie choice in the browser before each run (lighthouse-consent.cjs), through

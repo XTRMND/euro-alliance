@@ -53,6 +53,7 @@ export async function seed(payload: Payload) {
 
   await seedFundingLogo(payload)
   await seedHome(payload)
+  await seedShareImage(payload)
 
   await seedContact(payload)
   await seedPrograms(payload)
@@ -437,4 +438,18 @@ async function seedLegal(payload: Payload) {
     })
     payload.logger.info(`Seeded the legal page «${page.title}».`)
   }
+}
+
+/** The default sharing image (PR 22): the homepage's classroom photo, when none is chosen. */
+async function seedShareImage(payload: Payload) {
+  const site = await payload.findGlobal({ slug: 'site', depth: 0 })
+  if (site.seoImage) return
+  const home = await payload.findGlobal({ slug: 'home', depth: 0 })
+  const photo = home.hero?.photo
+  if (!photo) return
+  await payload.updateGlobal({
+    slug: 'site',
+    data: { seoImage: typeof photo === 'object' ? photo.id : photo },
+  })
+  payload.logger.info('Seeded the default sharing image.')
 }

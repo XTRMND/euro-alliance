@@ -4,6 +4,9 @@ import { NewsArticle } from '@/components/news/NewsArticle'
 import { getNewsArticle, getNewsList } from '@/lib/cms'
 import { newsAround } from '@/lib/news'
 import { routes } from '@/lib/routes'
+import { pageMetadata } from '@/lib/seo'
+import { JsonLd } from '@/components/seo/JsonLd'
+import { newsArticleLd } from '@/lib/structured-data'
 
 // A news article (183:2574 / 188:2385). Unpublished or missing articles are a 404.
 
@@ -12,7 +15,14 @@ type Params = PageProps<'/novini/[slug]'>
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const article = await getNewsArticle((await params).slug)
   if (!article) return {}
-  return { title: article.title, description: article.excerpt ?? undefined }
+  return pageMetadata({
+    title: article.title,
+    description: article.excerpt || article.lead,
+    path: routes.newsArticle(article.slug ?? (await params).slug),
+    image: article.cover,
+    meta: article.meta,
+    type: 'article',
+  })
 }
 
 export default async function NewsArticlePage({ params }: Params) {
@@ -27,11 +37,14 @@ export default async function NewsArticlePage({ params }: Params) {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? ''
 
   return (
-    <NewsArticle
-      article={article}
-      latest={latest}
-      more={more}
-      url={`${site}${routes.newsArticle(slug)}`}
-    />
+    <>
+      <JsonLd data={newsArticleLd(article)} />
+      <NewsArticle
+        article={article}
+        latest={latest}
+        more={more}
+        url={`${site}${routes.newsArticle(slug)}`}
+      />
+    </>
   )
 }

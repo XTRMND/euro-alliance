@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { getMessages } from 'next-intl/server'
+import { getMessages, getTranslations } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
 import { Footer } from '@/components/shell/Footer'
@@ -8,6 +8,7 @@ import { SkipLink } from '@/components/shell/SkipLink'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
 import { measurementIdOf } from '@/lib/analytics'
 import { consentHeadScript } from '@/lib/consent'
+import { siteUrl } from '@/lib/seo'
 import { fontVariables } from '@/styles/fonts'
 import '@/styles/tokens.css'
 import '@/styles/globals.css'
@@ -16,19 +17,30 @@ import '@/styles/globals.css'
 // hooks invalidate, so a build needs no database. CDN caching of whole pages comes with the CDN.
 export const dynamic = 'force-dynamic'
 
-// Temporary until PR 8 (homepage) and PR 22 (SEO) move these into the CMS.
-export const metadata: Metadata = {
-  title: 'Евро Алианс',
-  description:
-    'Езиков център, лицензиран център за професионално обучение и агенция за преводи в Пловдив и София от 1999 г.',
-  // Favicon set from the Logo mark (127:312).
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: '/apple-touch-icon.png',
-  },
+// The site-wide <head> (PR 22): the address every relative URL resolves against, «… | Евро
+// Алианс» titles, the default description and sharing card (pages add theirs through
+// src/lib/seo.ts), and indexing only where ALLOW_INDEXING=true: production, never staging.
+export async function generateMetadata(): Promise<Metadata> {
+  const [t, site] = await Promise.all([getTranslations('seo'), getSite()])
+  const name = site.name || t('name')
+  const indexing = process.env.ALLOW_INDEXING === 'true'
+  return {
+    metadataBase: new URL(siteUrl()),
+    title: { default: name, template: `%s | ${name}` },
+    description: t('description'),
+    applicationName: name,
+    robots: indexing ? { index: true, follow: true } : { index: false, follow: false },
+    openGraph: { type: 'website', siteName: name, locale: 'bg_BG' },
+    twitter: { card: 'summary_large_image' },
+    // Favicon set from the Logo mark (127:312).
+    icons: {
+      icon: [
+        { url: '/icon.svg', type: 'image/svg+xml' },
+        { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: '/apple-touch-icon.png',
+    },
+  }
 }
 
 export default async function FrontendLayout({ children }: LayoutProps<'/'>) {

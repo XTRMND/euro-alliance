@@ -18,9 +18,10 @@ import { Chip } from '@/components/ui/Chip'
 import { Tape } from '@/components/visuals/Tape'
 import { getAbout } from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
-import { aboutSections } from '@/lib/routes'
+import { aboutSections, routes } from '@/lib/routes'
 import type { Document, FundedProject, Media } from '@/payload-types'
 import styles from './page.module.css'
+import { pageMetadata } from '@/lib/seo'
 
 // About (190:2677 / 210:2395), from the `about` global: the hero, the subnav, then History, the
 // figures, who we train, Team, Standards, the licences, the documents after a course, Projects
@@ -28,7 +29,13 @@ import styles from './page.module.css'
 
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAbout()
-  return { title: about.hero?.title ?? undefined, description: about.hero?.lead ?? undefined }
+  return pageMetadata({
+    title: about.hero?.title ?? '',
+    description: about.hero?.lead,
+    path: routes.about(),
+    image: about.hero?.photo,
+    meta: about.meta,
+  })
 }
 
 const objects = <T,>(values: (number | T)[] | null | undefined) =>
