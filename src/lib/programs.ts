@@ -31,11 +31,13 @@ export function otherAudience(language: Language, audience: Audience): Audience 
   return hasLanguagePage(language, other) ? other : undefined
 }
 
-type ProgramType = 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer'
+type ProgramType =
+  'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer' | 'translations'
 
 /**
  * The courses a program page lists under «Предстоящи курсове»: a language page its language and
- * audience, the vouchers page the courses payable with a voucher, every other page its category.
+ * audience, the vouchers page the courses payable with a voucher, every other page its category
+ * (the translations page has none).
  */
 export function programCourseFilters(program: {
   type: ProgramType
@@ -52,6 +54,9 @@ export function programCourseFilters(program: {
       }
     case 'vouchers':
       return { ...filters, voucher: true }
+    case 'translations':
+      // No courses: the translation agency's page has no «Предстоящи курсове».
+      return filters
     default:
       return { ...filters, category: [program.type] }
   }

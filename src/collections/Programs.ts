@@ -9,8 +9,8 @@ import { languages } from '@/lib/routes'
 
 // Program pages (docs/cms-schema.md § 3). A language program (one per language and audience,
 // /ezitsi/{language}/{audience}) gets the notebook hero with its flag; every other type has one
-// page (/vaucheri, /profesionalno-obuchenie/profesii …) with the course-page hero: a sticker and
-// a count bubble. The sections are blocks.
+// page (/vaucheri, /profesionalno-obuchenie/profesii …, and /prevodi for the translation agency)
+// with the course-page hero: a sticker and a count bubble. The sections are blocks.
 
 const languageLabels = {
   english: 'Английски',
@@ -91,6 +91,7 @@ export const Programs: CollectionConfig = {
             { value: 'teachers', label: 'Педагогически специалисти' },
             { value: 'farmers', label: 'Земеделци' },
             { value: 'computer', label: 'Компютърни курсове' },
+            { value: 'translations', label: 'Преводи' },
           ],
         },
         {
@@ -125,6 +126,13 @@ export const Programs: CollectionConfig = {
           label: 'Подчертана фраза',
           localized: true,
           admin: { description: 'Част от заглавието, с пясъчен маркер.' },
+        },
+        {
+          name: 'highlightBreak',
+          type: 'checkbox',
+          label: 'Подчертаната фраза на нов ред',
+          defaultValue: true,
+          admin: { condition: (data) => !isLanguage(data) },
         },
         { name: 'lead', type: 'textarea', label: 'Текст', localized: true },
         {

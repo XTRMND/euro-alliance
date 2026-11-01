@@ -471,7 +471,7 @@ export interface Program {
    * Попълва се от заглавието, ако е празно.
    */
   slug?: string | null;
-  type: 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer';
+  type: 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer' | 'translations';
   language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
   audience?: ('adults' | 'students') | null;
   hero: {
@@ -481,6 +481,7 @@ export interface Program {
      * Част от заглавието, с пясъчен маркер.
      */
     highlight?: string | null;
+    highlightBreak?: boolean | null;
     lead?: string | null;
     /**
      * Към страница или към секция на тази страница (котвата ѝ). На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.
@@ -948,6 +949,100 @@ export interface Program {
             id?: string | null;
             blockName?: string | null;
             blockType: 'projects';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading: string;
+            lead?: string | null;
+            steps?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            buttonLabel?: string | null;
+            dropzoneArt?: ('always' | 'mobile') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'sendDocument';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  title: string;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            counter?: boolean | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'priceFactors';
+          }
+        | {
+            columns?:
+              | {
+                  /**
+                   * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+                   */
+                  anchor?: string | null;
+                  heading: string;
+                  items?:
+                    | {
+                        question: string;
+                        answer: {
+                          root: {
+                            type: string;
+                            children: {
+                              type: any;
+                              version: number;
+                              [k: string]: unknown;
+                            }[];
+                            direction: ('ltr' | 'rtl') | null;
+                            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                            indent: number;
+                            version: number;
+                          };
+                          [k: string]: unknown;
+                        };
+                        id?: string | null;
+                      }[]
+                    | null;
+                  note?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqColumns';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'locations';
           }
         | {
             /**
@@ -1699,6 +1794,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         kicker?: T;
         heading?: T;
         highlight?: T;
+        highlightBreak?: T;
         lead?: T;
         ctas?:
           | T
@@ -1969,6 +2065,72 @@ export interface ProgramsSelect<T extends boolean = true> {
               highlight?: T;
               lead?: T;
               projects?: T;
+              id?: T;
+              blockName?: T;
+            };
+        sendDocument?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              lead?: T;
+              steps?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              buttonLabel?: T;
+              dropzoneArt?: T;
+              id?: T;
+              blockName?: T;
+            };
+        priceFactors?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              counter?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faqColumns?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    anchor?: T;
+                    heading?: T;
+                    items?:
+                      | T
+                      | {
+                          question?: T;
+                          answer?: T;
+                          id?: T;
+                        };
+                    note?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        locations?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
               id?: T;
               blockName?: T;
             };

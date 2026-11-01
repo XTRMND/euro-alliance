@@ -100,8 +100,8 @@ export const navigation = {
     {
       heading: 'Преводи',
       links: [
-        { label: 'Писмени преводи', href: routes.translations() },
-        { label: 'Устни преводи', href: routes.translations() },
+        { label: 'Писмени преводи', href: `${routes.translations()}#pismeni-prevodi` },
+        { label: 'Устни преводи', href: `${routes.translations()}#ustni-prevodi` },
         { label: 'Изпрати документ', href: routes.contact('prevodi') },
       ],
     },

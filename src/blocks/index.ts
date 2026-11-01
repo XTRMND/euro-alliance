@@ -310,6 +310,105 @@ export const ProjectsBlock: Block = {
   ],
 }
 
+export const SendDocumentBlock: Block = {
+  slug: 'sendDocument',
+  labels: { singular: 'Изпратете документ', plural: 'Изпратете документ' },
+  admin: { group: 'Преводи' },
+  fields: [
+    anchorField,
+    { name: 'heading', type: 'text', label: 'Заглавие', required: true, localized: true },
+    { name: 'lead', type: 'textarea', label: 'Въвеждащ текст', localized: true },
+    {
+      name: 'steps',
+      type: 'array',
+      label: 'Стъпки',
+      maxRows: 3,
+      fields: [{ name: 'text', type: 'text', label: 'Текст', required: true, localized: true }],
+    },
+    {
+      type: 'row',
+      fields: [
+        { name: 'buttonLabel', type: 'text', label: 'Текст на бутона', localized: true },
+        {
+          name: 'dropzoneArt',
+          type: 'select',
+          label: 'Стикер в полето за файла',
+          defaultValue: 'always',
+          options: [
+            { value: 'always', label: 'Винаги' },
+            { value: 'mobile', label: 'Само на телефон' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const PriceFactorsBlock: Block = {
+  slug: 'priceFactors',
+  labels: { singular: 'Цена и брояч на страници', plural: 'Цена и брояч на страници' },
+  admin: { group: 'Преводи' },
+  fields: [
+    ...heading,
+    {
+      name: 'items',
+      type: 'array',
+      label: 'От какво зависи цената',
+      fields: [
+        { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+        { name: 'text', type: 'text', label: 'Текст', localized: true },
+      ],
+    },
+    {
+      name: 'counter',
+      type: 'checkbox',
+      label: 'Брояч на страници до списъка',
+      defaultValue: true,
+    },
+  ],
+}
+
+export const FaqColumnsBlock: Block = {
+  slug: 'faqColumns',
+  labels: { singular: 'Въпроси в две колони', plural: 'Въпроси в две колони' },
+  fields: [
+    {
+      name: 'columns',
+      type: 'array',
+      label: 'Колони',
+      minRows: 1,
+      maxRows: 2,
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            anchorField,
+            { name: 'heading', type: 'text', label: 'Заглавие', required: true, localized: true },
+          ],
+        },
+        {
+          name: 'items',
+          type: 'array',
+          label: 'Въпроси',
+          fields: [
+            { name: 'question', type: 'text', label: 'Въпрос', required: true, localized: true },
+            { name: 'answer', type: 'richText', label: 'Отговор', required: true, localized: true },
+          ],
+        },
+        { name: 'note', type: 'textarea', label: 'Бележка под въпросите', localized: true },
+      ],
+    },
+  ],
+}
+
+export const LocationsBlock: Block = {
+  slug: 'locations',
+  labels: { singular: 'Офисите на картата', plural: 'Офисите на картата' },
+  admin: { group: 'Списъци от колекциите' },
+  // The location cards of the Contact global, under this heading.
+  fields: [...heading],
+}
+
 export const FaqBlock: Block = {
   slug: 'faq',
   labels: { singular: 'Въпроси', plural: 'Въпроси' },
@@ -395,6 +494,10 @@ export const programBlocks = [
   TeacherProgrammesBlock,
   IndexCardsBlock,
   ProjectsBlock,
+  SendDocumentBlock,
+  PriceFactorsBlock,
+  FaqColumnsBlock,
+  LocationsBlock,
   FaqBlock,
   FiguresBlock,
   CalloutBlock,

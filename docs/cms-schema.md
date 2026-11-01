@@ -74,9 +74,9 @@ Built in PR 12 (`src/collections/Programs.ts`, blocks in `src/blocks/index.ts`).
 | Field | Type | Notes |
 |---|---|---|
 | `title`, `slug` | text | `title` is the browser title |
-| `type` | select, required | `language` / `vocational` / `vouchers` / `teachers` / `farmers` / `computer` |
+| `type` | select, required | `language` / `vocational` / `vouchers` / `teachers` / `farmers` / `computer` / `translations` (the translation agency's page, /prevodi, PR 14) |
 | `language`, `audience` | select | For `language` only: the 7 languages; adults / students. One page per language and audience (a hook rejects a second one); no Russian for adults. The page lives at `/ezitsi/<language>/<audience>` (`routes.languageProgram`), and the pair feeds Audience tabs (129:321). Every other type has one page (a hook rejects a second one) at its route: `/vaucheri`, `/profesionalno-obuchenie/profesii` … |
-| `hero` | group | `kicker`, `heading`, `highlight` (part of the heading; on the course-page hero it sits on its own line), `lead`, `ctas` (up to 2 × { label, destination or anchor }: an anchor links a section of the page), `sticker` and `countBubble` { value, label } (course-page hero only) |
+| `hero` | group | `kicker`, `heading`, `highlight` (part of the heading; on the course-page hero it sits on its own line unless `highlightBreak` is off, as on Translations), `lead`, `ctas` (up to 2 × { label, destination or anchor }: an anchor links a section of the page), `sticker` and `countBubble` { value, label } (course-page hero only) |
 | `upcoming` | group | The heading and link label of «Предстоящи курсове» (`src/lib/programs.ts`): a language page lists its language and audience, the vouchers page the courses payable with a voucher (`voucherEligible`), every other page its course category. Hidden without a heading or without courses. |
 | `notebook` | group | For `language` only: Program hero art 131:311. `title`, `phrases` (array of { phrase, translation }), `highlight` (1–4: the highlighted phrase), `note` { title, steps, done } (the optional sticky note) |
 | `sections` | blocks | See below |
@@ -104,6 +104,10 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `teacherProgrammes` | Index card 264:448 with numbered List rows 259:2318 | heading only: every published programme, a card per theme |
 | `indexCards` | Index card 264:448 | `cards` (up to 3: title, rows numbered or checked, the count on a chip or a navy bubble with its label); numbered rows run on from card to card; optional navy `checklist` { title, items } (the farmers' documents) |
 | `projects` | Project card 259:574 | `projects` → Funded projects; the heading beside the cards from 1024px |
+| `sendDocument` | Send a document 172:2255 | heading, lead, `steps`, `buttonLabel`, `dropzoneArt` (always / phone only); the languages come from the Translation global, the dropzone and the button open the wizard (PR 8) |
+| `priceFactors` | 172:2288 + Page counter 173:378 | heading, lead, numbered `items` { title, text }, `counter` (the Page counter beside them) |
+| `faqColumns` | FAQ item 129:335 in two columns (172:2357) | `columns` (up to 2: anchor, heading, items { question, answer }, note) |
+| `locations` | Location card 125:302 | heading only: the Contact global's locations |
 
 ### Textbook systems
 
@@ -149,6 +153,8 @@ Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official prog
 
 `languages` (array), `topics` (array). No prices per topic (dropped).
 
+
+The Translations page (/prevodi) is a Program of type `translations` (PR 14): its hero and sections are blocks like the other program pages. This global keeps the languages for the «Изпратете документ» pair (the homepage and /prevodi).
 ### Funded projects
 
 Built in PR 13 (`src/collections/FundedProjects.ts`): `title`, `code` (e.g. BG16RFPR001-1.004-1004; not shown on the card), `facts` (array of { label, value }), `goals` (array of text, shown as chips), `logoStrip` (upload → media, `kind: logo`). Seeded with the farmers' project from Figma 237:4189 and its EU logo strip.

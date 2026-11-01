@@ -353,7 +353,8 @@
       "vocational": "Professions and specialities",
       "teachers": "Pedagogical specialists",
       "farmers": "Training for farmers",
-      "computer": "Computer courses"
+      "computer": "Computer courses",
+      "translations": "Translations"
     },
     "professions": {
       "code": "Code",
@@ -379,5 +380,25 @@
         "text": "New dates are published here."
       }
     }
+  },
+  "pageCounter": {
+    "title": "Page counter",
+    "rule": "1800 characters = 1 page",
+    "textLabel": "Text to count",
+    "prompt": "Paste the text here or upload a file",
+    "hint": "PDF, Word or a photo. We count characters with spaces.",
+    "upload": "Upload a file",
+    "counting": "Counting…",
+    "characters": "{count} characters with spaces",
+    "remove": "Remove",
+    "uncountable": {
+      "image": "A photo or a scan: we can’t count it here. Ask for a quote.",
+      "format": "We can’t count this format here. Ask for a quote.",
+      "unreadable": "The file won’t open. Ask for a quote and we’ll count it."
+    },
+    "pages": "standard pages",
+    "note": "The price per page depends on the subject.",
+    "quote": "Ask for a quote",
+    "framework": "Framework agreement?"
   }
 }

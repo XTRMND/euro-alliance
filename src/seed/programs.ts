@@ -314,7 +314,7 @@ export { systemsBlock }
 
 // The programs that have one page each, with the course-page hero: copy from the approved Figma
 // frames (Vouchers 236:3391, Professions 236:3667, Teachers 237:3686, Farmers 237:3973, Computer
-// courses 258:3937). Their course cards in Figma are example data: the pages list real
+// courses 258:3937, Translations 171:2511). Their course cards in Figma are example data: the pages list real
 // courses from the Courses collection.
 
 const voucherCard = (card: {
@@ -655,6 +655,134 @@ export const singlePrograms = [
           text: 'Курсове по дигитални умения (DigComp), базово и средно ниво, с ваучер от Агенцията по заетостта.',
           cta: { label: 'Обучение с ваучери', destination: 'vouchers' },
         },
+      },
+    ],
+  },
+  {
+    title: 'Преводи и легализация',
+    type: 'translations',
+    hero: {
+      kicker: 'Писмени • Устни • Легализация',
+      heading: 'Преводи и легализация',
+      highlight: 'легализация',
+      highlightBreak: false,
+      lead: 'Писмени и устни езикови преводи, легализация на документи и компютърна обработка на преводни документи.',
+      ctas: [
+        { label: 'Изпрати документ', anchor: 'izpratete-dokument' },
+        { label: 'Как се формира цената', anchor: 'tsena' },
+      ],
+      sticker: 'translation',
+      countBubble: { value: 'ISO', label: '17100' },
+    },
+    sections: [
+      {
+        blockType: 'sendDocument',
+        anchor: 'izpratete-dokument',
+        heading: 'Изпратете документ',
+        lead: 'Изпратете документа за превод и ще се свържем с вас за уточняване на детайлите.',
+        steps: [
+          { text: 'Изпращате документа' },
+          { text: 'Свързваме се с вас' },
+          { text: 'Превод и легализация' },
+        ],
+        buttonLabel: 'Изпрати документ за превод',
+        dropzoneArt: 'mobile',
+      },
+      {
+        blockType: 'priceFactors',
+        anchor: 'tsena',
+        heading: 'Цена по оферта',
+        lead: 'Заплащането е на стандартна страница според тематиката. За цени, срокове и условия ще се свържем с вас. Цената зависи от:',
+        items: [
+          {
+            title: 'Обем',
+            text: 'в стандартни страници от 1800 знака с интервалите; при голям обем цените се договарят',
+          },
+          { title: 'Тематика', text: 'обща, икономическа, юридическа, техническа и др.' },
+          { title: 'Легализация', text: 'ако документът трябва да бъде легализиран' },
+          { title: 'Рамков договор', text: 'при сключен рамков договор цените се договарят' },
+        ],
+        counter: true,
+      },
+      {
+        blockType: 'faqColumns',
+        columns: [
+          {
+            anchor: 'pismeni-prevodi',
+            heading: 'Какво включва всяка тематика',
+            items: [
+              {
+                question: 'Обща',
+                answer: richText([
+                  'Лични документи и кореспонденция, текстове без специфична терминология.',
+                ]),
+              },
+              {
+                question: 'Икономическа',
+                answer: richText([
+                  'Фирмени документи и кореспонденция, финансови отчети, тръжни документи, договори и проекти.',
+                ]),
+              },
+              {
+                question: 'Юридическа',
+                answer: richText([
+                  'Съдебни документи, нотариални актове, правни консултации и други.',
+                ]),
+              },
+              {
+                question: 'Техническа',
+                answer: richText([
+                  'Строго специализирани: спецификации, проспекти, инструкции за експлоатация, сертификати, ръководства.',
+                ]),
+              },
+              {
+                question: 'Рекламна',
+                answer: richText(['Проспекти, анонси, уебсайтове и други.']),
+              },
+              {
+                question: 'Медицинска',
+                answer: richText(['Епикризи, медицински бележки и други.']),
+              },
+              {
+                question: 'Художествена литература',
+                answer: richText(['Превод на художествена литература.']),
+              },
+            ],
+          },
+          {
+            anchor: 'ustni-prevodi',
+            heading: 'Видове устни преводи',
+            items: [
+              {
+                question: 'Симултанен превод',
+                answer: richText([
+                  'Устен превод в момента на говоренето, без или с техническо оборудване: кабина, микрофон, слушалки.',
+                ]),
+              },
+              {
+                question: 'Консекутивен превод',
+                answer: richText([
+                  'Превод с изчакване, най-често при масови събития, събрания и конференции.',
+                ]),
+              },
+              {
+                question: 'Консекутивен превод на бизнес преговори',
+                answer: richText(['Превод с изчакване по време на бизнес преговори.']),
+              },
+              {
+                question: 'Придружаване',
+                answer: richText([
+                  'Съпровождане и асистиране при контакти, срещи, пътуване и настаняване на чужденци.',
+                ]),
+              },
+            ],
+            note: 'За устен превод направете предварителна заявка с информация за събитието.',
+          },
+        ],
+      },
+      {
+        blockType: 'locations',
+        heading: 'Къде да донесете документите',
       },
     ],
   },
