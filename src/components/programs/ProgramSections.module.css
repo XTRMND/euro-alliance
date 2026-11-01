@@ -1,0 +1,100 @@
+/* A program section (130:1993): paper, 75px above and 88px below on desktop, 28px between the
+   heading and the content; 64 / 44 on mobile. */
+.section {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 64px var(--page-margin) 44px;
+}
+
+.anchor {
+  scroll-margin-top: 80px;
+}
+
+.systems {
+  display: grid;
+  gap: 32px;
+  align-items: stretch;
+  padding-top: 18px;
+}
+
+.certificates {
+  --row-space: 28px;
+}
+
+.after {
+  justify-self: start;
+}
+
+.steps,
+.levels {
+  display: grid;
+  gap: 22px;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.number {
+  display: grid;
+  flex: none;
+  place-items: center;
+  min-width: 46px;
+  height: 50px;
+  padding: 0 6px;
+  font: 800 2rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  background: var(--color-brand-accent);
+  transform: rotate(2deg);
+}
+
+.itemTitle {
+  display: block;
+  font: 600 1.0625rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.itemText {
+  display: block;
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}
+
+.prose {
+  max-width: 760px;
+  font: var(--type-body);
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 768px) {
+  .section {
+    gap: 28px;
+    padding-block: 75px 88px;
+  }
+
+  .systems[data-count='2'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px;
+  }
+
+  .systems[data-count='3'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .steps {
+    grid-auto-flow: column;
+    gap: 32px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .systems[data-count='3'] {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

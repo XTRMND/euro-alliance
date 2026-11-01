@@ -6,14 +6,16 @@
 const port = 3100
 
 // Key pages; each page PR adds its own.
-const paths = ['/', '/kursove', '/kontakti']
+const paths = ['/', '/kursove', '/kontakti', '/ezitsi/angliyski/vazrastni']
 
 // Pages flagged for missing the LCP budget: still measured against 2,500 ms, but reported as a
 // warning so main stays green until PR 23 fixes them and empties this list. Each entry is named
 // in the notes of the commit that adds it.
 // '/': the placeholder homepage sits on the edge (CI medians 2.38 s and 2.65 s on the same code);
 // the framework's JavaScript lands in the simulated LCP whenever it runs before the first paint.
-const lcpFlagged = new Set(['/', '/kursove', '/kontakti'])
+// '/ezitsi/angliyski/vazrastni': the H1 paints at first paint, but the simulated LCP counts every
+// request started before it, the notebook's 127 KB handwriting font among them.
+const lcpFlagged = new Set(['/', '/kursove', '/kontakti', '/ezitsi/angliyski/vazrastni'])
 
 const url = (path) => `http://localhost:${port}${path}`
 const escapeRegExp = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')

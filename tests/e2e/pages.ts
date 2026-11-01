@@ -5,6 +5,8 @@ export const pages = [
   { name: 'Home', path: routes.home() },
   { name: 'Courses', path: routes.courses() },
   { name: 'Contact', path: routes.contact() },
+  { name: 'English for adults', path: routes.languageProgram('english', 'adults') },
+  { name: 'English for students', path: routes.languageProgram('english', 'students') },
   { name: 'Tokens (dev)', path: devRoutes.tokens },
   { name: 'Components (dev)', path: devRoutes.components },
   { name: 'Patterns (dev)', path: devRoutes.patterns },

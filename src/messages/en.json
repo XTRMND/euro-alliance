@@ -339,5 +339,13 @@
     "openMap": "Open the map of {street}",
     "mapAttribution": "© OpenStreetMap",
     "iban": "IBAN {iban}, BIC {bic}, {bank}"
+  },
+  "program": {
+    "languages": "Languages",
+    "audienceLabel": "Audience",
+    "audience": {
+      "adults": "For adults",
+      "students": "For students"
+    }
   }
 }

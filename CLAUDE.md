@@ -29,7 +29,7 @@ Euro Alliance (ЕВРО-АЛИАНС ООД) is a language school, a licensed vo
 - **Payload CMS** (MIT) installed inside the same Next.js app (`src/app/(payload)`), on **PostgreSQL** (`@payloadcms/db-postgres`), with migrations committed.
 - Server-side rendering with CDN caching. Content changes revalidate pages on demand from Payload hooks (`revalidateTag` / `revalidatePath`).
 - **Hosting is on the user's own servers. Do not assume Vercel** or any managed platform. Build a portable Node app: `output: 'standalone'`, a Dockerfile, Postgres via `DATABASE_URL`, media storage behind a Payload storage adapter. Ask the user before choosing anything infrastructure-specific (CDN, object storage, SMTP, preview environments, cron).
-- **Fonts**, all self-hosted (no runtime request to Google): Sofia Sans and Sofia Sans Extra Condensed as one subset variable WOFF2 each, made by `scripts/build-fonts.sh` (Cyrillic and Latin together, only the weights in use; PR 4); Caveat through `next/font/google`.
+- **Fonts**, all self-hosted (no runtime request to Google): Sofia Sans and Sofia Sans Extra Condensed as one subset variable WOFF2 each, made by `scripts/build-fonts.sh` (Cyrillic and Latin together, only the weights in use; PR 4); Caveat the same way, in `public/fonts`, declared in `globals.css` and preloaded only on the pages that write by hand (`src/styles/font-hand.tsx`, PR 12).
 - **Styling:** CSS Modules with design tokens as CSS custom properties (decided in PR 1). Tokens come from Figma variables and no component hard-codes a colour.
 - **Tests:** Vitest (unit), Playwright (smoke and visual), `@axe-core/playwright` (accessibility), Lighthouse CI (budgets).
 - Use the current stable versions at scaffold time, pin them, and list them in the PR 1 description.
@@ -245,7 +245,7 @@ Decided:
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
 Decided by the user on 01.11.2026:
-- Mobile LCP budget stays 2.5 s. Lighthouse CI runs 3 times per URL and asserts each metric on its median. A page that misses it is flagged in its commit notes and fixed in PR 23; the budget isn't relaxed. A flagged page goes on `lcpFlagged` in `lighthouserc.cjs`: its LCP is still checked against 2.5 s but reported as a warning, so `main` stays green; PR 23 empties the list. Flagged now: `/` (the homepage from PR 8: the LCP element is the hero photo; CI mobile median 2.9 s, performance 0.95) `/kursove` (PR 9: the LCP element is the hero's lead, painted about 1.1 s after FCP, likely re-recorded at the font swap after the scripts run; CI mobile median 2.66 s, performance 0.96) and `/kontakti` (PR 11: the same lead pattern, CI median 3.13 s, performance 0.93; its TBT median of 194 ms is close to the budget: the wizard's client code).
+- Mobile LCP budget stays 2.5 s. Lighthouse CI runs 3 times per URL and asserts each metric on its median. A page that misses it is flagged in its commit notes and fixed in PR 23; the budget isn't relaxed. A flagged page goes on `lcpFlagged` in `lighthouserc.cjs`: its LCP is still checked against 2.5 s but reported as a warning, so `main` stays green; PR 23 empties the list. Flagged now: `/` (the homepage from PR 8: the LCP element is the hero photo; CI mobile median 2.9 s, performance 0.95) `/kursove` (PR 9: the LCP element is the hero's lead, painted about 1.1 s after FCP, likely re-recorded at the font swap after the scripts run; CI mobile median 2.66 s, performance 0.96), `/kontakti` (PR 11: the same lead pattern, CI median 3.13 s, performance 0.93; its TBT median of 194 ms is close to the budget: the wizard's client code) and `/ezitsi/angliyski/vazrastni` (PR 12: the LCP element is the H1, painted at first paint, but the simulated LCP counts the notebook's 127 KB handwriting font, preloaded beside the styles; local mobile median 3.38 s, performance 0.92. Fix in PR 23: load the handwriting after the first paint, or a smaller subset).
 - Sand text only on navy (count bubble, inquiry band, footer). On paper and white, numbers are navy (Figure card, numbered List row); a design deviation the user will mirror in Figma.
 - «Езици» goes to the course listing filtered to language courses (`routes.courses('languages')`, `/kursove?kategoria=ezitsi`; PR 9 reads the filter). «Професионално обучение» is a disclosure button (aria-expanded, not a link) with ЦПО професии, Педагогически специалисти and Земеделски производители: a dropdown in the header, an expandable group in the mobile menu. The footer keeps its link to ЦПО професии.
 - «Ценоразпис» stays out: there's no official price list and prices are never invented. Add it only if the client supplies one.
@@ -341,6 +341,19 @@ From the contact wizard's server side (PR 11):
 - Non-language programmes (vouchers, professions, teachers, farmers, computer courses) route to office@ as proposed; the table is editable in the admin («Маршрутизиране на запитвания»).
 - The visitor's confirmation email (`inquiryEmail.confirmationText`) promises only that we'll get back to them: no response time until the client gives one.
 - Spam protection: a hidden field and a 3-second minimum; a rate limit per IP in the server action (per app instance).
+
+From the language programs (PR 12):
+- Seeded from the approved frames, to confirm with the client: the FAQ answers «Да, ако курсът е одобрен за ваучери. Ще ви помогнем с документите при записването.» (the FAQ item's default text in Figma) and «Да, удостоверение за завършен курс.» (is it an удостоверение?), and the five textbook systems with their levels and the four certificates. Figma's course cards on these pages are example data and aren't seeded.
+- System card level numbers are sand on white in Figma. [navy, the sand-on-navy rule]
+- The students' System cards have different heights in Figma. [equal heights, § 6 paired cards]
+- Feature cards and Certificate cards have a hover in Figma (the card turns navy; the seal turns) but no destination. [the hover as in Figma, no link: they aren't interactive. Drop the hover, or give them destinations?]
+- The hero's mobile H1 is 54 px and its lead 16 px in Figma, not `--type-display` 48 and `--type-lead` 17. [Figma]
+- «Езици» in the breadcrumb is plain text in the frames. [a link to the language courses, like «Начало»]
+- The FAQ answer's «безплатния входен тест» is underlined only in the screenshot. [a link to the level-test inquiry]
+- Figma's mobile certificates lead is shorter than the desktop one; the CMS has one lead. [the desktop text]
+- The hero's «Виж предстоящите курсове» scrolls to the page's own «Предстоящи курсове»; with no courses (the section is hidden) it opens the listing filtered to the language and audience. [as described]
+- Pages for German, French, Spanish, Italian, Bulgarian (БЕЛ) and Russian (students) use the same template; each shows once its program exists in the CMS (no content for them yet). Russian for adults has no page.
+- The desktop header now starts at 1200 px: at 1024 px «Преводи» ran into the logo. Below 1200 px the header has the menu button and the centred logo. [as described]
 
 Decisions this package proposes (confirm before the PR that needs them):
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).

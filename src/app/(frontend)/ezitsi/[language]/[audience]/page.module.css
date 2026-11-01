@@ -1,0 +1,24 @@
+/* «Предстоящи курсове» on a language page: 40px above (28 on mobile), 88 below (44). */
+.upcoming {
+  display: grid;
+  gap: 18px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 28px var(--page-margin) 44px;
+  scroll-margin-top: 80px;
+}
+
+.courses {
+  --row-space: 6px;
+}
+
+.all {
+  justify-self: start;
+}
+
+@media (min-width: 768px) {
+  .upcoming {
+    gap: 28px;
+    padding-block: 40px 88px;
+  }
+}

@@ -20,3 +20,7 @@
 .notebookShadow {
   mask-image: url('../../assets/halftone/notebook-shadow.svg');
 }
+
+.systemCorner {
+  mask-image: url('../../assets/halftone/system-corner.svg');
+}

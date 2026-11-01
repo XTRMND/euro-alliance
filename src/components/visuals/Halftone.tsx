@@ -6,11 +6,13 @@ import styles from './Halftone.module.css'
 //   panel           Course visual (86:416), 400 × 540, 36%
 //   course-card     Course card image (62:229), 274 × 172, 42%
 //   notebook-shadow Program hero art (131:311), 380 × 400, 32%
+//   system-corner   System card's corner (135:389), 300 × 190, 7%
 
 const patterns = {
   panel: styles.panel,
   'course-card': styles.courseCard,
   'notebook-shadow': styles.notebookShadow,
+  'system-corner': styles.systemCorner,
 }
 
 export type HalftonePattern = keyof typeof patterns

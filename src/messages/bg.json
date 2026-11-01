@@ -339,5 +339,13 @@
     "openMap": "Отвори картата на {street}",
     "mapAttribution": "© OpenStreetMap",
     "iban": "IBAN {iban}, BIC {bic}, {bank}"
+  },
+  "program": {
+    "languages": "Езици",
+    "audienceLabel": "Аудитория",
+    "audience": {
+      "adults": "За възрастни",
+      "students": "За ученици"
+    }
   }
 }

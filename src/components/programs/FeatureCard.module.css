@@ -1,0 +1,48 @@
+/* Feature card (129:348): white, 16px corners, 26px padding; navy on hover. */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  height: 100%;
+  padding: 26px;
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+  transition:
+    background-color var(--motion-card) var(--ease-out),
+    border-color var(--motion-card) var(--ease-out);
+}
+
+.chip {
+  padding: 1px 6px 2px;
+  font: 700 0.9375rem / 1.5 var(--font-display);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary-strong);
+  background: var(--color-brand-accent);
+}
+
+.title {
+  font: 800 2rem / 1 var(--font-display);
+  color: var(--color-brand-primary-strong);
+  transition: color var(--motion-card) var(--ease-out);
+}
+
+.text {
+  font: var(--type-body);
+  color: var(--color-text-muted);
+  transition: color var(--motion-card) var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: var(--color-brand-primary-strong);
+    border-color: var(--color-brand-primary-strong);
+  }
+
+  .card:hover .title,
+  .card:hover .text {
+    color: var(--color-text-on-brand);
+  }
+}

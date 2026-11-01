@@ -1,0 +1,107 @@
+/* Language hero (130:1993 / 147:1317). Mobile: one column, the notebook before the buttons.
+   Desktop: the copy in a 760 column, the notebook (560 × 460) beside it. */
+.hero {
+  --landing-rise: 36px;
+
+  overflow-x: clip;
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: grid;
+  grid-template-areas: 'crumb' 'title' 'tabs' 'lead' 'art' 'actions';
+  gap: 14px;
+  justify-items: start;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 24px var(--page-margin) 36px;
+}
+
+.copy {
+  grid-area: crumb;
+}
+
+.title {
+  grid-area: title;
+  font: 800 clamp(3.375rem, 2.982rem + 1.524vw, 4.75rem) / 0.96 var(--font-display); /* 54 → 76 */
+  color: var(--color-brand-primary-strong);
+}
+
+/* The highlighted word: 12px sides and 4px below at 76px, 1.5°. */
+.title > span {
+  padding: 0 0.158em 0.053em;
+  transform: rotate(1.5deg);
+}
+
+.tabs {
+  grid-area: tabs;
+}
+
+.lead {
+  grid-area: lead;
+  max-width: 700px;
+  font: 400 clamp(1rem, 0.93rem + 0.286vw, 1.1875rem) / 1.5 var(--font-body); /* 16 → 19 */
+  color: var(--color-text-muted);
+}
+
+.art {
+  grid-area: art;
+  justify-self: stretch;
+  max-width: 560px;
+}
+
+.actions {
+  display: flex;
+  grid-area: actions;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  justify-self: stretch;
+}
+
+.actions > :first-child {
+  align-self: stretch;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .art {
+    animation: art-in var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+}
+
+@keyframes art-in {
+  from {
+    opacity: 0;
+    rotate: -4deg;
+  }
+}
+
+@media (min-width: 640px) {
+  .actions {
+    flex-direction: row;
+    gap: 20px;
+    justify-self: start;
+    padding-top: 6px;
+  }
+
+  .actions > :first-child {
+    align-self: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    /* The empty first and last rows take the art's extra height, so the copy stays together and
+       centred beside it. */
+    grid-template-areas: '. art' 'crumb art' 'title art' 'tabs art' 'lead art' 'actions art' '. art';
+    grid-template-columns: minmax(0, 760fr) minmax(0, 560fr);
+    grid-template-rows: 1fr repeat(5, auto) 1fr;
+    column-gap: 40px;
+    row-gap: 18px;
+    padding: 38px 40px 54px var(--page-margin);
+  }
+
+  .art {
+    align-self: center;
+  }
+}
