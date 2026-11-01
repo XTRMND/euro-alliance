@@ -16,6 +16,7 @@ import {
 import {
   certificates,
   englishPrograms,
+  professions,
   singlePrograms,
   systemsBlock,
   textbookSystems,
@@ -205,6 +206,18 @@ async function seedPrograms(payload: Payload) {
       } as never,
     })
     payload.logger.info(`Seeded the program «${program.title}».`)
+  }
+
+  // The ЦПО list, in order, while it's empty (the client's edits always win).
+  if ((await payload.count({ collection: 'professions' })).totalDocs === 0) {
+    for (const profession of professions) {
+      await payload.create({
+        collection: 'professions',
+        locale: 'bg',
+        data: { ...profession, _status: 'published' },
+      })
+    }
+    payload.logger.info(`Seeded ${professions.length} professions.`)
   }
 
   for (const program of singlePrograms) {

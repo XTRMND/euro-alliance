@@ -76,6 +76,8 @@ export interface Config {
     programs: Program;
     'textbook-systems': TextbookSystem;
     certificates: Certificate;
+    professions: Profession;
+    exams: Exam;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -99,6 +101,8 @@ export interface Config {
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     'textbook-systems': TextbookSystemsSelect<false> | TextbookSystemsSelect<true>;
     certificates: CertificatesSelect<false> | CertificatesSelect<true>;
+    professions: ProfessionsSelect<false> | ProfessionsSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -496,6 +500,7 @@ export interface Program {
                 | 'translations'
                 | 'sendDocument'
                 | 'levelTest'
+                | 'otherInquiry'
                 | 'news'
                 | 'about'
                 | 'contact'
@@ -642,6 +647,7 @@ export interface Program {
                       | 'translations'
                       | 'sendDocument'
                       | 'levelTest'
+                      | 'otherInquiry'
                       | 'news'
                       | 'about'
                       | 'contact'
@@ -691,6 +697,7 @@ export interface Program {
                     | 'translations'
                     | 'sendDocument'
                     | 'levelTest'
+                    | 'otherInquiry'
                     | 'news'
                     | 'about'
                     | 'contact'
@@ -766,6 +773,7 @@ export interface Program {
                     | 'translations'
                     | 'sendDocument'
                     | 'levelTest'
+                    | 'otherInquiry'
                     | 'news'
                     | 'about'
                     | 'contact'
@@ -792,6 +800,36 @@ export interface Program {
             id?: string | null;
             blockName?: string | null;
             blockType: 'certificates';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'professions';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'exams';
           }
         | {
             /**
@@ -879,6 +917,7 @@ export interface Program {
                     | 'translations'
                     | 'sendDocument'
                     | 'levelTest'
+                    | 'otherInquiry'
                     | 'news'
                     | 'about'
                     | 'contact'
@@ -978,6 +1017,43 @@ export interface Certificate {
    * Учебникът, с който се подготвяме. Празно: редът не се показва.
    */
   prep?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Професиите на страницата «Професии и специалности», в този ред (подреждат се с влачене).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "professions".
+ */
+export interface Profession {
+  id: number;
+  _order?: string | null;
+  directionCode: string;
+  directionName: string;
+  name: string;
+  code: string;
+  degrees: ('I' | 'II' | 'III')[];
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: number;
+  kind: string;
+  subject: string;
+  part: 'theory' | 'practice' | 'both';
+  date: string;
+  place: string;
+  /**
+   * Адрес на документа с резултатите, когато ги има.
+   */
+  results?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1195,6 +1271,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'certificates';
         value: number | Certificate;
+      } | null)
+    | ({
+        relationTo: 'professions';
+        value: number | Profession;
+      } | null)
+    | ({
+        relationTo: 'exams';
+        value: number | Exam;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -1616,6 +1700,26 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        professions?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              id?: T;
+              blockName?: T;
+            };
+        exams?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              id?: T;
+              blockName?: T;
+            };
         faq?:
           | T
           | {
@@ -1716,6 +1820,36 @@ export interface CertificatesSelect<T extends boolean = true> {
   issuer?: T;
   code?: T;
   prep?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "professions_select".
+ */
+export interface ProfessionsSelect<T extends boolean = true> {
+  _order?: T;
+  directionCode?: T;
+  directionName?: T;
+  name?: T;
+  code?: T;
+  degrees?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  kind?: T;
+  subject?: T;
+  part?: T;
+  date?: T;
+  place?: T;
+  results?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -1987,6 +2121,7 @@ export interface Home {
             | 'translations'
             | 'sendDocument'
             | 'levelTest'
+            | 'otherInquiry'
             | 'news'
             | 'about'
             | 'contact'
@@ -2011,6 +2146,7 @@ export interface Home {
             | 'translations'
             | 'sendDocument'
             | 'levelTest'
+            | 'otherInquiry'
             | 'news'
             | 'about'
             | 'contact'
@@ -2073,6 +2209,7 @@ export interface Home {
             | 'translations'
             | 'sendDocument'
             | 'levelTest'
+            | 'otherInquiry'
             | 'news'
             | 'about'
             | 'contact';
@@ -2107,6 +2244,7 @@ export interface Home {
             | 'translations'
             | 'sendDocument'
             | 'levelTest'
+            | 'otherInquiry'
             | 'news'
             | 'about'
             | 'contact'

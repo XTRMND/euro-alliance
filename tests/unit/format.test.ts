@@ -7,6 +7,7 @@ import {
   formatPrice,
   startOfTodayInSofia,
   telHref,
+  formatDateTime,
 } from '@/lib/format'
 
 describe('formatDateNumeric', () => {
@@ -69,5 +70,12 @@ describe('startOfTodayInSofia', () => {
 describe('formatMonth', () => {
   it('writes the month name and the year', () => {
     expect(formatMonth('2026-11')).toBe('ноември 2026')
+  })
+})
+
+describe('formatDateTime', () => {
+  it('writes the date and the time in Bulgarian time', () => {
+    expect(formatDateTime('2027-01-15T08:00:00.000Z')).toBe('15 януари 2027, 10:00')
+    expect(formatDateTime('2027-07-01T06:30:00.000Z')).toBe('1 юли 2027, 09:30')
   })
 })

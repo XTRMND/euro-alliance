@@ -190,6 +190,20 @@ export const CertificatesBlock: Block = {
   ],
 }
 
+export const ProfessionsBlock: Block = {
+  slug: 'professions',
+  labels: { singular: 'Професии (ЦПО)', plural: 'Професии (ЦПО)' },
+  admin: { group: 'Списъци от колекциите' },
+  fields: [...heading],
+}
+
+export const ExamsBlock: Block = {
+  slug: 'exams',
+  labels: { singular: 'Изпити (ЦПО)', plural: 'Изпити (ЦПО)' },
+  admin: { group: 'Списъци от колекциите' },
+  fields: [...heading],
+}
+
 export const FaqBlock: Block = {
   slug: 'faq',
   labels: { singular: 'Въпроси', plural: 'Въпроси' },
@@ -269,6 +283,8 @@ export const programBlocks = [
   TextbookSystemsBlock,
   SystemCardsBlock,
   CertificatesBlock,
+  ProfessionsBlock,
+  ExamsBlock,
   FaqBlock,
   FiguresBlock,
   CalloutBlock,

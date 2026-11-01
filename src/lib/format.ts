@@ -40,6 +40,17 @@ export function formatDateLong(value: string | Date): string {
   return `${part('day')} ${part('month')} ${part('year')}`
 }
 
+/** 15 януари 2027, 10:00, in Bulgarian time (the ЦПО exams). */
+export function formatDateTime(value: string | Date): string {
+  const time = new Intl.DateTimeFormat('bg-BG', {
+    timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  }).format(new Date(value))
+  return `${formatDateLong(value)}, ${time}`
+}
+
 /** 495 € or 460,16 €: cents only when there are any. Never converts between currencies. */
 export function formatPrice(amount: number, currency: 'EUR' | 'BGN' = 'EUR'): string {
   return new Intl.NumberFormat('bg-BG', {

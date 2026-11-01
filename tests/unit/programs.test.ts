@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import {
   audienceFromSegment,
+  groupByDirection,
   hasLanguagePage,
   languageFromSegment,
   otherAudience,
@@ -68,5 +69,25 @@ describe('hero buttons of a program page', () => {
       '/kontakti?tema=test-za-nivo',
     )
     expect(programCtaHref({ destination: 'nowhere' }, { shown: false, listing })).toBeUndefined()
+  })
+})
+
+describe('groupByDirection', () => {
+  it('groups professions into directions in the order of their first profession', () => {
+    const row = (directionCode: string, code: string) => ({
+      directionCode,
+      directionName: `Direction ${directionCode}`,
+      code,
+    })
+    const groups = groupByDirection([
+      row('041', '041101'),
+      row('041', '041102'),
+      row('103', '103201'),
+      row('101', '101103'),
+      row('041', '041603'),
+    ])
+    expect(groups.map((group) => group.code)).toEqual(['041', '103', '101'])
+    expect(groups[0].professions.map((p) => p.code)).toEqual(['041101', '041102', '041603'])
+    expect(groups[1].name).toBe('Direction 103')
   })
 })

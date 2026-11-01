@@ -30,6 +30,7 @@ export const destinations = {
   translations: { label: 'Преводи', href: routes.translations() },
   sendDocument: { label: 'Изпрати документ за превод', href: routes.contact('prevodi') },
   levelTest: { label: 'Входен тест (запитване)', href: routes.contact('test-za-nivo') },
+  otherInquiry: { label: 'Запитване: друго', href: routes.contact('drugo') },
   news: { label: 'Новини', href: routes.news() },
   about: { label: 'За нас', href: routes.about() },
   contact: { label: 'Контакти', href: routes.contact() },

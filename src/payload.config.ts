@@ -8,12 +8,14 @@ import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
+import { Exams } from './collections/Exams'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
 import { Media } from './collections/Media'
 import { MediaTints } from './collections/MediaTints'
 import { News } from './collections/News'
 import { Offices } from './collections/Offices'
+import { Professions } from './collections/Professions'
 import { Programs } from './collections/Programs'
 import { TextbookSystems } from './collections/TextbookSystems'
 import { Users } from './collections/Users'
@@ -47,6 +49,8 @@ export default buildConfig({
     Programs,
     TextbookSystems,
     Certificates,
+    Professions,
+    Exams,
     Inquiries,
     InquiryFiles,
   ],

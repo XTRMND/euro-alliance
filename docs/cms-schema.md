@@ -99,7 +99,9 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `figures` | Figure card 259:410 | `items` { figure, label }. Only official numbers. |
 | `callout` | Callout band 259:449 | `layout` (row / stack), `heading`, `text`, `cta`. Phone numbers and email addresses in a callout's text become links (`src/lib/linkify.ts`); a button into the voucher inquiry reports `voucher_apply_click`. |
 | `richText` | Section heading 259:2319 + prose | heading + rich text |
-| `professions`, `teacherProgrammes`, `projects` | Data table 259:621, Index card 264:448 / List row 259:2318, Project card 259:574 | Arrive with their collections in PR 13 |
+| `professions` | Direction card (236:3760) | heading only: every published profession, by direction |
+| `exams` | Data table 259:621 | heading only: the exams from 60 days ago on |
+| `teacherProgrammes`, `projects` | Index card 264:448 / List row 259:2318, Project card 259:574 | Arrive with their collections in PR 13 |
 
 ### Textbook systems
 
@@ -111,7 +113,11 @@ Certificate card 145:364: `name`, `issuer` (the line above the name, e.g. CAMBRI
 
 ### Professions
 
-`directionCode`, `directionName`, `professionCode`, `name`, `degrees` (array or multi-select of qualification degrees). 20 professions in 5 directions, from the 2026 list.
+Built in PR 13 (`src/collections/Professions.ts`): `directionCode` (3 digits), `directionName`, `name`, `code` (6 digits, unique), `degrees` (multi-select I / II / III, shown «I, II, III степен»). Ordered by dragging in the admin (`orderable`); the page shows a card per direction where its first profession is. Seeded with the 20 professions in 5 directions of the 2026 list (Figma 236:3755).
+
+### Exams
+
+Built in PR 13 (`src/collections/Exams.ts`), the ЦПО's qualification exams in the Data table: `kind` («Вид изпит»), `subject` («Професия / специалност»), `part` (theory / practice / both), `date` (date and time), `place`, `results` (a link to the results, optional). The page lists them by date from 60 days ago on; without any it shows the table's empty state. Not seeded.
 
 ### Teacher programmes
 

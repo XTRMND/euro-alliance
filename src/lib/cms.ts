@@ -258,3 +258,48 @@ export const getProgram = unstable_cache(
     ],
   },
 )
+
+/** The published ЦПО professions, in the admin's order. */
+export const getProfessions = unstable_cache(
+  async () =>
+    (
+      await (
+        await payload()
+      ).find({
+        collection: 'professions',
+        locale: 'bg',
+        depth: 0,
+        sort: '_order',
+        limit: 200,
+        overrideAccess: false,
+      })
+    ).docs,
+  ['professions'],
+  { tags: [tags.collection('professions')] },
+)
+
+const examsSince = unstable_cache(
+  async (since: string) =>
+    (
+      await (
+        await payload()
+      ).find({
+        collection: 'exams',
+        locale: 'bg',
+        depth: 0,
+        where: { date: { greater_than_equal: since } },
+        sort: 'date',
+        limit: 100,
+        overrideAccess: false,
+      })
+    ).docs,
+  ['exams'],
+  { tags: [tags.collection('exams')] },
+)
+
+/** Published ЦПО exams from 60 days ago on, by date. The day is part of the cache key. */
+export function getExams() {
+  const since = new Date(startOfTodayInSofia())
+  since.setUTCDate(since.getUTCDate() - 60)
+  return examsSince(since.toISOString())
+}

@@ -313,7 +313,7 @@ export const englishPrograms = [
 export { systemsBlock }
 
 // The programs that have one page each, with the course-page hero: copy from the approved Figma
-// frames (Vouchers 236:3391). Their course cards in Figma are example data: the pages list real
+// frames (Vouchers 236:3391, Professions 236:3667). Their course cards in Figma are example data: the pages list real
 // courses from the Courses collection.
 
 const voucherCard = (card: {
@@ -397,4 +397,72 @@ export const singlePrograms = [
       },
     ],
   },
+  {
+    title: 'Професии и специалности',
+    type: 'vocational',
+    hero: {
+      heading: 'Професии и специалности',
+      highlight: 'специалности',
+      lead: 'Центърът за професионално обучение към ЕВРО-АЛИАНС е лицензиран от НАПОО през 2003 г. Нов списък с професии от 2026 г., с придобиване на първа, втора или трета степен на професионална квалификация.',
+      ctas: [
+        { label: 'Попитайте за професия', destination: 'otherInquiry' },
+        { label: 'Изпити за квалификация', anchor: 'izpiti' },
+      ],
+      sticker: 'professional',
+      countBubble: { value: '20', label: 'професии' },
+    },
+    sections: [
+      {
+        blockType: 'professions',
+        heading: 'Нов списък с професии от 2026 г.',
+        lead: 'Двадесет професии в пет професионални направления.',
+      },
+      {
+        blockType: 'exams',
+        anchor: 'izpiti',
+        heading: 'Изпити за придобиване на квалификация',
+        lead: 'Списък на обявените изпити за професионална квалификация.',
+      },
+    ],
+  },
 ] as const
+
+// The ЦПО's 2026 list (236:3755), in the page's order: 20 professions in 5 directions.
+const direction = (
+  directionCode: string,
+  directionName: string,
+  rows: [name: string, code: string, degrees: ('I' | 'II' | 'III')[]][],
+) => rows.map(([name, code, degrees]) => ({ directionCode, directionName, name, code, degrees }))
+
+export const professions = [
+  ...direction('041', 'Бизнес администрация', [
+    ['Оперативно счетоводство', '041101', ['II', 'III']],
+    ['Митническо обслужване', '041102', ['II', 'III']],
+    ['Банково, застрахователно и осигурително дело', '041201', ['II', 'III']],
+    ['Мениджмънт и икономика', '041301', ['II', 'III']],
+    ['Малък и среден бизнес', '041302', ['II']],
+    ['Административни и офис дейности', '041501', ['I', 'II', 'III']],
+    ['Търговия и продажби', '041601', ['I', 'II', 'III']],
+    ['Електронна търговия, маркетинг и реклама', '041602', ['II', 'III']],
+    ['Икономическа информатика', '041603', ['II', 'III']],
+  ]),
+  ...direction('103', 'Сигурност и отбрана', [
+    ['Гражданска, корпоративна сигурност и опазване на обществения ред', '103201', ['III']],
+  ]),
+  ...direction('101', 'Персонални услуги', [
+    ['Хотелиерство', '101103', ['I']],
+    ['Готварство', '101301', ['I', 'II']],
+    ['Ресторантьорство и кетъринг', '101302', ['I', 'II']],
+    ['Хотелиерство', '101303', ['I', 'II', 'III']],
+    ['Екскурзовод', '101501', ['III']],
+    ['Организиране на туристически пътувания', '101502', ['III']],
+    ['Туристическа анимация', '101504', ['III']],
+  ]),
+  ...direction('081', 'Селско стопанство', [
+    ['Агроекология и растителна защита', '081105', ['II', 'III']],
+    ['Флористика и озеленяване', '081106', ['I', 'II']],
+  ]),
+  ...direction('073', 'Строителство и архитектура', [
+    ['Експлоатация и сделки с недвижими имоти', '073205', ['I', 'II', 'III']],
+  ]),
+]

@@ -74,3 +74,23 @@ export function programCtaHref(
   }
   return hrefOf(cta.destination)
 }
+
+/**
+ * The ЦПО professions grouped into their directions' cards, in the list's order: a direction
+ * comes where its first profession is.
+ */
+export function groupByDirection<P extends { directionCode: string; directionName: string }>(
+  professions: P[],
+): { code: string; name: string; professions: P[] }[] {
+  const directions = new Map<string, { code: string; name: string; professions: P[] }>()
+  for (const profession of professions) {
+    const direction = directions.get(profession.directionCode) ?? {
+      code: profession.directionCode,
+      name: profession.directionName,
+      professions: [],
+    }
+    direction.professions.push(profession)
+    directions.set(profession.directionCode, direction)
+  }
+  return [...directions.values()]
+}

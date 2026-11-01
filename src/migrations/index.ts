@@ -8,6 +8,7 @@ import * as migration_20261101_130035_inquiries from './20261101_130035_inquirie
 import * as migration_20261101_132146_contact_and_topics from './20261101_132146_contact_and_topics';
 import * as migration_20261101_151145_programs from './20261101_151145_programs';
 import * as migration_20261101_161108_programs_vouchers from './20261101_161108_programs_vouchers';
+import * as migration_20261101_162829_programs_professions from './20261101_162829_programs_professions';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20261101_161108_programs_vouchers.up,
     down: migration_20261101_161108_programs_vouchers.down,
-    name: '20261101_161108_programs_vouchers'
+    name: '20261101_161108_programs_vouchers',
+  },
+  {
+    up: migration_20261101_162829_programs_professions.up,
+    down: migration_20261101_162829_programs_professions.down,
+    name: '20261101_162829_programs_professions'
   },
 ];
