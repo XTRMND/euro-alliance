@@ -92,7 +92,7 @@ The PR column is where each component is first expected. If a page needs a compo
 | 6 | Patterns | Project card | [`259:574`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=259-574) |  |
 | 6 | Patterns | Section heading | [`259:2319`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=259-2319) |  |
 | 6 | Patterns | Torn window | [`259:588`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=259-588) | About hero |
-| 7 | Courses | Course sticker set | [`50:274`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=50-274) | 16 topics + flags: English, German, French, Italian, Spanish, Russian, Bulgarian |
+| 7 | Courses | Course sticker set | [`50:274`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=50-274) | 17 topics + flags: English, German, French, Italian, Spanish (Sagrada Família), Russian, Bulgarian; plus one per ЦПО profession (19, «Hotel» for both «Хотелиерство») and per computer course (8): 308:141–308:193 (the user, 02.11.2026) |
 | 7 | Courses | Course visual | [`86:416`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=86-416) | Pose=A/Intro (Intro = landing start state) |
 | 7 | Motion | Halftone globe | — | No node ID in the brief: find it by name; behaviour from `docs/motion.md` |
 | 7 | Motion | Marquee / Languages | [`63:524`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=63-524) | Component set |

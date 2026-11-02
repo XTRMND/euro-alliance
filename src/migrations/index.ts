@@ -26,6 +26,7 @@ import * as migration_20261102_103633_course_level_unit from './20261102_103633_
 import * as migration_20261102_104535_bulgarian from './20261102_104535_bulgarian';
 import * as migration_20261102_134639_missing_addresses from './20261102_134639_missing_addresses';
 import * as migration_20261102_140644_course_free from './20261102_140644_course_free';
+import * as migration_20261102_151729_course_stickers from './20261102_151729_course_stickers';
 
 export const migrations = [
   {
@@ -166,6 +167,11 @@ export const migrations = [
   {
     up: migration_20261102_140644_course_free.up,
     down: migration_20261102_140644_course_free.down,
-    name: '20261102_140644_course_free'
+    name: '20261102_140644_course_free',
+  },
+  {
+    up: migration_20261102_151729_course_stickers.up,
+    down: migration_20261102_151729_course_stickers.down,
+    name: '20261102_151729_course_stickers'
   },
 ];

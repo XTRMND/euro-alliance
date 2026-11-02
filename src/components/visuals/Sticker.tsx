@@ -18,6 +18,33 @@ import spanish from '@/assets/stickers/spanish.png'
 import student from '@/assets/stickers/student.png'
 import teaching from '@/assets/stickers/teaching.png'
 import translation from '@/assets/stickers/translation.png'
+import accounting from '@/assets/stickers/accounting.png'
+import customs from '@/assets/stickers/customs.png'
+import banking from '@/assets/stickers/banking.png'
+import management from '@/assets/stickers/management.png'
+import smallBusiness from '@/assets/stickers/small-business.png'
+import office from '@/assets/stickers/office.png'
+import sales from '@/assets/stickers/sales.png'
+import marketing from '@/assets/stickers/marketing.png'
+import businessIt from '@/assets/stickers/business-it.png'
+import security from '@/assets/stickers/security.png'
+import hotel from '@/assets/stickers/hotel.png'
+import cooking from '@/assets/stickers/cooking.png'
+import catering from '@/assets/stickers/catering.png'
+import tourGuide from '@/assets/stickers/tour-guide.png'
+import travel from '@/assets/stickers/travel.png'
+import animation from '@/assets/stickers/animation.png'
+import plantProtection from '@/assets/stickers/plant-protection.png'
+import floristry from '@/assets/stickers/floristry.png'
+import realEstate from '@/assets/stickers/real-estate.png'
+import hardwareAndNetworks from '@/assets/stickers/hardware-and-networks.png'
+import wordProcessing from '@/assets/stickers/word-processing.png'
+import spreadsheets from '@/assets/stickers/spreadsheets.png'
+import presentations from '@/assets/stickers/presentations.png'
+import internetAndEmail from '@/assets/stickers/internet-and-email.png'
+import databases from '@/assets/stickers/databases.png'
+import webAndGraphicDesign from '@/assets/stickers/web-and-graphic-design.png'
+import specialisedSoftware from '@/assets/stickers/specialised-software.png'
 import styles from './Sticker.module.css'
 
 // Course sticker (50:274): a die-cut duotone photo with its white edge and shadow, exported once
@@ -44,6 +71,34 @@ export const stickers = {
   teaching,
   contact,
   'french-hero': frenchHero,
+  // ЦПО professions and computer courses (308:141–308:193, the user, 02.11.2026)
+  accounting: accounting,
+  customs: customs,
+  banking: banking,
+  management: management,
+  'small-business': smallBusiness,
+  office: office,
+  sales: sales,
+  marketing: marketing,
+  'business-it': businessIt,
+  security: security,
+  hotel: hotel,
+  cooking: cooking,
+  catering: catering,
+  'tour-guide': tourGuide,
+  travel: travel,
+  animation: animation,
+  'plant-protection': plantProtection,
+  floristry: floristry,
+  'real-estate': realEstate,
+  'hardware-and-networks': hardwareAndNetworks,
+  'word-processing': wordProcessing,
+  spreadsheets: spreadsheets,
+  presentations: presentations,
+  'internet-and-email': internetAndEmail,
+  databases: databases,
+  'web-and-graphic-design': webAndGraphicDesign,
+  'specialised-software': specialisedSoftware,
   'italian-hero': italianHero,
 }
 

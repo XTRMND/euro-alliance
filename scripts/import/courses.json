@@ -334,7 +334,7 @@
     "groups": [],
     "title": "Оперативно счетоводство",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "accounting",
     "cardTag": "Код 041101 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -344,7 +344,7 @@
     "groups": [],
     "title": "Митническо обслужване",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "customs",
     "cardTag": "Код 041102 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -354,7 +354,7 @@
     "groups": [],
     "title": "Банково, застрахователно и осигурително дело",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "banking",
     "cardTag": "Код 041201 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -364,7 +364,7 @@
     "groups": [],
     "title": "Мениджмънт и икономика",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "management",
     "cardTag": "Код 041301 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -374,7 +374,7 @@
     "groups": [],
     "title": "Малък и среден бизнес",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "small-business",
     "cardTag": "Код 041302 · II степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -384,7 +384,7 @@
     "groups": [],
     "title": "Административни и офис дейности",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "office",
     "cardTag": "Код 041501 · I, II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -394,7 +394,7 @@
     "groups": [],
     "title": "Търговия и продажби",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "sales",
     "cardTag": "Код 041601 · I, II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -404,7 +404,7 @@
     "groups": [],
     "title": "Електронна търговия, маркетинг и реклама",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "marketing",
     "cardTag": "Код 041602 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -414,7 +414,7 @@
     "groups": [],
     "title": "Икономическа информатика",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "business-it",
     "cardTag": "Код 041603 · II и III степен",
     "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -424,7 +424,7 @@
     "groups": [],
     "title": "Гражданска, корпоративна сигурност и опазване на обществения ред",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "security",
     "cardTag": "Код 103201 · III степен",
     "source": "The 2026 list of professions (103 Сигурност и отбрана; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -434,7 +434,7 @@
     "groups": [],
     "title": "Хотелиерство",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "hotel",
     "cardTag": "Код 101103 · I степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -444,7 +444,7 @@
     "groups": [],
     "title": "Готварство",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "cooking",
     "cardTag": "Код 101301 · I и II степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -454,7 +454,7 @@
     "groups": [],
     "title": "Ресторантьорство и кетъринг",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "catering",
     "cardTag": "Код 101302 · I и II степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -464,7 +464,7 @@
     "groups": [],
     "title": "Хотелиерство",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "hotel",
     "cardTag": "Код 101303 · I, II и III степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -474,7 +474,7 @@
     "groups": [],
     "title": "Екскурзовод",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "tour-guide",
     "cardTag": "Код 101501 · III степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -484,7 +484,7 @@
     "groups": [],
     "title": "Организиране на туристически пътувания",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "travel",
     "cardTag": "Код 101502 · III степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -494,7 +494,7 @@
     "groups": [],
     "title": "Туристическа анимация",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "animation",
     "cardTag": "Код 101504 · III степен",
     "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -504,7 +504,7 @@
     "groups": [],
     "title": "Агроекология и растителна защита",
     "category": "vocational",
-    "topic": "farming",
+    "topic": "plant-protection",
     "cardTag": "Код 081105 · II и III степен",
     "source": "The 2026 list of professions (081 Селско стопанство; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -514,7 +514,7 @@
     "groups": [],
     "title": "Флористика и озеленяване",
     "category": "vocational",
-    "topic": "farming",
+    "topic": "floristry",
     "cardTag": "Код 081106 · I и II степен",
     "source": "The 2026 list of professions (081 Селско стопанство; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -524,7 +524,7 @@
     "groups": [],
     "title": "Експлоатация и сделки с недвижими имоти",
     "category": "vocational",
-    "topic": "professional",
+    "topic": "real-estate",
     "cardTag": "Код 073205 · I, II и III степен",
     "source": "The 2026 list of professions (073 Строителство и архитектура; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
   },
@@ -570,7 +570,7 @@
     "groups": [],
     "title": "Компютри, периферия и мрежи",
     "category": "computer",
-    "topic": "computer",
+    "topic": "hardware-and-networks",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -579,7 +579,7 @@
     "groups": [],
     "title": "Текстообработка",
     "category": "computer",
-    "topic": "computer",
+    "topic": "word-processing",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -588,7 +588,7 @@
     "groups": [],
     "title": "Електронни таблици",
     "category": "computer",
-    "topic": "computer",
+    "topic": "spreadsheets",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -597,7 +597,7 @@
     "groups": [],
     "title": "Презентации",
     "category": "computer",
-    "topic": "computer",
+    "topic": "presentations",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -606,7 +606,7 @@
     "groups": [],
     "title": "Интернет и e-mail клиенти",
     "category": "computer",
-    "topic": "computer",
+    "topic": "internet-and-email",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -615,7 +615,7 @@
     "groups": [],
     "title": "Бази данни",
     "category": "computer",
-    "topic": "computer",
+    "topic": "databases",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -624,7 +624,7 @@
     "groups": [],
     "title": "Web и графичен дизайн",
     "category": "computer",
-    "topic": "computer",
+    "topic": "web-and-graphic-design",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
@@ -633,7 +633,7 @@
     "groups": [],
     "title": "Специализиран софтуер",
     "category": "computer",
-    "topic": "computer",
+    "topic": "specialised-software",
     "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   }
 ]
