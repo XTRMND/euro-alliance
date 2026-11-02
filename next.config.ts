@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 import createNextIntlPlugin from 'next-intl/plugin'
+import { securityHeaders } from './src/lib/security-headers'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts')
@@ -23,6 +24,16 @@ const nextConfig: NextConfig = {
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/api/media-tints/file/**' }],
   },
   turbopack: { root: dirname },
+  // The same security headers on every response; the per-page Content-Security-Policy comes from
+  // src/proxy.ts (src/lib/security-headers.ts).
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders({ production: process.env.NODE_ENV === 'production' }),
+      },
+    ]
+  },
   experimental: {
     // The contact wizard's server action carries translation documents: up to 10 files of 20 MB
     // (src/lib/inquiries.ts), checked again on the server.

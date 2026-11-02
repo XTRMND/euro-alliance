@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { Pool } from 'pg'
+import { measurementIdOf } from '@/lib/analytics'
 import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
+import { contentSecurityPolicy, createNonce, nonceHeader } from '@/lib/security-headers'
 
 // Old addresses (docs/content-import.md § 5): a single 301 to the new page (302 for the English
 // copies under /en until the English site exists), whatever the case and
@@ -9,6 +11,9 @@ import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/li
 // pass straight through; anything else is looked up in the fixed map, then in the `redirects`
 // collection, and otherwise gets the 404 page. The collection is read once a minute at most, with
 // its own small pool: the proxy doesn't load Payload.
+// Every page it lets through, the site's and the admin's, gets a Content-Security-Policy with a
+// fresh nonce (src/lib/security-headers.ts): on the request, where Next reads it to put on its
+// scripts, and on the response.
 
 const pool = process.env.DATABASE_URL
   ? new Pool({ connectionString: process.env.DATABASE_URL, max: 2 })
@@ -47,9 +52,27 @@ async function redirectFor(
   return target ? { target, status } : undefined
 }
 
+/** The page, with a Content-Security-Policy whose nonce Next puts on its scripts. */
+function withPolicy(request: NextRequest) {
+  const nonce = createNonce()
+  const policy = contentSecurityPolicy({
+    nonce,
+    dev: process.env.NODE_ENV === 'development',
+    analytics: Boolean(measurementIdOf(process.env.GA4_MEASUREMENT_ID)),
+  })
+  const headers = new Headers(request.headers)
+  headers.set(nonceHeader, nonce)
+  headers.set('Content-Security-Policy', policy)
+  const response = NextResponse.next({ request: { headers } })
+  response.headers.set('Content-Security-Policy', policy)
+  return response
+}
+
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
-  if (isSitePath(pathname)) return NextResponse.next()
+  if (isSitePath(pathname) || pathname === '/admin' || pathname.startsWith('/admin/')) {
+    return withPolicy(request)
+  }
 
   const redirect = await redirectFor(pathname)
   if (redirect) return NextResponse.redirect(new URL(redirect.target, request.url), redirect.status)
@@ -58,12 +81,13 @@ export async function proxy(request: NextRequest) {
   if (pathname.length > 1 && pathname.endsWith('/')) {
     return NextResponse.redirect(new URL(pathname.replace(/\/+$/, '') + search, request.url), 308)
   }
-  return NextResponse.next()
+  // Anything else gets the 404 page.
+  return withPolicy(request)
 }
 
 export const config = {
-  // Not the framework's files, Payload's admin and API, or the files in public/.
+  // Not the framework's files, Payload's API, or the files in public/.
   matcher: [
-    '/((?!_next/|api/|admin|fonts/|logos/|icon|apple-touch-icon|favicon|robots\\.txt|sitemap).*)',
+    '/((?!_next/|api/|fonts/|logos/|icon|apple-touch-icon|favicon|robots\\.txt|sitemap).*)',
   ],
 }

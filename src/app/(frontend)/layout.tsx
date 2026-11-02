@@ -8,6 +8,7 @@ import { Header } from '@/components/shell/Header'
 import { SkipLink } from '@/components/shell/SkipLink'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
 import { measurementIdOf } from '@/lib/analytics'
+import { requestNonce } from '@/lib/nonce'
 import { consentHeadScript } from '@/lib/consent'
 import { siteUrl } from '@/lib/seo'
 import { handFontScript } from '@/styles/font-hand'
@@ -48,11 +49,12 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
   // Read when the page is served, so the ID can change without a new build.
   const measurementId = measurementIdOf(process.env.GA4_MEASUREMENT_ID)
-  const [navigation, site, offices, messages] = await Promise.all([
+  const [navigation, site, offices, messages, nonce] = await Promise.all([
     getNavigation(),
     getSite(),
     getOffices(),
     getMessages(),
+    requestNonce(),
   ])
   const office = offices.find((o) => o.role === 'courses')
 
@@ -62,9 +64,9 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
     <html lang="bg" className={fontVariables} suppressHydrationWarning>
       <head>
         {/* Consent Mode's defaults and the stored choice, before anything else (src/lib/consent). */}
-        <script dangerouslySetInnerHTML={{ __html: consentHeadScript() }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: consentHeadScript() }} />
         {/* The handwriting (Caveat) once the page has loaded, after the LCP. */}
-        <script dangerouslySetInnerHTML={{ __html: handFontScript }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: handFontScript }} />
       </head>
       <body>
         <HeadScripts />

@@ -43,6 +43,9 @@ const dirname = path.dirname(fileURLToPath(import.meta.url))
 export default buildConfig({
   admin: {
     user: Users.slug,
+    // Payload's own avatar, not Gravatar: no editor's email hash goes to a third party, and the
+    // admin's Content-Security-Policy needs no outside images.
+    avatar: 'default',
     importMap: { baseDir: dirname },
     meta: { titleSuffix: ' · Евро Алианс' },
   },
