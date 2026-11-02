@@ -46,7 +46,7 @@ One extractor per page type, using `cheerio` on the fetched HTML (Playwright onl
 - News bodies: keep the heading structure and make section headings H2 (they feed the contents rail). Never more than one H1; the title is the H1.
 - Normalise typography: Bulgarian quotation marks „…“, non-breaking spaces in numbers («175 958») and before «г.» / «лв».
 - Dates → ISO. Phone numbers → `+359 …` format as in `CLAUDE.md`.
-- **Prices:** import exactly as written, including the currency. If a price is in лв, don't convert it; set the record to draft and list it in the report (Bulgaria has used the euro since 01.01.2026).
+- **Prices:** import exactly as written, including the currency. If a price is in лв, don't convert it; list it in the report (Bulgaria has used the euro since 01.01.2026).
 - Slugs from titles via `src/lib/slug.ts` (§ 4).
 
 ### 3.4 Images
@@ -57,11 +57,11 @@ One extractor per page type, using `cheerio` on the fetched HTML (Playwright onl
 
 ### 3.5 Load
 
-`pnpm import:run` (or the agreed package manager) uses Payload's Local API. Flags: `--dry-run` (no writes; prints what would change), `--only=news|courses|pages`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records start as **drafts** unless they are complete and checked; the user decides when to publish.
+`pnpm import:run` (or the agreed package manager) uses Payload's Local API. Flags: `--dry-run` (no writes; prints what would change), `--only=news|courses|pages`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records are **published**: the client approved all the content (02.11.2026) and reviews it on staging. The old site's English copies (`/en/…`) go in as the English locale where they're real translations, for the later English site.
 
 ### 3.6 Report
 
-`scripts/import/out/report.md`, attached to PR 21: counts per collection versus the inventory, records left as draft and why, missing fields (prices, dates, photos), images without reviewed alt, legacy URLs with no mapping, and anything the extractors couldn't parse.
+`scripts/import/out/report.md`, attached to PR 21: counts per collection versus the inventory, missing fields (prices, dates, photos), images without reviewed alt, legacy URLs with no mapping, and anything the extractors couldn't parse.
 
 ## 4. URL scheme (agreed 31.10.2026)
 

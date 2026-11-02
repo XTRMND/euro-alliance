@@ -150,7 +150,7 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 ### 21. Content import: `feat/content-import`
 
 - `scripts/import/` per `docs/content-import.md`: inventory, extract, transform, images, load, report. Per-article news redirects. The redirect test extended to every URL in the inventory.
-- **Done when:** a dry run and a real run against staging both succeed; the report is attached; the user decides what gets published.
+- **Done when:** a dry run and a real run against staging both succeed; the report is attached. Everything is imported as published (the client approved all content, 02.11.2026) and the client reviews it on staging.
 
 ### 22. SEO: `feat/seo`
 
@@ -183,7 +183,7 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 
 Adds `docs/launch.md` and works through it with the user:
 
-- [ ] All page PRs merged; content imported and the client has approved what's published.
+- [ ] All page PRs merged; content imported, and the client's changes from the staging review made.
 - [ ] Open items resolved or explicitly deferred by the user.
 - [ ] Production environment variables set; `INQUIRY_EMAIL_OVERRIDE` **unset** in production only.
 - [ ] Test inquiry for every topic reaches the right inbox (with the client), including a translation upload.

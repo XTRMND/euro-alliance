@@ -2,7 +2,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { Pool } from 'pg'
 import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
 
-// Old addresses (docs/content-import.md § 5): a single 301 to the new page, whatever the case and
+// Old addresses (docs/content-import.md § 5): a single 301 to the new page (302 for the English
+// copies under /en until the English site exists), whatever the case and
 // with or without a trailing slash (next.config's redirects can't ignore case, and Next's own
 // trailing-slash redirect would add a hop: skipTrailingSlashRedirect is on). Pages of the new site
 // pass straight through; anything else is looked up in the fixed map, then in the `redirects`
@@ -30,20 +31,28 @@ async function storedRedirects(): Promise<Map<string, string>> {
   return stored.map
 }
 
-async function redirectFor(pathname: string): Promise<string | undefined> {
+/**
+ * Where an old address goes, and how: 301 for good, but 302 for the English copies (/en/…), which
+ * point at the Bulgarian page only until the English site exists (the user's decision, 02.11.2026).
+ */
+async function redirectFor(
+  pathname: string,
+): Promise<{ target: string; status: 301 | 302 } | undefined> {
   const english = normalizePath(pathname)
   const path = withoutEnglish(english)
+  const status = path === english ? 301 : 302
   // /en on its own is the old English homepage.
-  if (path === '/' && english !== '/') return '/'
-  return staticRedirects[path] ?? (pool ? (await storedRedirects()).get(path) : undefined)
+  if (path === '/' && english !== '/') return { target: '/', status }
+  const target = staticRedirects[path] ?? (pool ? (await storedRedirects()).get(path) : undefined)
+  return target ? { target, status } : undefined
 }
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
   if (isSitePath(pathname)) return NextResponse.next()
 
-  const target = await redirectFor(pathname)
-  if (target) return NextResponse.redirect(new URL(target, request.url), 301)
+  const redirect = await redirectFor(pathname)
+  if (redirect) return NextResponse.redirect(new URL(redirect.target, request.url), redirect.status)
 
   // The new site's own addresses never end in a slash.
   if (pathname.length > 1 && pathname.endsWith('/')) {

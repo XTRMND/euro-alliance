@@ -64,3 +64,21 @@ test('a new address with a trailing slash loses it', async ({ request }) => {
   expect(response.status()).toBe(308)
   expect(response.headers().location).toMatch(/\/kursove$/)
 })
+
+test('the old English copies redirect for now, with a 302', async ({ request }) => {
+  for (const [old, to] of [
+    ['/en/Vouchers', '/vaucheri'],
+    ['/en/en/News?page=2', '/novini'],
+    ['/en', '/'],
+  ]) {
+    const response = await request.get(old, { maxRedirects: 0 })
+    expect(response.status(), old).toBe(302)
+    expect(new URL(response.headers().location, 'http://localhost').pathname, old).toBe(to)
+  }
+})
+
+test('the old news listing’s pages go to the news, not imported', async ({ request }) => {
+  const response = await request.get('/News?page=12', { maxRedirects: 0 })
+  expect(response.status()).toBe(301)
+  expect(new URL(response.headers().location, 'http://localhost').pathname).toBe('/novini')
+})
