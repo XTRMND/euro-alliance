@@ -48,8 +48,10 @@ export default async function NotFound() {
       </div>
       <div className={[styles.scrap, landing.art].join(' ')} aria-hidden="true">
         <div className={styles.paper}>
+          {/* Low priority: React preloads every server-rendered <img> from the <head>, and this
+              page's tree travels with every page (the root not-found boundary). */}
           {/* eslint-disable-next-line @next/next/no-img-element -- Figma's torn paper, an SVG */}
-          <img src={tornScrap.src} alt="" className={styles.paperImage} />
+          <img src={tornScrap.src} alt="" className={styles.paperImage} fetchPriority="low" />
           <span className={styles.rules} />
         </div>
         <Tape className={styles.tape} />

@@ -16,8 +16,16 @@ export async function SearchField({ query, className }: { query?: string; classN
       method="get"
       className={[styles.field, className].filter(Boolean).join(' ')}
     >
+      {/* Low priority, so React doesn't preload it on every page (the 404 page has the field). */}
       {/* eslint-disable-next-line @next/next/no-img-element -- a 16px decorative SVG */}
-      <img src={searchRing.src} alt="" width={16} height={16} className={styles.icon} />
+      <img
+        src={searchRing.src}
+        alt=""
+        width={16}
+        height={16}
+        className={styles.icon}
+        fetchPriority="low"
+      />
       <input
         type="search"
         name={queryParams.search}

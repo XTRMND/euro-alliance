@@ -26,8 +26,16 @@ export function LogoBadge({ size, ring, variant = 'badge', className }: LogoBadg
         .join(' ')}
       style={{ '--badge-size': size, '--badge-ring': ring } as CSSProperties}
     >
+      {/* Low priority, so React doesn't preload it ahead of the page's LCP element. */}
       {/* eslint-disable-next-line @next/next/no-img-element -- the 1 KB logo SVG, as it is */}
-      <img src={logoMark.src} alt="" width={64} height={64} className={styles.mark} />
+      <img
+        src={logoMark.src}
+        alt=""
+        width={64}
+        height={64}
+        className={styles.mark}
+        fetchPriority="low"
+      />
     </span>
   )
 }
