@@ -4,7 +4,8 @@ import type { Course } from '@/payload-types'
 // 126:1940). A course is what the centre teaches; its dates belong to its groups:
 // - a group whose start is today or later is upcoming: its date and «Запиши се»;
 // - a group that has started is running («В ход») until its end date; without an end date it
-//   stays running (the old data has none, and none is guessed); people may ask to join it;
+//   stays running (the import estimates one for the old groups: scripts/import/old-course.ts);
+//   people may ask to join it;
 // - a group whose end date has passed is over and isn't shown;
 // - a course with no upcoming or running group has no date: «Няма насрочена дата».
 // The group a card or a page shows is the soonest upcoming one, else the latest to have started.

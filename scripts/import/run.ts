@@ -21,7 +21,14 @@ import { slugify } from '@/lib/slug'
 import { type Destination, destinations } from '@/lib/destinations'
 import { richText } from '@/seed/programs'
 import { htmlToLexical, plainText, typeset } from './html-to-lexical'
-import { cleanCourseTitle, type OldLevel, parseOldLevel, parseOldPrice } from './old-course'
+import {
+  bgnPerEuro,
+  cleanCourseTitle,
+  estimateGroupEnd,
+  type OldLevel,
+  parseOldLevel,
+  parseOldPrice,
+} from './old-course'
 
 const out = new URL('./out/', import.meta.url)
 const userAgent = 'EuroAlliance-site-migration/1.0 (content migration to the new euro-alliance.net)'
@@ -53,8 +60,8 @@ const report = {
     created: 0,
     updated: 0,
     prices: [] as string[],
-    /** Every imported group: none has an end date (the client gives them). */
-    withoutEnd: [] as string[],
+    /** Every imported group's estimated end (the old site gives none). */
+    ends: [] as string[],
     missing: [] as string[],
     /** «Ниво» as written → the bubble. */
     levels: [] as string[],
@@ -656,6 +663,35 @@ async function main() {
       }
     }
 
+    /** An old entry's price in euro and its group's estimated end, both reported. */
+    const priceAndEnd = (title: string, field: Record<string, string>, startDate: string) => {
+      const written = field['Цена (лв.)']
+      const parsed = parseOldPrice(written)
+      if (written)
+        report.courses.prices.push(
+          `${title}: «${written}»${
+            parsed?.bgn
+              ? ` → ${parsed.price} € (${parsed.bgn} лв. ÷ ${bgnPerEuro}, rounded to 5 €)`
+              : parsed
+                ? ` → ${String(parsed.price).replace('.', ',')} €`
+                : ''
+          }`,
+        )
+      const end = estimateGroupEnd(startDate, {
+        total: field['Хорариум'],
+        days: field['Учебни дни'],
+        hours: field['Учебни часове'],
+      })
+      report.courses.ends.push(`${title}: ${startDate} → ${end.endDate} (${end.how})`)
+      // The group keeps the euro amount; the лв. amount stays in the report.
+      const price = parsed && {
+        price: parsed.price,
+        currency: parsed.currency,
+        priceLabel: parsed.priceLabel,
+      }
+      return { price, endDate: `${end.endDate}T00:00:00.000Z` }
+    }
+
     const reportLevel = (title: string, level: OldLevel | null, written?: string) =>
       level
         ? report.courses.levels.push(
@@ -684,18 +720,16 @@ async function main() {
         level ??= parseOldLevel(field['Ниво'])
         course.levelName ??= level?.levelName ?? field['Ниво']
         if (!startDate) continue
-        const price = parseOldPrice(field['Цена (лв.)'])
-        if (field['Цена (лв.)'])
-          report.courses.prices.push(
-            `${course.title}: «${field['Цена (лв.)']}»${price?.currency === 'BGN' ? ' (лв.)' : ''}`,
-          )
-        report.courses.withoutEnd.push(
-          `${course.title}${label ? `, ${label}` : ''}: from ${startDate}`,
+        const { price, endDate } = priceAndEnd(
+          `${course.title}${label ? `, ${label}` : ''}`,
+          field,
+          startDate,
         )
         const online = /online/i.test(field['Зала'] ?? '') || /онлайн/i.test(name)
         groups.push({
           ...(label ? { label } : {}),
           startDate: `${startDate}T00:00:00.000Z`,
+          endDate,
           days: field['Учебни дни'] || undefined,
           hours: field['Учебни часове'] || undefined,
           format: online ? 'online' : 'in-person',
@@ -775,12 +809,12 @@ async function main() {
     for (const doc of unlisted.docs) {
       const page = pageById.get(pathOf(doc.legacyUrl ?? '').split('/')[2])
       if (!page) continue
-      const { field, name } = await readOldEntry(page)
+      const { field, name, startDate } = await readOldEntry(page)
       const level = parseOldLevel(field['Ниво'])
       const title = cleanCourseTitle(name)
       reportLevel(`${title} (not in the list yet)`, level, field['Ниво'])
-      const price = parseOldPrice(field['Цена (лв.)'])
       const [first, ...rest] = doc.groups ?? []
+      const { price, endDate } = priceAndEnd(`${title} (not in the list yet)`, field, startDate)
       if (dryRun) continue
       await payload.update({
         collection: 'courses',
@@ -790,14 +824,20 @@ async function main() {
           title,
           originalTitle: doc.originalTitle || name,
           ...(level ?? {}),
-          ...(first && price
+          ...(first && startDate
             ? {
                 groups: [
                   {
                     ...first,
-                    ...price,
-                    // The old price text, now the amount and its label, isn't repeated as a note.
-                    priceNote: first.priceNote === field['Цена (лв.)'] ? null : first.priceNote,
+                    endDate,
+                    ...(price
+                      ? {
+                          ...price,
+                          // The old price text, now the amount and its label, isn't repeated.
+                          priceNote:
+                            first.priceNote === field['Цена (лв.)'] ? null : first.priceNote,
+                        }
+                      : {}),
                   },
                   ...rest,
                 ],
@@ -947,10 +987,10 @@ async function writeReport(inventory: Inventory) {
     '',
     `- ${r.news.allCaps} news titles are written in capitals on the old site and kept as written.`,
     `- ${r.news.tables} tables in article texts became a paragraph per row.`,
-    `- Prices, as written:`,
+    `- Prices, as written and as imported (лв. converted at the fixed rate and rounded to 5 €; euro as written):`,
     ...r.courses.prices.map((price) => `  - ${price}`),
-    `- Groups without an end date (a started group counts as running until it has one: ask the client):`,
-    ...r.courses.withoutEnd.map((group) => `  - ${group}`),
+    `- Estimated end dates (the old site gives none): from the total hours and the hours a week when both are written, otherwise 9 months after the start. An ended group isn't shown; ask the client for the real dates:`,
+    ...r.courses.ends.map((group) => `  - ${group}`),
     `- Level bubbles, from the old «Ниво» (Cyrillic look-alikes read as Latin, a span as a range; school years as КЛАС):`,
     ...r.courses.levels.map((level) => `  - ${level}`),
     `- No level could be read, so no bubble: ${r.courses.noLevel.join('; ') || 'none'}.`,

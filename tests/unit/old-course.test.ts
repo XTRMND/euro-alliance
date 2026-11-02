@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { cleanCourseTitle, parseOldLevel, parseOldPrice } from '../../scripts/import/old-course'
+import {
+  cleanCourseTitle,
+  estimateGroupEnd,
+  euroFromBgn,
+  parseOldLevel,
+  parseOldPrice,
+} from '../../scripts/import/old-course'
 
 describe('the old site’s prices', () => {
   it('becomes an amount, its currency and the label before it', () => {
@@ -21,12 +27,15 @@ describe('the old site’s prices', () => {
     expect(parseOldPrice('660 евро')).toEqual({ price: 660, currency: 'EUR' })
   })
 
-  it('keeps лв. as лв., never converted', () => {
-    expect(parseOldPrice('580 лв.')).toEqual({ price: 580, currency: 'BGN' })
-    expect(parseOldPrice('стойност на ваучер 900 лв.')).toMatchObject({
-      price: 900,
-      currency: 'BGN',
+  it('converts лв. to euro at the fixed rate, rounded to 5 €; euro stays as written', () => {
+    expect(parseOldPrice('580 лв.')).toEqual({ price: 295, currency: 'EUR', bgn: 580 })
+    expect(parseOldPrice('стойност на ваучер 900 лв.')).toEqual({
+      price: 460,
+      currency: 'EUR',
+      priceLabel: 'стойност на ваучера',
+      bgn: 900,
     })
+    expect(euroFromBgn(1000)).toBe(510)
   })
 
   it('has no price for «ask» or nothing', () => {
@@ -85,5 +94,38 @@ describe('the old site’s course titles', () => {
       cleanCourseTitle('СЕДМИЧНИ ДНЕВНИ ГРУПИ УЧЕНИЦИ от нива S1 и S2 (от 5-ти до 7-ми клас)'),
     ).toBe('Седмични дневни групи от нива S1–S2 (от 5-ти до 7-ми клас)')
     expect(cleanCourseTitle('Педагогически специалисти')).toBe('Педагогически специалисти')
+  })
+})
+
+describe('the old groups’ end', () => {
+  it('comes from the total hours and the hours a week when both are written', () => {
+    expect(
+      estimateGroupEnd('2026-10-10', {
+        total: '100',
+        days: 'Събота по 3 уч.часа',
+        hours: '100 уч.часа',
+      }),
+    ).toEqual({ endDate: '2027-05-31', how: '100 h ÷ 3 h a week ≈ 33 weeks' })
+    expect(
+      estimateGroupEnd('2026-10-02', {
+        total: '120 часа',
+        days: 'събота',
+        hours: '9.00-12.00 по 4 уч.часа',
+      }),
+    ).toEqual({ endDate: '2027-04-30', how: '120 h ÷ 4 h a week ≈ 30 weeks' })
+  })
+
+  it('is 9 months after the start otherwise', () => {
+    expect(
+      estimateGroupEnd('2026-11-03', {
+        total: '100 учебни часа',
+        days: 'понеделник и сряда / вторник и четвъртък',
+        hours: '18.00 до 20.50',
+      }),
+    ).toEqual({ endDate: '2027-08-03', how: '9 months after the start' })
+    expect(estimateGroupEnd('2026-01-01', { total: '' })).toEqual({
+      endDate: '2026-10-01',
+      how: '9 months after the start',
+    })
   })
 })
