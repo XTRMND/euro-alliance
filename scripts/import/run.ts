@@ -145,8 +145,26 @@ async function main() {
     newsSlug.set(normalizePath(pathOf(page.url)), slug)
   }
 
-  // Documents linked from the text: uploaded, and their links rewritten to the copies.
+  // Course slugs too, for the links to old course pages.
+  const coursePages = bulgarian.filter((page) => /^\/courses\/\d+/i.test(pathOf(page.url)))
+  const courseSlug = new Map<string, string>()
+  const courseTitle = new Map<string, string>()
+  const usedCourseSlugs = new Set<string>()
+  for (const page of coursePages) {
+    const $ = await html(page)
+    const id = pathOf(page.url).split('/')[2]
+    const title = typeset(String($('input[name="courseName"]').val() ?? page.title).trim())
+    let slug = slugify(title)
+    if (usedCourseSlugs.has(slug)) slug = `${slug}-${id}`
+    usedCourseSlugs.add(slug)
+    courseSlug.set(normalizePath(pathOf(page.url)), slug)
+    courseTitle.set(normalizePath(pathOf(page.url)), title)
+  }
+
+  // Documents on the old site linked from the text: uploaded, and their links rewritten to the
+  // copies (documents on other sites stay links). One missing on the old site too loses its link.
   const documentUrl = new Map<string, string>()
+  const copies = new Set<string>()
   async function documentLink(href: string, label: string): Promise<string | null> {
     if (documentUrl.has(href)) return documentUrl.get(href)!
     const doc = await media(
@@ -161,11 +179,13 @@ async function main() {
     }
     report.documents.uploaded++
     documentUrl.set(href, doc?.url ?? href)
+    if (doc?.url) copies.add(doc.url)
     return doc?.url ?? href
   }
 
   /** An old link → the new address (or left as it is, for other sites). */
   const mapLink = (href: string): string => {
+    if (copies.has(href)) return href
     let url: URL
     try {
       url = new URL(href, 'https://euro-alliance.net/')
@@ -182,7 +202,8 @@ async function main() {
       path === '/'
         ? '/'
         : (staticRedirects[path] ??
-          (newsSlug.has(path) ? routes.newsArticle(newsSlug.get(path)!) : undefined))
+          (newsSlug.has(path) ? routes.newsArticle(newsSlug.get(path)!) : undefined) ??
+          (courseSlug.has(path) ? routes.course(courseSlug.get(path)!) : undefined))
     if (target) {
       report.links.mapped++
       return target
@@ -205,10 +226,12 @@ async function main() {
         .find('.carousel-inner, [role="listbox"], .carousel-indicators, .carousel-control')
         .remove()
       for (const link of content.find('a[href]').toArray()) {
-        const href = new URL($(link).attr('href')!, page.url).href
-        if (/\.(pdf|docx?|xlsx?)$/i.test(new URL(href).pathname)) {
-          const copy = await documentLink(href, $(link).text().trim())
+        const href = new URL($(link).attr('href')!, page.url)
+        const ours = href.hostname.replace(/^www\./, '') === 'euro-alliance.net'
+        if (ours && /\.(pdf|docx?|xlsx?)$/i.test(href.pathname)) {
+          const copy = await documentLink(href.href, $(link).text().trim())
           if (copy) $(link).attr('href', copy)
+          else $(link).removeAttr('href')
         }
       }
       const converted = htmlToLexical(content.html() ?? '', mapLink)
@@ -257,20 +280,15 @@ async function main() {
 
   // ── Courses ───────────────────────────────────────────────────────────────
   if (runs('courses')) {
-    const coursePages = bulgarian.filter((page) => /^\/courses\/\d+/i.test(pathOf(page.url)))
-    const courseSlugs = new Set<string>()
     for (const page of coursePages) {
       const $ = await html(page)
-      const id = pathOf(page.url).split('/')[2]
       const field: Record<string, string> = {}
       $('dl.dl-horizontal dt').each((_, dt) => {
         const value = $(dt).next('dd').text().replace(/\s+/g, ' ').trim()
         field[$(dt).text().trim()] = value === 'ask' ? '' : value
       })
-      const title = typeset(String($('input[name="courseName"]').val() ?? page.title).trim())
-      let slug = slugify(title)
-      if (courseSlugs.has(slug)) slug = `${slug}-${id}`
-      courseSlugs.add(slug)
+      const title = courseTitle.get(normalizePath(pathOf(page.url)))!
+      const slug = courseSlug.get(normalizePath(pathOf(page.url)))!
       const description = $('h3')
         .filter((_, h) => $(h).text().trim() === 'Тема на обучение')
         .first()
@@ -476,7 +494,7 @@ async function writeReport(inventory: Inventory) {
     `| News articles | ${bg.filter((p) => /^\/news\/\d+/i.test(pathOf(p.url))).length} | ${r.news.created} new, ${r.news.updated} updated |`,
     `| Courses | ${bg.filter((p) => /^\/courses\/\d+/i.test(pathOf(p.url))).length} | ${r.courses.created} new, ${r.courses.updated} updated |`,
     `| Language pages | ${r.pages.made.length} without a page on the new site | ${r.pages.created} new, ${r.pages.updated} updated |`,
-    `| Images and documents | ${r.images.downloaded} downloaded | ${r.images.reused} already in media |`,
+    `| Documents linked from the texts | ${r.images.downloaded} downloaded | ${r.images.reused} already in media |`,
     '',
     `News listing pages (\`/News?page=N\`) aren't imported: they redirect to /novini. The English copies (\`/en/…\`) redirect to the Bulgarian page with a 302 (docs/english/old-site.md keeps the few real translations).`,
     '',
@@ -490,8 +508,7 @@ async function writeReport(inventory: Inventory) {
     `- Language pages made from the old site (the hero and the text; no textbook cards, certificates or FAQ):`,
     ...r.pages.made.map((page) => `  - ${page}`),
     `- Old pages not imported (the new site has its own, from the approved Figma copy, or they're sections): ${r.pages.kept.length}.`,
-    `- Documents linked from the texts, now in Media: ${r.documents.uploaded}; failed: ${r.documents.failed.join(', ') || 'none'}.`,
-    `- Downloads that failed: ${r.images.failed.join(', ') || 'none'}.`,
+    `- Documents linked from the texts, now in Media: ${r.documents.uploaded}. Missing on the old site too, so their links were removed (the text stays): ${r.documents.failed.join(', ') || 'none'}.`,
     `- Links to the old site without a new address: ${[...r.links.unmapped].join(', ') || 'none'}; ${r.links.mapped} links rewritten to the new addresses, ${r.links.external} to other sites kept.`,
     '',
     `## Images`,
