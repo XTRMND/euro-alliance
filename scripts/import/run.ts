@@ -5,7 +5,7 @@
 // photos picked for them. Documents linked from the texts are downloaded once, a second apart, and
 // stored by content hash. Idempotent: a record is matched on its legacyUrl and updated, and a
 // cover set since is kept. Writes scripts/import/out/report.md.
-//   pnpm import:run, with IMPORT_DRY_RUN=1 to write nothing and IMPORT_ONLY=news|courses|pages for
+//   pnpm import:run, with IMPORT_DRY_RUN=1 to write nothing and IMPORT_ONLY=news|courses|pages|translation for
 //   one part (environment variables: `payload run` doesn't pass arguments on to the script).
 //   IMPORT_ONLY=covers applies the user's photo picks (out/photo-decisions.json), the last step:
 //   it never runs as part of the rest.
@@ -25,6 +25,7 @@ import {
   bgnPerEuro,
   cleanCourseTitle,
   estimateGroupEnd,
+  mergeOldLevels,
   type OldLevel,
   parseOldLevel,
   parseOldPrice,
@@ -69,7 +70,10 @@ const report = {
     noLevel: [] as string[],
     /** Old entries not yet in the approved list, cleaned up in place. */
     tidied: 0,
+    /** Old one-per-entry courses that became groups of an approved course. */
+    merged: [] as string[],
   },
+  translation: { languages: [] as string[] },
   pages: {
     created: 0,
     updated: 0,
@@ -627,10 +631,10 @@ async function main() {
   // ── Courses ───────────────────────────────────────────────────────────────
   // The courses in scripts/import/courses.json the user has approved (the list in
   // docs/course-list.md): what the centre teaches, each with zero or more groups made from the old
-  // site's dated entries (/Courses/N). A group keeps the old entry's start, schedule, format,
-  // office and price as written; no end date is guessed (the report lists every group without one).
-  // The level bubble comes from the old «Ниво» (scripts/import/old-course.ts), unless the list
-  // gives one; the report lists every course without a level.
+  // site's dated entries (/Courses/N). A group keeps the old entry's start, schedule, format and
+  // office; its price comes in euro and its end is estimated (scripts/import/old-course.ts; the
+  // report lists both). The level bubble comes from the old «Ниво», across all the course's groups,
+  // unless the list gives one; the report lists every course without a level.
   if (runs('courses')) {
     const entries = (
       JSON.parse(
@@ -702,7 +706,7 @@ async function main() {
     for (const entry of entries) {
       const groups = []
       const course: Record<string, string> = {}
-      let level: OldLevel | null = null
+      const levelTexts: string[] = []
       for (const { legacyId, label, priceLabel } of entry.groups) {
         const page = pageById.get(legacyId)
         if (!page) {
@@ -717,8 +721,7 @@ async function main() {
         course.program ??= field['Програма']
         course.document ??= field['Документ']
         course.included ??= field['Бележки']
-        level ??= parseOldLevel(field['Ниво'])
-        course.levelName ??= level?.levelName ?? field['Ниво']
+        levelTexts.push(field['Ниво'])
         if (!startDate) continue
         const { price, endDate } = priceAndEnd(
           `${course.title}${label ? `, ${label}` : ''}`,
@@ -741,6 +744,11 @@ async function main() {
           legacyUrl: page.url,
         })
       }
+      // One group's level as written; several groups' as the span of their codes (each group's
+      // own range is in its label).
+      const level = mergeOldLevels(levelTexts)
+      if (level || levelTexts.some(Boolean))
+        course.levelName = level?.levelName ?? levelTexts.find(Boolean)!
       const title = course.title ?? entry.title ?? entry.slug
       // The list's level wins (ДЗИ and НВО give theirs); otherwise the old «Ниво», read.
       if (entry.level)
@@ -766,7 +774,7 @@ async function main() {
       const legacyUrls = entry.groups
         .map(({ legacyId }) => pageById.get(legacyId)?.url)
         .filter(Boolean) as string[]
-      const found = await payload.find({
+      const matches = await payload.find({
         collection: 'courses',
         where: {
           or: [
@@ -774,15 +782,24 @@ async function main() {
             ...(legacyUrls.length ? [{ legacyUrl: { in: legacyUrls } }] : []),
           ],
         },
-        limit: 1,
+        pagination: false,
         depth: 0,
         draft: true,
       })
+      // The course this entry updates: the one with its slug, else the first old entry it takes
+      // in. The other old entries it takes in as groups were imported as courses of their own
+      // (one per entry, before the list): they go, and their old addresses come to this course.
+      const target = matches.docs.find((doc) => doc.slug === entry.slug) ?? matches.docs[0]
+      const superseded = matches.docs.filter((doc) => doc.id !== target?.id)
       if (dryRun) continue
-      if (found.docs[0]) {
+      for (const doc of superseded) {
+        await payload.delete({ collection: 'courses', id: doc.id })
+        report.courses.merged.push(`«${doc.title}» → a group of «${title}»`)
+      }
+      if (target) {
         await payload.update({
           collection: 'courses',
-          id: found.docs[0].id,
+          id: target.id,
           locale: 'bg',
           data: { ...data, legacyUrl: null } as never,
         })
@@ -846,6 +863,31 @@ async function main() {
         } as never,
       })
       report.courses.tidied++
+    }
+  }
+
+  // ── Translation languages ─────────────────────────────────────────────────
+  // The languages of «Изпратете документ», from the old «Писмени преводи» page (C13, the user:
+  // «go check yourself», 02.11.2026): Figma's pair first (Български, Немски), then the old list in
+  // its order. Only into an empty list, so the client's own edits stay.
+  if (runs('translation')) {
+    const page = bulgarian.find((candidate) =>
+      /^\/translations\/document-translations$/i.test(normalizePath(pathOf(candidate.url))),
+    )
+    const translation = await payload.findGlobal({ slug: 'translation', depth: 0 })
+    if (page && !translation.languages?.length) {
+      const $ = await html(page)
+      const text = $('body').text().replace(/\s+/g, ' ')
+      const list = text.match(/Писмени езикови преводи и легализация(.*?)Други езици/)?.[1] ?? ''
+      const old = [...list.matchAll(/([А-Я][а-я]+) език/g)].map((match) => match[1])
+      const names = [...new Set(['Български', 'Немски', ...old])]
+      report.translation.languages = names
+      if (!dryRun && old.length)
+        await payload.updateGlobal({
+          slug: 'translation',
+          locale: 'bg',
+          data: { languages: names.map((name) => ({ name })) } as never,
+        })
     }
   }
 
@@ -994,6 +1036,12 @@ async function writeReport(inventory: Inventory) {
     `- Level bubbles, from the old «Ниво» (Cyrillic look-alikes read as Latin, a span as a range; school years as КЛАС):`,
     ...r.courses.levels.map((level) => `  - ${level}`),
     `- No level could be read, so no bubble: ${r.courses.noLevel.join('; ') || 'none'}.`,
+    ...(r.courses.merged.length
+      ? [
+          `- Old entries imported as their own courses before the list, now groups of an approved course (their old addresses redirect to it):`,
+          ...r.courses.merged.map((merged) => `  - ${merged}`),
+        ]
+      : []),
     ...(r.courses.tidied
       ? [
           `- ${r.courses.tidied} courses from old entries not yet in the approved list (docs/course-list.md) got the same clean-up in place: level, title (the old one kept in «Заглавие на стария сайт»), price and its label.`,
@@ -1002,6 +1050,11 @@ async function writeReport(inventory: Inventory) {
     ...(r.courses.missing.length
       ? [
           `- Old entries named in courses.json but not in the crawl: ${r.courses.missing.join('; ')}.`,
+        ]
+      : []),
+    ...(r.translation.languages.length
+      ? [
+          `- Translation languages, from the old «Писмени преводи» page (Figma's pair first; «Други езици с предварителна заявка» stays a note): ${r.translation.languages.join(', ')}.`,
         ]
       : []),
     `- Language pages on the English template, from each old page and the neutral Figma copy (scripts/import/language-pages.json has a source for every field):`,

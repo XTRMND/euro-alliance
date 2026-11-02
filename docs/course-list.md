@@ -1,4 +1,11 @@
-# Course list (draft for the user's review, 02.11.2026)
+# Course list (approved by the user, 02.11.2026)
+
+Imported from `scripts/import/courses.json`. The user's answers: L1 the list approved; L2 #10 stays
+its own course (on the old site it's a separate announcement with its own level, programme and
+format, not linked from the English adults page); L3 CPE and IELTS stay certificates; L4 one card per
+profession (the «Professional» and «Farming» stickers: no new art in Figma); L5 one teachers' course;
+L6 the 2022 summer course kept, without a current date; L7 one English students' course with three
+groups.
 
 Every course the centre teaches gets a card in the listing and its own page, with or without a
 date (CLAUDE.md § 12). Sources: the old site's course list (`/Courses`, 9 dated entries, plus one

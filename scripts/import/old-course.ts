@@ -128,6 +128,24 @@ export function parseOldLevel(text: string | undefined): OldLevel | null {
   return null
 }
 
+// The old site's levels from the youngest to the oldest: P and S (2nd to 7th grade, by the old
+// entries' own order «Р2, Р3, Р4, S1, S2, S3, B2 и С1»), then CEFR.
+const levelOrder = ['P1', 'P2', 'P3', 'P4', 'S1', 'S2', 'S3', 'A1', 'A2', 'B1', 'B2', 'C1', 'C2']
+
+/**
+ * One bubble for a course whose groups each have a level: the span of all their codes («P2–S2»,
+ * «S1–S2» and «P2…C1» → «P2–C1»). One group keeps its own level and full text.
+ */
+export function mergeOldLevels(texts: (string | undefined)[]): OldLevel | null {
+  const levels = texts.map(parseOldLevel).filter((level): level is OldLevel => level !== null)
+  if (levels.length <= 1) return levels[0] ?? null
+  if (levels.some((level) => level.levelUnit !== 'level')) return levels[0]
+  const codes = [...new Set(levels.flatMap((level) => level.levelName.match(codePattern) ?? []))]
+  codes.sort((a, b) => levelOrder.indexOf(a) - levelOrder.indexOf(b))
+  const level = codes.length === 1 ? codes[0] : `${codes[0]}–${codes.at(-1)}`
+  return { level, levelUnit: 'level', levelName: level }
+}
+
 /**
  * A course title without the audience and format words its tags already show, and with its
  * level codes in Latin and as a range: «Английски език В2 Възрастни ОНЛАЙН» → «Английски език

@@ -1,18 +1,82 @@
 [
   {
-    "slug": "podgotovka-po-bel-za-dzi",
-    "title": "Подготовка по БЕЛ за ДЗИ",
+    "slug": "angliyski-ezik-za-uchenitsi",
     "approved": true,
-    "category": "exams",
-    "language": "bulgarian",
+    "groups": [
+      {
+        "legacyId": "70",
+        "label": "Седмични вечерни групи (P2–S2, 2.–7. клас)"
+      },
+      {
+        "legacyId": "71",
+        "label": "Седмични дневни групи (S1–S2, 5.–7. клас)"
+      },
+      {
+        "legacyId": "69",
+        "label": "Съботни групи (P2–C1, 2.–12. клас)"
+      }
+    ],
+    "title": "Английски език за ученици",
+    "category": "languages",
+    "language": "english",
     "audience": "students",
-    "audienceNote": "11–12 клас",
-    "topic": "exam-prep",
-    "level": "11–12",
-    "levelUnit": "grade",
-    "format": "in-person",
-    "groups": [{ "legacyId": "73", "priceLabel": "за целия курс" }],
-    "source": "Old /Courses/73; tags, level bubble, sticker and «за целия курс» from БЕЛ 299:4737 (the user, 02.11.2026)"
+    "topic": "english",
+    "source": "Old /Courses/70, 71, 69 (one course with three groups, L7) and the English students page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "nemski-ezik-za-uchenitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Немски език за ученици",
+    "category": "languages",
+    "language": "german",
+    "audience": "students",
+    "topic": "german",
+    "source": "The old german students page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "frenski-ezik-za-uchenitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Френски език за ученици",
+    "category": "languages",
+    "language": "french",
+    "audience": "students",
+    "topic": "french",
+    "source": "The old french students page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ispanski-ezik-za-uchenitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Испански език за ученици",
+    "category": "languages",
+    "language": "spanish",
+    "audience": "students",
+    "topic": "spanish",
+    "source": "The old spanish students page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "italianski-ezik-za-uchenitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Италиански език за ученици",
+    "category": "languages",
+    "language": "italian",
+    "audience": "students",
+    "topic": "italian",
+    "source": "The old italian students page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ruski-ezik-za-uchenitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Руски език за ученици",
+    "category": "languages",
+    "language": "russian",
+    "audience": "students",
+    "topic": "russian",
+    "source": "The old russian students page; docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
     "slug": "podgotovka-po-bel-za-nvo",
@@ -26,8 +90,131 @@
     "level": "6–7",
     "levelUnit": "grade",
     "format": "in-person",
-    "groups": [{ "legacyId": "74", "priceLabel": "за целия курс" }],
+    "groups": [
+      {
+        "legacyId": "74",
+        "priceLabel": "за целия курс"
+      }
+    ],
     "source": "Old /Courses/74; tags, level bubble, sticker and «за целия курс» from БЕЛ 299:4737 (the user, 02.11.2026)"
+  },
+  {
+    "slug": "podgotovka-po-bel-za-dzi",
+    "title": "Подготовка по БЕЛ за ДЗИ",
+    "approved": true,
+    "category": "exams",
+    "language": "bulgarian",
+    "audience": "students",
+    "audienceNote": "11–12 клас",
+    "topic": "exam-prep",
+    "level": "11–12",
+    "levelUnit": "grade",
+    "format": "in-person",
+    "groups": [
+      {
+        "legacyId": "73",
+        "priceLabel": "за целия курс"
+      }
+    ],
+    "source": "Old /Courses/73; tags, level bubble, sticker and «за целия курс» from БЕЛ 299:4737 (the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-leten-intenziven-kurs-b1",
+    "approved": true,
+    "groups": [
+      {
+        "legacyId": "9"
+      }
+    ],
+    "title": "Английски език – летен интензивен курс B1",
+    "category": "languages",
+    "language": "english",
+    "audience": "students",
+    "topic": "english",
+    "format": "in-person",
+    "source": "Old /Courses/9 (2022; kept without a current date, L6); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-b2",
+    "approved": true,
+    "groups": [
+      {
+        "legacyId": "1"
+      }
+    ],
+    "title": "Английски език B2",
+    "category": "languages",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "format": "online",
+    "source": "Old /Courses/1: its own announcement on the old site (Roadmap B2, 100 уч. часа, online), not linked from the English adults page, so its own course (L2); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-za-vazrastni",
+    "approved": true,
+    "groups": [],
+    "title": "Английски език за възрастни",
+    "category": "languages",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "source": "The old English adults page (New Total English); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "razgovoren-angliyski-ezik",
+    "approved": true,
+    "groups": [],
+    "title": "Разговорен английски език",
+    "category": "languages",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "source": "The old English adults page (SpeakOut); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "nemski-ezik-za-vazrastni",
+    "approved": true,
+    "groups": [],
+    "title": "Немски език за възрастни",
+    "category": "languages",
+    "language": "german",
+    "audience": "adults",
+    "topic": "german",
+    "source": "The old German adults page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "frenski-ezik-za-vazrastni",
+    "approved": true,
+    "groups": [],
+    "title": "Френски език за възрастни",
+    "category": "languages",
+    "language": "french",
+    "audience": "adults",
+    "topic": "french",
+    "source": "The old French adults page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ispanski-ezik-za-vazrastni",
+    "approved": true,
+    "groups": [],
+    "title": "Испански език за възрастни",
+    "category": "languages",
+    "language": "spanish",
+    "audience": "adults",
+    "topic": "spanish",
+    "source": "The old Spanish adults page; docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "italianski-ezik-za-vazrastni",
+    "approved": true,
+    "groups": [],
+    "title": "Италиански език за възрастни",
+    "category": "languages",
+    "language": "italian",
+    "audience": "adults",
+    "topic": "italian",
+    "source": "The old Italian adults page; docs/course-list.md (approved by the user, 02.11.2026)"
   },
   {
     "slug": "balgarski-ezik-za-chuzhdentsi",
@@ -40,5 +227,411 @@
     "cardTag": "Групово и индивидуално",
     "groups": [],
     "source": "The old Bulgarian pages («Научете бързо български език – интензивен курс»); the card in За чужденци 295:4337"
+  },
+  {
+    "slug": "podgotovka-za-cambridge-b2-first-fce",
+    "approved": true,
+    "groups": [],
+    "title": "Подготовка за Cambridge B2 First (FCE)",
+    "category": "exams",
+    "language": "english",
+    "topic": "exams",
+    "level": "B2",
+    "source": "The old certificates page (Complete First); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "podgotovka-za-cambridge-c1-advanced-cae",
+    "approved": true,
+    "groups": [],
+    "title": "Подготовка за Cambridge C1 Advanced (CAE)",
+    "category": "exams",
+    "language": "english",
+    "topic": "exams",
+    "level": "C1",
+    "source": "The old certificates page (Complete Advanced); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-a1-b1",
+    "approved": true,
+    "groups": [
+      {
+        "legacyId": "64"
+      },
+      {
+        "legacyId": "4"
+      }
+    ],
+    "title": "Английски език A1–B1",
+    "category": "vouchers",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "voucherEligible": true,
+    "duration": "300 уч. часа",
+    "source": "Old /Courses/64 and /Courses/4 and the old vouchers page (Roadmap, 300 уч. часа); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-a2-b2",
+    "approved": true,
+    "groups": [],
+    "title": "Английски език A2–B2",
+    "category": "vouchers",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "format": "online",
+    "level": "A2–B2",
+    "voucherEligible": true,
+    "duration": "300 уч. часа",
+    "program": "Roadmap (Pearson)",
+    "source": "The old vouchers page (Roadmap, 300 уч. часа, дистанционно синхронно); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "angliyski-ezik-b1-c1",
+    "approved": true,
+    "groups": [],
+    "title": "Английски език B1–C1",
+    "category": "vouchers",
+    "language": "english",
+    "audience": "adults",
+    "topic": "english",
+    "format": "online",
+    "level": "B1–C1",
+    "voucherEligible": true,
+    "duration": "300 уч. часа",
+    "program": "Roadmap (Pearson)",
+    "source": "The old vouchers page (Roadmap, 300 уч. часа, дистанционно синхронно); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "digitalni-umenia-bazovo-nivo",
+    "approved": true,
+    "groups": [],
+    "title": "Дигитални умения – базово ниво",
+    "category": "vouchers",
+    "audience": "adults",
+    "topic": "computer",
+    "level": "1–2",
+    "voucherEligible": true,
+    "duration": "55 уч. часа",
+    "source": "The old vouchers page (DigComp 1–2, Ключова компетентност 4); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "digitalni-umenia-sredno-nivo",
+    "approved": true,
+    "groups": [],
+    "title": "Дигитални умения – средно ниво",
+    "category": "vouchers",
+    "audience": "adults",
+    "topic": "computer",
+    "level": "3–4",
+    "voucherEligible": true,
+    "duration": "45 уч. часа",
+    "source": "The old vouchers page (DigComp 3–4); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "operativno-schetovodstvo",
+    "approved": true,
+    "groups": [],
+    "title": "Оперативно счетоводство",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041101 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "mitnichesko-obsluzhvane",
+    "approved": true,
+    "groups": [],
+    "title": "Митническо обслужване",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041102 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "bankovo-zastrahovatelno-i-osiguritelno-delo",
+    "approved": true,
+    "groups": [],
+    "title": "Банково, застрахователно и осигурително дело",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041201 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "menidzhmant-i-ikonomika",
+    "approved": true,
+    "groups": [],
+    "title": "Мениджмънт и икономика",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041301 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "malak-i-sreden-biznes",
+    "approved": true,
+    "groups": [],
+    "title": "Малък и среден бизнес",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041302 · II степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "administrativni-i-ofis-deynosti",
+    "approved": true,
+    "groups": [],
+    "title": "Административни и офис дейности",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041501 · I, II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "targovia-i-prodazhbi",
+    "approved": true,
+    "groups": [],
+    "title": "Търговия и продажби",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041601 · I, II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "elektronna-targovia-marketing-i-reklama",
+    "approved": true,
+    "groups": [],
+    "title": "Електронна търговия, маркетинг и реклама",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041602 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ikonomicheska-informatika",
+    "approved": true,
+    "groups": [],
+    "title": "Икономическа информатика",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 041603 · II и III степен",
+    "source": "The 2026 list of professions (041 Бизнес администрация; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "grazhdanska-korporativna-sigurnost-i-opazvane-na-obshtestvenia-red",
+    "approved": true,
+    "groups": [],
+    "title": "Гражданска, корпоративна сигурност и опазване на обществения ред",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 103201 · III степен",
+    "source": "The 2026 list of professions (103 Сигурност и отбрана; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "hotelierstvo-101103",
+    "approved": true,
+    "groups": [],
+    "title": "Хотелиерство",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101103 · I степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "gotvarstvo",
+    "approved": true,
+    "groups": [],
+    "title": "Готварство",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101301 · I и II степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "restorantyorstvo-i-ketaring",
+    "approved": true,
+    "groups": [],
+    "title": "Ресторантьорство и кетъринг",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101302 · I и II степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "hotelierstvo-101303",
+    "approved": true,
+    "groups": [],
+    "title": "Хотелиерство",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101303 · I, II и III степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ekskurzovod",
+    "approved": true,
+    "groups": [],
+    "title": "Екскурзовод",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101501 · III степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "organizirane-na-turisticheski-patuvania",
+    "approved": true,
+    "groups": [],
+    "title": "Организиране на туристически пътувания",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101502 · III степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "turisticheska-animatsia",
+    "approved": true,
+    "groups": [],
+    "title": "Туристическа анимация",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 101504 · III степен",
+    "source": "The 2026 list of professions (101 Персонални услуги; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "agroekologia-i-rastitelna-zashtita",
+    "approved": true,
+    "groups": [],
+    "title": "Агроекология и растителна защита",
+    "category": "vocational",
+    "topic": "farming",
+    "cardTag": "Код 081105 · II и III степен",
+    "source": "The 2026 list of professions (081 Селско стопанство; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "floristika-i-ozelenyavane",
+    "approved": true,
+    "groups": [],
+    "title": "Флористика и озеленяване",
+    "category": "vocational",
+    "topic": "farming",
+    "cardTag": "Код 081106 · I и II степен",
+    "source": "The 2026 list of professions (081 Селско стопанство; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "eksploatatsia-i-sdelki-s-nedvizhimi-imoti",
+    "approved": true,
+    "groups": [],
+    "title": "Експлоатация и сделки с недвижими имоти",
+    "category": "vocational",
+    "topic": "professional",
+    "cardTag": "Код 073205 · I, II и III степен",
+    "source": "The 2026 list of professions (073 Строителство и архитектура; src/seed/programs.ts); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "kvalifikatsia-na-pedagogicheski-spetsialisti",
+    "approved": true,
+    "groups": [
+      {
+        "legacyId": "53"
+      }
+    ],
+    "title": "Квалификация на педагогически специалисти",
+    "category": "teachers",
+    "topic": "teaching",
+    "cardTag": "29 програми · 1–3 кредита",
+    "source": "Old /Courses/53 and the teachers page (29 programmes, 1–3 credits under Наредба 12); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "inovatsii-i-ekologichni-praktiki-v-rastitelnata-zashtita",
+    "approved": true,
+    "groups": [],
+    "title": "Иновации и екологични практики в растителната защита",
+    "category": "farmers",
+    "topic": "farming",
+    "duration": "150 уч. часа (19 дни)",
+    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "ustoychivo-upravlenie-ekologia-i-inovatsii-v-zemedelskite-stopanstva",
+    "approved": true,
+    "groups": [],
+    "title": "Устойчиво управление, екология и иновации в земеделските стопанства",
+    "category": "farmers",
+    "topic": "farming",
+    "duration": "50 уч. часа (7 дни)",
+    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "kompyutri-periferia-i-mrezhi",
+    "approved": true,
+    "groups": [],
+    "title": "Компютри, периферия и мрежи",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "tekstoobrabotka",
+    "approved": true,
+    "groups": [],
+    "title": "Текстообработка",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "elektronni-tablitsi",
+    "approved": true,
+    "groups": [],
+    "title": "Електронни таблици",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "prezentatsii",
+    "approved": true,
+    "groups": [],
+    "title": "Презентации",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "internet-i-e-mail-klienti",
+    "approved": true,
+    "groups": [],
+    "title": "Интернет и e-mail клиенти",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "bazi-danni",
+    "approved": true,
+    "groups": [],
+    "title": "Бази данни",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "web-i-grafichen-dizayn",
+    "approved": true,
+    "groups": [],
+    "title": "Web и графичен дизайн",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
+  },
+  {
+    "slug": "spetsializiran-softuer",
+    "approved": true,
+    "groups": [],
+    "title": "Специализиран софтуер",
+    "category": "computer",
+    "topic": "computer",
+    "source": "The old computer courses page (8 programme areas; groups of 8–12, Google Classroom); docs/course-list.md (approved by the user, 02.11.2026)"
   }
 ]

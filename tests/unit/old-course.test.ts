@@ -3,6 +3,7 @@ import {
   cleanCourseTitle,
   estimateGroupEnd,
   euroFromBgn,
+  mergeOldLevels,
   parseOldLevel,
   parseOldPrice,
 } from '../../scripts/import/old-course'
@@ -127,5 +128,27 @@ describe('the old groups’ end', () => {
       endDate: '2026-10-01',
       how: '9 months after the start',
     })
+  })
+})
+
+describe('a course’s level from its groups', () => {
+  it('spans every group’s codes', () => {
+    expect(
+      mergeOldLevels([
+        'Р2, Р3, Р4, S1, S2 (от 2-ри до 7-ми клас)',
+        'S1 и S2 (от 5-ти до 7-ми клас)',
+        'Р2, Р3, Р4, S1, S2, S3, B2 и С1 (от 2-ри до 12-ти клас)',
+      ]),
+    ).toEqual({ level: 'P2–C1', levelUnit: 'level', levelName: 'P2–C1' })
+    expect(mergeOldLevels(['А1 A2 B1', 'А1 A2 B1'])).toMatchObject({ level: 'A1–B1' })
+  })
+
+  it('keeps one group’s level and text as they are', () => {
+    expect(mergeOldLevels(['B2 Upper-Intermediate'])).toEqual({
+      level: 'B2',
+      levelUnit: 'level',
+      levelName: 'B2 Upper-Intermediate',
+    })
+    expect(mergeOldLevels(['', undefined])).toBeNull()
   })
 })
