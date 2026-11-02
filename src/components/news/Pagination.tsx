@@ -1,11 +1,13 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
+import { pageWindow } from '@/lib/pagination'
 import { routes } from '@/lib/routes'
 import styles from './Pagination.module.css'
 
 // Pagination of the news listing: Page number (181:371) links, the current page marked (not a
 // link), «Следваща» after them and «Предишна» before them from page 2 (not in Figma). Links, not
-// buttons: each page has its URL (/novini?stranitsa=2).
+// buttons: each page has its URL (/novini?stranitsa=2). With many pages, only the first, the last and
+// the current one's neighbours, with «…» between (not in Figma, which shows two pages).
 export async function Pagination({ page, pages }: { page: number; pages: number }) {
   if (pages < 2) return null
   const t = await getTranslations('news.pagination')
@@ -17,9 +19,13 @@ export async function Pagination({ page, pages }: { page: number; pages: number 
         </Link>
       )}
       <ol className={styles.numbers}>
-        {Array.from({ length: pages }, (_, i) => i + 1).map((number) => (
-          <li key={number}>
-            {number === page ? (
+        {pageWindow(page, pages).map((number, i) => (
+          <li key={number === 'gap' ? `gap-${i}` : number}>
+            {number === 'gap' ? (
+              <span className={styles.gap} aria-hidden="true">
+                …
+              </span>
+            ) : number === page ? (
               <span className={styles.number} aria-current="page">
                 <span className="sr-only">{t('page', { n: number })}</span>
                 <span aria-hidden="true">{number}</span>

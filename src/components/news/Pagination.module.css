@@ -29,6 +29,15 @@
   transition: border-color var(--motion-button) var(--ease-out);
 }
 
+.gap {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 44px;
+  font: 800 1.25rem / 1.5 var(--font-display);
+  color: var(--color-text-muted);
+}
+
 .number[aria-current] {
   border-color: var(--color-brand-primary-strong);
   background: var(--color-brand-primary-strong);
