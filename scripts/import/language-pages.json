@@ -29,7 +29,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Шест нива по Общата европейска езикова рамка: MENSCHEN за начинаещи и EM за напреднали. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Шест нива по Общата европейска езикова рамка: MENSCHEN за начинаещи и EM за напреднали. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -76,7 +76,7 @@
         "answer": [
           "Нивото се определя с ",
           {
-            "text": "тест за входно ниво",
+            "text": "безплатен тест за входно ниво",
             "destination": "levelTest"
           },
           " при записването."
@@ -115,8 +115,8 @@
       "systems[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «СИСТЕМИ ЗА СРЕДНОШКОЛЦИ,СТУДЕНТИ И ВЪЗРАСТНИ - НАПРЕДНАЛИ: Brückenkurs, Hauptkurs, Abschlusskurs»; «EM NEU»; «4 ниво (B1). Система за обучение EM 1. Курсът е подходящ за всички, които искат да затвърдят и усъвършенстват познанията, получени в първите три нива, както и да се подготвят за сертификатни изпити(Zertifikat Deutsch).»; «5 ниво (B2). Система за обучение EM 2.»; «6 ниво (C1). Система за обучение EM 3. … свободно ползувате немски език както писмено, така и говоримо.»",
       "certificates[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «4 ниво (B1). Система за обучение EM 1. Курсът е подходящ за всички, които искат … да се подготвят за сертификатни изпити(Zertifikat Deutsch).» No issuer or code on the page.",
       "certificatesBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: same quote as certificates[0].",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «общо в шест нива» and the CEFR levels A1–C1; hubs: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» / «Нивата са по CEFR - Common European Framework of Reference for Languages.»; entry test: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Template lead from Figma English copy, «Безплатният» dropped (see notes).",
-      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «общо в шест нива» and the CEFR levels A1–C1; hubs: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» / «Нивата са по CEFR - Common European Framework of Reference for Languages.»; entry test: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Template lead from Figma English copy, «Безплатният» dropped (see notes).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
+      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Обучението в курсове за ученици е целогодишно (от октомври до юни).» «За предстоящата учебна година записването започва в месец юни до октомври.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts); Figma's answer «Да, според нуждите на ученика.» is supported by the same quote.",
       "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»).",
@@ -163,7 +163,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Шест нива по Общата европейска езикова рамка: MENSCHEN за начинаещи и EM за напреднали. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Шест нива по Общата европейска езикова рамка: MENSCHEN за начинаещи и EM за напреднали. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -249,7 +249,7 @@
       "systems[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «СИСТЕМИ ЗА СРЕДНОШКОЛЦИ,СТУДЕНТИ И ВЪЗРАСТНИ - НАПРЕДНАЛИ: Brückenkurs, Hauptkurs, Abschlusskurs»; «EM NEU»; «4 ниво (B1). Система за обучение EM 1. Курсът е подходящ за всички, които искат да затвърдят и усъвършенстват познанията, получени в първите три нива, както и да се подготвят за сертификатни изпити(Zertifikat Deutsch).»; «5 ниво (B2). Система за обучение EM 2.»; «6 ниво (C1). Система за обучение EM 3. … свободно ползувате немски език както писмено, така и говоримо.»",
       "certificates[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «4 ниво (B1). Система за обучение EM 1. Курсът е подходящ за всички, които искат … да се подготвят за сертификатни изпити(Zertifikat Deutsch).» No issuer or code on the page.",
       "certificatesBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: same quote as certificates[0].",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «общо в шест нива» and the CEFR levels A1–C1; hubs: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» / «Нивата са по CEFR - Common European Framework of Reference for Languages.»; entry test: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Template lead from Figma English copy, «Безплатният» dropped (see notes).",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «общо в шест нива» and the CEFR levels A1–C1; hubs: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» / «Нивата са по CEFR - Common European Framework of Reference for Languages.»; entry test: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Template lead from Figma English copy, «Безплатният» dropped (see notes).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.» Question from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Групи с 8 до 12 лица.»",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Желаещи да повишат знанията и уменията си по чужд език могат да проведат индивидуални занятия с преподавател. Заплащането е за всяко проведено занятие или авансово за определен брой занятия … Времето на занятията и броя проведени часове на занятие се определят от желанието на учащия,като на занятие се провеждат минимум 2 учебни часа.»",
@@ -319,17 +319,39 @@
         "countLabel": "нива",
         "description": "Система за ученици от прогимназията. Разработена е за 120 учебни часа.",
         "levels": []
+      },
+      {
+        "name": "ECHO",
+        "kicker": "9–12 клас",
+        "count": "B2",
+        "countLabel": "до ниво",
+        "description": "Съвременна комуникативна система, адаптирана към общоевропейските езикови изисквания и одобрена от МОН. Съобразена е и с европейския езиков сертификат TELC.",
+        "levels": ["От A1 до B2"],
+        "strip": {
+          "label": "Формат",
+          "note": "на хартия и дигитален"
+        }
       }
     ],
-    "certificatesBlock": null,
-    "certificates": null,
+    "certificatesBlock": {
+      "heading": "Сертификатни изпити",
+      "lead": "Подготовка за DELF по учебната система ECHO."
+    },
+    "certificates": [
+      {
+        "name": "DELF",
+        "issuer": null,
+        "code": "DELF",
+        "prep": "ECHO"
+      }
+    ],
     "faq": [
       {
         "question": "Как да разбера нивото на детето?",
         "answer": [
           "Нивото се определя с ",
           {
-            "text": "тест за входно ниво",
+            "text": "безплатен тест за входно ниво",
             "destination": "levelTest"
           },
           " при записването."
@@ -363,10 +385,13 @@
       "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: «Учебните системи са съобразени с възрастта и нивото на знания. Освен стандартните учебни помагала, всяка система предлага аудио и видео обучение. Децата се учат да говорят, пишат и четат с помощта на забавни ролеви игри, песнички и различни упражнения.»",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: «Френски език за деца на 7-10 години. Система на обучение – Alex et Zoe et compagnie. Френска езикова система в три нива, предназначена за деца от началното училище, специално адаптирана за България. Системата включва учебник, учебна тетрадка и СД. Разработена е за 120 учебни часа.»",
       "systems[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: «Френски език за деца на 11-14 години. Система на обучение – Junior. Френска езикова система в четири нива за ученици от прогимназията. Включва учебник, учебна тетрадка и 1 аудиокасета. Разработена е за 120 учебни часа»",
-      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
+      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Обучението в курсове за ученици е целогодишно (от октомври до юни).» «За предстоящата учебна година записването започва в месец юни до октомври.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts); Figma's answer «Да, според нуждите на ученика.» is supported by the same quote.",
-      "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»)."
+      "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»).",
+      "systems[2]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale. Съвременна, комуникативна система изцяло адаптирана към общоевропейските езикови изисквания за изучаване на френски език. Системата е одобрена от МОН. Предзначена е за ученици 9-12 клас и за възрастни. … Системата е съобразена и с Европейския езиков сертификат TELC … Те граматически обхващат материал от DELF / A1 / до DALF / B2 /.»; strip: bullet «На хартия или дигитален? И двете...!» (bullets under the ECHO cover image). Kicker «9–12 клас» from «Предзначена е за ученици 9-12 клас и за възрастни» (added to the students page by the user, 02.11.2026: Y4).",
+      "certificatesBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: same as certificates[0]. (also on the students page: Y4)",
+      "certificates[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: bullet «Ефективна подготовка за DELF», under the ECHO cover image (88cf944a….png is the ECHO cover: «Méthode de français», J. Girardet / J. Pécheur). (also on the students page: Y4)"
     },
     "notes": [
       "The students' page differs from the adults' page: Alex et Zoe et compagnie (7–10) and Junior (11–14) here, ECHO there.",
@@ -408,7 +433,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -478,7 +503,7 @@
       "features[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Желаещи да повишат знанията и уменията си по чужд език могат да проведат индивидуални занятия с преподавател. Заплащането е за всяко проведено занятие или авансово за определен брой занятия … Времето на занятията и броя проведени часове на занятие се определят от желанието на учащия,като на занятие се провеждат минимум 2 учебни часа.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Обучението в курсове за възрастни е по поръчка на работодатели, бюра по труда, по проекти и програми или с лично финансиране от участниците.» and «Групови курсове и индивидуално обучение. Фирмени езикови обучения. Валидиране на компетентности за езиково ниво.» (banner on every adults' language page and the hub) Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Езиков център ЕВРО-АЛИАНС провежда изпити за признаване на ниво на чуждоезикови компетентности.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: ECHO «изцяло адаптирана към общоевропейските езикови изисквания»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Нивата са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: ECHO «изцяло адаптирана към общоевропейските езикови изисквания»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Нивата са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale. Съвременна, комуникативна система изцяло адаптирана към общоевропейските езикови изисквания за изучаване на френски език. Системата е одобрена от МОН. Предзначена е за ученици 9-12 клас и за възрастни. … Системата е съобразена и с Европейския езиков сертификат TELC … Те граматически обхващат материал от DELF / A1 / до DALF / B2 /.»; strip: bullet «На хартия или дигитален? И двете...!» (bullets under the ECHO cover image).",
       "certificates[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: bullet «Ефективна подготовка за DELF», under the ECHO cover image (88cf944a….png is the ECHO cover: «Méthode de français», J. Girardet / J. Pécheur).",
       "certificatesBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: same as certificates[0].",
@@ -526,7 +551,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -551,7 +576,7 @@
         "answer": [
           "Нивото се определя с ",
           {
-            "text": "тест за входно ниво",
+            "text": "безплатен тест за входно ниво",
             "destination": "levelTest"
           },
           " при записването."
@@ -582,9 +607,9 @@
       "features[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Title from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Учениците могат да участват и в обявените летни курсове- преговорни или за покриване на ниво (от юни до края на юли).»",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language: «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.»",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language: «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language: «Nuevo Ven Испански за средношколци и възрастни»; «Nuevo Ven е три степенна система за тийнейджъри и възрастни. Нейният методологичен подход е подкрепен от богат опит в класната стая … Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка.»; «Съдържанието му следват насоките на Институт Сервантес в учебните планове.»; strip: «Nuevo Ven Digital: Sala de profesores, Zona de estudiante».",
-      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
+      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Обучението в курсове за ученици е целогодишно (от октомври до юни).» «За предстоящата учебна година записването започва в месец юни до октомври.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts); Figma's answer «Да, според нуждите на ученика.» is supported by the same quote.",
       "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»)."
@@ -627,7 +652,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -683,7 +708,7 @@
       "features[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Желаещи да повишат знанията и уменията си по чужд език могат да проведат индивидуални занятия с преподавател. Заплащането е за всяко проведено занятие или авансово за определен брой занятия … Времето на занятията и броя проведени часове на занятие се определят от желанието на учащия,като на занятие се провеждат минимум 2 учебни часа.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Обучението в курсове за възрастни е по поръчка на работодатели, бюра по труда, по проекти и програми или с лично финансиране от участниците.» and «Групови курсове и индивидуално обучение. Фирмени езикови обучения. Валидиране на компетентности за езиково ниво.» (banner on every adults' language page and the hub) Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Езиков център ЕВРО-АЛИАНС провежда изпити за признаване на ниво на чуждоезикови компетентности.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language: «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language: «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language: «Nuevo Ven Испански за средношколци и възрастни»; «Nuevo Ven е три степенна система за тийнейджъри и възрастни. Нейният методологичен подход е подкрепен от богат опит в класната стая … Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка.»; «Съдържанието му следват насоките на Институт Сервантес в учебните планове.»; strip: «Nuevo Ven Digital: Sala de profesores, Zona de estudiante».",
       "faq[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.» Question from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Групи с 8 до 12 лица.»",
@@ -727,7 +752,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -748,7 +773,7 @@
         "answer": [
           "Нивото се определя с ",
           {
-            "text": "тест за входно ниво",
+            "text": "безплатен тест за входно ниво",
             "destination": "levelTest"
           },
           " при записването."
@@ -779,9 +804,9 @@
       "features[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Title from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Учениците могат да участват и в обявените летни курсове- преговорни или за покриване на ниво (от юни до края на юли).»",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: levels А1–С1; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.»",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: levels А1–С1; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Нивата за средношколци са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: «Progetto Italiano е разработена в пет нива. В първите три нива /А1, А2, В1/ се изучава изцяло граматиката на езика, а в четвърто и пето ниво /В2, С1/ се прави преговор на всички граматически компоненти и се набляга на доусъвършенстване на комуникативните умения … Тя залага на комуникативността, бързо развива говорните умения … запознаване на обучаващите се не само с езика, но и с италианската култура.»; kicker: «Progetto Italiano е одобрена от МОН в България за италиански език.»",
-      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
+      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Обучението в курсове за ученици е целогодишно (от октомври до юни).» «За предстоящата учебна година записването започва в месец юни до октомври.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts); Figma's answer «Да, според нуждите на ученика.» is supported by the same quote.",
       "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»)."
@@ -823,7 +848,7 @@
     ],
     "systemsBlock": {
       "heading": "Учебни системи и нива",
-      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Входният тест ще ви покаже.",
+      "lead": "Обучението следва Общата европейска езикова рамка. Не знаете от кое ниво да започнете? Безплатният входен тест ще ви покаже.",
       "linkLabel": "Направи входния тест"
     },
     "systems": [
@@ -875,7 +900,7 @@
       "features[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Желаещи да повишат знанията и уменията си по чужд език могат да проведат индивидуални занятия с преподавател. Заплащането е за всяко проведено занятие или авансово за определен брой занятия … Времето на занятията и броя проведени часове на занятие се определят от желанието на учащия,като на занятие се провеждат минимум 2 учебни часа.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Обучението в курсове за възрастни е по поръчка на работодатели, бюра по труда, по проекти и програми или с лично финансиране от участниците.» and «Групови курсове и индивидуално обучение. Фирмени езикови обучения. Валидиране на компетентности за езиково ниво.» (banner on every adults' language page and the hub) Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Езиков център ЕВРО-АЛИАНС провежда изпити за признаване на ниво на чуждоезикови компетентности.» Title from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
-      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: levels А1–С1; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Нивата са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»",
+      "systemsBlock": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: levels А1–С1; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Нивата са по CEFR - Common European Framework of Reference for Languages.» «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: «Progetto Italiano е разработена в пет нива. В първите три нива /А1, А2, В1/ се изучава изцяло граматиката на езика, а в четвърто и пето ниво /В2, С1/ се прави преговор на всички граматически компоненти и се набляга на доусъвършенстване на комуникативните умения … Тя залага на комуникативността, бързо развива говорните умения … запознаване на обучаващите се не само с езика, но и с италианската култура.»; kicker: «Progetto Italiano е одобрена от МОН в България за италиански език.»",
       "faq[0]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» … «Всички желаещи да се обучават в по-високо от начално ниво попълват Входен тест за определяне на знанията.» Question from Figma English copy (Английски език за възрастни, src/seed/programs.ts).",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Групи с 8 до 12 лица.»",
@@ -943,7 +968,7 @@
         "answer": [
           "Нивото се определя с ",
           {
-            "text": "тест за входно ниво",
+            "text": "безплатен тест за входно ниво",
             "destination": "levelTest"
           },
           " при записването."
@@ -975,7 +1000,7 @@
       "features[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Учениците могат да участват и в обявените летни курсове- преговорни или за покриване на ниво (от юни до края на юли).»",
       "features[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»",
       "systems[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language: «Поехали! Руски език за възрастни. Начален курс.»; «Учебникът е предназначен за начинаещи, които ще изучават руски език. Средната продължетилност на курса е предвиден за 120 часа. … Учебникът комбинира граматиката и разговорни курсове. Речникът в края на пособието включва превод на английски, немски и френски език. Илюстрации, таблици. аудио приложение -2 броя CD.»",
-      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
+      "faq[0]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Текущите знания на курсистите, при заявяване на участие в курс, се определя с тест за входно ниво.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).; https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests and /Entry-Level-Tests-for-Adults: «Безплатно тестване и определяне на входно ниво на кандидат обучаеми» (allowed as a source by the user, 02.11.2026: Y5)",
       "faq[1]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Обучението в курсове за ученици е целогодишно (от октомври до юни).» «За предстоящата учебна година записването започва в месец юни до октомври.» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts).",
       "faq[2]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Индивидуалното обучение за ученици е според необходимостта на обучаемия и личният му план за развитие на езикови знания и умения.» … «Занятията продължават минимум 2 учебни часа и се проведат с предварителна уговорка с преподавателя» Question from Figma English copy (Английски език за ученици, src/seed/programs.ts); Figma's answer «Да, според нуждите на ученика.» is supported by the same quote.",
       "faq[3]": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)» Question adapted from Figma English copy (Английски език за възрастни, src/seed/programs.ts) («Получавам ли документ след курса?»)."

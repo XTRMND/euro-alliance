@@ -138,6 +138,8 @@ export const certificates = [
     name: 'International English Language Testing System',
     issuer: 'Международен изпит',
     code: 'IELTS',
+    // Their site's preparation book (the user: reconcile against their site, 02.11.2026).
+    prep: 'Focus On IELTS',
   },
 ] as const
 
@@ -235,8 +237,9 @@ export const englishPrograms = [
           },
           {
             question: 'Мога ли да платя с ваучер от Агенцията по заетостта?',
+            // Figma's answer also promised help with the documents, which their site doesn't.
             answer: richText([
-              'Да, ако курсът е одобрен за ваучери. Ще ви помогнем с документите при записването.',
+              'Да, ако курсът е одобрен за обучение с ваучер от Агенцията по заетостта.',
             ]),
           },
           {
@@ -295,8 +298,9 @@ export const englishPrograms = [
           },
           {
             question: 'Курсовете целогодишни ли са?',
+            // Their students' page: «целогодишно (от октомври до юни)», and summer courses.
             answer: richText([
-              'Да, обучението за ученици е целогодишно, по паралелни училищни програми.',
+              'Да, от октомври до юни. През лятото има и летни курсове: преговорни или за покриване на ниво.',
             ]),
           },
           {
