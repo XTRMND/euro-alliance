@@ -69,20 +69,27 @@ export async function CourseCard({
           )}
         </Heading>
         <p className={styles.start}>
-          {state.status === 'none'
-            ? t('course.status.none')
-            : t(state.status === 'running' ? 'course.status.runningSince' : 'course.startsOn', {
+          {state.status === 'none' ? (
+            t('course.status.none')
+          ) : (
+            <span className={styles.date} data-status={state.status}>
+              {t(state.status === 'running' ? 'course.status.runningSince' : 'course.startsOn', {
                 date: formatDateLong(group!.startDate),
               })}
+            </span>
+          )}
         </p>
         <div className={styles.foot}>
-          {group && state.pricing !== 'none' && (
+          {state.pricing === 'free' && (
+            <p className={[styles.price, styles.ask].join(' ')}>{t('course.free')}</p>
+          )}
+          {group && state.pricing !== 'none' && state.pricing !== 'free' && (
             <p className={styles.price}>
               {formatPrice(group.price!, group.currency ?? 'EUR')}
               {group.priceLabel && <span className={styles.note}>{group.priceLabel}</span>}
             </p>
           )}
-          {state.status === 'none' && (
+          {state.status === 'none' && state.pricing !== 'free' && (
             <p className={[styles.price, styles.ask].join(' ')}>
               {t('course.askPrice')}
               <span className={styles.note}>{t('course.askPriceNote')}</span>

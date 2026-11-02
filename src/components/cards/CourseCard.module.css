@@ -99,6 +99,23 @@
   color: var(--color-text-muted);
 }
 
+/* The date on a highlight (the user, 02.11.2026): sand for a start, grey-blue for a running group,
+   navy text on both (about 9.5:1). «Няма насрочена дата» stays plain. */
+.date {
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: var(--color-brand-primary-strong);
+  box-decoration-break: clone;
+}
+
+.date[data-status='upcoming'] {
+  background: var(--color-brand-accent-subtle);
+}
+
+.date[data-status='running'] {
+  background: var(--color-border-default);
+}
+
 /* The price and the button share one row, always (the user, 02.11.2026): the button never wraps
    or shrinks; the price gives way, its label wrapping under the amount. */
 .foot {
