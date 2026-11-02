@@ -23,6 +23,7 @@ import * as migration_20261102_082459_programs_legacy_url from './20261102_08245
 import * as migration_20261102_091944_media_text_in_image from './20261102_091944_media_text_in_image';
 import * as migration_20261102_100531_course_groups from './20261102_100531_course_groups';
 import * as migration_20261102_103633_course_level_unit from './20261102_103633_course_level_unit';
+import * as migration_20261102_104535_bulgarian from './20261102_104535_bulgarian';
 
 export const migrations = [
   {
@@ -148,6 +149,11 @@ export const migrations = [
   {
     up: migration_20261102_103633_course_level_unit.up,
     down: migration_20261102_103633_course_level_unit.down,
-    name: '20261102_103633_course_level_unit'
+    name: '20261102_103633_course_level_unit',
+  },
+  {
+    up: migration_20261102_104535_bulgarian.up,
+    down: migration_20261102_104535_bulgarian.down,
+    name: '20261102_104535_bulgarian'
   },
 ];

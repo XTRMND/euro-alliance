@@ -135,6 +135,7 @@ export async function CourseDetails({
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>
                 <span className={styles.amount}>{t('askPrice')}</span>
+                <span className={styles.note}>{t('askPriceNote')}</span>
               </p>
             </>
           )}

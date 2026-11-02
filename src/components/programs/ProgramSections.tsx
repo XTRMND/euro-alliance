@@ -213,8 +213,9 @@ function SectionContent({ section, index }: { section: Section; index: number })
       return (
         <Wrap section={section} id={id} anchor={anchors.certificates}>
           <Head section={section} id={id} />
+          {/* Four to a row; fewer share the row (БЕЛ's two exams, 299:4758). */}
           <SwipeRow
-            columns={4}
+            columns={Math.min(4, Math.max(2, certificates.length)) as 2 | 3 | 4}
             itemWidth={260}
             gap={{ column: 28 }}
             focusable

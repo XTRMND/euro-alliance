@@ -19,6 +19,9 @@ import {
 import { reindexSearch } from '@/lib/search-index'
 import { legalBody, legalPages } from './legal'
 import {
+  bulgarianCertificates,
+  bulgarianPrograms,
+  bulgarianSystems,
   certificates,
   englishPrograms,
   farmersLogoStrip,
@@ -182,7 +185,7 @@ async function seedHome(payload: Payload) {
  */
 async function seedPrograms(payload: Payload) {
   const systemIds = new Map<string, number>()
-  for (const { levels, ...system } of textbookSystems) {
+  for (const { levels, ...system } of [...textbookSystems, ...bulgarianSystems]) {
     const found = await payload.find({
       collection: 'textbook-systems',
       where: { name: { equals: system.name } },
@@ -249,6 +252,73 @@ async function seedPrograms(payload: Payload) {
         _status: 'published',
       } as never,
     })
+    payload.logger.info(`Seeded the program «${program.title}».`)
+  }
+
+  // Bulgarian (the user, 02.11.2026): its two tabs from Figma, created, or put in place of a page
+  // an earlier import made from the old site (it has an old address); the client's page stays.
+  const certificateByCode = new Map<string, number>()
+  for (const certificate of bulgarianCertificates) {
+    const found = await payload.find({
+      collection: 'certificates',
+      where: { code: { equals: certificate.code } },
+      depth: 0,
+      limit: 1,
+      draft: true,
+    })
+    const doc =
+      found.docs[0] ??
+      (await payload.create({
+        collection: 'certificates',
+        locale: 'bg',
+        data: { ...certificate, _status: 'published' },
+      }))
+    certificateByCode.set(certificate.code, doc.id)
+  }
+  for (const { sections, ...program } of bulgarianPrograms) {
+    const found = await payload.find({
+      collection: 'programs',
+      where: {
+        and: [
+          { type: { equals: 'language' } },
+          { language: { equals: program.language } },
+          { audience: { equals: program.audience } },
+        ],
+      },
+      limit: 1,
+      depth: 0,
+      draft: true,
+    })
+    const existing = found.docs[0]
+    if (existing && !existing.legacyUrl) continue
+    const data = {
+      ...program,
+      sections: sections.map((section) =>
+        'systemNames' in section
+          ? {
+              blockType: section.blockType,
+              heading: section.heading,
+              lead: section.lead,
+              columns: section.columns,
+              systems: section.systemNames.map((name) => systemIds.get(name)!),
+            }
+          : 'certificateCodes' in section
+            ? {
+                blockType: section.blockType,
+                heading: section.heading,
+                lead: section.lead,
+                certificates: section.certificateCodes.map((code) => certificateByCode.get(code)!),
+              }
+            : section,
+      ),
+      legacyUrl: null,
+      _status: 'published',
+    } as never
+    if (existing) {
+      await payload.update({ collection: 'programs', id: existing.id, locale: 'bg', data })
+    } else {
+      await payload.create({ collection: 'programs', locale: 'bg', data })
+    }
     payload.logger.info(`Seeded the program «${program.title}».`)
   }
 

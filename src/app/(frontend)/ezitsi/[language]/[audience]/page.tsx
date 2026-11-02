@@ -66,8 +66,16 @@ export default async function LanguageProgramPage({ params }: Params) {
             label={t('program.audienceLabel')}
             tabs={
               other
-                ? (['adults', 'students'] as const).map((value) => ({
-                    label: t(`program.audience.${value}`),
+                ? // Bulgarian: «БЕЛ | За чужденци», БЕЛ first (the user, 02.11.2026; 299:4731).
+                  (language === 'bulgarian'
+                    ? (['students', 'adults'] as const)
+                    : (['adults', 'students'] as const)
+                  ).map((value) => ({
+                    label: t(
+                      language === 'bulgarian'
+                        ? `program.bulgarian.${value}`
+                        : `program.audience.${value}`,
+                    ),
                     href: routes.languageProgram(language, value as 'students'),
                     current: value === audience,
                   }))

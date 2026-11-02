@@ -256,6 +256,17 @@ test.describe('computer courses', () => {
   })
 })
 
+test('Bulgarian is one page with two tabs: БЕЛ and За чужденци', async ({ page }) => {
+  await page.goto(routes.languageProgram('bulgarian', 'students'))
+  const tabs = page.getByRole('navigation', { name: 'Аудитория' })
+  await expect(tabs.getByRole('link')).toHaveText(['БЕЛ', 'За чужденци'])
+  await expect(tabs.getByRole('link', { name: 'БЕЛ' })).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('heading', { name: 'Изпити, за които подготвяме' })).toBeVisible()
+  await tabs.getByRole('link', { name: 'За чужденци' }).click()
+  await expect(page).toHaveURL(routes.languageProgram('bulgarian', 'adults'))
+  await expect(page.getByRole('heading', { name: 'Научете бързо български език' })).toBeVisible()
+})
+
 test('a language or audience without a page is not found', async ({ page }) => {
   for (const path of [
     '/ezitsi/klingonski/vazrastni',

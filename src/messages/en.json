@@ -87,7 +87,8 @@
     "inquire": "Enquire",
     "inquireTitle": "Ask about joining",
     "groups": "Groups",
-    "askPrice": "Ask us"
+    "askPrice": "Ask us",
+    "askPriceNote": "for the price and the next group"
   },
   "courses": {
     "audience": {
@@ -398,6 +399,10 @@
         "title": "No exams are announced at the moment.",
         "text": "New dates are published here."
       }
+    },
+    "bulgarian": {
+      "students": "Bulgarian language and literature",
+      "adults": "For foreigners"
     }
   },
   "pageCounter": {

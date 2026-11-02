@@ -18,7 +18,10 @@ export type Upcoming = { courses: Course[]; listing: string; shown: boolean }
 
 export async function loadUpcoming(program: Program): Promise<Upcoming> {
   const filters = programCourseFilters(program)
-  const listing = `${routes.courses()}${courseFiltersQuery(filters)}`
+  const listing =
+    program.upcoming?.linkScope === 'languages'
+      ? routes.courses('languages')
+      : `${routes.courses()}${courseFiltersQuery(filters)}`
   if (!program.upcoming?.heading) return { courses: [], listing, shown: false }
   const { docs } = await getListedCourses(filters)
   return { courses: docs, listing, shown: docs.length > 0 }

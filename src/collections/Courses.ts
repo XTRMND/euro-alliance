@@ -40,6 +40,7 @@ const topicLabels = {
   italian: 'Италиански',
   spanish: 'Испански',
   russian: 'Руски',
+  bulgarian: 'Български за чужденци (Александър Невски)',
   'exam-prep': 'Подготовка за изпит (книги)',
   exams: 'Изпити (молив)',
   student: 'Ученици',

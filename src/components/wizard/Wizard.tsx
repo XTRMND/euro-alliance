@@ -70,6 +70,7 @@ export async function Wizard({
                   online: t('courses.format.online'),
                 },
                 voucher: t('courses.voucher'),
+                foreigners: t('program.bulgarian.adults'),
               }).map(lower),
             ].join(', '),
             // «Удобен график»: the course's upcoming and running groups.

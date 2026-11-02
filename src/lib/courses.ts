@@ -29,6 +29,7 @@ export const courseTopics = [
   'italian',
   'spanish',
   'russian',
+  'bulgarian',
   'exam-prep',
   'exams',
   'student',
@@ -70,6 +71,7 @@ export function matchesUpcomingFilter(course: FilterableCourse, filter: Upcoming
 }
 
 type TaggedCourse = FilterableCourse & {
+  language?: string | null
   audienceNote?: string | null
   cardTag?: string | null
 }
@@ -78,6 +80,8 @@ export type CourseTagLabels = {
   audience: Record<CourseAudience, string>
   format: Record<CourseFormat, string>
   voucher: string
+  /** «За чужденци»: Bulgarian for adults (the Bulgarian page's second tab). */
+  foreigners?: string
 }
 
 /**
@@ -85,8 +89,12 @@ export type CourseTagLabels = {
  * the card tag if set, else «С ваучер» for a voucher course, else the format.
  */
 export function courseTags(course: TaggedCourse, labels: CourseTagLabels): string[] {
-  const audience = course.audience
-    ? [labels.audience[course.audience], course.audienceNote].filter(Boolean).join(' ')
+  const audienceLabel =
+    course.language === 'bulgarian' && course.audience === 'adults' && labels.foreigners
+      ? labels.foreigners
+      : course.audience && labels.audience[course.audience]
+  const audience = audienceLabel
+    ? [audienceLabel, course.audienceNote].filter(Boolean).join(' ')
     : undefined
   const second =
     course.cardTag ||

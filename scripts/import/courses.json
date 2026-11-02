@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "podgotovka-po-bel-za-dzi",
+    "title": "Подготовка по БЕЛ за ДЗИ",
+    "approved": true,
+    "category": "exams",
+    "language": "bulgarian",
+    "audience": "students",
+    "audienceNote": "11–12 клас",
+    "topic": "exam-prep",
+    "level": "11–12",
+    "levelUnit": "grade",
+    "format": "in-person",
+    "groups": [{ "legacyId": "73", "priceLabel": "за целия курс" }],
+    "source": "Old /Courses/73; tags, level bubble, sticker and «за целия курс» from БЕЛ 299:4737 (the user, 02.11.2026)"
+  },
+  {
+    "slug": "podgotovka-po-bel-za-nvo",
+    "title": "Подготовка по БЕЛ за НВО",
+    "approved": true,
+    "category": "exams",
+    "language": "bulgarian",
+    "audience": "students",
+    "audienceNote": "6–7 клас",
+    "topic": "exams",
+    "level": "6–7",
+    "levelUnit": "grade",
+    "format": "in-person",
+    "groups": [{ "legacyId": "74", "priceLabel": "за целия курс" }],
+    "source": "Old /Courses/74; tags, level bubble, sticker and «за целия курс» from БЕЛ 299:4737 (the user, 02.11.2026)"
+  },
+  {
+    "slug": "balgarski-ezik-za-chuzhdentsi",
+    "title": "Български език за чужденци",
+    "approved": true,
+    "category": "languages",
+    "language": "bulgarian",
+    "audience": "adults",
+    "topic": "bulgarian",
+    "cardTag": "Групово и индивидуално",
+    "groups": [],
+    "source": "The old Bulgarian pages («Научете бързо български език – интензивен курс»); the card in За чужденци 295:4337"
+  }
+]

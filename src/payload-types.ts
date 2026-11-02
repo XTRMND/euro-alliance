@@ -363,6 +363,7 @@ export interface Course {
     | 'italian'
     | 'spanish'
     | 'russian'
+    | 'bulgarian'
     | 'exam-prep'
     | 'exams'
     | 'student'
@@ -602,6 +603,7 @@ export interface Program {
           | 'italian'
           | 'spanish'
           | 'russian'
+          | 'bulgarian'
           | 'exam-prep'
           | 'exams'
           | 'student'
@@ -619,11 +621,12 @@ export interface Program {
     };
   };
   /**
-   * Курсовете от «Курсове»: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.
+   * Всички курсове на програмата със състоянието им: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.
    */
   upcoming?: {
     heading?: string | null;
     linkLabel?: string | null;
+    linkScope?: ('program' | 'languages') | null;
   };
   notebook?: {
     title?: string | null;
@@ -2088,6 +2091,7 @@ export interface ProgramsSelect<T extends boolean = true> {
     | {
         heading?: T;
         linkLabel?: T;
+        linkScope?: T;
       };
   notebook?:
     | T
@@ -3005,6 +3009,7 @@ export interface Home {
             | 'italian'
             | 'spanish'
             | 'russian'
+            | 'bulgarian'
             | 'exam-prep'
             | 'exams'
             | 'student'

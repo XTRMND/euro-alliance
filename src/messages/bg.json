@@ -87,7 +87,8 @@
     "inquire": "Запитване",
     "inquireTitle": "Попитайте за записване",
     "groups": "Групи",
-    "askPrice": "Попитайте"
+    "askPrice": "Попитайте",
+    "askPriceNote": "за цена и следваща група"
   },
   "courses": {
     "audience": {
@@ -398,6 +399,10 @@
         "title": "В момента няма обявени изпити.",
         "text": "Новите дати се публикуват тук."
       }
+    },
+    "bulgarian": {
+      "students": "БЕЛ",
+      "adults": "За чужденци"
     }
   },
   "pageCounter": {

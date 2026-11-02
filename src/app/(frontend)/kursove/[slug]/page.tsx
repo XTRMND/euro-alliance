@@ -68,6 +68,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
     },
     format: { 'in-person': t('courses.format.inPerson'), online: t('courses.format.online') },
     voucher: t('courses.voucher'),
+    foreigners: t('program.bulgarian.adults'),
   })
   // «Провери нивото си»: the certificates section of the course's language page, where one exists.
   const levelCheckHref =

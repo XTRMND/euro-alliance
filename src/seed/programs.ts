@@ -909,3 +909,174 @@ export const farmersLogoStrip = {
   mimetype: 'image/png',
   alt: 'Съфинансирано от Европейския съюз. Стратегически план 2023–2027 за развитие на земеделието и селските райони',
 }
+
+// Bulgarian (the user, 02.11.2026): one page, two tabs. «БЕЛ» (299:4717 / 300:4188) is exam
+// preparation for students (НВО, ДЗИ); «За чужденци» (295:4317 / 295:8718) is Bulgarian for
+// foreigners. Copy from the approved frames. The exams and the textbook system are seeded by
+// code and name; the sections name them, and the seed resolves them to ids.
+
+export const bulgarianCertificates = [
+  {
+    name: 'Национално външно оценяване по БЕЛ',
+    issuer: 'Края на 7. клас',
+    code: 'НВО',
+    prep: 'Подготовка за 6. и 7. клас',
+  },
+  {
+    name: 'Държавен зрелостен изпит по БЕЛ (матура)',
+    issuer: '12. клас',
+    code: 'ДЗИ',
+    prep: 'Подготовка за 11. и 12. клас',
+  },
+] as const
+
+export const bulgarianSystems = [
+  {
+    name: 'Научете бързо български език',
+    kicker: 'Интензивен курс',
+    count: '2',
+    countLabel: 'нива',
+    description:
+      'Учебна система в две части, която представя цялата българска граматика. Предназначена е за интензивно обучение на чужденци от всички възрасти, индивидуално и в група.',
+    levels: ['A2', 'B2'],
+    strip: { label: 'Включено', note: 'Учебник и учебна тетрадка' },
+  },
+] as const
+
+const bulgarianHero = (lead: string) => ({
+  heading: 'Български език',
+  highlight: 'език',
+  lead,
+  ctas: [{ label: 'Виж курсовете', destination: 'languageCourses' }],
+})
+
+const documentFaq = {
+  question: 'Получавам ли документ след курса?',
+  answer: richText(['Да, удостоверение за завършен курс.']),
+}
+
+export const bulgarianPrograms = [
+  {
+    title: 'Български език: БЕЛ',
+    type: 'language',
+    language: 'bulgarian',
+    audience: 'students',
+    hero: bulgarianHero(
+      'Подготовка по БЕЛ за НВО в края на 7. клас и за матурата в 12. клас. Съботни групи в Пловдив.',
+    ),
+    upcoming: {
+      heading: 'Курсове по БЕЛ',
+      linkLabel: 'Всички езикови курсове',
+      linkScope: 'languages',
+    },
+    notebook: {
+      title: 'Подготовка за изпит',
+      highlight: 3,
+      phrases: [
+        { phrase: 'НВО - подготовка', translation: 'БЕЛ и литература' },
+        { phrase: 'ДЗИ - подготовка', translation: 'учебен материал от 11 и 12 клас' },
+        { phrase: '100 учебни часа', translation: 'събота по 3 часа' },
+      ],
+    },
+    sections: [
+      {
+        blockType: 'certificates',
+        heading: 'Изпити, за които подготвяме',
+        lead: 'Подготовката следва учебните програми по БЕЛ за 6. и 7. клас и за 11. и 12. клас.',
+        certificateCodes: ['НВО', 'ДЗИ'],
+      },
+      {
+        blockType: 'features',
+        heading: 'Как протича подготовката',
+        items: [
+          { title: 'Съботни групи', text: 'Събота по 3 учебни часа, присъствено в Пловдив.' },
+          { title: '100 учебни часа', text: 'Пълният курс е 100 учебни часа.' },
+          {
+            title: 'По учебната програма',
+            text: 'Подготовката следва учебните програми по БЕЛ за съответния клас.',
+          },
+          { title: 'Удостоверение', text: 'След курса получавате удостоверение.' },
+        ],
+      },
+      {
+        blockType: 'faq',
+        heading: 'Често задавани въпроси',
+        items: [
+          {
+            question: 'Кога стартира групата?',
+            answer: richText(['Групата стартира, когато се запишат поне шестима обучаеми.']),
+          },
+          {
+            question: 'Мога ли да се включа, ако курсът вече е започнал?',
+            answer: richText(['Свържете се с нас: ще ви кажем дали има място в започнала група.']),
+          },
+          documentFaq,
+        ],
+      },
+    ],
+  },
+  {
+    title: 'Български език за чужденци',
+    type: 'language',
+    language: 'bulgarian',
+    audience: 'adults',
+    hero: bulgarianHero(
+      'Групови курсове и индивидуално обучение по български език за чужденци. Фирмени езикови обучения и валидиране на езиково ниво.',
+    ),
+    upcoming: {
+      heading: 'Курсове по български',
+      linkLabel: 'Всички езикови курсове',
+      linkScope: 'languages',
+    },
+    notebook: {
+      title: 'Първи думи',
+      highlight: 3,
+      phrases: [
+        { phrase: 'Здравей!', translation: 'Hello!' },
+        { phrase: 'Как си?', translation: 'How are you?' },
+        { phrase: 'Приятно ми е.', translation: 'Nice to meet you.' },
+      ],
+    },
+    sections: [
+      {
+        blockType: 'features',
+        heading: 'Как можете да учите',
+        items: [
+          { title: 'Групово обучение', text: 'Групови курсове по български език за чужденци.' },
+          {
+            title: 'Индивидуално обучение',
+            text: 'Ускорено и конкретизирано обучение според вашите нужди.',
+          },
+          {
+            title: 'Фирмено обучение',
+            text: 'Индивидуални програми за фирмено и специализирано обучение.',
+          },
+          {
+            title: 'Признаване на ниво',
+            text: 'Изпит пред комисия от преподаватели и сертификат за постигнатото ниво.',
+          },
+        ],
+      },
+      {
+        blockType: 'textbookSystems',
+        heading: 'Учебни системи и нива',
+        lead: 'Учебната система е в две части, означени като A2 и B2 по европейските стандарти за владеене на чужд език.',
+        systemNames: ['Научете бързо български език'],
+        columns: 'one',
+      },
+      {
+        blockType: 'faq',
+        heading: 'Често задавани въпроси',
+        items: [
+          {
+            question: 'Мога ли да платя с ваучер от Агенцията по заетостта?',
+            answer: richText([
+              'Да, ако курсът е одобрен за ваучери. Ще ви помогнем с документите при записването.',
+            ]),
+          },
+          documentFaq,
+        ],
+      },
+    ],
+  },
+] as const

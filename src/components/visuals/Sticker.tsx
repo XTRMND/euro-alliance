@@ -1,4 +1,5 @@
 import { Img } from '@/components/ui/Img'
+import bulgarian from '@/assets/stickers/bulgarian.png'
 import computer from '@/assets/stickers/computer.png'
 import contact from '@/assets/stickers/contact.png'
 import corporate from '@/assets/stickers/corporate.png'
@@ -31,6 +32,7 @@ export const stickers = {
   italian,
   spanish,
   russian,
+  bulgarian,
   'exam-prep': examPrep,
   student,
   computer,

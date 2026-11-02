@@ -7,6 +7,8 @@ export const pages = [
   { name: 'Contact', path: routes.contact() },
   { name: 'English for adults', path: routes.languageProgram('english', 'adults') },
   { name: 'English for students', path: routes.languageProgram('english', 'students') },
+  { name: 'Bulgarian: БЕЛ', path: routes.languageProgram('bulgarian', 'students') },
+  { name: 'Bulgarian for foreigners', path: routes.languageProgram('bulgarian', 'adults') },
   { name: 'Vouchers', path: routes.vouchers() },
   { name: 'Professions', path: routes.professions() },
   { name: 'Teachers', path: routes.teachers() },

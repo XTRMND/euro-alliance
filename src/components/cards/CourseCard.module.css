@@ -135,12 +135,6 @@
   border-radius: var(--radius-button);
 }
 
-/* «Попитайте» where a course without a date has no price. */
-.ask {
-  font: var(--type-label);
-  color: var(--color-text-muted);
-}
-
 .card:focus-within {
   box-shadow: var(--shadow-card-hover);
 }

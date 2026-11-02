@@ -21,6 +21,7 @@ import { slugify } from '@/lib/slug'
 import { type Destination, destinations } from '@/lib/destinations'
 import { richText } from '@/seed/programs'
 import { htmlToLexical, plainText, typeset } from './html-to-lexical'
+import { parseOldPrice } from './old-course'
 
 const out = new URL('./out/', import.meta.url)
 const userAgent = 'EuroAlliance-site-migration/1.0 (content migration to the new euro-alliance.net)'
@@ -48,7 +49,14 @@ const report = {
     /** Articles with images in their text (left out: the article text has no image design). */
     textImages: [] as string[],
   },
-  courses: { created: 0, updated: 0, prices: [] as string[], pastStart: [] as string[] },
+  courses: {
+    created: 0,
+    updated: 0,
+    prices: [] as string[],
+    /** Every imported group: none has an end date (the client gives them). */
+    withoutEnd: [] as string[],
+    missing: [] as string[],
+  },
   pages: {
     created: 0,
     updated: 0,
@@ -249,6 +257,25 @@ async function importCovers(payload: Payload, altOf: Map<string, string>) {
       data: { cover } as never,
     })
   }
+}
+
+/** A course of scripts/import/courses.json. */
+type CourseEntry = {
+  slug: string
+  title: string
+  approved: boolean
+  category: string
+  language?: Language
+  audience?: Audience
+  audienceNote?: string
+  topic: string
+  level?: string
+  levelUnit?: 'level' | 'grade'
+  format?: 'in-person' | 'online'
+  cardTag?: string
+  voucherEligible?: boolean
+  groups: { legacyId: string; label?: string; priceLabel?: string }[]
+  source: string
 }
 
 type Part = string | { text: string; destination: Destination }
@@ -541,62 +568,96 @@ async function main() {
   }
 
   // ── Courses ───────────────────────────────────────────────────────────────
+  // The courses in scripts/import/courses.json the user has approved (the list in
+  // docs/course-list.md): what the centre teaches, each with zero or more groups made from the old
+  // site's dated entries (/Courses/N). A group keeps the old entry's start, schedule, format,
+  // office and price as written; no end date is guessed (the report lists every group without one).
   if (runs('courses')) {
-    for (const page of coursePages) {
-      const $ = await html(page)
-      const field: Record<string, string> = {}
-      $('dl.dl-horizontal dt').each((_, dt) => {
-        const value = $(dt).next('dd').text().replace(/\s+/g, ' ').trim()
-        field[$(dt).text().trim()] = value === 'ask' ? '' : value
-      })
-      const title = courseTitle.get(normalizePath(pathOf(page.url)))!
-      const slug = courseSlug.get(normalizePath(pathOf(page.url)))!
-      const description = $('h3')
-        .filter((_, h) => $(h).text().trim() === 'Тема на обучение')
-        .first()
-        .next('p')
-        .text()
-        .trim()
-      const students = /ученици/i.test(field['Участници'] ?? '')
-      const isBel = /БЕЛ/.test(title)
-      const isTeachers = /педагогическ/i.test(title)
-      const voucher = /ваучер/i.test(title) || /ваучер/i.test(field['Цена (лв.)'] ?? '')
-      const priceText = field['Цена (лв.)'] ?? ''
-      const amount = priceText.match(/(\d+(?:[.,]\d+)?)/)?.[1]
-      const currency = /лв/i.test(priceText.replace(/\(лв\.\)/, '')) ? 'BGN' : 'EUR'
-      if (priceText)
-        report.courses.prices.push(`${title}: «${priceText}»${currency === 'BGN' ? ' (лв)' : ''}`)
-      const startDate = String($('input[name="courseStartDate"]').val() ?? '') || null
-      if (startDate && startDate < new Date().toISOString().slice(0, 10))
-        report.courses.pastStart.push(`${title} (${startDate})`)
-      const days = [field['Учебни дни'], field['Учебни часове']].filter(Boolean).join(', ')
+    const entries = (
+      JSON.parse(
+        await readFile(new URL('./courses.json', import.meta.url), 'utf8'),
+      ) as CourseEntry[]
+    ).filter((entry) => entry.approved)
+    const pageById = new Map(coursePages.map((page) => [pathOf(page.url).split('/')[2], page]))
+    const offices = await payload.find({ collection: 'offices', depth: 0, pagination: false })
+    const coursesOffice = offices.docs.find((office) => office.role === 'courses')?.id
+    for (const entry of entries) {
+      const groups = []
+      const course: Record<string, string> = {}
+      for (const { legacyId, label, priceLabel } of entry.groups) {
+        const page = pageById.get(legacyId)
+        if (!page) {
+          report.courses.missing.push(`${entry.title}: /Courses/${legacyId}`)
+          continue
+        }
+        const $ = await html(page)
+        const field: Record<string, string> = {}
+        $('dl.dl-horizontal dt').each((_, dt) => {
+          const value = $(dt).next('dd').text().replace(/\s+/g, ' ').trim()
+          field[$(dt).text().trim()] = value === 'ask' ? '' : value
+        })
+        const name = String($('input[name="courseName"]').val() ?? page.title).trim()
+        course.originalTitle ??= typeset(name)
+        course.description ??= typeset(
+          $('h3')
+            .filter((_, h) => $(h).text().trim() === 'Тема на обучение')
+            .first()
+            .next('p')
+            .text()
+            .trim(),
+        )
+        course.duration ??= field['Хорариум']
+        course.program ??= field['Програма']
+        course.document ??= field['Документ']
+        course.included ??= field['Бележки']
+        course.levelName ??= field['Ниво']
+        const startDate = String($('input[name="courseStartDate"]').val() ?? '')
+        if (!startDate) continue
+        const price = parseOldPrice(field['Цена (лв.)'])
+        if (field['Цена (лв.)'])
+          report.courses.prices.push(
+            `${entry.title}: «${field['Цена (лв.)']}»${price?.currency === 'BGN' ? ' (лв.)' : ''}`,
+          )
+        report.courses.withoutEnd.push(
+          `${entry.title}${label ? `, ${label}` : ''}: from ${startDate}`,
+        )
+        const online = /online/i.test(field['Зала'] ?? '') || /онлайн/i.test(name)
+        groups.push({
+          ...(label ? { label } : {}),
+          startDate: `${startDate}T00:00:00.000Z`,
+          days: field['Учебни дни'] || undefined,
+          hours: field['Учебни часове'] || undefined,
+          format: online ? 'online' : 'in-person',
+          ...(/самара/i.test(field['Учебна база'] ?? '') && coursesOffice
+            ? { office: coursesOffice }
+            : {}),
+          ...(price ?? {}),
+          ...(priceLabel ? { priceLabel } : {}),
+          legacyUrl: page.url,
+        })
+      }
+      // The course's own fields: everything but the list's bookkeeping and the groups.
+      const fields = Object.fromEntries(
+        Object.entries(entry).filter(([key]) => !['approved', 'source', 'groups'].includes(key)),
+      )
       const data = {
-        title,
-        slug,
-        description: typeset(description),
-        category: isTeachers ? 'teachers' : isBel ? 'exams' : voucher ? 'vouchers' : 'languages',
-        topic: isTeachers ? 'teaching' : isBel ? 'exam-prep' : 'english',
-        ...(isTeachers ? {} : { language: (isBel ? 'bulgarian' : 'english') as Language }),
-        audience: (students ? 'students' : 'adults') as Audience,
-        format: /онлайн/i.test(title) ? 'online' : 'in-person',
-        levelName: field['Ниво'] || undefined,
-        program: field['Програма'] || undefined,
-        document: field['Документ'] || undefined,
-        duration: field['Хорариум'] || undefined,
-        schedule: days || undefined,
-        venue: field['Учебна база'] || undefined,
-        city: field['Град'] || undefined,
-        startDate: startDate ? `${startDate}T00:00:00.000Z` : undefined,
-        ...(amount ? { price: Number(amount.replace(',', '.')), currency } : {}),
-        priceNote: priceText || undefined,
-        included: field['Бележки'] || undefined,
-        voucherEligible: voucher,
-        legacyUrl: page.url,
+        ...fields,
+        ...Object.fromEntries(Object.entries(course).filter(([, value]) => value)),
+        groups,
+        voucherEligible: Boolean(entry.voucherEligible),
         _status: 'published' as const,
       }
+      const legacyUrls = entry.groups
+        .map(({ legacyId }) => pageById.get(legacyId)?.url)
+        .filter(Boolean) as string[]
       const found = await payload.find({
         collection: 'courses',
-        where: { legacyUrl: { equals: page.url } },
+        where: {
+          or: [
+            { slug: { equals: entry.slug } },
+            ...(legacyUrls.length ? [{ legacyUrl: { in: legacyUrls } }] : []),
+          ],
+        },
         limit: 1,
         depth: 0,
         draft: true,
@@ -607,7 +668,7 @@ async function main() {
           collection: 'courses',
           id: found.docs[0].id,
           locale: 'bg',
-          data: data as never,
+          data: { ...data, legacyUrl: null } as never,
         })
         report.courses.updated++
       } else {
@@ -621,8 +682,8 @@ async function main() {
   // One page per language and audience (the user, 02.11.2026) from scripts/import/language-pages.json:
   // each language's old page and the English pages' language-neutral Figma copy, with a source per
   // field; a section with no content is left out. Pages from the approved Figma copy (English) stay.
-  // Bulgarian (БЕЛ, Bulgarian for foreigners) is on hold: not built, and a page an earlier run made
-  // from the old site is unpublished.
+  // Bulgarian (БЕЛ, Bulgarian for foreigners) comes from its Figma frames through the seed, which
+  // replaces a page an earlier run made from the old site; until it has, such a page is unpublished.
   if (runs('pages')) {
     const pages = JSON.parse(
       await readFile(new URL('./language-pages.json', import.meta.url), 'utf8'),
@@ -744,7 +805,7 @@ async function writeReport(inventory: Inventory) {
     `| | Old site | Imported |`,
     `|---|---|---|`,
     `| News articles | ${bg.filter((p) => /^\/news\/\d+/i.test(pathOf(p.url))).length} | ${r.news.created} new, ${r.news.updated} updated |`,
-    `| Courses | ${bg.filter((p) => /^\/courses\/\d+/i.test(pathOf(p.url))).length} | ${r.courses.created} new, ${r.courses.updated} updated |`,
+    `| Courses (approved in scripts/import/courses.json) | ${bg.filter((p) => /^\/courses\/\d+/i.test(pathOf(p.url))).length} dated entries on the old site | ${r.courses.created} new, ${r.courses.updated} updated |`,
     `| Language pages | ${r.pages.made.length} without a page on the new site | ${r.pages.created} new, ${r.pages.updated} updated |`,
     `| Documents linked from the texts | ${r.images.downloaded} downloaded | ${r.images.reused} already in media |`,
     '',
@@ -756,7 +817,13 @@ async function writeReport(inventory: Inventory) {
     `- ${r.news.tables} tables in article texts became a paragraph per row.`,
     `- Prices, as written:`,
     ...r.courses.prices.map((price) => `  - ${price}`),
-    `- Courses that have already started (published, but no longer listed): ${r.courses.pastStart.join('; ') || 'none'}.`,
+    `- Groups without an end date (a started group counts as running until it has one: ask the client):`,
+    ...r.courses.withoutEnd.map((group) => `  - ${group}`),
+    ...(r.courses.missing.length
+      ? [
+          `- Old entries named in courses.json but not in the crawl: ${r.courses.missing.join('; ')}.`,
+        ]
+      : []),
     `- Language pages on the English template, from each old page and the neutral Figma copy (scripts/import/language-pages.json has a source for every field):`,
     ...r.pages.made.map((page) => `  - ${page}`),
     `- Pages kept from the approved Figma copy: ${r.pages.kept.join('; ') || 'none'}. On hold until the user has checked them in Figma, unpublished: ${r.pages.held.join('; ') || 'none'}.`,

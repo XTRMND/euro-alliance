@@ -210,10 +210,10 @@ export const Programs: CollectionConfig = {
     {
       name: 'upcoming',
       type: 'group',
-      label: 'Предстоящи курсове',
+      label: 'Курсове',
       admin: {
         description:
-          'Курсовете от «Курсове»: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.',
+          'Всички курсове на програмата със състоянието им: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.',
       },
       fields: [
         {
@@ -225,6 +225,17 @@ export const Programs: CollectionConfig = {
               type: 'text',
               label: 'Текст на връзката към всички',
               localized: true,
+            },
+            {
+              // A general label goes to a general view (the user's rule, 02.11.2026).
+              name: 'linkScope',
+              type: 'select',
+              label: 'Връзката води към',
+              defaultValue: 'program',
+              options: [
+                { value: 'program', label: 'Курсовете на тази програма' },
+                { value: 'languages', label: 'Всички езикови курсове' },
+              ],
             },
           ],
         },

@@ -40,6 +40,7 @@ export async function CourseCard({
     },
     format: { 'in-person': t('courses.format.inPerson'), online: t('courses.format.online') },
     voucher: t('courses.voucher'),
+    foreigners: t('program.bulgarian.adults'),
   })
 
   return (
@@ -82,7 +83,10 @@ export async function CourseCard({
             </p>
           )}
           {state.status === 'none' && (
-            <p className={[styles.price, styles.ask].join(' ')}>{t('course.askPrice')}</p>
+            <p className={styles.price}>
+              {t('course.askPrice')}
+              <span className={styles.note}>{t('course.askPriceNote')}</span>
+            </p>
           )}
           {course.slug && (
             <span aria-hidden="true" className={styles.enrol}>
