@@ -4,6 +4,7 @@ import { CourseCard } from '@/components/cards/CourseCard'
 import { NewsCard } from '@/components/cards/NewsCard'
 import { ProgramCard } from '@/components/cards/ProgramCard'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { courseTopics } from '@/lib/courses'
 import { destinations } from '@/lib/destinations'
 import type { Course, Media } from '@/payload-types'
 import fixtureColour from '../patterns/_fixtures/fixture-colour.jpg'
@@ -65,6 +66,11 @@ const courses = [
   course(4, { topic: 'computer', cardTag: 'Тестов етикет' }),
 ]
 
+// One card per course sticker, so the e2e test can hover each and check it stays inside the card.
+const everySticker = courseTopics.map((topic, index) =>
+  course(100 + index, { title: `Тестов курс ${topic}`, slug: `testov-kurs-${topic}`, topic }),
+)
+
 const photo = {
   url: fixtureColour.src,
   width: fixtureColour.width,
@@ -90,6 +96,14 @@ export default function CardsPage() {
       <section aria-label="Course card" className={styles.section}>
         <SwipeRow columns={3} wideColumns={4} itemWidth={280}>
           {courses.map((item) => (
+            <CourseCard key={item.id} course={item} headingLevel="h2" />
+          ))}
+        </SwipeRow>
+      </section>
+
+      <section aria-label="Course card, every sticker" className={styles.section}>
+        <SwipeRow columns={3} wideColumns={4} itemWidth={280}>
+          {everySticker.map((item) => (
             <CourseCard key={item.id} course={item} headingLevel="h2" />
           ))}
         </SwipeRow>

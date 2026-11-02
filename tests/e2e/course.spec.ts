@@ -104,3 +104,61 @@ for (const width of [1440, 1280, 1024, 768, 390, 320]) {
     expect(rows.filter((row) => !row.sameRow || !row.oneLine || !row.inside)).toEqual([])
   })
 }
+
+// Every sticker stays inside its course card (the user, 02.11.2026): it may break out of the image
+// panel, but never past the card's top or sides, at rest or in the hover pose. A probe the size of
+// the photo (its share of the square box, from Sticker) takes the sticker's transform, so its box is
+// the photo's.
+for (const width of [1440, 320]) {
+  test(`every sticker stays inside its course card at ${width}px`, async ({ page }) => {
+    test.setTimeout(90_000)
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto(devRoutes.cards)
+    // The final poses only: no transitions, so no waiting for them.
+    await page.addStyleTag({ content: '*, *::before, *::after { transition: none !important; }' })
+    const cards = page
+      .getByRole('region', { name: 'Course card, every sticker' })
+      .locator('article')
+    const count = await cards.count()
+    expect(count).toBeGreaterThan(40)
+
+    const outside: string[] = []
+    for (let i = 0; i < count; i++) {
+      const card = cards.nth(i)
+      await card.scrollIntoViewIfNeeded()
+      for (const state of ['rest', 'hover'] as const) {
+        if (state === 'hover') await card.hover()
+        else await page.mouse.move(0, 0)
+        const edges = await card.evaluate((article) => {
+          const span = article.querySelector<HTMLElement>('[style*="--sticker-w"]')!
+          const w = Number(span.style.getPropertyValue('--sticker-w'))
+          const h = Number(span.style.getPropertyValue('--sticker-h'))
+          let probe = span.querySelector<HTMLElement>('[data-probe]')
+          if (!probe) {
+            probe = document.createElement('i')
+            probe.dataset.probe = ''
+            Object.assign(probe.style, {
+              position: 'absolute',
+              left: `${(1 - w) * 50}%`,
+              top: `${(1 - h) * 50}%`,
+              width: `${w * 100}%`,
+              height: `${h * 100}%`,
+            })
+            span.append(probe)
+          }
+          const photo = probe.getBoundingClientRect()
+          const box = article.getBoundingClientRect()
+          return {
+            title: article.querySelector('h2')?.textContent,
+            top: photo.top - box.top,
+            left: photo.left - box.left,
+            right: box.right - photo.right,
+          }
+        })
+        if (Math.min(edges.top, edges.left, edges.right) < 0)
+          outside.push(`${edges.title} (${state}): ${JSON.stringify(edges)}`)
+      }
+    }
+    expect(outside).toEqual([])
+  })
+}

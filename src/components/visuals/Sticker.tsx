@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { Img } from '@/components/ui/Img'
 import bulgarian from '@/assets/stickers/bulgarian.png'
 import computer from '@/assets/stickers/computer.png'
@@ -115,10 +116,19 @@ type StickerProps = {
   className?: string
 }
 
-/** Fills a square box (200 × 200 in Figma), the photo fitted inside it. */
+/**
+ * Fills a square box (200 × 200 in Figma), the photo fitted inside it. The photo's share of the box
+ * (`--sticker-w`, `--sticker-h`, 0–1) lets a card keep a tall or wide sticker inside its edges.
+ */
 export function Sticker({ topic, sizes, eager = false, preload = false, className }: StickerProps) {
+  const { width, height } = stickers[topic]
+  const side = Math.max(width, height)
+  const share = {
+    '--sticker-w': (width / side).toFixed(3),
+    '--sticker-h': (height / side).toFixed(3),
+  } as CSSProperties
   return (
-    <span className={[styles.sticker, className].filter(Boolean).join(' ')}>
+    <span className={[styles.sticker, className].filter(Boolean).join(' ')} style={share}>
       <Img
         src={stickers[topic]}
         alt=""

@@ -22,8 +22,17 @@
   background: var(--color-bg-warm);
 }
 
-/* 168px, 4°, centred 6px left of the middle; on hover 186px, −5°, up and to the right. */
+/* 168px, 4°, centred 6px left of the middle; on hover 186px, −5°, up and to the right. The sticker
+   may break out of the panel but never past the card's top or sides (the user, 02.11.2026): on
+   hover a tall or square photo rises and grows only as far as keeps its top 2px inside the card
+   (95.65 = the photo's centre at rest, 85.65px down the 172px panel, plus 10 of the card's 12px
+   padding); a wide one takes the full pose. --base is the photo's half-height at −5°, unscaled,
+   from its share of the box (Sticker). The sides and the resting pose fit at every card width. */
 .art .sticker {
+  --base: calc(84 * var(--sticker-h, 1) * 0.9962 + 84 * var(--sticker-w, 1) * 0.0872);
+  --hover-scale: min(1.107, calc(95.65 / var(--base)));
+  --hover-lift: max(-17.11px, calc((var(--hover-scale) * var(--base) - 95.65) * 1px));
+
   position: absolute;
   top: calc(50% - 0.35px);
   left: calc(50% - 6.06px);
@@ -176,9 +185,9 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .card:focus-within .sticker {
-    translate: calc(-50% + 13.81px) calc(-50% - 17.11px);
+    translate: calc(-50% + 13.81px) calc(-50% + var(--hover-lift));
     rotate: -5deg;
-    scale: 1.107;
+    scale: var(--hover-scale);
   }
 
   .card:focus-within .level {
@@ -188,9 +197,9 @@
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card:hover .sticker {
-    translate: calc(-50% + 13.81px) calc(-50% - 17.11px);
+    translate: calc(-50% + 13.81px) calc(-50% + var(--hover-lift));
     rotate: -5deg;
-    scale: 1.107;
+    scale: var(--hover-scale);
   }
 
   .card:hover .level {
