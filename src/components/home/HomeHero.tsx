@@ -14,9 +14,8 @@ import styles from './HomeHero.module.css'
 
 // Home hero (57:269 / 115:248): the headline with «от 1999 г.» on its own highlighted line, the
 // lead and two buttons; beside it the collage (57:288): the globe, the classroom photo as a taped
-// polaroid in its 88% tint, an optional second photo in colour (Figma's is stock, so it stays
-// empty until the client supplies one), the emphasis marks and the
-// «7 ЕЗИКА» bubble. The collage scales as one piece with its width (--u = 1/560 of it).
+// polaroid in its 88% tint, the second photo in colour (Figma's Photo B, seeded; hidden when the
+// field is empty), the emphasis marks and the «7 ЕЗИКА» bubble. The collage scales as one piece with its width (--u = 1/560 of it).
 // Landing motion from «Prototype · Начало landing» (149:4372); the H1 and the photo (the LCP
 // candidates) move without fading in (docs/motion.md § 2).
 

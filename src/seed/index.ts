@@ -10,6 +10,7 @@ import {
   fundingLogo,
   home,
   homePhoto,
+  homePhotoSecondary,
   navigation,
   navigationMoves,
   offices,
@@ -143,6 +144,15 @@ async function seedHome(payload: Payload) {
   if (isEmpty(current.hero?.heading)) {
     const photo = await uploadOnce(payload, { ...homePhoto, kind: 'photo', altReviewed: false })
     data.hero = { ...home.hero, photo: photo.id }
+  }
+  // Photo B (57:317), added to a homepage seeded before it was; a photo the client chose stays.
+  if (!current.hero?.photoSecondary) {
+    const photo = await uploadOnce(payload, {
+      ...homePhotoSecondary,
+      kind: 'photo',
+      altReviewed: false,
+    })
+    data.hero = { ...(data.hero ?? current.hero), photoSecondary: photo.id }
   }
   for (const key of ['upcoming', 'programs', 'translations', 'news'] as const) {
     if (isEmpty(current[key]?.title)) data[key] = home[key]

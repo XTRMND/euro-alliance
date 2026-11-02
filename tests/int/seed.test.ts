@@ -85,7 +85,7 @@ describe('seed', () => {
     ])
   })
 
-  it('seeds the homepage from Figma, with the classroom photo and its tints', async () => {
+  it('seeds the homepage from Figma, with the classroom photo, Photo B and the tints', async () => {
     const home = await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 2 })
     const photo = home.hero.photo as Media
 
@@ -93,7 +93,7 @@ describe('seed', () => {
     expect(home.hero.highlight).toBe('от 1999 г.')
     expect(photo.kind).toBe('photo')
     expect(photo.altReviewed).toBe(false)
-    expect(home.hero.photoSecondary ?? null).toBeNull()
+    expect((home.hero.photoSecondary as Media | null)?.filename).toMatch(/^photo-b/)
     const { docs: tints } = await payload.find({
       collection: 'media-tints',
       where: { source: { equals: photo.id } },
