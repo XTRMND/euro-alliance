@@ -643,6 +643,26 @@ async function main() {
         await readFile(new URL('./courses.json', import.meta.url), 'utf8'),
       ) as CourseEntry[]
     ).filter((entry) => entry.approved)
+    // Each course page's text from its old page (scripts/import/course-pages.json, a source for
+    // every field): it decides these fields, and a field it leaves out is cleared (hidden on the
+    // page), so nothing from an old dated entry lingers where the page says otherwise.
+    const pageContent = new Map(
+      (
+        JSON.parse(await readFile(new URL('./course-pages.json', import.meta.url), 'utf8')) as {
+          slug: string
+          fields: Record<string, string>
+        }[]
+      ).map((page) => [page.slug, page.fields]),
+    )
+    const contentFields = [
+      'description',
+      'duration',
+      'program',
+      'document',
+      'included',
+      'audienceNote',
+      'levelName',
+    ] as const
     const pageById = new Map(coursePages.map((page) => [pathOf(page.url).split('/')[2], page]))
     const offices = await payload.find({ collection: 'offices', depth: 0, pagination: false })
     const coursesOffice = offices.docs.find((office) => office.role === 'courses')?.id
@@ -722,7 +742,6 @@ async function main() {
         course.duration ??= field['Хорариум']
         course.program ??= field['Програма']
         course.document ??= field['Документ']
-        course.included ??= field['Бележки']
         levelTexts.push(field['Ниво'])
         if (!startDate) continue
         const { price, endDate } = priceAndEnd(
@@ -736,7 +755,10 @@ async function main() {
           startDate: `${startDate}T00:00:00.000Z`,
           endDate,
           days: field['Учебни дни'] || undefined,
-          hours: field['Учебни часове'] || undefined,
+          // A time («18.00 до 20.50»), not a total («100 уч.часа», which some entries put here).
+          hours: /\d{1,2}[.:]\d{2}/.test(field['Учебни часове'] ?? '')
+            ? field['Учебни часове']
+            : undefined,
           format: online ? 'online' : 'in-person',
           ...(/самара/i.test(field['Учебна база'] ?? '') && coursesOffice
             ? { office: coursesOffice }
@@ -768,6 +790,14 @@ async function main() {
         ...(level ? { level: level.level, levelUnit: level.levelUnit } : {}),
         ...fields,
         ...Object.fromEntries(Object.entries(course).filter(([, value]) => value)),
+        ...(pageContent.has(entry.slug)
+          ? {
+              ...Object.fromEntries(
+                contentFields.map((name) => [name, pageContent.get(entry.slug)![name] ?? null]),
+              ),
+              format: pageContent.get(entry.slug)!.format ?? entry.format ?? null,
+            }
+          : {}),
         ...(entry.title ? { title: entry.title } : {}),
         groups,
         voucherEligible: Boolean(entry.voucherEligible),

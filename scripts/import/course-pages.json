@@ -1,0 +1,1061 @@
+[
+  {
+    "slug": "angliyski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по английски език за ученици: Team Together за най-малките, Wider World за 3.–7. клас и Gold Experience за 8.–12. клас.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "Team Together, Wider World, Gold Experience (Pearson)",
+      "document": "Удостоверение за завършен курс за ниво",
+      "audienceNote": "2.–12. клас",
+      "levelName": "P2, P3, P4, S1, S2, S3, B2 и C1",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/English-Language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «Team Together е курс в шест нива.» under «За най-малките ученици»; «Wider World - за ученици от ІІІ до VІІ клас»; «Gold Experience за ученици от 8 до 12 клас»",
+      "duration": "https://euro-alliance.net/Courses/70/СЕДМИЧНИ-ВЕЧЕРНИ-ГРУПИ-УЧЕНИЦИ-от-нива-Р2-Р3-Р4-S1-S2-от-2ри-до-7ми-клас: Хорариум «120 часа»; https://euro-alliance.net/Courses/71/СЕДМИЧНИ-ДНЕВНИ-ГРУПИ-УЧЕНИЦИ-от-нива-S1-и-S2-от-5ти-до-7ми-клас: Хорариум «120 часа»; https://euro-alliance.net/Courses/69/СЪБОТНИ-ГРУПИ-УЧЕНИЦИ: Хорариум «120 часа», Учебни часове «9.00-12.00 по 4 уч.часа»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/English-Language: headings «Team Together», «Wider World в пет курсови нива», «Gold Experience за ученици от 8 до 12 клас»; https://euro-alliance.net/Courses/70/СЕДМИЧНИ-ВЕЧЕРНИ-ГРУПИ-УЧЕНИЦИ-от-нива-Р2-Р3-Р4-S1-S2-от-2ри-до-7ми-клас: Програма «Pearson»; https://euro-alliance.net/Courses/71/СЕДМИЧНИ-ДНЕВНИ-ГРУПИ-УЧЕНИЦИ-от-нива-S1-и-S2-от-5ти-до-7ми-клас: Програма «Pearson»; https://euro-alliance.net/Courses/69/СЪБОТНИ-ГРУПИ-УЧЕНИЦИ: Програма «Pearson»",
+      "document": "https://euro-alliance.net/Courses/70/СЕДМИЧНИ-ВЕЧЕРНИ-ГРУПИ-УЧЕНИЦИ-от-нива-Р2-Р3-Р4-S1-S2-от-2ри-до-7ми-клас: Документ «Удостоверение»; https://euro-alliance.net/Courses/71/СЕДМИЧНИ-ДНЕВНИ-ГРУПИ-УЧЕНИЦИ-от-нива-S1-и-S2-от-5ти-до-7ми-клас: Документ «Удостоверение»; https://euro-alliance.net/Courses/69/СЪБОТНИ-ГРУПИ-УЧЕНИЦИ: Документ «Удостоверение»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "audienceNote": "https://euro-alliance.net/Courses/70/СЕДМИЧНИ-ВЕЧЕРНИ-ГРУПИ-УЧЕНИЦИ-от-нива-Р2-Р3-Р4-S1-S2-от-2ри-до-7ми-клас: Ниво «Р2, Р3, Р4, S1, S2 (от 2-ри до 7-ми клас)»; https://euro-alliance.net/Courses/71/СЕДМИЧНИ-ДНЕВНИ-ГРУПИ-УЧЕНИЦИ-от-нива-S1-и-S2-от-5ти-до-7ми-клас: Ниво «S1 и S2 (от 5-ти до 7-ми клас)»; https://euro-alliance.net/Courses/69/СЪБОТНИ-ГРУПИ-УЧЕНИЦИ: Ниво «Р2, Р3, Р4, S1, S2, S3, B2 и С1 (от 2-ри до 12-ти клас)»",
+      "levelName": "https://euro-alliance.net/Courses/69/СЪБОТНИ-ГРУПИ-УЧЕНИЦИ: Ниво «Р2, Р3, Р4, S1, S2, S3, B2 и С1 (от 2-ри до 12-ти клас)» (it takes in the levels of /Courses/70 and /Courses/71)",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": [
+      "The groups' own entries: /Courses/70 «СЕДМИЧНИ ВЕЧЕРНИ ГРУПИ» (Р2–S2, 2.–7. клас, «понеделник и сряда / вторник и четвъртък», «17:30 - 18:10», «Базова цена 545 евро»); /Courses/71 «СЕДМИЧНИ ДНЕВНИ ГРУПИ» (S1–S2, 5.–7. клас, same days, «15:00 - 16:30 ч.», 545 евро); /Courses/69 «СЪБОТНИ ГРУПИ» (Р2–С1, 2.–12. клас, «събота», «9.00-12.00 по 4 уч.часа», 545 евро). All three: Програма «Pearson», Хорариум «120 часа», Документ «Удостоверение».",
+      "All three entries' «Бележки» say «Цената на учебните пособия не е включена.»: that is what is NOT included, so «included» stays empty. It fits each group's price note instead.",
+      "Doubt: /Courses/70's «17:30 - 18:10» is 40 minutes, but the hub gives 2 учебни часа on weekdays. Probably a typo on the old site.",
+      "Program: the three systems are from the English students' page and «(Pearson)» is from the entries' «Програма: Pearson». The page itself doesn't name the publisher.",
+      "The page banner says «от 1-ви до 12-ти клас», and the hub has P1 (1st grade, 60 h). The groups start at 2nd grade, so the audience note is 2.–12. клас and the duration is the hub's 120 h for 2nd to 12th grade. The description names no grade range for Team Together («за най-малките»).",
+      "Level as written in /Courses/69 (A1–B1 aren't listed there; it goes S3 → B2). The import's bubble from the three entries is P2–C1."
+    ]
+  },
+  {
+    "slug": "nemski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по немски език за средношколци по системите MENSCHEN за начинаещи (Grundstufe) и EM NEU за напреднали (Mittelstufe), общо в шест нива.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "MENSCHEN, EM NEU, Wirtschaftsdeutsch für Anfänger",
+      "document": "Удостоверение за завършен курс за ниво",
+      "levelName": "A1–C1",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «СИСТЕМИ ЗА СРЕДНОШКОЛЦИ И ВЪЗРАСТНИ - НАЧИНАЕЩИ»; «Занятията се водят по учебните системи MENSCHEN за начинаещи (Grundstufe) и EM за напреднали (Mittelstufe) общо в шест нива.»; list «MENSCHEN, EM NEU, Wirtschaftsdeutsch für Anfänger»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «Занятията се водят по учебните системи …»: list «MENSCHEN», «EM NEU», «Wirtschaftsdeutsch für Anfänger»",
+      "document": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language: «MENSCHEN … Включва нивата от А1 до В1 включително.»; «6 ниво (C1). Система за обучение EM 3.»",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": [
+      "The page's systems are «ЗА СРЕДНОШКОЛЦИ И ВЪЗРАСТНИ» and it gives no grade range, so there is no audience note. The hub defines средношколци as «за ученици от осми до дванадесети клас», so «8.–12. клас» would be possible if wanted.",
+      "Wirtschaftsdeutsch für Anfänger is only named in the list, with no description. Drop it from the programme if it isn't taught to students. The students' and adults' German pages are identical."
+    ]
+  },
+  {
+    "slug": "frenski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по френски език за ученици: Alex et Zoe et compagnie за деца на 7–10 години, Junior за 11–14 години и ECHO за 9.–12. клас.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "Alex et Zoe et compagnie, Junior, ECHO",
+      "document": "Удостоверение за завършен курс за ниво",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «Френски език за деца на 7-10 години. Система на обучение – Alex et Zoe et compagnie»; «Френски език за деца на 11-14 години. Система на обучение – Junior»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale … Предзначена е за ученици 9-12 клас и за възрастни.» (added to the students' page by the user, 02.11.2026, Y4)",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: Alex et Zoe: «Разработена е за 120 учебни часа.»; Junior: «Разработена е за 120 учебни часа»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language: «Система на обучение – Alex et Zoe et compagnie»; «Система на обучение – Junior»; https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale … Предзначена е за ученици 9-12 клас и за възрастни.»",
+      "document": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": [
+      "No audience note: the students' page says 7–14 years, but ECHO (9.–12. клас, from the adults' page, Y4) widens it. «от 7 до 14 години» would fit only Alex et Zoe and Junior.",
+      "No level name: Alex et Zoe («в три нива») and Junior («в четири нива») don't name their levels. ECHO alone is A1–B2.",
+      "«Системата включва учебник, учебна тетрадка и СД» / «учебник, учебна тетрадка и 1 аудиокасета» describe the books, not what the course price includes, so «included» is empty."
+    ]
+  },
+  {
+    "slug": "ispanski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по испански език за средношколци по системата Nuevo Ven, която следва Общата европейска езикова рамка и насоките на Институт Сервантес.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "Nuevo Ven",
+      "document": "Удостоверение за завършен курс за ниво",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «Nuevo Ven Испански за средношколци и възрастни»; «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка.» «Съдържанието му следват насоките на Институт Сервантес в учебните планове.»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language: «Nuevo Ven е три степенна система за тийнейджъри и възрастни.»",
+      "document": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": ["No level name: Nuevo Ven's three levels aren't named («три степенна система»)."]
+  },
+  {
+    "slug": "italianski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по италиански език за ученици по системата Progetto Italiano, одобрена от МОН, в пет нива от A1 до C1.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "Progetto Italiano",
+      "document": "Удостоверение за завършен курс за ниво",
+      "levelName": "A1–C1",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «Progetto Italiano е разработена в пет нива. В първите три нива /А1, А2, В1/ … в четвърто и пето ниво /В2, С1/ …»; «Progetto Italiano е одобрена от МОН в България за италиански език.»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: heading «Progetto Italiano»",
+      "document": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language: «В първите три нива /А1, А2, В1/ … в четвърто и пето ниво /В2, С1/»",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": []
+  },
+  {
+    "slug": "ruski-ezik-za-uchenitsi",
+    "fields": {
+      "description": "Целогодишни курсове по руски език за начинаещи средношколци по учебника «Поехали!», който съчетава граматика и разговорен курс.",
+      "duration": "120 учебни часа. В делнични дни по 2 учебни часа, в събота по 4 учебни часа",
+      "program": "Поехали! Начален курс",
+      "document": "Удостоверение за завършен курс за ниво",
+      "levelName": "Начинаещи",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language: «Целогодишни езикови курсове за ученици от 1-ви до 12-ти клас и индивидуално обучение.» (banner); «Руски език за средношколци и възрастни»; «Учебникът е предназначен за начинаещи, които ще изучават руски език.» «Учебникът комбинира граматиката и разговорни курсове.»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language: «Средната продължетилност на курса е предвиден за 120 часа.»; https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Продължителност на обучението (хорариум) … 120 учебни часа - за ученици от 2-ри до 12-ти клас.»; «Времето на провеждане на занятията: В делнични дни по 2 учебни часа. В събота по 4 учебни часа.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language: heading «Поехали! Руски език за възрастни. Начален курс.»",
+      "document": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Документ за завършено обучение на деца, ученици и средношколци: Удостоверение за завършен курс за ниво (образец на Евро-Алианс ООД)»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language: «Учебникът е предназначен за начинаещи»",
+      "format": "https://euro-alliance.net/Language-Education/Language-Education-For-Students: «Формата на обучение е присъствена (класна) форма. Част от уроците и тестовете могат за се провеждат онлайн или чрез интернет страница за електронно обучение.»"
+    },
+    "notes": [
+      "The book's full title is «Поехали! Руски език за възрастни. Начален курс.», and the page heading is «Руски език за средношколци и възрастни». The programme leaves out «за възрастни» (Russian is for students only, CLAUDE.md § 3).",
+      "The page gives 120 hours as an average («Средната продължителност»), and the hub gives 120 учебни часа for 2nd to 12th grade. The duration uses the hub's wording."
+    ]
+  },
+  {
+    "slug": "podgotovka-po-bel-za-nvo",
+    "fields": {
+      "description": "Подготовка по български език и литература за националното външно оценяване в края на 7. клас.",
+      "duration": "100 учебни часа, в събота по 3 учебни часа",
+      "program": "Учебните програми по БЕЛ за 6. и 7. клас",
+      "document": "Удостоверение",
+      "levelName": "6.–7. клас"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Courses/74/ПОДГОТОВКА-по-БЕЛ-за-НВО: Тема на обучение «БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА ЗА НАЦИОНАЛНО ВЪНШНО ОЦЕНЯВАНЕ В КРАЯ НА 7-ми клас»",
+      "duration": "https://euro-alliance.net/Courses/74/ПОДГОТОВКА-по-БЕЛ-за-НВО: Хорариум «100»; Учебни дни «Събота по 3 уч.часа»; Учебни часове «100 уч.часа»",
+      "program": "https://euro-alliance.net/Courses/74/ПОДГОТОВКА-по-БЕЛ-за-НВО: Програма «Подготовката е по учебните програми по БЕЛ за 6-ти и 7-ми клас»",
+      "document": "https://euro-alliance.net/Courses/74/ПОДГОТОВКА-по-БЕЛ-за-НВО: Документ «Удостоверение»",
+      "levelName": "https://euro-alliance.net/Courses/74/ПОДГОТОВКА-по-БЕЛ-за-НВО: Ниво «6-ти и 7-ми клас»"
+    },
+    "notes": [
+      "The entry's «Бележки» is «ГРУПАТА СТАРТИРА С МИНИМУМ ШЕСТИМА ЗАПИСАНИ ОБУЧАЕМИ !». That isn't an «included» item, so it is left out. The import's fallback (course.included ??= Бележки) would put it there: let course-pages.json win, and use the text as the group's note if wanted.",
+      "The entry's «Учебни часове» is «100 уч.часа», the total and not a time of day, so the group's «hours» field should be emptied. «Учебни дни» is «Събота по 3 уч.часа».",
+      "Price «660 евро» is in the group. The audience note «6–7 клас» and the format are already in courses.json, so they aren't repeated here."
+    ]
+  },
+  {
+    "slug": "podgotovka-po-bel-za-dzi",
+    "fields": {
+      "description": "Подготовка по български език и литература за матурата в 12. клас.",
+      "duration": "100 учебни часа, в събота по 3 учебни часа",
+      "program": "Учебните програми по БЕЛ за 11. и 12. клас",
+      "document": "Удостоверение",
+      "levelName": "11.–12. клас"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Courses/73/ПОДГОТОВКА-по-БЕЛ-за-ДЗИ: Тема на обучение «БЪЛГАРСКИ ЕЗИК И ЛИТЕРАТУРА ЗА МАТУРАТА В 12-ти клас»",
+      "duration": "https://euro-alliance.net/Courses/73/ПОДГОТОВКА-по-БЕЛ-за-ДЗИ: Хорариум «100»; Учебни дни «Събота по 3 уч.часа»; Учебни часове «100 уч.часа»",
+      "program": "https://euro-alliance.net/Courses/73/ПОДГОТОВКА-по-БЕЛ-за-ДЗИ: Програма «Подготовката е по учебните програми по БЕЛ за 11-ти и 12-ти клас»",
+      "document": "https://euro-alliance.net/Courses/73/ПОДГОТОВКА-по-БЕЛ-за-ДЗИ: Документ «Удостоверение»",
+      "levelName": "https://euro-alliance.net/Courses/73/ПОДГОТОВКА-по-БЕЛ-за-ДЗИ: Ниво «11-12 клас»"
+    },
+    "notes": [
+      "The entry's «Бележки» is «ГРУПАТА СТАРТИРА С МИНИМУМ ШЕСТИМА ЗАПИСАНИ ОБУЧАЕМИ !». That isn't an «included» item, so it is left out. The import's fallback (course.included ??= Бележки) would put it there: let course-pages.json win, and use the text as the group's note if wanted.",
+      "The entry's «Учебни часове» is «100 уч.часа», the total and not a time of day, so the group's «hours» field should be emptied. «Учебни дни» is «Събота по 3 уч.часа».",
+      "Price «660 евро» is in the group. The audience note «11–12 клас» and the format are already in courses.json."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-leten-intenziven-kurs-b1",
+    "fields": {
+      "description": "Летен курс по английски език на ниво B1 за ученици, завършили 6. клас или ниво S2 в езиковия център, и за външни ученици, преди важния за тях 7. клас.",
+      "duration": "100 учебни часа, от понеделник до петък, от 9:00 до 13:00 ч.",
+      "program": "Wider World 4",
+      "document": "Удостоверение",
+      "included": "Учебни пособия",
+      "levelName": "B1"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Тема на обучение «Летен курс по английски език за ученици ниво В1. Курсът е за ученици завършили 6-ти (7 -ми) клас, или завършили ниво S2 ниво в езиковия център, както и за външни ученици. Летният езиков курс В1 ниво е възможност учениците да покрият ниво по английски език, преди важният за тях 7-ми клас.»",
+      "duration": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Хорариум «100»; Учебни дни «понеделник до петък»; Тема на обучение «Време на провеждане - 9,00 до 13,00ч.»",
+      "program": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Програма «Wider World 4»",
+      "document": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Документ «Удостоверение»",
+      "included": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Бележки «Цена на учебните пособия - включени в цената на курса !»",
+      "levelName": "https://euro-alliance.net/Courses/9/Английски-език-Летен-интензивен-курс-В1: Ниво «В1»"
+    },
+    "notes": [
+      "Doubt: the only entry is from 2022 (start 27.06.2022), so the days and times in «duration» are that summer's. Without them the page would say nothing about the intensive daily schedule. Drop them if the next summer course may differ.",
+      "The description leaves out «(7 -ми)» from «завършили 6-ти (7 -ми) клас», which contradicts «преди важният за тях 7-ми клас». No audience note: the description already says who the course is for.",
+      "Price «580 лв.» is in the 2022 group (ended, not shown). «Учебни часове» is «100», the total and not a time of day."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-b2",
+    "fields": {
+      "description": "Онлайн курс по английски език на ниво B2 за възрастни. Един учебен час е 40 минути.",
+      "duration": "100 учебни часа, по 4 на занятие, два пъти седмично",
+      "program": "Roadmap B2 (Pearson)",
+      "document": "Удостоверение",
+      "included": "Оригинални учебни пособия",
+      "levelName": "B2 Upper-Intermediate",
+      "format": "online"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Тема на обучение «Английски език ниво В2 за възрастни. Онлайн форма на обучение по 4 уч.часа на занятие (1 уч.час е 40 минути) два пъти седмично.»",
+      "duration": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Хорариум «100 учебни часа»; Тема на обучение «по 4 уч.часа на занятие … два пъти седмично»",
+      "program": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Програма «Roadmap В2 (Pearson)»",
+      "document": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Документ «Удостоверение»",
+      "included": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Бележки «Цената включва оригинални учебни пособия.»",
+      "levelName": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Ниво «B2 Upper-Intermediate»",
+      "format": "https://euro-alliance.net/Courses/1/Английски-език-В2-Възрастни-ОНЛАЙН: Тема на обучение «Онлайн форма на обучение»; title «… ОНЛАЙН»"
+    },
+    "notes": [
+      "Price «ПРОМОЦИЯ - 495 евро» is in the group. The group's days are «понеделник и сряда / вторник и четвъртък» and its hours «18.00 до 20.50»."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-za-vazrastni",
+    "fields": {
+      "description": "Групови курсове по английски език за възрастни по New Total English (Longman), система, отговаряща на стандартите на Европейската езикова рамка.",
+      "duration": "Примерно: 80–100 учебни часа за Beginner, 100–120 за Elementary до Upper-Intermediate, 100–150 за Advanced",
+      "program": "New Total English (Longman)",
+      "levelName": "Beginner–Advanced"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: banner «Групови курсове и индивидуално обучение.»; «Total English e нова, съвременна учебна система за възрастни на авторитетното британско издателство Longman. Системата е изцяло ново решение за обучение отговарящо на стандартите на Европейската езикова рамка.»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Примерни програми по часове и нива на обучение: 80 до 100 уч.часа - Beginner; 100 до 120 уч.часа - Elementary; 100 до 120 уч.часа - Pre-Intermediate; 100 до 120 уч.часа - Intermediate; 100 до 120 уч.часа - Upper-Intermediate; 100 до 150 уч.часа - Advanced»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: heading «New Total English»; «… учебна система за възрастни на авторитетното британско издателство Longman»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: list under «New Total English»: «Beginner, Elementary, Pre-Intermediate, Intermediate, Upper-Intermediate, Advanced»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "The hours are the hub's «Примерни програми», so they keep «Примерно». The hub also says «Продължителността на обучението се определя [от] одобрената програма за обучение или от избраната езикова система.»",
+      "«Безплатно DVD във всеки учебник и CD към учебната тетрадка» describes the book, not what the course price includes, so «included» is empty."
+    ]
+  },
+  {
+    "slug": "razgovoren-angliyski-ezik",
+    "fields": {
+      "description": "Курс по разговорен английски език за възрастни по SpeakOut, с видео съдържание от Би Би Си. Говорните дейности са видни, но не за сметка на четенето, писането и слушането.",
+      "duration": "Примерно: 80–100 учебни часа за Beginner, 100–120 за Elementary до Upper-Intermediate, 100–150 за Advanced",
+      "program": "SpeakOut",
+      "levelName": "Starter–Advanced"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: heading «Разговорен английски език»; «SpeakOut е курс по английски език, който включва видео съдържание от Би Би Си … Говорните дейности са видни, но не за сметка на другите основни умения за четене, писане и слушане»",
+      "duration": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults: «Примерни програми по часове и нива на обучение: 80 до 100 уч.часа - Beginner; 100 до 120 уч.часа - Elementary; 100 до 120 уч.часа - Pre-Intermediate; 100 до 120 уч.часа - Intermediate; 100 до 120 уч.часа - Upper-Intermediate; 100 до 150 уч.часа - Advanced»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: heading «SpeakOut»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language: list under «SpeakOut»: «Starter, Elementary, Pre-Intermediate, Intermediate, Upper-Intermediate, Advanced»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "Doubt: the hub's sample hours name «Beginner», while SpeakOut's first level is «Starter». Drop the duration here if that doesn't fit."
+    ]
+  },
+  {
+    "slug": "nemski-ezik-za-vazrastni",
+    "fields": {
+      "description": "Курсове по немски език за възрастни по системите MENSCHEN за начинаещи (Grundstufe) и EM NEU за напреднали (Mittelstufe), общо в шест нива.",
+      "program": "MENSCHEN, EM NEU, Wirtschaftsdeutsch für Anfänger",
+      "levelName": "A1–C1"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «СИСТЕМИ ЗА СРЕДНОШКОЛЦИ И ВЪЗРАСТНИ - НАЧИНАЕЩИ»; «Занятията се водят по учебните системи MENSCHEN за начинаещи (Grundstufe) и EM за напреднали (Mittelstufe) общо в шест нива.»; list «MENSCHEN, EM NEU, Wirtschaftsdeutsch für Anfänger»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «Занятията се водят по учебните системи …»: list «MENSCHEN», «EM NEU», «Wirtschaftsdeutsch für Anfänger»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language: «MENSCHEN … Включва нивата от А1 до В1 включително.»; «6 ниво (C1). Система за обучение EM 3.»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "No duration: the hub's sample hours use English level names (Beginner … Advanced). They don't map clearly onto MENSCHEN/EM."
+    ]
+  },
+  {
+    "slug": "frenski-ezik-za-vazrastni",
+    "fields": {
+      "description": "Курсове по френски език за възрастни по ECHO: съвременна комуникативна система, адаптирана към общоевропейските езикови изисквания и одобрена от МОН, с подготовка за DELF.",
+      "program": "ECHO (Cle Internationale)",
+      "levelName": "A1–B2"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale. Съвременна, комуникативна система изцяло адаптирана към общоевропейските езикови изисквания за изучаване на френски език. Системата е одобрена от МОН. Предзначена е за ученици 9-12 клас и за възрастни.»; bullet «Ефективна подготовка за DELF»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «ECHO - издателство Cle Internationale»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults: «Те граматически обхващат материал от DELF / A1 / до DALF / B2 /.»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "Publisher spelled as on the page, «Cle Internationale» (properly «CLE International»). Confirm before showing it.",
+      "No duration: the hub's sample hours use English level names."
+    ]
+  },
+  {
+    "slug": "ispanski-ezik-za-vazrastni",
+    "fields": {
+      "description": "Курсове по испански език за възрастни по системата Nuevo Ven, която следва Общата европейска езикова рамка и насоките на Институт Сервантес.",
+      "program": "Nuevo Ven"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language: «Nuevo Ven Испански за средношколци и възрастни»; «Ven изпълнява препоръките и предложенията на Общата европейска езикова рамка.» «Съдържанието му следват насоките на Институт Сервантес в учебните планове.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language: «Nuevo Ven е три степенна система за тийнейджъри и възрастни.»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "No level name: the three levels aren't named. No duration: the hub's sample hours use English level names."
+    ]
+  },
+  {
+    "slug": "italianski-ezik-za-vazrastni",
+    "fields": {
+      "description": "Курсове по италиански език за възрастни по Progetto Italiano, одобрена от МОН, в пет нива от A1 до C1. Системата залага на комуникативността и бързо развива говорните умения.",
+      "program": "Progetto Italiano",
+      "levelName": "A1–C1"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: «Progetto Italiano е разработена в пет нива. В първите три нива /А1, А2, В1/ … в четвърто и пето ниво /В2, С1/ …»; «Тя залага на комуникативността, бързо развива говорните умения»; «Progetto Italiano е одобрена от МОН в България за италиански език.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: heading «Progetto Italiano»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language: «В първите три нива /А1, А2, В1/ … в четвърто и пето ниво /В2, С1/»"
+    },
+    "notes": [
+      "No «Документ»: the adults' hub and language pages don't name one (the About page's list of documents, /About-us/Documents, has «Удостоверение за завършен курс на обучение (А4)» but doesn't say for which courses).",
+      "No «Формат»: the adults' hub offers both («Присъствена (класна) форма. Електронно, дистанционно и online обучение.»).",
+      "No duration: the hub's sample hours use English level names."
+    ]
+  },
+  {
+    "slug": "balgarski-ezik-za-chuzhdentsi",
+    "fields": {
+      "description": "Интензивен курс по български език за чужденци по системата «Научете бързо български език», подходяща за всички възрасти, за индивидуално и групово обучение.",
+      "program": "Научете бързо български език",
+      "levelName": "A2 и B2"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Bulgarian-Language: heading «Научете бързо български език - интензивен курс»; «„Научете бързо български език\" e учебна система в две части … Предназначена е за интензивно обучение на чужденци. Подходяща е за всички възрасти както за индивидуално, така и за групово обучение.» (same text on the students' page; written partly in Latin look-alike letters on the old site)",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Bulgarian-Language: «„Научете бързо български език\" e учебна система в две части»",
+      "levelName": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Bulgarian-Language: «B първата част са включени граматически материал и лексика, отговарящи на изискванията за първо ниво, а във втората част — за второ ниво, означени съответно като А2 и B2 в европейските стандарти за владеене на чужд език.»"
+    },
+    "notes": [
+      "The page's list «Учебник», «Учебна тетрадка» names the system's parts, not what the price includes, so «included» is empty.",
+      "No format, duration or document: neither Bulgarian page states them."
+    ]
+  },
+  {
+    "slug": "podgotovka-za-cambridge-b2-first-fce",
+    "fields": {
+      "description": "Подготовка за изпита за Първи сертификат на Кеймбридж (FCE), на хартия или на компютър, по учебната система Complete First.",
+      "program": "Complete First"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Language-Certificates: «ЕВРО АЛИАНС ПРЕДЛАГА ПОДГОТОВКА ЗА ЯВЯВАНЕ НА ИЗПИТИ /PAPER-BASED; COMPUTER-BASED/ ЗА ПРИДОБИВАНЕ НА СЛЕДНИТЕ ЕЗИКОВИ СЕРТИФИКАТИ»; «FCE - First Certificate of English - Cambridge ESOL»; «Complete First за подготовка за Първи сертификат.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Language-Certificates: «за FCE - Complete First»"
+    },
+    "notes": [
+      "The certificates page is the same in the students' and adults' sections (/Language-Certificates under both). The adults' copy is the source here.",
+      "The level «B2» / «C1» isn't written on the old page (it comes from courses.json). No levelName.",
+      "«Включва пълен практически тест с аудио» and the CD-ROM describe the book, not the course price, so «included» is empty. There is no duration, document or format on the page."
+    ]
+  },
+  {
+    "slug": "podgotovka-za-cambridge-c1-advanced-cae",
+    "fields": {
+      "description": "Подготовка за изпита за Втори сертификат на Кеймбридж (CAE), на хартия или на компютър, по учебната система Complete Advanced.",
+      "program": "Complete Advanced"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Language-Certificates: «ЕВРО АЛИАНС ПРЕДЛАГА ПОДГОТОВКА ЗА ЯВЯВАНЕ НА ИЗПИТИ /PAPER-BASED; COMPUTER-BASED/ ЗА ПРИДОБИВАНЕ НА СЛЕДНИТЕ ЕЗИКОВИ СЕРТИФИКАТИ»; «CAE - Certificate of Advanced English - Cambridge ESOL»; «Complete Advanced за подготовка за Втори сертификат.»",
+      "program": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Language-Certificates: «за CAE - Complete Advanced»"
+    },
+    "notes": [
+      "The certificates page is the same in the students' and adults' sections (/Language-Certificates under both). The adults' copy is the source here.",
+      "The level «B2» / «C1» isn't written on the old page (it comes from courses.json). No levelName.",
+      "«Включва пълен практически тест с аудио» and the CD-ROM describe the book, not the course price, so «included» is empty. There is no duration, document or format on the page."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-a1-b1",
+    "fields": {
+      "description": "Обучение по многоезикова компетентност (английски език, нива A1, A2 и B1) с ваучер от Агенцията по заетостта, присъствено в Пловдив или дистанционно в синхронна форма.",
+      "duration": "300 учебни часа, по 4 на занятие, два пъти седмично (учебният час е 40 минути)",
+      "program": "Roadmap (Pearson)",
+      "included": "Учебни пособия (в стойността на ваучера)",
+      "levelName": "A1, A2 и B1"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Vouchers: «ЕВРО-АЛИАНС ООД ИМА СКЛЮЧЕНО СПОРАЗУМЕНИЕ С АГЕНЦИЯ ПО ЗАЕТОСТТА ЗА ОБУЧЕНИЯ С ВАУЧЕРИ»; «Ключова компетентност 2: 1. Многоезикова компетентност - Английски език нива А1, А2 и В1, 300 уч.часа, учебна система Roadmap(Pearson), присъствена форма на адрес Пловдив, ул.Самара №13»; «2. Многоезикова компетентност - Английски език нива А1, А2 и В1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "duration": "https://euro-alliance.net/Courses/64/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Хорариум «300»; Тема на обучение «2 пъти седмично по 4 уч.часа на занятие (часовете са по 40 мин.)»; https://euro-alliance.net/Courses/4/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Хорариум «300 учебни часа»; same Тема на обучение",
+      "program": "https://euro-alliance.net/Courses/4/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Програма «ROADMAP (Pearson)»; https://euro-alliance.net/Courses/64/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Програма «Roadmap»; https://euro-alliance.net/Vouchers: «учебна система Roadmap(Pearson)»",
+      "included": "https://euro-alliance.net/Courses/4/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Бележки «Включени учебни пособия в стоаността на ваучера.»",
+      "levelName": "https://euro-alliance.net/Courses/64/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Ниво «А1 A2 B1»; https://euro-alliance.net/Courses/4/Английски-език-ниво-А1-А2-В1-С-ВАУЧЕРИ-ОТ-АЗ: Ниво «А1 A2 B1»"
+    },
+    "notes": [
+      "Doubt: «Документ» differs between the entries: /Courses/64 (22.10.2026) «Сертификат», /Courses/4 (29.01.2026) «Удостоверение». Left out until the client says which.",
+      "Doubt: «included» comes only from /Courses/4. /Courses/64's «Бележки» is instead «Безплатно с ваучер от Агенция по затостта или със самостоятелно заплащане 495 € за всяко ниво.» (a price note for the group).",
+      "No format: the vouchers page offers both in-person (Пловдив) and «дистанционна синхронна форма». Both old groups were online («ДИСТАНЦИОННА ФОРМА», Зала «ONLINE»).",
+      "Groups' own entries: /Courses/64 «ВЕЧЕРЕН от 18:00 ч», «вторник и четвъртък», «18:00 - 21:00», «стойност на ваучер 460,16 €»; /Courses/4 «вторник и четвъртък», «18.00-21.00», «стойност на ваучер 900 лв.». The prices are in the groups."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-a2-b2",
+    "fields": {
+      "description": "Обучение по многоезикова компетентност (английски език, нива A2, B1 и B2) с ваучер от Агенцията по заетостта, дистанционно в синхронна форма.",
+      "duration": "300 учебни часа",
+      "program": "Roadmap (Pearson)",
+      "levelName": "A2, B1 и B2",
+      "format": "online"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Vouchers: «ЕВРО-АЛИАНС ООД ИМА СКЛЮЧЕНО СПОРАЗУМЕНИЕ С АГЕНЦИЯ ПО ЗАЕТОСТТА ЗА ОБУЧЕНИЯ С ВАУЧЕРИ»; «Ключова компетентност 2»; «3. Многоезикова компетентност - Английски език нива А2, В1 и В2, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "duration": "https://euro-alliance.net/Vouchers: «3. Многоезикова компетентност - Английски език нива А2, В1 и В2, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "program": "https://euro-alliance.net/Vouchers: «3. Многоезикова компетентност - Английски език нива А2, В1 и В2, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "levelName": "https://euro-alliance.net/Vouchers: «3. Многоезикова компетентност - Английски език нива А2, В1 и В2, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "format": "https://euro-alliance.net/Vouchers: «3. Многоезикова компетентност - Английски език нива А2, В1 и В2, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»"
+    },
+    "notes": [
+      "No document: the vouchers page names none. The hours a session («по 4 уч.часа на занятие») are only in the A1–B1 entries, so they aren't carried over.",
+      "Price: the vouchers page gives no amount for this course, only «КАК ДА КАНДИДАТСТВАТЕ ЗА БЕЗПЛАТЕН ВАУЧЕР». The voucher value is known only for the A1–B1 groups («стойност на ваучер 460,16 €», earlier «900 лв.»)."
+    ]
+  },
+  {
+    "slug": "angliyski-ezik-b1-c1",
+    "fields": {
+      "description": "Обучение по многоезикова компетентност (английски език, нива B1, B2 и C1) с ваучер от Агенцията по заетостта, дистанционно в синхронна форма.",
+      "duration": "300 учебни часа",
+      "program": "Roadmap (Pearson)",
+      "levelName": "B1, B2 и C1",
+      "format": "online"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Vouchers: «ЕВРО-АЛИАНС ООД ИМА СКЛЮЧЕНО СПОРАЗУМЕНИЕ С АГЕНЦИЯ ПО ЗАЕТОСТТА ЗА ОБУЧЕНИЯ С ВАУЧЕРИ»; «Ключова компетентност 2»; «4. Многоезикова компетентност - Английски език нива В1, В2 и С1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "duration": "https://euro-alliance.net/Vouchers: «4. Многоезикова компетентност - Английски език нива В1, В2 и С1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "program": "https://euro-alliance.net/Vouchers: «4. Многоезикова компетентност - Английски език нива В1, В2 и С1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "levelName": "https://euro-alliance.net/Vouchers: «4. Многоезикова компетентност - Английски език нива В1, В2 и С1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»",
+      "format": "https://euro-alliance.net/Vouchers: «4. Многоезикова компетентност - Английски език нива В1, В2 и С1, 300 уч.часа, учебна система Roadmap(Pearson), дистанционна синхронна форма»"
+    },
+    "notes": [
+      "No document: the vouchers page names none. The hours a session («по 4 уч.часа на занятие») are only in the A1–B1 entries, so they aren't carried over.",
+      "Price: the vouchers page gives no amount for this course, only «КАК ДА КАНДИДАТСТВАТЕ ЗА БЕЗПЛАТЕН ВАУЧЕР». The voucher value is known only for the A1–B1 groups («стойност на ваучер 460,16 €», earlier «900 лв.»)."
+    ]
+  },
+  {
+    "slug": "digitalni-umenia-bazovo-nivo",
+    "fields": {
+      "description": "Обучение по цифрова компетентност: базово ниво на общи дигитални умения (ниво 1 и 2 по DigComp), с ваучер от Агенцията по заетостта, дистанционно в синхронна форма.",
+      "duration": "55 учебни часа",
+      "levelName": "Базово ниво (ниво 1 и 2 по DigComp)",
+      "format": "online"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Vouchers: «ЕВРО-АЛИАНС ООД ИМА СКЛЮЧЕНО СПОРАЗУМЕНИЕ С АГЕНЦИЯ ПО ЗАЕТОСТТА ЗА ОБУЧЕНИЯ С ВАУЧЕРИ»; «Ключова компетентност 4: 1. Цифрова компетентност - БАЗОВО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Базово ниво (ниво 1 и 2 съгласно DigComp), 55 уч.часа, дистанционна синхронна форма»",
+      "duration": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 1. Цифрова компетентност - БАЗОВО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Базово ниво (ниво 1 и 2 съгласно DigComp), 55 уч.часа, дистанционна синхронна форма»",
+      "levelName": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 1. Цифрова компетентност - БАЗОВО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Базово ниво (ниво 1 и 2 съгласно DigComp), 55 уч.часа, дистанционна синхронна форма»",
+      "format": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 1. Цифрова компетентност - БАЗОВО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Базово ниво (ниво 1 и 2 съгласно DigComp), 55 уч.часа, дистанционна синхронна форма»"
+    },
+    "notes": [
+      "The programme itself is a PDF linked as «виж програмата» (c8d9977db0efbd3b388a812fa742199e.pdf). It isn't in the crawl's files, so there is no programme or document. Read it if it can be fetched.",
+      "courses.json has no format for this course, but the vouchers page says «дистанционна синхронна форма».",
+      "Price: the vouchers page gives no amount for this course, only «КАК ДА КАНДИДАТСТВАТЕ ЗА БЕЗПЛАТЕН ВАУЧЕР». The voucher value is known only for the A1–B1 groups («стойност на ваучер 460,16 €», earlier «900 лв.»)."
+    ]
+  },
+  {
+    "slug": "digitalni-umenia-sredno-nivo",
+    "fields": {
+      "description": "Обучение по цифрова компетентност: средно ниво на общи дигитални умения (ниво 3 и 4 по DigComp), с ваучер от Агенцията по заетостта, дистанционно в синхронна форма.",
+      "duration": "45 учебни часа",
+      "levelName": "Средно ниво (ниво 3 и 4 по DigComp)",
+      "format": "online"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Vouchers: «ЕВРО-АЛИАНС ООД ИМА СКЛЮЧЕНО СПОРАЗУМЕНИЕ С АГЕНЦИЯ ПО ЗАЕТОСТТА ЗА ОБУЧЕНИЯ С ВАУЧЕРИ»; «Ключова компетентност 4: 2. Цифрова компетентност - СРЕДНО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Средно ниво (ниво 3 и 4 съгласно DigComp), 45 уч.часа, дистанционна синхронна форма»",
+      "duration": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 2. Цифрова компетентност - СРЕДНО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Средно ниво (ниво 3 и 4 съгласно DigComp), 45 уч.часа, дистанционна синхронна форма»",
+      "levelName": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 2. Цифрова компетентност - СРЕДНО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Средно ниво (ниво 3 и 4 съгласно DigComp), 45 уч.часа, дистанционна синхронна форма»",
+      "format": "https://euro-alliance.net/Vouchers: «Ключова компетентност 4: 2. Цифрова компетентност - СРЕДНО НИВО НА ОБЩИ ДИГИТАЛНИ УМЕНИЯ - Средно ниво (ниво 3 и 4 съгласно DigComp), 45 уч.часа, дистанционна синхронна форма»"
+    },
+    "notes": [
+      "The programme itself is a PDF linked as «виж програмата» (cdbdb6af9feb946e34ccb464cb62673b.pdf). It isn't in the crawl's files, so there is no programme or document. Read it if it can be fetched.",
+      "courses.json has no format for this course, but the vouchers page says «дистанционна синхронна форма».",
+      "Price: the vouchers page gives no amount for this course, only «КАК ДА КАНДИДАТСТВАТЕ ЗА БЕЗПЛАТЕН ВАУЧЕР». The voucher value is known only for the A1–B1 groups («стойност на ваучер 460,16 €», earlier «900 лв.»)."
+    ]
+  },
+  {
+    "slug": "operativno-schetovodstvo",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Оперативно счетоводство\", код 041101 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "mitnichesko-obsluzhvane",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Митническо обслужване\", код 041102 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "bankovo-zastrahovatelno-i-osiguritelno-delo",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Банково, застрахователно и осигурително дело\", код 041201 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "menidzhmant-i-ikonomika",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Мениджмънт и икономика\", код 041301 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "malak-i-sreden-biznes",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Малък и среден бизнес\", код 041302 - втора степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "administrativni-i-ofis-deynosti",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа, втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Административни и офис дейности\", код 041501 - първа, втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "targovia-i-prodazhbi",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа, втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Търговия и продажби\", код 041601 - първа, втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "elektronna-targovia-marketing-i-reklama",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Електронна търговия, маркетинг и реклама\", код 041602 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "ikonomicheska-informatika",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Бизнес администрация», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «041 БИЗНЕС АДМИНИСТРАЦИЯ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Икономическа информатика\", код 041603 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "grazhdanska-korporativna-sigurnost-i-opazvane-na-obshtestvenia-red",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Сигурност и отбрана», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «103 СИГУРНОСТ И ОТБРАНА»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Гражданска, корпоративна сигурност и опазване на обществения ред\", код 103201 - трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "hotelierstvo-101103",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Хотелиерство\", код 101103 - първа степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession.",
+      "«Хотелиерство» is on the 2026 list twice (101103, първа степен; 101303, първа, втора, трета степен), as in Figma. Confirm against the НАПОО list."
+    ]
+  },
+  {
+    "slug": "gotvarstvo",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа и втора степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Готварство\", код 101301 - първа, втора степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "restorantyorstvo-i-ketaring",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа и втора степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Ресторантьортво и кетъринг\", код 101302 - първа, втора степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession.",
+      "The old page writes «Ресторантьортво» (typo). The title is already corrected."
+    ]
+  },
+  {
+    "slug": "hotelierstvo-101303",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа, втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Хотелиерство\", код 101303 - първа, втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession.",
+      "«Хотелиерство» is on the 2026 list twice (101103, първа степен; 101303, първа, втора, трета степен), as in Figma. Confirm against the НАПОО list."
+    ]
+  },
+  {
+    "slug": "ekskurzovod",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Екскурзовод\", код 101501 - трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "organizirane-na-turisticheski-patuvania",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Организиране на туристически пътувания\", код 101502 - трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "turisticheska-animatsia",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Персонални услуги», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «101 ПЕРСОНАЛНИ УСЛУГИ»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Туристическа анимация\", код 101504 - трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "agroekologia-i-rastitelna-zashtita",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Селско стопанство», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «081 СЕЛСКО СТОПАНСТВО»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Агроекология и растителна защита\", код 081105 - втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession.",
+      "The two farmers' courses (#46, #47) are «КУРСОВЕ ЗА ЧАСТ ОТ ПРОФЕСИЯ \"Агроекология и растителна защита\"»."
+    ]
+  },
+  {
+    "slug": "floristika-i-ozelenyavane",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Селско стопанство», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа и втора степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «081 СЕЛСКО СТОПАНСТВО»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Флористика и озеленяване\", код 081106 - първа, втора степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "eksploatatsia-i-sdelki-s-nedvizhimi-imoti",
+    "fields": {
+      "description": "Курс за придобиване на квалификация по професия от направление «Строителство и архитектура», за работещи и безработни, по утвърдена програма с практически примери от реалната работна среда.",
+      "document": "Свидетелство или удостоверение за професионална квалификация",
+      "included": "Езикови, компютърни и специализирани модули според програмата",
+      "levelName": "Първа, втора и трета степен на професионална квалификация"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: heading «073 СТРОИТЕЛСТВО И АРХИТЕКТУРА»; https://euro-alliance.net/Professional-Education: «ЦПО към ЕВРО-АЛИАНС организира и провежда курсове за придобиване на квалификация по професии на работещи и безработни по утвърдени програми.» «Програмите за обучение са изградени на модулен принцип. Предвидени са практически примери от реалната работна среда и производстена практика.»",
+      "document": "https://euro-alliance.net/Professional-Education: «На успешно завършилите курса на обучение се издава свидетелство или удостоверение за професионална квалификация.»",
+      "included": "https://euro-alliance.net/Professional-Education: «Курсовете включват езикови, компютърни и специализирани модули според квалификационната програма.»",
+      "levelName": "https://euro-alliance.net/Professional-Education/Professions-and-specialty: «Професия \"Експлоатация и сделки с недвижими имоти\", код 073205 - първа, втора, трета степен на професионална квалификация»"
+    },
+    "notes": [
+      "Shared with the other 19 professions: the description, document and «included» are the ЦПО's general facts (/Professional-Education). Only the direction and the degree come from this profession's own line on the 2026 list.",
+      "No duration, programme or format: the professions page gives none, for any profession."
+    ]
+  },
+  {
+    "slug": "kvalifikatsia-na-pedagogicheski-spetsialisti",
+    "fields": {
+      "description": "29 одобрени от МОН програми за учители, директори, възпитатели, психолози, логопеди и педагогически съветници, които носят 1, 2 или 3 кредита. Групово обучение от 10 до 25 лица.",
+      "duration": "16, 18, 32 или 48 учебни часа според програмата",
+      "program": "29 одобрени от МОН програми",
+      "document": "Удостоверение с присъдените кредити по Наредба 12 от 01.09.2016 г."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Pedagogical-specialists: «Програми за обучение на: Учители, Директори, Възпитатели, Психолози, Логопеди, Педагогически съветници»; «29 одобрени програми за обучение на педагогически специалисти.» «Групово обучение - от 10 до 25 лица (според вида на програмата).» «Програмите за обучение предоставят на педагогическите специалисти 1, 2 или 3 кредита.»; https://euro-alliance.net/: «ОБУЧЕНИЕ НА ПЕДАГОГИЧЕСКИ СПЕЦИАЛИСТИ: По одобрени от МОН програми за педагогически кадри с придобиване на кредити»",
+      "duration": "https://euro-alliance.net/Professional-Education/Pedagogical-specialists: «Хорариум на програмите - 16 , 18 , 32 или 48 учебни часа.»",
+      "program": "https://euro-alliance.net/Professional-Education/Pedagogical-specialists: «29 одобрени програми за обучение на педагогически специалисти.»; https://euro-alliance.net/: «По одобрени от МОН програми за педагогически кадри»",
+      "document": "https://euro-alliance.net/Professional-Education/Pedagogical-specialists: «Преминалите обучение получават Удостоверение с присъдени брой кредити по Наредба 12 / 01.09.2016 г.»; https://euro-alliance.net/Courses/53/Педагогически-специалисти: Документ «Удостоверение»"
+    },
+    "notes": [
+      "/Courses/53 has almost nothing: Тема «Педагогически специалисти», Участници «Възрастни», Хорариум «ask», Цена «ask», Документ «Удостоверение». The teachers' page is the source.",
+      "«Групово обучение - от 10 до 25 лица (според вида на програмата)»: the description shortens it to «от 10 до 25 лица».",
+      "Not used: «Обучения на място», «Изнесени обучения» (no format slot for «off-site»), and «Безплатно обучение по ОП Наука и образование за интелигентен растеж» (open question in CLAUDE.md § 12: does it still run?)."
+    ]
+  },
+  {
+    "slug": "inovatsii-i-ekologichni-praktiki-v-rastitelnata-zashtita",
+    "fields": {
+      "description": "Професионален курс за земеделски стопани по проект, финансиран по Стратегическия план за развитието на земеделието и селските райони 2023–2027 г. Препоръчителен за млади фермери.",
+      "duration": "150 учебни часа за 19 дни: теория 76 часа, практика 74 часа",
+      "program": "Част от професията «Агроекология и растителна защита»",
+      "document": "Удостоверение 3-37 на МОН за завършен курс по част от професията",
+      "included": "Безплатно настаняване, изхранване, пътуване и транспорт",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Обученията се провеждат по проект „Повишаване знанията на земеделски стопани чрез професионални обучения в „ЕВРО-АЛИАНС“ ООД“, финансиран по Стратегическия план за развитието на земеделието и селските райони на Република България за периода 2023–2027 г.»; «тема: Иновации и екологични практики в растителната защита на съвременното земеделско стопанство»; «Препоръчителен курс за Млади фермери»",
+      "duration": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «тема: Иновации и екологични практики в растителната защита на съвременното земеделско стопанство»: «Професионален курс 150 учебни часа - 19 дни - присъствено обучение»; «Теория - 76 часа / Практика - 74 часа»",
+      "program": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «КУРСОВЕ ЗА ЧАСТ ОТ ПРОФЕСИЯТА Агроекология и растителна защита»",
+      "document": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Документ при завършване - Удостоверение 3 37 на МОН за завършен курс по част от професията»",
+      "included": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Включено безплатно настаняване, изхранване, пътуване и транспорт»",
+      "format": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Професионален курс 150 учебни часа - 19 дни - присъствено обучение»"
+    },
+    "notes": [
+      "Doubt: the farmers' page doesn't say the training itself is free, only «Включено безплатно настаняване, изхранване, пътуване и транспорт». The Projects page says «100% безвъзмездна финансова помощ», and CLAUDE.md § 3 says «free». The description doesn't claim «безплатно»; add it if the client confirms.",
+      "The Projects page (/About-us/Projects) says the training is «по част от професията „Техник-растениевъд“». The farmers' page uses the new name «Агроекология и растителна защита» (after 01.01.2026), so that name is used.",
+      "Not in any slot: the eligibility list («ДОПУСТИМИ УЧАСТНИЦИ»), the documents participants must bring, and the subjects («Предмети, включени в курсовете: Икономика и предприемачество; Конвенционално и биологично земеделие; …»).",
+      "«Удостоверение 3 37» is written «3-37» (the МОН form's number)."
+    ]
+  },
+  {
+    "slug": "ustoychivo-upravlenie-ekologia-i-inovatsii-v-zemedelskite-stopanstva",
+    "fields": {
+      "description": "Професионален курс за земеделски стопани по проект, финансиран по Стратегическия план за развитието на земеделието и селските райони 2023–2027 г.",
+      "duration": "50 учебни часа за 7 дни: теория 25 часа, практика 25 часа",
+      "program": "Част от професията «Агроекология и растителна защита»",
+      "document": "Удостоверение 3-37 на МОН за завършен курс по част от професията",
+      "included": "Безплатно настаняване, изхранване, пътуване и транспорт",
+      "format": "in-person"
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Обученията се провеждат по проект „Повишаване знанията на земеделски стопани чрез професионални обучения в „ЕВРО-АЛИАНС“ ООД“, финансиран по Стратегическия план за развитието на земеделието и селските райони на Република България за периода 2023–2027 г.»; «тема: Устойчиво управление, екология и иновации в земеделските стопанства»",
+      "duration": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «тема: Устойчиво управление, екология и иновации в земеделските стопанства»: «Професионален курс - 50 учебни часа - 7 дни - присъствено обучение»; «Теория - 25 часа / Практика - 25 часа»",
+      "program": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «КУРСОВЕ ЗА ЧАСТ ОТ ПРОФЕСИЯТА Агроекология и растителна защита»",
+      "document": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Документ при завършване - Удостоверение 3 37 на МОН за завършен курс по част от професията»",
+      "included": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Включено безплатно настаняване, изхранване, пътуване и транспорт»",
+      "format": "https://euro-alliance.net/Professional-Education/Training-for-farmers: «Професионален курс - 50 учебни часа - 7 дни - присъствено обучение»"
+    },
+    "notes": [
+      "Doubt: the farmers' page doesn't say the training itself is free, only «Включено безплатно настаняване, изхранване, пътуване и транспорт». The Projects page says «100% безвъзмездна финансова помощ», and CLAUDE.md § 3 says «free». The description doesn't claim «безплатно»; add it if the client confirms.",
+      "The Projects page (/About-us/Projects) says the training is «по част от професията „Техник-растениевъд“». The farmers' page uses the new name «Агроекология и растителна защита» (after 01.01.2026), so that name is used.",
+      "Not in any slot: the eligibility list («ДОПУСТИМИ УЧАСТНИЦИ»), the documents participants must bring, and the subjects («Предмети, включени в курсовете: Икономика и предприемачество; Конвенционално и биологично земеделие; …»).",
+      "«Удостоверение 3 37» is written «3-37» (the МОН form's number)."
+    ]
+  },
+  {
+    "slug": "kompyutri-periferia-i-mrezhi",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "tekstoobrabotka",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "elektronni-tablitsi",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "prezentatsii",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "internet-i-e-mail-klienti",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "bazi-danni",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "web-i-grafichen-dizayn",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  },
+  {
+    "slug": "spetsializiran-softuer",
+    "fields": {
+      "description": "Компютърен курс в малки групи от 8 до 12 лица, присъствено или смесено, с индивидуална компютърна техника за всеки, или дистанционно с Google Classroom."
+    },
+    "sources": {
+      "description": "https://euro-alliance.net/Computer-Education: «Курсове от малки групи с индивидуална компютърна техника за всеки в съвременно оборудвани кабинети. Групите в присъствената и смесена форма са с 8 до 12 лица.» «Дистанционни компютърни обучения с Google Classroom.»"
+    },
+    "notes": [
+      "Shared with the other seven areas: the computer page lists the eight «Програми по информационни технологии» by name only, with no hours, programme, document or level for any of them.",
+      "No format: the page offers in-person, blended and distance learning.",
+      "Doubt (audience): the computer page says «КОМПЮТЪРНО ОБУЧЕНИЕ ЗА ВЪЗРАСТНИ», but the homepage says «Компютърни курсове и индивидуално обучение за ученици и възрастни.» The description names no audience. courses.json leaves audience empty."
+    ]
+  }
+]
