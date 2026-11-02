@@ -472,7 +472,7 @@ From SEO (PR 22):
 
 From the security headers (PR 24):
 - The Content-Security-Policy has a fresh nonce per response (`src/proxy.ts`, `src/lib/security-headers.ts`), so whole pages can't be cached at the CDN as they are: a cached page would reuse its nonce. When the CDN is chosen: keep pages uncached there (the CMS reads are cached in the app), or move to a hash-based policy. [no page caching at the CDN]
-- HSTS has `includeSubDomains` (the plan) and no `preload`: every subdomain of the site's domain must serve HTTPS. Does the client have HTTP-only subdomains (webmail, an old system)? Preload only if the user wants it.
+- HSTS until launch (the user, 02.11.2026): `max-age=300`, this host only, no `includeSubDomains`, no `preload`. Waiting on the client: does every subdomain of the site's domain serve HTTPS (webmail, an old system)? If so, `includeSubDomains` at launch, with two years (PR 27).
 - Styles allow 'unsafe-inline' (React's style attributes carry CSS custom properties); scripts don't. Google Analytics' hosts are in the policy only when `GA4_MEASUREMENT_ID` is set; gtag.js itself is trusted through 'strict-dynamic' and still loads only after consent.
 - The admin runs under the same policy. Its avatar is now Payload's own, not Gravatar, so no editor's email hash goes to a third party.
 - TLS settings for the user's servers or CDN: README, «Security headers and TLS» (Mozilla intermediate, ECDHE only).

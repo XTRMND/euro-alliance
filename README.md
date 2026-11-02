@@ -86,9 +86,9 @@ Inquiry emails are sent right after an inquiry is stored; a failed send is retri
 
 ### Security headers and TLS
 
-The app sends its own security headers ([`src/lib/security-headers.ts`](src/lib/security-headers.ts)): HSTS (two years, with subdomains, no preload) in production, `nosniff`, the referrer policy, a Permissions-Policy, `X-Frame-Options: DENY`, and on every page a Content-Security-Policy with a fresh nonce. The proxy or CDN in front of it should pass them through unchanged, not add a second HSTS header, and not cache whole pages: each page's nonce is new on every response.
+The app sends its own security headers ([`src/lib/security-headers.ts`](src/lib/security-headers.ts)): HSTS in production (five minutes, this host only, until launch), `nosniff`, the referrer policy, a Permissions-Policy, `X-Frame-Options: DENY`, and on every page a Content-Security-Policy with a fresh nonce. The proxy or CDN in front of it should pass them through unchanged, not add a second HSTS header, and not cache whole pages: each page's nonce is new on every response.
 
-`includeSubDomains` means every subdomain of the site's domain must serve HTTPS (check mail and webmail hosts before launch).
+At launch HSTS goes to two years. `includeSubDomains` is added only once the client confirms every subdomain of the site's domain serves HTTPS (mail and webmail hosts too).
 
 TLS is terminated in front of the app. For an A on SSL Labs, use Mozilla's «intermediate» profile without the DHE suites ([ssl-config.mozilla.org](https://ssl-config.mozilla.org)):
 

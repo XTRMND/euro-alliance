@@ -27,7 +27,7 @@ test('pages carry the security headers and a fresh nonce on every script', async
 }) => {
   const response = await page.goto(routes.home())
   const headers = response!.headers()
-  expect(headers['strict-transport-security']).toBe('max-age=63072000; includeSubDomains')
+  expect(headers['strict-transport-security']).toBe('max-age=300')
   expect(headers['x-content-type-options']).toBe('nosniff')
   expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin')
   expect(headers['x-frame-options']).toBe('DENY')

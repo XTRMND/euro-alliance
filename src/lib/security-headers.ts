@@ -1,7 +1,7 @@
 // Security headers (PR 24, docs/pr-plan.md § 24). Two parts:
-// - the same headers on every response (next.config.ts): HSTS in production (two years, with
-//   subdomains, no preload unless the user asks), nosniff, the referrer policy, a Permissions-Policy
-//   denying what the site doesn't use, and X-Frame-Options for browsers without frame-ancestors;
+// - the same headers on every response (next.config.ts): HSTS in production, nosniff, the referrer
+//   policy, a Permissions-Policy denying what the site doesn't use, and X-Frame-Options for
+//   browsers without frame-ancestors;
 // - a Content-Security-Policy with a fresh nonce per page (src/proxy.ts). Next puts the nonce on
 //   its own scripts; ours read it with `requestNonce()`. 'strict-dynamic' lets those trusted scripts
 //   load others (the chunks, gtag.js after consent), so no host list is needed for scripts. Styles
@@ -64,12 +64,15 @@ export function contentSecurityPolicy({ nonce, dev = false, analytics = false }:
   })
 }
 
+// HSTS for five minutes, for this host only, until launch (the user, 02.11.2026): no
+// includeSubDomains until the client confirms every subdomain serves HTTPS, and no preload. The
+// launch checklist (PR 27) raises it to two years.
+export const hsts = 'max-age=300'
+
 /** The headers every response carries (next.config.ts). */
 export function securityHeaders({ production }: { production: boolean }) {
   return [
-    ...(production
-      ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' }]
-      : []),
+    ...(production ? [{ key: 'Strict-Transport-Security', value: hsts }] : []),
     { key: 'X-Content-Type-Options', value: 'nosniff' },
     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
     { key: 'X-Frame-Options', value: 'DENY' },

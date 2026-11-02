@@ -180,6 +180,7 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 ### 26. Code Connect mappings: `chore/code-connect`
 
 - Map every component on page 03 to its code component (`get_code_connect_suggestions`, review, `send_code_connect_mappings`). Only after the user says go; skip if the Figma plan doesn't support Code Connect.
+- Paused (the user, 02.11.2026): after the client approves staging.
 
 ### 27. Launch checklist: `chore/launch`
 
@@ -197,6 +198,7 @@ Adds `docs/launch.md` and works through it with the user:
 - [ ] `robots.txt` allows production; staging is `noindex`.
 - [ ] Sitemap submitted in Search Console (needs the client's access).
 - [ ] GA4 receives events only after consent; real-time view checked.
+- [ ] HSTS raised from five minutes to two years (`hsts` in `src/lib/security-headers.ts`), with `includeSubDomains` only if the client confirmed every subdomain serves HTTPS.
 - [ ] Security headers and TLS checked (Observatory, SSL Labs).
 - [ ] Editors trained: a short guide for the client on adding courses and news, uploading photos (alt text), and handling inquiries.
 - [ ] DNS cut-over planned with the user, with a rollback path.
