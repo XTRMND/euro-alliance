@@ -69,6 +69,8 @@ const report = {
   documents: { uploaded: 0, failed: [] as string[] },
   links: { mapped: 0, external: 0, unmapped: new Set<string>() },
   covers: {
+    /** Covers from the Figma file (figma-covers.json). */
+    figma: 0,
     decisions: false,
     original: 0,
     unsplash: 0,
@@ -185,6 +187,47 @@ type Decision = {
  * found by its id in the file name, or none. Alt texts are drafts (altReviewed: false) unless the
  * old site had one.
  */
+/**
+ * The covers Figma gives real articles (scripts/import/figma-covers.json, the images in
+ * figma-covers/ by the article's old id): every image in the approved Figma file is approved
+ * (the user, 02.11.2026). The user's own picks (photo-decisions.json) come after and win.
+ */
+async function importFigmaCovers(payload: Payload) {
+  const entries = JSON.parse(
+    await readFile(new URL('./figma-covers.json', import.meta.url), 'utf8'),
+  ) as { legacyId: string; alt: string; textInImage: boolean }[]
+  for (const { legacyId, alt, textInImage } of entries) {
+    const doc = await upload(
+      payload,
+      {
+        data: await readFile(new URL(`./figma-covers/${legacyId}.jpg`, import.meta.url)),
+        type: 'image/jpeg',
+      },
+      `figma-news-${legacyId}.jpg`,
+      { alt, kind: 'photo', textInImage },
+    )
+    if (!doc || dryRun) continue
+    const found = await payload.find({
+      collection: 'news',
+      where: { legacyUrl: { like: `/News/${legacyId}/` } },
+      limit: 1,
+      depth: 0,
+      draft: true,
+    })
+    if (!found.docs[0]) {
+      report.covers.notFound.push(`/News/${legacyId}`)
+      continue
+    }
+    await payload.update({
+      collection: 'news',
+      id: found.docs[0].id,
+      locale: 'bg',
+      data: { cover: doc.id } as never,
+    })
+    report.covers.figma++
+  }
+}
+
 async function importCovers(payload: Payload, altOf: Map<string, string>) {
   const file = new URL('photo-decisions.json', out)
   if (!existsSync(file)) return
@@ -757,6 +800,7 @@ async function main() {
     })[])
       for (const image of page.images ?? [])
         if (image.alt?.trim()) altOf.set(image.src, typeset(image.alt.trim()))
+    await importFigmaCovers(payload)
     await importCovers(payload, altOf)
   }
 
@@ -836,6 +880,7 @@ async function writeReport(inventory: Inventory) {
     '',
     ...(only === 'covers'
       ? [
+          `- Covers from the Figma file (figma-covers.json): ${r.covers.figma}.`,
           r.covers.decisions
             ? `- Covers and the homepage photo, from the user's picks: ${r.covers.original} old covers, ${r.covers.unsplash} Unsplash photos, ${r.covers.none} without. Their alt texts are drafts to review in Media (\`altReviewed: false\`).`
             : '- No picks yet: out/photo-decisions.json is missing.',

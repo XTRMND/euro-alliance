@@ -1,0 +1,44 @@
+[
+  {
+    "legacyId": "213",
+    "alt": "Плакат за 1 ноември, Деня на народните будители",
+    "textInImage": true,
+    "match": "certain: the Новини lead story; the old cover, perceptual hash"
+  },
+  {
+    "legacyId": "205",
+    "alt": "Листовка за промоция за нови ученици",
+    "textInImage": true,
+    "match": "certain: Новини grid and Търсене; the old cover, perceptual hash"
+  },
+  {
+    "legacyId": "204",
+    "alt": "Изображение към новината за опреснителните занятия",
+    "textInImage": false,
+    "match": "certain: Новини grid and Търсене; the old cover, perceptual hash"
+  },
+  {
+    "legacyId": "210",
+    "alt": "Участници в турнира CoVE Football Cup в Грац",
+    "textInImage": false,
+    "match": "certain: Новини grid, «Още новини» and the About polaroid «Грац»; the old cover"
+  },
+  {
+    "legacyId": "209",
+    "alt": "Екипът на Евро Алианс на Форума за професионални постижения 2026",
+    "textInImage": false,
+    "match": "certain: Новини grid, «Още новини» and the About torn window; the old cover"
+  },
+  {
+    "legacyId": "212",
+    "alt": "Стажанти по проекта GreenHost по време на занятие",
+    "textInImage": false,
+    "match": "likely: the article banner on the Новина template, Home card 2 and the About polaroid «GreenHost стажове, 2026»; not on the old site (to confirm with the user)"
+  },
+  {
+    "legacyId": "211",
+    "alt": "Среща по проекта GreenHost в CETT Barcelona",
+    "textInImage": false,
+    "match": "likely: Home card 3 and the About polaroid «GreenHost среща, Барселона 2026»; not on the old site (to confirm with the user)"
+  }
+]
