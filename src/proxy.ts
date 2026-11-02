@@ -52,6 +52,44 @@ async function redirectFor(
   return target ? { target, status } : undefined
 }
 
+// Addresses that end on the 404 page are counted here and written once a minute to the «Липсващи
+// адреси» collection (src/collections/MissingAddresses.ts), at most 200 a minute. Bot noise isn't
+// counted.
+const botNoise =
+  /(^|\/)(wp-|wordpress|xmlrpc|cgi-bin|phpmyadmin|\.well-known|\.git|\.env)|\.(php\d?|aspx?|cgi|sql|bak|ini|ya?ml|log|zip|tar|gz|rar)$/i
+const missing = new Map<string, { hits: number; lastSeen: Date }>()
+let flushing: ReturnType<typeof setTimeout> | null = null
+
+async function flushMissing() {
+  flushing = null
+  const rows = [...missing].slice(0, 200)
+  missing.clear()
+  for (const [path, { hits, lastSeen }] of rows) {
+    try {
+      await pool!.query(
+        `insert into missing_addresses (path, hits, last_seen, updated_at, created_at)
+         values ($1, $2, $3, now(), now())
+         on conflict (path) do update set hits = missing_addresses.hits + excluded.hits,
+           last_seen = excluded.last_seen, updated_at = now()`,
+        [path, hits, lastSeen],
+      )
+    } catch (error) {
+      // Without the table (before its migration) or the database, nothing is recorded.
+      console.error('Missing addresses: could not record.', error)
+      return
+    }
+  }
+}
+
+function recordMissing(request: NextRequest) {
+  const path = normalizePath(request.nextUrl.pathname)
+  if (!pool || !['GET', 'HEAD'].includes(request.method) || botNoise.test(path)) return
+  const seen = missing.get(path)
+  if (!seen && missing.size >= 200) return
+  missing.set(path, { hits: (seen?.hits ?? 0) + 1, lastSeen: new Date() })
+  flushing ??= setTimeout(flushMissing, 60_000)
+}
+
 /** The page, with a Content-Security-Policy whose nonce Next puts on its scripts. */
 function withPolicy(request: NextRequest) {
   const nonce = createNonce()
@@ -82,6 +120,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(pathname.replace(/\/+$/, '') + search, request.url), 308)
   }
   // Anything else gets the 404 page.
+  recordMissing(request)
   return withPolicy(request)
 }
 

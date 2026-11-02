@@ -13,6 +13,7 @@ import { Exams } from './collections/Exams'
 import { FundedProjects } from './collections/FundedProjects'
 import { LegalPages } from './collections/LegalPages'
 import { SearchIndex } from './collections/SearchIndex'
+import { MissingAddresses } from './collections/MissingAddresses'
 import { Redirects } from './collections/Redirects'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
@@ -69,6 +70,7 @@ export default buildConfig({
     LegalPages,
     SearchIndex,
     Redirects,
+    MissingAddresses,
     Inquiries,
     InquiryFiles,
   ],

@@ -85,6 +85,7 @@ export interface Config {
     'legal-pages': LegalPage;
     search: Search;
     redirects: Redirect;
+    'missing-addresses': MissingAddress;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -117,6 +118,7 @@ export interface Config {
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     search: SearchSelect<false> | SearchSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    'missing-addresses': MissingAddressesSelect<false> | MissingAddressesSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -1554,6 +1556,20 @@ export interface Redirect {
   createdAt: string;
 }
 /**
+ * Адреси, които са стигнали до страницата «Тази страница я няма». Важните пренасочете в «Пренасочвания» и изтрийте реда.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missing-addresses".
+ */
+export interface MissingAddress {
+  id: number;
+  path: string;
+  hits: number;
+  lastSeen?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Пазят се 1 година, освен ако не са довели до договор.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1802,6 +1818,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'redirects';
         value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'missing-addresses';
+        value: number | MissingAddress;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2665,6 +2685,17 @@ export interface RedirectsSelect<T extends boolean = true> {
   from?: T;
   to?: T;
   source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "missing-addresses_select".
+ */
+export interface MissingAddressesSelect<T extends boolean = true> {
+  path?: T;
+  hits?: T;
+  lastSeen?: T;
   updatedAt?: T;
   createdAt?: T;
 }

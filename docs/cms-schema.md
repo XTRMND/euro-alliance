@@ -30,6 +30,7 @@ Payload runs inside the Next.js app on PostgreSQL. The client edits content in P
 | `inquiries` | none (created only by the wizard's server action, never through the public REST/GraphQL API) | read, update `status` and notes | all |
 | `inquiryFiles` | **none**; never served publicly | read (download through an authenticated route) | all |
 | `redirects` | none (used by the server) | read | all |
+| `missing-addresses` | none (written by the proxy) | read | read, delete |
 | `users` | none | read self, update self | all |
 | Globals | read | update (except `inquiryRouting`) | all |
 
@@ -199,6 +200,10 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 ### Redirects
 
 `from` (the old path, stored lowercase without a trailing slash; unique), `to` (a path or an https address; never an address that redirects again), `source` (`import` / `manual`). Every redirect is a 301, so there's no `type`. Our own collection (PR 19), not Payload's redirects plugin: the proxy (`src/proxy.ts`) reads it directly with `pg`, once a minute at most, without loading Payload. Editors read it; the admin edits it.
+
+### Missing addresses
+
+*(02.11.2026, the user's Y8)* `path` (lowercase, no trailing slash; unique), `hits`, `lastSeen`. Addresses that ended on the 404 page: the proxy counts them and writes the counts once a minute with `pg` (an upsert, at most 200 a minute), leaving out bot noise (`.php`, `wp-…`, `.env`). Nobody adds rows by hand; one worth keeping becomes a redirect, and the row can go.
 
 ## 4. Media and the image pipeline
 
