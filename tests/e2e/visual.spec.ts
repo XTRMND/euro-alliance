@@ -39,6 +39,9 @@ for (const { name, path } of snapshots) {
     test(`${name} at ${width}px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 })
       await page.goto(path, { waitUntil: 'networkidle' })
+      // The handwriting (Caveat) arrives after the page has loaded (src/styles/font-hand.ts).
+      await page.waitForFunction(() => document.documentElement.hasAttribute('data-hand-font'))
+      await page.evaluate(() => document.fonts.load('700 30px Caveat'))
       await page.evaluate(() => document.fonts.ready)
       // A full-page shot doesn't scroll, so lazy images far down a long page may not have loaded
       // yet: load and decode them all first.

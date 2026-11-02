@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import notebookShadow from '@/assets/halftone/notebook-shadow.svg'
 import { Flag, type FlagLanguage } from './Flag'
 import { Halftone } from './Halftone'
 import styles from './ProgramHeroArt.module.css'
@@ -41,6 +42,15 @@ export function ProgramHeroArt({
 }: ProgramHeroArtProps) {
   return (
     <div className={[styles.art, className].filter(Boolean).join(' ')}>
+      {/* The shadow's dots are a CSS mask, which counts as the hero's largest image: preloaded, so
+          it doesn't wait for the stylesheet (in CORS mode, as masks are fetched). */}
+      <link
+        rel="preload"
+        as="image"
+        href={notebookShadow.src}
+        crossOrigin="anonymous"
+        fetchPriority="high"
+      />
       <div className={styles.stage}>
         <Halftone pattern="notebook-shadow" className={styles.shadow} />
         <div className={styles.page}>
