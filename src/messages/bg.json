@@ -337,7 +337,7 @@
     "locations": "Как да ни намерите",
     "route": "Маршрут",
     "openMap": "Отвори картата на {street}",
-    "mapAttribution": "© OpenStreetMap",
+    "mapAttribution": "© OpenStreetMap contributors",
     "iban": "IBAN {iban}, BIC {bic}, {bank}"
   },
   "program": {

@@ -54,18 +54,3 @@ test('both funded projects show with their EU logos', async ({ page }) => {
     await expect(project.getByRole('img')).toBeVisible()
   }
 })
-
-test('the logo badge is a circle', async ({ page }) => {
-  for (const width of [1440, 390]) {
-    await page.setViewportSize({ width, height: 900 })
-    await page.goto(routes.about())
-    const size = await page
-      .locator('[class*="bubble"]')
-      .first()
-      .evaluate((badge) => [
-        (badge as HTMLElement).offsetWidth,
-        (badge as HTMLElement).offsetHeight,
-      ])
-    expect(size[0], `${width}px`).toBe(size[1])
-  }
-})

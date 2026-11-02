@@ -1,0 +1,38 @@
+/* Zero specificity: whoever places the badge (absolutely, usually) wins over these. */
+:where(.badge) {
+  position: relative;
+  display: block;
+}
+
+.badge {
+  isolation: isolate; /* the pin's pointer sits under the mark */
+  width: var(--badge-size);
+  height: var(--badge-size);
+  border: var(--badge-ring) solid var(--color-bg-page);
+  border-radius: 50%;
+  background: var(--color-bg-page);
+}
+
+.mark {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+/* The pin's pointer (Map pin): a white square turned 45°, its centre on the ring's bottom edge,
+   so its tip is about 0.2 of the badge below it. */
+.pin::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: calc(100% + var(--badge-ring));
+  left: 50%;
+  width: calc(var(--badge-size) * 0.3056); /* 22 of 72 */
+  height: calc(var(--badge-size) * 0.3056);
+  border-radius: 3px;
+  background: var(--color-bg-page);
+  translate: -50% -50%;
+  rotate: 45deg;
+}

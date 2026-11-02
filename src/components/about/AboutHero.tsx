@@ -1,8 +1,7 @@
 import { Breadcrumb } from '@/components/patterns/Breadcrumb'
 import { withHighlight } from '@/components/patterns/Highlight'
 import { TornWindow } from '@/components/patterns/TornWindow'
-import { Img } from '@/components/ui/Img'
-import logoMark from '@/assets/logo-mark-dark.svg'
+import { LogoBadge } from '@/components/visuals/LogoBadge'
 import type { Media } from '@/payload-types'
 import landing from '@/styles/landing.module.css'
 import styles from './AboutHero.module.css'
@@ -48,9 +47,11 @@ export function AboutHero({
         {photo && (
           <div className={styles.art}>
             <TornWindow photo={photo} eager className={styles.window} />
-            <span className={styles.bubble} aria-hidden="true">
-              <Img src={logoMark} alt="" unoptimized />
-            </span>
+            <LogoBadge
+              size="clamp(75px, 18vw, 104px)"
+              ring="clamp(7px, 1.7vw, 10px)"
+              className={styles.bubble}
+            />
           </div>
         )}
       </div>

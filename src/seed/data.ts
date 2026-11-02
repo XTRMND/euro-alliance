@@ -237,7 +237,8 @@ export const partners = [
 
 /**
  * The contact page (119:1795): copy and the two location cards (125:302) from Figma, with the
- * coordinates of Figma's map links and its OpenStreetMap snapshots.
+ * coordinates of Figma's map links; the maps are drawn from OpenStreetMap data at 2× by
+ * scripts/maps/render.mjs (the same areas as Figma's snapshots).
  */
 export const contact = {
   hero: {
@@ -254,7 +255,7 @@ export const contact = {
       latitude: 42.1585573,
       longitude: 24.7394618,
       map: {
-        file: 'src/seed/contact/plovdiv-map.png',
+        file: 'src/seed/contact/plovdiv-map.webp',
         alt: 'Карта на района около ул. Самара №13, Пловдив',
       },
     },
@@ -266,7 +267,7 @@ export const contact = {
       latitude: 42.6940008,
       longitude: 23.3288525,
       map: {
-        file: 'src/seed/contact/sofia-map.png',
+        file: 'src/seed/contact/sofia-map.webp',
         alt: 'Карта на района около ул. Георги С. Раковски 125, София',
       },
     },

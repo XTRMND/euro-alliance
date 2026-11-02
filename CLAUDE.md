@@ -336,7 +336,8 @@ From the contact wizard (PR 11):
 - Step 3 requires name and email; phone is optional. The privacy label links to the privacy page (Figma's has no link). Done links «Към всички курсове» for course, voucher and level-test inquiries and «Към началната страница» for the others. [as described]
 - The corporate topics besides «Езиково обучение» (Компютърно, Професионално, Друго) are proposed. [as described]
 - The Contact sticker shows twice on the contact page (the hero and «Друго»), as in Figma; «one sticker, one meaning» holds if both mean contact. [Figma]
-- The location cards use Figma's OpenStreetMap snapshots and the coordinates from Figma's links, and Sofia's «1000» postcode; neither is among the verified facts. Confirm with the client. [Figma]
+- The location cards use the coordinates from Figma's links and Sofia's «1000» postcode; neither is among the verified facts. Confirm with the client. [Figma]
+- The maps (02.11.2026): Figma's OpenStreetMap snapshots were 800 × 460, shown up to about 600 px wide (1.35× on a 2× screen), with an incomplete credit («© OpenStreetMap», no link) inside the map's link. They're now drawn by `scripts/maps/render.mjs` from OpenFreeMap's vector tiles (OpenStreetMap data, free for commercial use) in the site's colours at 1600 × 920, the same areas, stored as WebP; next/image serves AVIF or WebP. The credit «© OpenStreetMap contributors · OpenMapTiles · OpenFreeMap» is linked and sits under the map, outside its link. The marker is the logo badge (`LogoBadge`, SVG and CSS), not part of the image. [as described]
 
 From the contact wizard's server side (PR 11):
 - Upload limits as proposed: 10 files, 20 MB each, PDF, JPG, PNG, DOC, DOCX, ODT, the type checked from the content. No virus scan (ClamAV) unless the servers can run it.

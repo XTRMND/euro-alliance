@@ -337,7 +337,7 @@
     "locations": "How to find us",
     "route": "Directions",
     "openMap": "Open the map of {street}",
-    "mapAttribution": "© OpenStreetMap",
+    "mapAttribution": "© OpenStreetMap contributors",
     "iban": "IBAN {iban}, BIC {bic}, {bank}"
   },
   "program": {

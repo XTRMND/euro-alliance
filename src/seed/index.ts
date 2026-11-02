@@ -379,10 +379,26 @@ async function seedContact(payload: Payload) {
   if (isEmpty(current.locations)) {
     const locations = []
     for (const { map, ...location } of contact.locations) {
-      const media = await uploadOnce(payload, { ...map, mimetype: 'image/png', kind: 'art' })
+      const media = await uploadOnce(payload, { ...map, mimetype: 'image/webp', kind: 'art' })
       locations.push({ ...location, map: media.id })
     }
     data.locations = locations
+  }
+  // Figma's 800 × 460 snapshots (seeded before 02.11.2026) give way to the sharp maps; a map the
+  // client chose stays.
+  else {
+    const maps = await Promise.all(
+      (current.locations ?? []).map(async (location, i) => {
+        const id = typeof location.map === 'object' ? location.map?.id : location.map
+        if (!id) return location
+        const media = await payload.findByID({ collection: 'media', id, depth: 0 })
+        const seeded = contact.locations[i]?.map
+        if (!seeded || !/^(plovdiv|sofia)-map\.png$/.test(media.filename ?? '')) return location
+        const sharp = await uploadOnce(payload, { ...seeded, mimetype: 'image/webp', kind: 'art' })
+        return { ...location, map: sharp.id }
+      }),
+    )
+    if (maps.some((location, i) => location !== current.locations?.[i])) data.locations = maps
   }
   if (Object.keys(data).length === 0) return
   await payload.updateGlobal({ slug: 'contact', locale: 'bg', data })

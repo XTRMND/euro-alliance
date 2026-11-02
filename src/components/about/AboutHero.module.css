@@ -66,22 +66,8 @@
   position: absolute;
   top: 72%;
   left: -2%;
-  display: block;
-  width: clamp(75px, 18vw, 104px);
-  height: clamp(75px, 18vw, 104px); /* not aspect-ratio: Safari adds the ring to the height */
-  border: clamp(7px, 1.7vw, 10px) solid var(--color-bg-page);
-  border-radius: 50%;
-  overflow: hidden;
   filter: drop-shadow(0 8px 9px rgb(var(--shadow-rgb) / 0.3));
   rotate: 8deg;
-}
-
-.bubble img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  /* The logo SVG stretches to any box (preserveAspectRatio="none"): never into an oval. */
-  object-fit: contain;
 }
 
 @media (prefers-reduced-motion: no-preference) {

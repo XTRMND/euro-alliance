@@ -23,15 +23,19 @@
   object-fit: cover;
 }
 
-/* The pin's point marks the spot, the centre of the map. */
+/* The pin's tip marks the spot, the centre of the map: the pointer reaches 0.216 of the badge
+   below it. */
 .pin {
   position: absolute;
-  top: calc(50% - 41px);
+  top: 50%;
   left: 50%;
-  width: 72px;
-  height: 90px;
-  translate: -50% -50%;
-  overflow: visible;
+  translate: -50% calc(-100% - 72px * 0.216);
+  filter: drop-shadow(0 6px 14px rgb(var(--shadow-rgb) / 0.35));
+}
+
+/* The credit sits over the map but outside its link (a link can't hold links). */
+.frame {
+  position: relative;
 }
 
 .attribution {
@@ -39,10 +43,20 @@
   right: 8px;
   bottom: 8px;
   padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--color-bg-page);
   font: 400 0.65625rem / 1.45 var(--font-body);
   color: var(--color-text-muted);
-  background: var(--color-bg-page);
-  border-radius: 4px;
+}
+
+.attribution a {
+  color: inherit;
+}
+
+@media (hover: hover) {
+  .attribution a:hover {
+    color: var(--color-brand-primary);
+  }
 }
 
 .card .tape {

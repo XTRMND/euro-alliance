@@ -19,7 +19,11 @@ export default defineConfig({
     // tests/e2e/consent.spec.ts starts without it.
     storageState: 'tests/e2e/consented.json',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [
+    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+    // WebKit for what renders differently in Safari (the logo badge stretched into an oval there).
+    { name: 'webkit', use: { ...devices['Desktop Safari'] }, testMatch: /badge\.spec\.ts/ },
+  ],
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
