@@ -475,6 +475,12 @@ From SEO (PR 22):
 From the review follow-ups (PR 24a, 02.11.2026):
 - The course card's button stays on the price row, its label on one line (the user). A card needs about 260px for that, so course card rows have four cards only from 1440px (Figma's width), three from 1024px, and two on the homepage until 1440px (its four cards make two rows of two, never three and one). «Попитайте» is set in the H3 size, a step below the prices, so it fits beside «Запитване». [as described]
 
+From the accessibility pass (PR 25):
+- New checks (`tests/e2e/a11y.spec.ts`): axe on the open states not covered elsewhere (header dropdown, mobile menu with its group, a licence in full size, the article's contents box, the wizard's Step 2 for every topic); reflow at 320px on every page (WCAG 1.4.10); WCAG 1.4.12 text spacing at 390 and 1440 (no sideways scroll, no text cut off); a keyboard pass on every page (skip link first, every Tab stop on screen with a visible focus state).
+- Fixed: at 320px the System cards, the project cards and the program sections grew past the screen with a long word or the logo strip (they keep to their column now), and the Ticket's label goes above its value below 360px; with wider text spacing the notebook and its sticky note no longer cut off their lines.
+- By design, not changed: course card titles stop at two lines with an ellipsis (Figma); the full title is on the course page. Visually hidden labels are 1 × 1 px.
+- Screen-reader spot checks (VoiceOver, NVDA) need a person: the header and its dropdown, the mobile menu, the filters sheet, the wizard, the cookie settings and the search. The accessibility tree and names are checked by axe and the component tests.
+
 From the security headers (PR 24):
 - The Content-Security-Policy has a fresh nonce per response (`src/proxy.ts`, `src/lib/security-headers.ts`), so whole pages can't be cached at the CDN as they are: a cached page would reuse its nonce. When the CDN is chosen: keep pages uncached there (the CMS reads are cached in the app), or move to a hash-based policy. [no page caching at the CDN]
 - HSTS until launch (the user, 02.11.2026): `max-age=300`, this host only, no `includeSubDomains`, no `preload`. Waiting on the client: does every subdomain of the site's domain serve HTTPS (webmail, an old system)? If so, `includeSubDomains` at launch, with two years (PR 27).

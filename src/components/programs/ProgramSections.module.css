@@ -2,6 +2,8 @@
    heading and the content; 64 / 44 on mobile. */
 .section {
   display: grid;
+  /* One column that never grows to fit a long word (text spacing overrides, WCAG 1.4.12). */
+  grid-template-columns: minmax(0, 1fr);
   gap: 18px;
   max-width: var(--page-max);
   margin: 0 auto;

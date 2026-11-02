@@ -33,7 +33,8 @@
   left: calc(59.28 * var(--u));
   width: calc(380 * var(--u));
   height: calc(400 * var(--u));
-  overflow: hidden;
+  /* Not clipped: with a reader's wider letter spacing (WCAG 1.4.12) a phrase may run past the
+     paper's edge, but it stays readable. At normal spacing every line fits. */
   border-radius: calc(6 * var(--u));
   background-color: var(--color-bg-page);
   background-image:
@@ -163,7 +164,7 @@
   width: calc(150 * var(--u));
   height: calc(138 * var(--u));
   padding: calc(12 * var(--u)) calc(10 * var(--u)) 0 calc(14 * var(--u));
-  overflow: hidden;
+  /* Not clipped, like the page: wider text spacing may run a step past the note's edge. */
   background: var(--color-brand-accent);
   box-shadow: 0 calc(12 * var(--u)) calc(30 * var(--u)) rgb(var(--shadow-rgb) / 0.14);
   font-family: var(--font-hand);

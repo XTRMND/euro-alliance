@@ -38,6 +38,15 @@
   align-items: baseline;
 }
 
+/* At 320px (WCAG 1.4.10) the value's column is too narrow for a long word («висококвалифицирани»):
+   the label goes above the value, as on the project card's facts. */
+@media (max-width: 359px) {
+  .field {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+}
+
 .label {
   font: 700 0.875rem / 1.5 var(--font-display);
   letter-spacing: var(--tracking-caps);

@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Never wider than its column: at 320px (WCAG 1.4.10) or with wider text spacing (1.4.12) a
+     long word or the logo strip's height-based width would otherwise widen the whole grid. */
+  min-width: 0;
   height: 100%;
   padding: 30px 30px 26px;
   border-radius: 8px;
