@@ -21,7 +21,7 @@ import { slugify } from '@/lib/slug'
 import { type Destination, destinations } from '@/lib/destinations'
 import { richText } from '@/seed/programs'
 import { htmlToLexical, plainText, typeset } from './html-to-lexical'
-import { parseOldPrice } from './old-course'
+import { cleanCourseTitle, type OldLevel, parseOldLevel, parseOldPrice } from './old-course'
 
 const out = new URL('./out/', import.meta.url)
 const userAgent = 'EuroAlliance-site-migration/1.0 (content migration to the new euro-alliance.net)'
@@ -56,6 +56,12 @@ const report = {
     /** Every imported group: none has an end date (the client gives them). */
     withoutEnd: [] as string[],
     missing: [] as string[],
+    /** «Ниво» as written → the bubble. */
+    levels: [] as string[],
+    /** Courses whose level couldn't be read: no bubble. */
+    noLevel: [] as string[],
+    /** Old entries not yet in the approved list, cleaned up in place. */
+    tidied: 0,
   },
   pages: {
     created: 0,
@@ -305,7 +311,8 @@ async function importCovers(payload: Payload, altOf: Map<string, string>) {
 /** A course of scripts/import/courses.json. */
 type CourseEntry = {
   slug: string
-  title: string
+  /** The card's title; without one, the old entry's, cleaned (cleanCourseTitle). */
+  title?: string
   approved: boolean
   category: string
   language?: Language
@@ -615,6 +622,8 @@ async function main() {
   // docs/course-list.md): what the centre teaches, each with zero or more groups made from the old
   // site's dated entries (/Courses/N). A group keeps the old entry's start, schedule, format,
   // office and price as written; no end date is guessed (the report lists every group without one).
+  // The level bubble comes from the old «Ниво» (scripts/import/old-course.ts), unless the list
+  // gives one; the report lists every course without a level.
   if (runs('courses')) {
     const entries = (
       JSON.parse(
@@ -624,45 +633,64 @@ async function main() {
     const pageById = new Map(coursePages.map((page) => [pathOf(page.url).split('/')[2], page]))
     const offices = await payload.find({ collection: 'offices', depth: 0, pagination: false })
     const coursesOffice = offices.docs.find((office) => office.role === 'courses')?.id
+
+    /** An old entry's fields (`dl.dl-horizontal`), its name and its start date. */
+    const readOldEntry = async (page: InventoryPage) => {
+      const $ = await html(page)
+      const field: Record<string, string> = {}
+      $('dl.dl-horizontal dt').each((_, dt) => {
+        const value = $(dt).next('dd').text().replace(/\s+/g, ' ').trim()
+        field[$(dt).text().trim()] = value === 'ask' ? '' : value
+      })
+      const description = $('h3')
+        .filter((_, h) => $(h).text().trim() === 'Тема на обучение')
+        .first()
+        .next('p')
+        .text()
+        .trim()
+      return {
+        field,
+        name: typeset(String($('input[name="courseName"]').val() ?? page.title).trim()),
+        description: typeset(description),
+        startDate: String($('input[name="courseStartDate"]').val() ?? ''),
+      }
+    }
+
+    const reportLevel = (title: string, level: OldLevel | null, written?: string) =>
+      level
+        ? report.courses.levels.push(
+            `${title}: «${written}» → ${level.level} (${level.levelUnit === 'grade' ? 'КЛАС' : 'НИВО'})`,
+          )
+        : report.courses.noLevel.push(`${title}${written ? `: «${written}»` : ''}`)
+
     for (const entry of entries) {
       const groups = []
       const course: Record<string, string> = {}
+      let level: OldLevel | null = null
       for (const { legacyId, label, priceLabel } of entry.groups) {
         const page = pageById.get(legacyId)
         if (!page) {
-          report.courses.missing.push(`${entry.title}: /Courses/${legacyId}`)
+          report.courses.missing.push(`${entry.title ?? entry.slug}: /Courses/${legacyId}`)
           continue
         }
-        const $ = await html(page)
-        const field: Record<string, string> = {}
-        $('dl.dl-horizontal dt').each((_, dt) => {
-          const value = $(dt).next('dd').text().replace(/\s+/g, ' ').trim()
-          field[$(dt).text().trim()] = value === 'ask' ? '' : value
-        })
-        const name = String($('input[name="courseName"]').val() ?? page.title).trim()
-        course.originalTitle ??= typeset(name)
-        course.description ??= typeset(
-          $('h3')
-            .filter((_, h) => $(h).text().trim() === 'Тема на обучение')
-            .first()
-            .next('p')
-            .text()
-            .trim(),
-        )
+        const { field, name, description, startDate } = await readOldEntry(page)
+        course.originalTitle ??= name
+        course.title ??= entry.title ?? cleanCourseTitle(name)
+        course.description ??= description
         course.duration ??= field['Хорариум']
         course.program ??= field['Програма']
         course.document ??= field['Документ']
         course.included ??= field['Бележки']
-        course.levelName ??= field['Ниво']
-        const startDate = String($('input[name="courseStartDate"]').val() ?? '')
+        level ??= parseOldLevel(field['Ниво'])
+        course.levelName ??= level?.levelName ?? field['Ниво']
         if (!startDate) continue
         const price = parseOldPrice(field['Цена (лв.)'])
         if (field['Цена (лв.)'])
           report.courses.prices.push(
-            `${entry.title}: «${field['Цена (лв.)']}»${price?.currency === 'BGN' ? ' (лв.)' : ''}`,
+            `${course.title}: «${field['Цена (лв.)']}»${price?.currency === 'BGN' ? ' (лв.)' : ''}`,
           )
         report.courses.withoutEnd.push(
-          `${entry.title}${label ? `, ${label}` : ''}: from ${startDate}`,
+          `${course.title}${label ? `, ${label}` : ''}: from ${startDate}`,
         )
         const online = /online/i.test(field['Зала'] ?? '') || /онлайн/i.test(name)
         groups.push({
@@ -679,13 +707,24 @@ async function main() {
           legacyUrl: page.url,
         })
       }
+      const title = course.title ?? entry.title ?? entry.slug
+      // The list's level wins (ДЗИ and НВО give theirs); otherwise the old «Ниво», read.
+      if (entry.level)
+        reportLevel(
+          title,
+          { level: entry.level, levelUnit: entry.levelUnit ?? 'level', levelName: '' },
+          course.levelName || 'courses.json',
+        )
+      else reportLevel(title, level, course.levelName)
       // The course's own fields: everything but the list's bookkeeping and the groups.
       const fields = Object.fromEntries(
         Object.entries(entry).filter(([key]) => !['approved', 'source', 'groups'].includes(key)),
       )
       const data = {
+        ...(level ? { level: level.level, levelUnit: level.levelUnit } : {}),
         ...fields,
         ...Object.fromEntries(Object.entries(course).filter(([, value]) => value)),
+        ...(entry.title ? { title: entry.title } : {}),
         groups,
         voucherEligible: Boolean(entry.voucherEligible),
         _status: 'published' as const,
@@ -718,6 +757,55 @@ async function main() {
         await payload.create({ collection: 'courses', locale: 'bg', data: data as never })
         report.courses.created++
       }
+    }
+
+    // Old entries not yet in the approved list keep the course the first import made of each
+    // (it still has the entry's address in `legacyUrl`; an approved course clears it), with the
+    // same clean-up: the level bubble, the title without the words its tags show (the old one
+    // kept), and the price with its label. Their addresses (slugs) stay until the list replaces
+    // them.
+    const unlisted = await payload.find({
+      collection: 'courses',
+      where: { legacyUrl: { exists: true } },
+      locale: 'bg',
+      depth: 0,
+      pagination: false,
+      draft: true,
+    })
+    for (const doc of unlisted.docs) {
+      const page = pageById.get(pathOf(doc.legacyUrl ?? '').split('/')[2])
+      if (!page) continue
+      const { field, name } = await readOldEntry(page)
+      const level = parseOldLevel(field['Ниво'])
+      const title = cleanCourseTitle(name)
+      reportLevel(`${title} (not in the list yet)`, level, field['Ниво'])
+      const price = parseOldPrice(field['Цена (лв.)'])
+      const [first, ...rest] = doc.groups ?? []
+      if (dryRun) continue
+      await payload.update({
+        collection: 'courses',
+        id: doc.id,
+        locale: 'bg',
+        data: {
+          title,
+          originalTitle: doc.originalTitle || name,
+          ...(level ?? {}),
+          ...(first && price
+            ? {
+                groups: [
+                  {
+                    ...first,
+                    ...price,
+                    // The old price text, now the amount and its label, isn't repeated as a note.
+                    priceNote: first.priceNote === field['Цена (лв.)'] ? null : first.priceNote,
+                  },
+                  ...rest,
+                ],
+              }
+            : {}),
+        } as never,
+      })
+      report.courses.tidied++
     }
   }
 
@@ -863,6 +951,14 @@ async function writeReport(inventory: Inventory) {
     ...r.courses.prices.map((price) => `  - ${price}`),
     `- Groups without an end date (a started group counts as running until it has one: ask the client):`,
     ...r.courses.withoutEnd.map((group) => `  - ${group}`),
+    `- Level bubbles, from the old «Ниво» (Cyrillic look-alikes read as Latin, a span as a range; school years as КЛАС):`,
+    ...r.courses.levels.map((level) => `  - ${level}`),
+    `- No level could be read, so no bubble: ${r.courses.noLevel.join('; ') || 'none'}.`,
+    ...(r.courses.tidied
+      ? [
+          `- ${r.courses.tidied} courses from old entries not yet in the approved list (docs/course-list.md) got the same clean-up in place: level, title (the old one kept in «Заглавие на стария сайт»), price and its label.`,
+        ]
+      : []),
     ...(r.courses.missing.length
       ? [
           `- Old entries named in courses.json but not in the crawl: ${r.courses.missing.join('; ')}.`,
