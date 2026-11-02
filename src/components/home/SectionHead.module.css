@@ -9,6 +9,12 @@
   flex: none;
 }
 
+/* The word space before «курсове»: the button is a flex box, which drops the space at the end of
+   «Всички ». */
+.long {
+  margin-inline-start: 0.25em;
+}
+
 /* «курсове» in «Всички курсове»: read, but not shown below 768px. */
 @media (max-width: 767.98px) {
   .long {
