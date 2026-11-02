@@ -33,6 +33,7 @@ export function NavLink({
     return <TrackedLink href={href} event="mailto_click" params={{ inbox, placement }} {...rest} />
   }
   if (/^(https?:|tel:|mailto:)/.test(href)) return <a href={href} {...rest} />
-  const current = href.split(/[?#]/)[0] === pathname && !href.includes('#')
+  // A filtered view (/kursove?kategoria=…) or a section (#…) isn't the page itself.
+  const current = href === pathname
   return <Link href={href} prefetch={false} aria-current={current ? 'page' : undefined} {...rest} />
 }

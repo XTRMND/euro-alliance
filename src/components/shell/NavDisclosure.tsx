@@ -22,7 +22,7 @@ export function NavDisclosure({ label, links, variant }: NavDisclosureProps) {
   const root = useRef<HTMLDivElement>(null)
   const button = useRef<HTMLButtonElement>(null)
   const pathname = usePathname()
-  const current = links.some((link) => link.href.split(/[?#]/)[0] === pathname)
+  const current = links.some((link) => link.href === pathname)
 
   useEffect(() => {
     if (!open) return
