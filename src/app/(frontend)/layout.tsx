@@ -9,6 +9,7 @@ import { getNavigation, getOffices, getSite } from '@/lib/cms'
 import { measurementIdOf } from '@/lib/analytics'
 import { consentHeadScript } from '@/lib/consent'
 import { siteUrl } from '@/lib/seo'
+import { handFontScript } from '@/styles/font-hand'
 import { fontVariables } from '@/styles/fonts'
 import '@/styles/tokens.css'
 import '@/styles/globals.css'
@@ -61,6 +62,8 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
       <head>
         {/* Consent Mode's defaults and the stored choice, before anything else (src/lib/consent). */}
         <script dangerouslySetInnerHTML={{ __html: consentHeadScript() }} />
+        {/* The handwriting (Caveat) once the page has loaded, after the LCP. */}
+        <script dangerouslySetInnerHTML={{ __html: handFontScript }} />
       </head>
       <body>
         <SkipLink />

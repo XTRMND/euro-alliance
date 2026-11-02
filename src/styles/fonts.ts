@@ -21,7 +21,7 @@ export const sofiaSansExtraCondensed = localFont({
   fallback: ['Arial Narrow', 'Arial', 'sans-serif'],
 })
 
-// Caveat, the handwriting, is in ./font-hand.tsx: it loads only where it's used.
+// Caveat, the handwriting, is declared in globals.css and turned on after load (./font-hand.ts).
 
 export const fontVariables = [sofiaSans, sofiaSansExtraCondensed]
   .map((font) => font.variable)

@@ -267,3 +267,12 @@ test('a language or audience without a page is not found', async ({ page }) => {
     expect(response?.status(), path).toBe(404)
   }
 })
+
+test('the notebook writes by hand once the page has loaded, without a preload', async ({
+  page,
+}) => {
+  await page.goto(routes.languageProgram('english', 'adults'))
+  await expect(page.locator('link[rel="preload"][href*="Caveat"]')).toHaveCount(0)
+  await expect(page.locator('html')).toHaveAttribute('data-hand-font', '')
+  await expect.poll(() => page.evaluate(() => document.fonts.check('700 20px Caveat'))).toBe(true)
+})

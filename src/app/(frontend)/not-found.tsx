@@ -6,7 +6,6 @@ import { SearchField } from '@/components/search/SearchField'
 import { Button } from '@/components/ui/Button'
 import { Tape } from '@/components/visuals/Tape'
 import { routes } from '@/lib/routes'
-import { HandFontPreload } from '@/styles/font-hand'
 import landing from '@/styles/landing.module.css'
 import styles from './not-found.module.css'
 
@@ -29,7 +28,6 @@ export default async function NotFound() {
   ]
   return (
     <div className={styles.page}>
-      <HandFontPreload />
       <div className={styles.copy}>
         <h1 className={[styles.title, landing.rise].join(' ')}>
           {t('title')} <Highlight>{t('highlight')}</Highlight>
