@@ -255,6 +255,7 @@ Decided by the user on 01.11.2026:
 - The EU logo strip in Figma (Project card 259:574) is the client's official file. It's in `public/logos/eu-pkip-logo-strip.jpg` byte for byte and seeded as a `logo` upload: never tinted, halftoned, recompressed or recoloured. It shows in the footer funding notice and, from PR 13, on the project card.
 
 Decided by the user on 02.11.2026 (images and courses, PR 21; the second message of the day replaces the first):
+- Staging is shown without Unsplash photos (the user, 02.11.2026, later the same day): the local picker stays local, nothing from it is imported, and slots Figma doesn't cover show their no-image state. Pictures for old articles are a question for the client (Waiting on the client).
 - Every image in Figma's pages 03 Components, 04 Templates desktop, 05 Templates mobile and 06 Logo is approved and ported at full resolution into its slot (hero photos, the homepage's small photo, news cards and banners, About photos, scans, maps, stickers, logos). A Figma image that belongs to a real article becomes its cover (`scripts/import/figma-covers.json`, the import's covers step): 213 Будители, 205 Супер промоция, 204 Опреснителни занятия, 210 Грац, 209 Форум (certain), 212 and 211 the GreenHost стажове and Барселона photos (likely: not on the old site, to confirm with the user). The local Unsplash picker (not committed) only fills slots Figma doesn't cover and blocks nothing.
 - No photo from the old site is imported beyond that: `pnpm import:images` sorts the crawl's 325 images by use (`scripts/import/out/contact-sheet/`) and the import report lists the old pages that had photos (gap report); the 9 images inside article texts aren't imported (no design for them); the 8 `/Courses` thumbnails aren't used.
 - A cover shows in a slot only if it fills it without being enlarged (`src/lib/media/slots.ts`): a card 420 × 220, the lead story 680 × 420, the article banner as a 1024 px screen shows it, 908 × 407 (wider screens enlarge it up to 1.4×). A cover with text in it (Media «Има текст в изображението», for posters) stays out of the banner.
@@ -265,6 +266,7 @@ Decided by the user on 02.11.2026 (images and courses, PR 21; the second message
 - Links: a general label never goes to one specific page. «Езици за ученици» / «Езици за възрастни» (footer, homepage cards) go to the listing filtered to languages and that audience; the filters live in the address, so menus and old-site redirects can point at a filtered view.
 
 Waiting on the client:
+- Old news (the user, 02.11.2026): do they want their old articles brought over at all (the backfill; the import has 203), and if so, with pictures (their old covers or picked photos)? [staging shows the imported articles with Figma's seven covers; the rest have no cover]
 - The tour operator certificate: its number and exact wording (not in the `site` global until supplied).
 - Team photos and classroom photos (the team section is built but stays hidden until photos exist). Real photos only, no Unsplash. The About hero's team photo (forum 2026) is a 900 px copy of a 2048 × 1536 news cover on the old site: use the original?
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
@@ -468,7 +470,13 @@ From SEO (PR 22):
 - JSON-LD: EducationalOrganization on the homepage (offices' addresses as written, the ЕИК as identifier), Course on course pages (only the fields the CMS has), NewsArticle on articles, BreadcrumbList wherever there's a breadcrumb. `hreflang` waits for English.
 - The sitemap lists the fixed pages and everything in the search index (what's published). The search page, the dev pages and old addresses aren't in it.
 
-Decisions this package proposes (confirm before the PR that needs them):
+From the security headers (PR 24):
+- The Content-Security-Policy has a fresh nonce per response (`src/proxy.ts`, `src/lib/security-headers.ts`), so whole pages can't be cached at the CDN as they are: a cached page would reuse its nonce. When the CDN is chosen: keep pages uncached there (the CMS reads are cached in the app), or move to a hash-based policy. [no page caching at the CDN]
+- HSTS has `includeSubDomains` (the plan) and no `preload`: every subdomain of the site's domain must serve HTTPS. Does the client have HTTP-only subdomains (webmail, an old system)? Preload only if the user wants it.
+- Styles allow 'unsafe-inline' (React's style attributes carry CSS custom properties); scripts don't. Google Analytics' hosts are in the policy only when `GA4_MEASUREMENT_ID` is set; gtag.js itself is trusted through 'strict-dynamic' and still loads only after consent.
+- The admin runs under the same policy. Its avatar is now Payload's own, not Gravatar, so no editor's email hash goes to a third party.
+- TLS settings for the user's servers or CDN: README, «Security headers and TLS» (Mozilla intermediate, ECDHE only).
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Ask whether funded-project amounts show the contracted лв amount, the euro amount, or both. Never convert silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.

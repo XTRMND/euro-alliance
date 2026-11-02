@@ -84,6 +84,20 @@ Inquiry emails are sent right after an inquiry is stored; a failed send is retri
 
   For example: `* * * * * curl -fsS -H "Authorization: Bearer $CRON_SECRET" https://<site>/api/payload-jobs/run`.
 
+### Security headers and TLS
+
+The app sends its own security headers ([`src/lib/security-headers.ts`](src/lib/security-headers.ts)): HSTS (two years, with subdomains, no preload) in production, `nosniff`, the referrer policy, a Permissions-Policy, `X-Frame-Options: DENY`, and on every page a Content-Security-Policy with a fresh nonce. The proxy or CDN in front of it should pass them through unchanged, not add a second HSTS header, and not cache whole pages: each page's nonce is new on every response.
+
+`includeSubDomains` means every subdomain of the site's domain must serve HTTPS (check mail and webmail hosts before launch).
+
+TLS is terminated in front of the app. For an A on SSL Labs, use Mozilla's «intermediate» profile without the DHE suites ([ssl-config.mozilla.org](https://ssl-config.mozilla.org)):
+
+- TLS 1.2 and 1.3 only.
+- TLS 1.2 suites, all forward-secret ECDHE: `ECDHE-ECDSA-AES128-GCM-SHA256`, `ECDHE-RSA-AES128-GCM-SHA256`, `ECDHE-ECDSA-AES256-GCM-SHA384`, `ECDHE-RSA-AES256-GCM-SHA384`, `ECDHE-ECDSA-CHACHA20-POLY1305`, `ECDHE-RSA-CHACHA20-POLY1305`; the client picks (`ssl_prefer_server_ciphers off`).
+- OCSP stapling on, session tickets off, plain HTTP answered with a 301 to HTTPS.
+
+Check with [Mozilla Observatory](https://developer.mozilla.org/en-US/observatory) (target: A or better) and SSL Labs once staging is up.
+
 ### Analytics
 
 Set `GA4_MEASUREMENT_ID` to the GA4 property's measurement ID (`G-…`); it's read when a page is served, so changing it needs a restart, not a build. Without it, or with the placeholder `G-XXXXXXXXXX`, no tag loads. With it, gtag.js still loads only after a visitor allows statistics cookies (Consent Mode basic), and its cookies expire within 12 months. In the GA4 property, mark `wizard_submit` as a key event (Admin → Data display → Events). The events and their parameters are in [`docs/measurement.md`](docs/measurement.md).
