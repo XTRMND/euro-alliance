@@ -9,7 +9,7 @@ How to bring the current site's courses, news and pages into Payload, the propos
   - the old privacy page (it says the site uses no cookies; the new approved privacy and cookie texts replace it);
   - «20 години» wording (use «от 1999 г.»);
   - translation prices per topic (dropped).
-- **Photos:** real photos only. Import the client's photos; never substitute stock.
+- **Photos:** none from the old site (the user's decision, 02.11.2026; CLAUDE.md § 12). News covers and the homepage's small photo are picked by the user (the old cover or an Unsplash photo) and imported last; About page photos are the client's only.
 - **Be polite to their server:** one request per second, an identifying user agent, respect `robots.txt`. The site is small (the baseline crawl found 120 pages and 1473 images).
 - The import is code in `scripts/import/`, run against a local or staging database. It is idempotent: re-running it updates records (matched on `legacyUrl`) instead of duplicating them.
 
@@ -51,13 +51,13 @@ One extractor per page type, using `cheerio` on the fetched HTML (Playwright onl
 
 ### 3.4 Images
 
-- Download originals (largest available), deduplicate by content hash, upload to `media` with the right `kind` (`photo`, `scan`, `logo`).
-- **EU logo strips:** upload as `kind: logo`, byte-for-byte as found. If the old site's versions are low resolution, flag them; ask the client for the originals rather than upscaling.
-- **Alt text:** keep the existing alt where present. 22% of images (328 of 1473) have none; for those, draft a factual description of what the image shows, set `altReviewed: false`, and list them in the report. Editors confirm them in Payload.
+- `pnpm import:images` downloads every image the crawl found once (one request a second, cached in `out/files/`), sorts it by use (news cover, inside an article's text, course, page, site chrome) and writes `out/images.json` and a contact sheet, `out/contact-sheet/index.html`.
+- None of them is imported (02.11.2026). The scans, EU logo strips and partner logos the design uses are already seeded, from the same files. The report lists the old pages that had photos, for the client.
+- News covers and the homepage's small photo come from `out/photo-decisions.json` (the user's picks: the old cover, an Unsplash photo, or none) as the import's last step: originals by content hash, Unsplash photos from `in/unsplash/` by the photo id in the file name, with the photographer in «Автор». A kept original with text in it is marked «Има текст в изображението». Alt text: the old alt where there is one, otherwise drafted with `altReviewed: false` and listed in the report.
 
 ### 3.5 Load
 
-`pnpm import:run` (or the agreed package manager) uses Payload's Local API. Flags: `--dry-run` (no writes; prints what would change), `--only=news|courses|pages`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records are **published**: the client approved all the content (02.11.2026) and reviews it on staging. The old site's English copies (`/en/…`) go in as the English locale where they're real translations, for the later English site.
+`pnpm import:run` (or the agreed package manager) uses Payload's Local API. Options, as environment variables (`payload run` doesn't pass arguments on): `IMPORT_DRY_RUN=1` (no writes; the report says what would change), `IMPORT_ONLY=news|courses|pages`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records are **published**: the client approved all the content (02.11.2026) and reviews it on staging. The old site's English copies (`/en/…`) go in as the English locale where they're real translations, for the later English site.
 
 ### 3.6 Report
 

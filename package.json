@@ -16,6 +16,8 @@
     "test:int": "vitest run --config vitest.int.config.ts",
     "test:e2e": "playwright test",
     "import:inventory": "node scripts/import/inventory.ts",
+    "import:images": "node scripts/import/images.ts",
+    "import:run": "payload run scripts/import/run.ts",
     "lhci": "node scripts/lighthouse-cpu.mjs && lhci autorun --config=lighthouserc.cjs && lhci autorun --config=lighthouserc.desktop.cjs",
     "payload": "payload",
     "generate:types": "payload generate:types",

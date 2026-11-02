@@ -77,6 +77,16 @@ export const Programs: CollectionConfig = {
   },
   fields: [
     metaField(),
+    {
+      name: 'legacyUrl',
+      type: 'text',
+      label: 'Стар адрес',
+      admin: {
+        position: 'sidebar',
+        readOnly: true,
+        description: 'Страница, внесена от стария сайт (PR 21).',
+      },
+    },
     { name: 'title', type: 'text', label: 'Заглавие (в админа)', required: true, localized: true },
     slugField(),
     {

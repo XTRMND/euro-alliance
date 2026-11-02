@@ -19,6 +19,7 @@ import * as migration_20261101_211203_legal_pages from './20261101_211203_legal_
 import * as migration_20261101_214328_search_index from './20261101_214328_search_index';
 import * as migration_20261101_222512_redirects from './20261101_222512_redirects';
 import * as migration_20261101_224812_seo_meta from './20261101_224812_seo_meta';
+import * as migration_20261102_082459_programs_legacy_url from './20261102_082459_programs_legacy_url';
 import * as migration_20261102_091944_media_text_in_image from './20261102_091944_media_text_in_image';
 
 export const migrations = [
@@ -126,6 +127,11 @@ export const migrations = [
     up: migration_20261101_224812_seo_meta.up,
     down: migration_20261101_224812_seo_meta.down,
     name: '20261101_224812_seo_meta',
+  },
+  {
+    up: migration_20261102_082459_programs_legacy_url.up,
+    down: migration_20261102_082459_programs_legacy_url.down,
+    name: '20261102_082459_programs_legacy_url',
   },
   {
     up: migration_20261102_091944_media_text_in_image.up,

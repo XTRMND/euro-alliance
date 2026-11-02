@@ -517,6 +517,10 @@ export interface Program {
     description?: string | null;
     image?: (number | null) | Media;
   };
+  /**
+   * Страница, внесена от стария сайт (PR 21).
+   */
+  legacyUrl?: string | null;
   title: string;
   /**
    * Попълва се от заглавието, ако е празно.
@@ -2023,6 +2027,7 @@ export interface ProgramsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
+  legacyUrl?: T;
   title?: T;
   slug?: T;
   type?: T;

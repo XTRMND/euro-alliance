@@ -4,8 +4,9 @@ import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { courseAudiences, courseCategoryValues, courseFormats, courseTopics } from '@/lib/courses'
-import { languages } from '@/lib/routes'
+import { languages, routes } from '@/lib/routes'
 import { metaField } from '@/fields/meta'
+import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
 
 // docs/cms-schema.md § 3. Added with the homepage, the first page that lists courses. The
 // relation to Programs arrives with the Programs collection (PR 12). Never invent a course:
@@ -52,6 +53,14 @@ const topicLabels = {
 /** The sticker choice, also offered on the homepage program cards. */
 export const topicOptions = courseTopics.map((value) => ({ value, label: topicLabels[value] }))
 
+// The old site's address redirects here while the record is published (PR 21).
+const legacyRedirect = legacyRedirectHooks<{
+  id: number
+  slug?: string | null
+  _status?: string | null
+  legacyUrl?: string | null
+}>('courses', (doc) => (doc.slug ? routes.course(doc.slug) : null))
+
 export const Courses: CollectionConfig = {
   slug: 'courses',
   labels: { singular: 'Курс', plural: 'Курсове' },
@@ -63,8 +72,8 @@ export const Courses: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {
-    afterChange: [revalidateCollection, indexAfterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete],
+    afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
+    afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
   },
   fields: [
     metaField(),

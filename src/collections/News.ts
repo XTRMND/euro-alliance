@@ -5,6 +5,8 @@ import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { metaField } from '@/fields/meta'
+import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
+import { routes } from '@/lib/routes'
 
 // docs/cms-schema.md § 3. Added with the homepage, the first page that shows news; the news pages
 // arrive in PR 15. The cover is a photo, shown in its duotone tint (55% on the homepage, 30% on
@@ -55,6 +57,14 @@ const NewsLinkCard: Block = {
   ],
 }
 
+// The old site's address redirects here while the record is published (PR 21).
+const legacyRedirect = legacyRedirectHooks<{
+  id: number
+  slug?: string | null
+  _status?: string | null
+  legacyUrl?: string | null
+}>('news', (doc) => (doc.slug ? routes.newsArticle(doc.slug) : null))
+
 export const News: CollectionConfig = {
   slug: 'news',
   labels: { singular: 'Новина', plural: 'Новини' },
@@ -63,8 +73,8 @@ export const News: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {
-    afterChange: [revalidateCollection, indexAfterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete],
+    afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
+    afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
   },
   fields: [
     metaField(),
