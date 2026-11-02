@@ -3,7 +3,8 @@ import { normalizePath } from '@/lib/redirects'
 
 // An imported record's old address (legacyUrl, docs/content-import.md § 5) redirects to it while
 // it's published: publishing writes the redirect, a new slug updates it, unpublishing or deleting
-// removes it, so an old address never leads to a missing page. Used by News and Courses.
+// removes it, so an old address never leads to a missing page. Used by News and Courses (a
+// course also has its groups' old addresses: several old entries can be one course's groups).
 
 type Doc = { id: number | string; _status?: string | null; legacyUrl?: string | null }
 
@@ -43,10 +44,16 @@ async function save(req: PayloadRequest, from: string, to: string | null) {
 export function legacyRedirectHooks<T extends Doc>(
   collection: 'news' | 'courses',
   urlOf: (doc: T) => string | null,
+  moreUrls: (doc: T) => (string | null | undefined)[] = () => [],
 ) {
+  const pathsOf = (doc: T) => [
+    ...new Set(
+      [doc.legacyUrl, ...moreUrls(doc)].map(legacyPath).filter((path): path is string => !!path),
+    ),
+  ]
   const afterChange: CollectionAfterChangeHook = async ({ doc, req }) => {
-    const from = legacyPath((doc as T).legacyUrl)
-    if (!from) return doc
+    const paths = pathsOf(doc as T)
+    if (!paths.length) return doc
     // A draft save leaves the published version live: redirect to that one.
     const live =
       (doc as T)._status === 'published'
@@ -54,12 +61,12 @@ export function legacyRedirectHooks<T extends Doc>(
         : ((await req.payload
             .findByID({ collection, id: doc.id, draft: false, depth: 0, req, disableErrors: true })
             .catch(() => null)) as T | null)
-    await save(req, from, live && live._status === 'published' ? urlOf(live) : null)
+    const to = live && live._status === 'published' ? urlOf(live) : null
+    for (const from of paths) await save(req, from, to)
     return doc
   }
   const afterDelete: CollectionAfterDeleteHook = async ({ doc, req }) => {
-    const from = legacyPath((doc as T).legacyUrl)
-    if (from) await save(req, from, null)
+    for (const from of pathsOf(doc as T)) await save(req, from, null)
   }
   return { afterChange, afterDelete }
 }

@@ -9,9 +9,10 @@ import { routes } from '@/lib/routes'
 import type { Course, Program } from '@/payload-types'
 import styles from './UpcomingCourses.module.css'
 
-// «Предстоящи курсове» on a program page (130:1993, 236:3479): up to four published courses of the
-// program (src/lib/programs.ts), soonest first, and a link to all of them in the listing. Without
-// a heading or without courses the section isn't shown.
+// «Курсове по …» on a program page (130:1993, 236:3479): every published course of the program
+// (src/lib/programs.ts) with its state, upcoming first, then running, then without a date
+// (src/lib/course-state.ts; «Предстоящи курсове по …» until 02.11.2026), and a link to them in the
+// listing. Without a heading or without courses the section isn't shown.
 
 export type Upcoming = { courses: Course[]; listing: string; shown: boolean }
 
@@ -20,7 +21,7 @@ export async function loadUpcoming(program: Program): Promise<Upcoming> {
   const listing = `${routes.courses()}${courseFiltersQuery(filters)}`
   if (!program.upcoming?.heading) return { courses: [], listing, shown: false }
   const { docs } = await getListedCourses(filters)
-  return { courses: docs.slice(0, 4), listing, shown: docs.length > 0 }
+  return { courses: docs, listing, shown: docs.length > 0 }
 }
 
 export function UpcomingCourses({ program, upcoming }: { program: Program; upcoming: Upcoming }) {

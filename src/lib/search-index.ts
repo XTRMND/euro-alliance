@@ -114,7 +114,9 @@ export function searchRecord(collection: string, doc: Doc): SearchRecord | null 
         url: routes.course(str(doc.slug)),
         source,
         sourceId,
-        publishedAt: (doc.startDate as string) ?? null,
+        // The first group's start, for the date beside a result.
+        publishedAt:
+          ((doc.groups as { startDate?: string }[] | undefined)?.[0]?.startDate as string) ?? null,
       }
     }
     case 'news': {

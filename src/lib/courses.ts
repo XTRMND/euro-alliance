@@ -49,6 +49,7 @@ type FilterableCourse = {
   audience?: CourseAudience | null
   format?: CourseFormat | null
   voucherEligible?: boolean | null
+  groups?: { format?: CourseFormat | null }[] | null
 }
 
 export function matchesUpcomingFilter(course: FilterableCourse, filter: UpcomingFilter): boolean {
@@ -61,7 +62,10 @@ export function matchesUpcomingFilter(course: FilterableCourse, filter: Upcoming
     case 'voucher':
       return Boolean(course.voucherEligible)
     case 'online':
-      return course.format === 'online'
+      return (
+        course.format === 'online' ||
+        (course.groups ?? []).some((group) => group.format === 'online')
+      )
   }
 }
 

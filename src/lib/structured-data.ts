@@ -1,4 +1,5 @@
 import type { Course, Media, News, Office, Site } from '@/payload-types'
+import { currentGroups } from './course-state'
 import { routes } from './routes'
 import { siteUrl } from './seo'
 
@@ -49,8 +50,13 @@ export function organizationLd(site: Site, offices: Office[]): Ld {
   })
 }
 
-/** A course (Course), with its instance and offer only where the CMS has them. */
-export function courseLd(course: Course): Ld {
+/**
+ * A course (Course), with one instance per upcoming or running group and the shown group's offer,
+ * only where the CMS has them.
+ */
+export function courseLd(course: Course, today: string): Ld {
+  const groups = currentGroups(course, today).map(({ group }) => group)
+  const offer = groups.find((group) => typeof group.price === 'number')
   return compact({
     '@context': 'https://schema.org',
     '@type': 'Course',
@@ -58,27 +64,29 @@ export function courseLd(course: Course): Ld {
     description: course.description,
     url: course.slug ? absolute(routes.course(course.slug)) : undefined,
     provider: { '@id': absolute('/#organization') },
-    hasCourseInstance:
-      course.startDate || course.city
-        ? compact({
+    hasCourseInstance: groups.length
+      ? groups.map((group) => {
+          const format = group.format ?? course.format
+          const office = typeof group.office === 'object' ? group.office : null
+          return compact({
             '@type': 'CourseInstance',
-            courseMode:
-              course.format === 'online' ? 'online' : course.format ? 'onsite' : undefined,
-            startDate: course.startDate?.slice(0, 10),
-            location: course.city
-              ? { '@type': 'Place', name: course.venue || course.city, address: course.city }
+            courseMode: format === 'online' ? 'online' : format ? 'onsite' : undefined,
+            startDate: group.startDate.slice(0, 10),
+            endDate: group.endDate?.slice(0, 10),
+            location: office
+              ? { '@type': 'Place', name: office.name, address: office.address }
               : undefined,
           })
-        : undefined,
-    offers:
-      typeof course.price === 'number'
-        ? {
-            '@type': 'Offer',
-            category: 'Paid',
-            price: course.price,
-            priceCurrency: course.currency ?? 'EUR',
-          }
-        : undefined,
+        })
+      : undefined,
+    offers: offer
+      ? {
+          '@type': 'Offer',
+          category: 'Paid',
+          price: offer.price,
+          priceCurrency: offer.currency ?? 'EUR',
+        }
+      : undefined,
   })
 }
 

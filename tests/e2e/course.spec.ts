@@ -30,10 +30,22 @@ test.describe('course states (dev gallery)', () => {
     await page.goto(devRoutes.course)
 
     await expect(state(page, 'Малко места')).toContainText('Остават само 2 места')
-    const closed = state(page, 'Записването приключи')
+    const closed = state(page, 'Няма места')
     await expect(closed).toContainText('записването приключи')
     await expect(closed).toContainText('Няма свободни места')
     await expect(closed.getByRole('link', { name: 'Уведоми ме за следващия курс' })).toBeVisible()
+  })
+
+  test('a running group: «В ход от …» and an inquiry; no group: «Попитайте»', async ({ page }) => {
+    await page.goto(devRoutes.course)
+    const running = state(page, 'В ход')
+    await expect(running).toContainText('В ход от 1 декември 2098')
+    await expect(running.getByRole('link', { name: 'Запитване' })).toBeVisible()
+
+    const undated = state(page, 'Няма насрочена дата')
+    await expect(undated).toContainText('Няма насрочена дата')
+    await expect(undated).toContainText('Попитайте')
+    await expect(undated.getByRole('link', { name: 'Запитване' })).toBeVisible()
   })
 
   test('empty fields are left out', async ({ page }) => {

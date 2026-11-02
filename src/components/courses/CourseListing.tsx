@@ -3,6 +3,8 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useOptimistic, useRef, useTransition, type ReactNode } from 'react'
 import { Button } from '@/components/ui/Button'
+import { ChipButton } from '@/components/ui/Chip'
+import { type CourseStatus, courseStatuses } from '@/lib/course-state'
 import {
   activeFilterCount,
   type CourseFilters,
@@ -48,6 +50,9 @@ export type ListingLabels = {
   apply: string
   sortLabel: string
   sort: Record<CourseSort, string>
+  /** «Състояние» and its pills: Всички, Предстоящи, В ход, Без дата. */
+  status: string
+  statuses: Record<'all' | CourseStatus, string>
   count: string
   showMore: string
   shown: string
@@ -136,6 +141,22 @@ export function CourseListing({ filters, total, options, labels, cards }: Course
       </aside>
 
       <section className={styles.results} aria-labelledby="results-count" aria-busy={pending}>
+        <div className={styles.status} role="group" aria-labelledby="status-label">
+          <span id="status-label" className={styles.statusLabel}>
+            {labels.status}
+          </span>
+          {(['all', ...courseStatuses] as const).map((value) => (
+            <ChipButton
+              key={value}
+              pressed={(shownFilters.status ?? 'all') === value}
+              onClick={() =>
+                apply({ ...shownFilters, status: value === 'all' ? undefined : value })
+              }
+            >
+              {labels.statuses[value]}
+            </ChipButton>
+          ))}
+        </div>
         <div className={styles.head}>
           <h2 id="results-count" className={styles.count}>
             {labels.count}

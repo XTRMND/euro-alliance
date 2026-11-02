@@ -38,9 +38,14 @@ const courses = [
     audience: 'adults',
     format: 'online',
     level: 'B2',
-    startDate: '2099-01-15T12:00:00.000Z',
-    price: 100,
-    priceNote: 'тестова бележка',
+    groups: [
+      {
+        id: 'g1',
+        startDate: '2099-01-15T12:00:00.000Z',
+        price: 100,
+        priceLabel: 'тестов етикет',
+      },
+    ],
   }),
   course(2, {
     title: 'Тестов курс с дълго заглавие, което не се побира на два реда в картата',
@@ -48,15 +53,14 @@ const courses = [
     audience: 'adults',
     voucherEligible: true,
     level: 'A1–B1',
-    startDate: '2099-02-01T12:00:00.000Z',
-    price: 100.5,
+    groups: [{ id: 'g2', startDate: '2099-02-01T12:00:00.000Z', price: 100.5 }],
   }),
   course(3, {
     topic: 'exam-prep',
     audience: 'students',
     audienceNote: '12 клас',
     format: 'in-person',
-    startDate: '2099-03-01T12:00:00.000Z',
+    groups: [{ id: 'g3', startDate: '2099-03-01T12:00:00.000Z' }],
   }),
   course(4, { topic: 'computer', cardTag: 'Тестов етикет' }),
 ]

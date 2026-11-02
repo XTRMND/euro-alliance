@@ -4,7 +4,7 @@ import { CourseDetails } from '@/components/courses/CourseDetails'
 import { CourseHero } from '@/components/courses/CourseHero'
 import { EnrolBar } from '@/components/courses/EnrolBar'
 import { Button } from '@/components/ui/Button'
-import { courseState } from '@/lib/course-state'
+import { type CourseGroup, courseState } from '@/lib/course-state'
 import { destinations } from '@/lib/destinations'
 import { routes } from '@/lib/routes'
 import type { Course } from '@/payload-types'
@@ -19,6 +19,18 @@ export const metadata: Metadata = { title: 'Курс', robots: { index: false, f
 
 const today = '2099-01-01T00:00:00.000Z'
 
+const group = {
+  id: 'g1',
+  startDate: '2099-03-01T12:00:00.000Z',
+  days: 'тестови дни',
+  hours: '10:00–12:00',
+  format: 'online' as const,
+  price: 100,
+  currency: 'EUR' as const,
+  priceLabel: 'тестов етикет',
+  seats: 5,
+}
+
 const base: Course = {
   id: 1,
   title: 'Тестов курс B2',
@@ -31,51 +43,53 @@ const base: Course = {
   level: 'B2',
   levelName: 'Тестово ниво',
   description: 'Тестово описание на курса в един ред.',
-  startDate: '2099-03-01T12:00:00.000Z',
-  days: 'тестови дни',
-  hours: '10:00–12:00',
   duration: 'Тестов хорариум в два реда, за да се види пренасянето.',
-  venue: 'Тестова учебна база',
-  city: 'Тестов град',
   program: 'Тестова програма',
   document: 'Тестов документ',
   included: 'Тестово включено',
-  price: 100,
-  currency: 'EUR',
-  priceNote: 'тестова бележка',
-  seats: 5,
+  groups: [group],
   updatedAt: '',
   createdAt: '',
 }
 
+const withGroup = (changes: Partial<CourseGroup>): Course => ({
+  ...base,
+  groups: [{ ...group, ...changes }],
+})
+
 const states: { name: string; course: Course }[] = [
-  { name: 'Промоция', course: { ...base, regularPrice: 120 } },
+  { name: 'Промоция', course: withGroup({ regularPrice: 120 }) },
   { name: 'Редовна цена', course: base },
-  { name: 'С ваучер', course: { ...base, voucherEligible: true, priceNote: null } },
-  { name: 'Малко места', course: { ...base, seats: 2 } },
-  { name: 'Записването приключи', course: { ...base, seats: 0 } },
+  {
+    name: 'С ваучер',
+    course: { ...withGroup({ priceLabel: null }), voucherEligible: true },
+  },
+  { name: 'Малко места', course: withGroup({ seats: 2 }) },
+  { name: 'Няма места', course: withGroup({ seats: 0 }) },
+  { name: 'В ход', course: withGroup({ startDate: '2098-12-01T12:00:00.000Z' }) },
+  { name: 'Няма насрочена дата', course: { ...base, groups: [] } },
   {
     name: 'Липсващи полета',
     course: {
       ...base,
-      days: null,
-      hours: null,
-      venue: null,
-      city: null,
       audience: null,
       program: null,
       included: null,
-      price: null,
-      seats: null,
+      groups: [{ id: 'g2', startDate: group.startDate }],
     },
   },
 ]
 
 const action = (course: Course) => {
-  const closed = courseState(course, today).enrolment === 'closed'
+  const state = courseState(course, today)
+  const closed = state.enrolment === 'inquiry'
   return (
     <Button href={routes.enrol(base.slug!)} variant={closed ? 'secondary' : 'primary'}>
-      {closed ? 'Уведоми ме за следващия курс' : 'Запиши се'}
+      {!closed
+        ? 'Запиши се'
+        : state.status === 'upcoming'
+          ? 'Уведоми ме за следващия курс'
+          : 'Запитване'}
     </Button>
   )
 }
@@ -114,7 +128,7 @@ export default function CourseStatesPage() {
           </section>
         ))}
       </div>
-      <EnrolBar price="100 €" note="тестова бележка" action={action(base)} />
+      <EnrolBar price="100 €" note="тестов етикет" action={action(base)} />
     </>
   )
 }

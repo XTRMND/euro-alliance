@@ -153,7 +153,7 @@ const shared = {
     ],
   },
   upcoming: {
-    heading: 'Предстоящи курсове по английски',
+    heading: 'Курсове по английски',
     linkLabel: 'Всички курсове по английски',
   },
   notebook: {
@@ -345,7 +345,7 @@ export const singlePrograms = [
       sticker: 'corporate',
       countBubble: { value: '6', label: 'курса' },
     },
-    upcoming: { heading: 'Предстоящи курсове с ваучер' },
+    upcoming: { heading: 'Курсове с ваучер' },
     sections: [
       {
         blockType: 'systemCards',

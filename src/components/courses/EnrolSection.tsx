@@ -13,10 +13,13 @@ import styles from './EnrolSection.module.css'
 export const enrolAnchor = 'zapishete-se'
 
 export async function EnrolSection({
+  title,
   course,
   office,
   path,
 }: {
+  /** «Попитайте за записване» for a running course or one without a date; «Запишете се» else. */
+  title?: string
   course: Course
   office?: Office
   path: string
@@ -29,7 +32,7 @@ export async function EnrolSection({
   return (
     <section id={enrolAnchor} className={styles.section} aria-labelledby="enrol-title">
       <h2 id="enrol-title" className={styles.title}>
-        {t('title')}
+        {title ?? t('title')}
       </h2>
       <div className={styles.grid}>
         <Wizard

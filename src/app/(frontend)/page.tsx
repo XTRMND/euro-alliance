@@ -14,7 +14,7 @@ import {
   getOffices,
   getSite,
   getTranslationLanguages,
-  getUpcomingCourses,
+  getAllCourses,
 } from '@/lib/cms'
 import styles from './page.module.css'
 import { routes } from '@/lib/routes'
@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   const home = await getHome()
   const [courses, news, languages, site, offices] = await Promise.all([
-    getUpcomingCourses(),
+    getAllCourses(),
     getLatestNews(home.news?.count ?? 3),
     getTranslationLanguages(),
     getSite(),
@@ -54,7 +54,7 @@ export default async function HomePage() {
       <JsonLd data={organizationLd(site, offices)} />
       <HomeHero hero={home.hero} />
       <LanguageStrip />
-      {home.upcoming?.title && courses.length > 0 && (
+      {home.upcoming?.title && (
         <div className={styles.deferred}>
           <UpcomingCourses title={home.upcoming.title} courses={courses} />
         </div>

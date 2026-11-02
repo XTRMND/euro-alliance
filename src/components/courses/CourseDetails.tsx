@@ -4,12 +4,14 @@ import { Ticket, ticket } from '@/components/patterns/Ticket'
 import { Button } from '@/components/ui/Button'
 import type { CourseState } from '@/lib/course-state'
 import { formatDateLong, formatPrice } from '@/lib/format'
-import type { Course } from '@/payload-types'
+import type { Course, Office } from '@/payload-types'
 import styles from './CourseDetails.module.css'
 
 // Details ticket (91:1412 / 117:956): three groups of facts (Кога, Къде и за кого, Какво
-// получавате) and the stub with the price and enrolment, in the states of board 126:1940. Every
-// empty field is left out, and a group with no fields isn't shown (State: Липсващи полета).
+// получавате) and the stub with the price and enrolment, in the states of board 126:1940. The
+// dates, place and price are the shown group's (src/lib/course-state.ts): the soonest upcoming
+// one, else the latest running; a course without one says «Няма насрочена дата». Every empty
+// field is left out, and a group with no fields isn't shown (State: Липсващи полета).
 
 type CourseDetailsProps = {
   course: Course
@@ -36,16 +38,26 @@ export async function CourseDetails({
   action,
 }: CourseDetailsProps) {
   const t = await getTranslations('course')
-  const currency = course.currency ?? 'EUR'
-  const closed = state.enrolment === 'closed'
+  const group = state.group
+  const currency = group?.currency ?? 'EUR'
+  const closed = state.enrolment === 'inquiry'
+  const office = typeof group?.office === 'object' ? (group.office as Office | null) : null
 
   const groups: { title: string; fields: Field[] }[] = [
     {
       title: t('when'),
       fields: [
-        { label: t('field.start'), value: course.startDate && formatDateLong(course.startDate) },
-        { label: t('field.days'), value: course.days },
-        { label: t('field.hours'), value: course.hours },
+        {
+          label: t('field.start'),
+          value: group
+            ? state.status === 'running'
+              ? t('status.runningSince', { date: formatDateLong(group.startDate) })
+              : formatDateLong(group.startDate)
+            : t('status.none'),
+        },
+        { label: t('field.end'), value: group?.endDate && formatDateLong(group.endDate) },
+        { label: t('field.days'), value: group?.days },
+        { label: t('field.hours'), value: group?.hours },
         { label: t('field.duration'), value: course.duration },
       ],
     },
@@ -53,8 +65,10 @@ export async function CourseDetails({
       title: t('where'),
       fields: [
         { label: t('field.format'), value: format },
-        { label: t('field.venue'), value: course.venue },
-        { label: t('field.city'), value: course.city },
+        {
+          label: t('field.office'),
+          value: office && [office.name, office.address].filter(Boolean).join(', '),
+        },
         { label: t('field.participants'), value: participants },
       ],
     },
@@ -84,30 +98,28 @@ export async function CourseDetails({
     .map((group) => ({ ...group, fields: group.fields.filter((field) => field.value) }))
     .filter((group) => group.fields.length > 0)
 
-  const note = closed
-    ? t('closedNote')
-    : state.pricing === 'voucher'
-      ? course.priceNote || t('voucherValue')
-      : course.priceNote
+  const label = group?.priceLabel || (state.pricing === 'voucher' ? t('voucherValue') : undefined)
+  const note = state.status === 'upcoming' && state.seats === 0 ? t('closedNote') : label
 
   return (
     <Ticket
       groups={shown}
       stubClassName={styles.stub}
-      stubProps={{ 'data-closed': closed || undefined }}
+      // Muted only for a full upcoming group; a running group's price still applies to joining it.
+      stubProps={{ 'data-closed': (state.status === 'upcoming' && state.seats === 0) || undefined }}
       stub={
         <>
           {state.pricing !== 'none' && (
             <>
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>
-                <span className={styles.amount}>{formatPrice(course.price!, currency)}</span>
+                <span className={styles.amount}>{formatPrice(group!.price!, currency)}</span>
                 {note && <span className={styles.note}>{note}</span>}
               </p>
               {!closed && state.pricing === 'promotion' && (
                 <p className={styles.extra}>
                   {t.rich('regularPrice', {
-                    price: formatPrice(course.regularPrice!, currency),
+                    price: formatPrice(group!.regularPrice!, currency),
                     old: (chunks) => <s>{chunks}</s>,
                   })}
                 </p>
@@ -115,6 +127,15 @@ export async function CourseDetails({
               {!closed && state.pricing === 'voucher' && (
                 <p className={styles.extra}>{t('voucherNote')}</p>
               )}
+              {group?.priceNote && <p className={styles.extra}>{group.priceNote}</p>}
+            </>
+          )}
+          {state.status === 'none' && (
+            <>
+              <p className={ticket.label}>{t('field.price')}</p>
+              <p className={styles.price}>
+                <span className={styles.amount}>{t('askPrice')}</span>
+              </p>
             </>
           )}
           {action}

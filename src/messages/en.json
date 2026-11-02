@@ -5,7 +5,8 @@
     "level": "Level",
     "languagesCount": "{count, plural, one {language} other {languages}}",
     "copyAddress": "Copy address",
-    "addressCopied": "Address copied"
+    "addressCopied": "Address copied",
+    "grade": "Grade"
   },
   "header": {
     "skipLink": "Skip to content",
@@ -59,7 +60,9 @@
       "program": "Course book",
       "document": "Certificate",
       "included": "Included",
-      "price": "Price"
+      "price": "Price",
+      "end": "Ends",
+      "office": "Office"
     },
     "checkLevel": "Check your level",
     "regularPrice": "Regular price <old>{price}</old>",
@@ -75,7 +78,16 @@
     "related": "Similar courses",
     "allCourses": "All courses",
     "previous": "Previous courses",
-    "next": "Next courses"
+    "next": "Next courses",
+    "status": {
+      "running": "In progress",
+      "none": "No date set",
+      "runningSince": "In progress since {date}"
+    },
+    "inquire": "Enquire",
+    "inquireTitle": "Ask about joining",
+    "groups": "Groups",
+    "askPrice": "Ask us"
   },
   "courses": {
     "audience": {
@@ -115,7 +127,8 @@
       "anyMonth": "Any month",
       "reset": "Clear filters",
       "resetShort": "Clear",
-      "apply": "Show {count, plural, one {# course} other {# courses}}"
+      "apply": "Show {count, plural, one {# course} other {# courses}}",
+      "status": "Status"
     },
     "sort": {
       "label": "Sort:",
@@ -125,7 +138,13 @@
     "showMore": "Show more courses",
     "shown": "Showing {shown} of {total}",
     "empty": "No courses match these filters.",
-    "breadcrumb": "Courses"
+    "breadcrumb": "Courses",
+    "status": {
+      "all": "All",
+      "upcoming": "Upcoming",
+      "running": "In progress",
+      "none": "No date"
+    }
   },
   "home": {
     "allCourses": "All <long>courses</long>",

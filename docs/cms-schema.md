@@ -50,16 +50,13 @@ Disable GraphQL if nothing uses it. Lock down the REST API to what the site need
 | `audienceNote` | text, optional | *(PR 8)* Shown after the audience on the card («Ученици 12 клас») |
 | `cardTag` | text, optional | *(PR 8)* The card's second tag («Вечерна група»); empty: «С ваучер» for a voucher course, else the format |
 | `level` | text, optional | Drives the level bubble. Empty → no bubble (`Show level` off). |
-| `format` | select | In person / online (the «Формат» filter group) |
-| `startDate` | date, optional | |
+| `format` | select | In person / online (the «Формат» filter group): the usual format; each group may have its own |
 | `description` | textarea | *(PR 10)* The course page lead |
-| `days`, `hours`, `duration` | text | *(PR 10)* Учебни дни, Учебни часове, Хорариум |
-| `venue`, `city` | text | *(PR 10)* Учебна база, Град |
+| `duration` | text | *(PR 10)* Хорариум, for the whole course |
 | `levelName`, `program`, `document`, `included` | text | *(PR 10)* Какво получавате |
-| `schedule` | textarea | A note on the schedule |
-| `price` | number, optional | Empty → price hidden. Store with `currency` *(proposed)*, default EUR. **Never convert imported лв prices silently**; flag them. |
-| `priceNote` | text, optional | The chip beside the price («промоция», «за целия курс») |
-| `regularPrice` | number, optional | *(PR 10)* Above `price`, it marks a promotion and shows struck through |
+| `levelUnit` | select: level / grade | *(02.11.2026)* The word under the bubble: «НИВО», or «КЛАС» for exam preparation by school year («11–12») |
+| `originalTitle` | text, read-only | *(PR 21)* The old site's title, before audience and format words went to the tags |
+| `groups` | array | *(02.11.2026)* The dates belong to groups; zero or more, each: `label` (optional, «Съботни групи»), `startDate` (required), `endDate`, `seats`, `days`, `hours`, `format`, `office` (relation to Offices), `price` with `currency` (EUR default; **never convert imported лв prices silently**), `regularPrice` (above `price`: a promotion, struck through), `priceLabel` (the chip: «Промоция», «Базова цена», «за целия курс»), `priceNote` (a line under the price), `legacyUrl` (an old /Courses/N address, redirected to the course). A group starting today or later is upcoming; one that has started is running until its `endDate` (none is guessed); one past its end is over. The course's state comes from its groups (`src/lib/course-state.ts`). |
 | `seats` | number, optional | |
 | `voucherEligible` | checkbox | Voucher flag |
 | `relatedProgram` | relationship → Programs | |

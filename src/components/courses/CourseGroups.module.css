@@ -1,0 +1,47 @@
+/* The groups list: List row style (index rows) on white, under the ticket. */
+.section {
+  display: grid;
+  gap: 16px;
+}
+
+.title {
+  font: var(--type-h3);
+  color: var(--color-brand-primary-strong);
+}
+
+.list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--color-bg-page);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-card);
+}
+
+.group {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px;
+}
+
+.group + .group {
+  border-top: 1px solid var(--color-border-default);
+}
+
+.name {
+  font: var(--type-label);
+  color: var(--color-text-primary);
+}
+
+.start {
+  font: 700 1.0625rem / 1.3 var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-brand-primary-strong);
+}
+
+.details {
+  font: var(--type-small);
+  color: var(--color-text-muted);
+}

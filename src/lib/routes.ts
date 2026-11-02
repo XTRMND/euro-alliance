@@ -66,6 +66,8 @@ export const queryParams = {
   start: 'nachalo',
   sort: 'sortirane',
   shown: 'pokazani',
+  /** The courses' state: upcoming, running or without a date (02.11.2026). */
+  status: 'sastoyanie',
   /** The course a visitor enrols in, read by the contact wizard (PR 11). */
   course: 'kurs',
   /** The language pair of «Изпратете документ», read by the contact wizard (PR 11). */
@@ -90,6 +92,12 @@ export const courseAudienceSegments = { ...audienceSegments, companies: 'firmi' 
 export const courseFormatSegments = { 'in-person': 'prisastveno', online: 'onlayn' } as const
 
 /** «С ваучер от АЗ» (the only funding filter) and the sort orders. */
+export const courseStatusSegments = {
+  upcoming: 'predstoyashti',
+  running: 'v-hod',
+  none: 'bez-data',
+} as const
+
 export const courseFilterValues = {
   voucher: 'vaucher',
   sortSoonest: 'nay-skoro',
@@ -137,6 +145,7 @@ export const devRoutes = {
 export type CourseView = {
   category?: CourseCategory
   audience?: keyof typeof courseAudienceSegments
+  status?: keyof typeof courseStatusSegments
 }
 
 function withQuery(path: string, name: string, value: string | undefined): string {
@@ -147,10 +156,12 @@ export const routes = {
   home: () => '/',
   /** The course listing, filtered to a category, or to a category and an audience. */
   courses: (view?: CourseCategory | CourseView) => {
-    const { category, audience } = typeof view === 'string' ? { category: view } : (view ?? {})
+    const { category, audience, status } =
+      typeof view === 'string' ? { category: view } : (view ?? ({} as CourseView))
     const query = new URLSearchParams()
     if (category) query.set(queryParams.category, courseCategories[category])
     if (audience) query.set(queryParams.audience, courseAudienceSegments[audience])
+    if (status) query.set(queryParams.status, courseStatusSegments[status])
     return query.size ? `/${segments.courses}?${query}` : `/${segments.courses}`
   },
   course: (slug: string) => `/${segments.courses}/${slug}`,

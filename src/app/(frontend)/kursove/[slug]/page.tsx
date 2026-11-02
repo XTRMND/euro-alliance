@@ -12,9 +12,10 @@ import { TrackCourseView } from '@/components/courses/TrackCourseView'
 import { InquiryBand } from '@/components/shell/InquiryBand'
 import { Button } from '@/components/ui/Button'
 import { getCourse, getOffices, getRelatedCourses } from '@/lib/cms'
-import { courseState } from '@/lib/course-state'
+import { CourseGroups } from '@/components/courses/CourseGroups'
+import { courseState, currentGroups } from '@/lib/course-state'
 import { courseTags } from '@/lib/courses'
-import { formatPrice, startOfTodayInSofia } from '@/lib/format'
+import { formatDateLong, formatPrice, startOfTodayInSofia } from '@/lib/format'
 import { anchors, routes } from '@/lib/routes'
 import styles from './page.module.css'
 import { pageMetadata } from '@/lib/seo'
@@ -22,8 +23,9 @@ import { JsonLd } from '@/components/seo/JsonLd'
 import { courseLd } from '@/lib/structured-data'
 
 // Course (81:1226 / 117:895), in the states of board 126:1940 (src/lib/course-state.ts), with
-// «Запишете се» (91:1462): the contact wizard at Step 2 with the course chosen. The enrol buttons
-// scroll to it.
+// «Запишете се» (91:1462): the contact wizard at Step 2 with the course chosen; «Попитайте за
+// записване» when the course is running or has no date. The enrol buttons scroll to it. A course
+// with more than one upcoming or running group lists them under the ticket (not in Figma).
 
 export async function generateMetadata({
   params,
@@ -48,14 +50,16 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
     getOffices(),
     getTranslations(),
   ])
-  const state = courseState(course, startOfTodayInSofia())
-  const closed = state.enrolment === 'closed'
+  const today = startOfTodayInSofia()
+  const state = courseState(course, today)
+  const closed = state.enrolment === 'inquiry'
   const voucher = state.pricing === 'voucher'
+  const groups = currentGroups(course, today)
+  const formatLabel = (value?: string | null) =>
+    value ? t(value === 'online' ? 'courses.format.online' : 'courses.format.inPerson') : undefined
 
   const audience = course.audience ? t(`courses.audience.${course.audience}`) : undefined
-  const format =
-    course.format &&
-    t(course.format === 'online' ? 'courses.format.online' : 'courses.format.inPerson')
+  const format = formatLabel(state.group?.format ?? course.format)
   const tags = courseTags(course, {
     audience: {
       students: t('courses.audience.students'),
@@ -77,7 +81,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
     closed ? (
       <EnrolButton
         href={`#${enrolAnchor}`}
-        label={t('course.notify')}
+        label={state.status === 'upcoming' ? t('course.notify') : t('course.inquire')}
         event={null}
         variant="secondary"
         className={className}
@@ -98,7 +102,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
 
   return (
     <>
-      <JsonLd data={courseLd(course)} />
+      <JsonLd data={courseLd(course, today)} />
       <TrackCourseView
         course={slug}
         language={course.language ?? undefined}
@@ -113,7 +117,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
         tags={tags}
         title={course.title}
         level={course.level}
-        levelLabel={t('common.level')}
+        levelLabel={t(course.levelUnit === 'grade' ? 'common.grade' : 'common.level')}
         description={course.description}
         topic={course.topic}
         enrol={closed ? null : enrol()}
@@ -132,7 +136,31 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
           levelCheckHref={levelCheckHref}
           action={enrol()}
         />
+        {groups.length > 1 && (
+          <CourseGroups
+            title={t('course.groups')}
+            groups={groups.map(({ group, status }) => ({
+              id: group.id ?? group.startDate,
+              label: group.label,
+              start:
+                status === 'running'
+                  ? t('course.status.runningSince', { date: formatDateLong(group.startDate) })
+                  : t('course.startsOn', { date: formatDateLong(group.startDate) }),
+              details: [
+                [group.days, group.hours].filter(Boolean).join(' '),
+                formatLabel(group.format),
+                typeof group.office === 'object' ? group.office?.name : undefined,
+                typeof group.price === 'number'
+                  ? [formatPrice(group.price, group.currency ?? 'EUR'), group.priceLabel]
+                      .filter(Boolean)
+                      .join(' ')
+                  : undefined,
+              ].filter((detail): detail is string => Boolean(detail)),
+            }))}
+          />
+        )}
         <EnrolSection
+          title={closed ? t('course.inquireTitle') : undefined}
           course={course}
           office={offices.find((office) => office.role === 'courses')}
           path={routes.course(slug)}
@@ -151,11 +179,19 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
       <InquiryBand />
       <EnrolBar
         price={
-          state.pricing === 'none'
-            ? undefined
-            : formatPrice(course.price!, course.currency ?? 'EUR')
+          state.status === 'none'
+            ? t('course.askPrice')
+            : state.pricing === 'none' || !state.group
+              ? undefined
+              : formatPrice(state.group.price!, state.group.currency ?? 'EUR')
         }
-        note={closed ? t('course.closedNote') : course.priceNote}
+        note={
+          state.status === 'upcoming' && state.seats === 0
+            ? t('course.closedNote')
+            : state.status === 'running'
+              ? t('course.status.running')
+              : state.group?.priceLabel
+        }
         action={enrol()}
       />
     </>

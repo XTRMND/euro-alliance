@@ -3,7 +3,9 @@ import { getMessages, getTranslations } from 'next-intl/server'
 import { Sticker } from '@/components/visuals/Sticker'
 import { getListedCourses, getTranslationLanguages } from '@/lib/cms'
 import { emptyCourseFilters } from '@/lib/course-filters'
+import { currentGroups } from '@/lib/course-state'
 import { courseTags } from '@/lib/courses'
+import { startOfTodayInSofia } from '@/lib/format'
 import type { InquiryTopic } from '@/lib/inquiries'
 import { languages, routes } from '@/lib/routes'
 import type { Course } from '@/payload-types'
@@ -70,7 +72,14 @@ export async function Wizard({
                 voucher: t('courses.voucher'),
               }).map(lower),
             ].join(', '),
-            schedules: (course.schedules ?? []).map((schedule) => schedule.label),
+            // «Удобен график»: the course's upcoming and running groups.
+            schedules: currentGroups(course, startOfTodayInSofia())
+              .map(({ group }) =>
+                [group.label, [group.days, group.hours].filter(Boolean).join(' ')]
+                  .filter(Boolean)
+                  .join(': '),
+              )
+              .filter(Boolean),
             entryLevel: course.entryLevel,
             askLevel: course.category === 'languages' || course.category === 'exams',
             voucher: Boolean(course.voucherEligible),

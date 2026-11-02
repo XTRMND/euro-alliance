@@ -1,4 +1,12 @@
-import type { Where } from 'payload'
+import type { Course } from '@/payload-types'
+import {
+  type CourseStatus,
+  type CourseState,
+  compareCourses,
+  courseStatuses,
+  currentGroups,
+  withStates,
+} from './course-state'
 import {
   type CourseAudience,
   type CourseCategoryValue,
@@ -12,6 +20,7 @@ import {
   courseCategories,
   courseFilterValues,
   courseFormatSegments,
+  courseStatusSegments,
   type Language,
   languages,
   languageSegments,
@@ -20,7 +29,9 @@ import {
 
 // The course listing's filters, sort and «Покажи още», all in the URL query (docs/motion.md § 8):
 // /kursove?auditoria=vazrastni&ezik=nemski&nachalo=2026-11&pokazani=18. Unknown values are
-// ignored, so an old or mistyped link still shows a sensible list.
+// ignored, so an old or mistyped link still shows a sensible list. The listing shows every
+// published course with its state (src/lib/course-state.ts); the filters and the sort run on the
+// whole list in code: the states come from the groups, which a database query can't order by.
 
 export const coursesPageSize = 9
 
@@ -32,6 +43,8 @@ export type CourseFilters = {
   language: Language[]
   format: CourseFormat[]
   voucher: boolean
+  /** Upcoming, running or without a date; every course when unset. */
+  status?: CourseStatus
   /** A month, YYYY-MM. */
   start?: string
   sort: CourseSort
@@ -75,6 +88,7 @@ export function parseCourseFilters(params: SearchParams): CourseFilters {
     language: pick(languages, languageSegments, all(params, queryParams.language)),
     format: pick(courseFormats, courseFormatSegments, all(params, queryParams.format)),
     voucher: all(params, queryParams.funding).includes(courseFilterValues.voucher),
+    status: pick(courseStatuses, courseStatusSegments, all(params, queryParams.status))[0],
     start: start && /^\d{4}-(0[1-9]|1[0-2])$/.test(start) ? start : undefined,
     sort: all(params, queryParams.sort)[0] === courseFilterValues.sortPrice ? 'price' : 'soonest',
     shown:
@@ -93,6 +107,7 @@ export function courseFiltersQuery(filters: CourseFilters): string {
   for (const value of filters.language) query.append(queryParams.language, languageSegments[value])
   for (const value of filters.format) query.append(queryParams.format, courseFormatSegments[value])
   if (filters.voucher) query.append(queryParams.funding, courseFilterValues.voucher)
+  if (filters.status) query.append(queryParams.status, courseStatusSegments[filters.status])
   if (filters.start) query.append(queryParams.start, filters.start)
   if (filters.sort === 'price') query.append(queryParams.sort, courseFilterValues.sortPrice)
   if (filters.shown > coursesPageSize) query.append(queryParams.shown, String(filters.shown))
@@ -100,7 +115,10 @@ export function courseFiltersQuery(filters: CourseFilters): string {
   return text ? `?${text}` : ''
 }
 
-/** How many filters are on (the count on the mobile «Филтри» button). Sort isn't a filter. */
+/**
+ * How many filters are on (the count on the mobile «Филтри» button). Sort isn't a filter, and the
+ * state has its own pills above the list.
+ */
 export function activeFilterCount(filters: CourseFilters): number {
   return (
     filters.audience.length +
@@ -112,52 +130,62 @@ export function activeFilterCount(filters: CourseFilters): number {
   )
 }
 
-/** Midnight in Bulgaria on the first of `month` (YYYY-MM), as an ISO string. */
-export function monthStartInSofia(month: string): string {
-  const [year, number] = month.split('-').map(Number)
-  // Noon UTC on the 1st is the same day in Sofia; read the offset there, then step to midnight.
-  const noon = new Date(Date.UTC(year, number - 1, 1, 12))
-  const offset = new Intl.DateTimeFormat('en', {
-    timeZone: 'Europe/Sofia',
-    timeZoneName: 'longOffset',
-  })
-    .formatToParts(noon)
-    .find((part) => part.type === 'timeZoneName')
-    ?.value.replace('GMT', '')
-  return new Date(`${month}-01T00:00:00${offset || '+00:00'}`).toISOString()
+const monthIn = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Europe/Sofia',
+  year: 'numeric',
+  month: '2-digit',
+})
+
+/** The month (YYYY-MM, in Bulgaria) of a date. */
+export function monthOf(date: string): string {
+  return monthIn.format(new Date(date))
 }
 
-function nextMonth(month: string): string {
-  const [year, number] = month.split('-').map(Number)
-  return number === 12 ? `${year + 1}-01` : `${year}-${String(number + 1).padStart(2, '0')}`
+/** The months in which upcoming groups start: the «Начало» options. */
+export function courseMonths(courses: Pick<Course, 'groups' | 'voucherEligible'>[], today: string) {
+  const months = courses.flatMap((course) =>
+    currentGroups(course, today)
+      .filter((item) => item.status === 'upcoming')
+      .map((item) => monthOf(item.group.startDate)),
+  )
+  return [...new Set(months)].sort()
 }
+
+type Stated<C> = { course: C; state: CourseState }
+
+const priceOf = ({ state }: Stated<unknown>) => state.group?.price ?? Number.POSITIVE_INFINITY
 
 /**
- * The listing's Payload query: courses starting today or later, or with no start date (open
- * enrolment), narrowed by every filter that's on. Within a group the options add up (OR);
- * groups narrow each other (AND).
+ * The listing: every course with its state, narrowed by every filter that's on, in the list
+ * order (upcoming, running, without a date) or the lowest price first. Within a group of options
+ * they add up (OR); groups narrow each other (AND). A course matches a format through its own
+ * format or one of its groups', and a month through an upcoming group starting in it.
  */
-export function courseWhere(filters: CourseFilters, today: string): Where {
-  const and: Where[] = [
-    { or: [{ startDate: { greater_than_equal: today } }, { startDate: { exists: false } }] },
-  ]
-  if (filters.audience.length) and.push({ audience: { in: filters.audience } })
-  if (filters.category.length) and.push({ category: { in: filters.category } })
-  if (filters.language.length) and.push({ language: { in: filters.language } })
-  if (filters.format.length) and.push({ format: { in: filters.format } })
-  if (filters.voucher) and.push({ voucherEligible: { equals: true } })
-  if (filters.start) {
-    and.push({
-      startDate: {
-        greater_than_equal: monthStartInSofia(filters.start),
-        less_than: monthStartInSofia(nextMonth(filters.start)),
-      },
-    })
-  }
-  return { and }
-}
-
-/** Soonest first (courses without a date last); or the lowest price first, then soonest. */
-export function courseSort(filters: CourseFilters): string[] {
-  return filters.sort === 'price' ? ['price', 'startDate'] : ['startDate', 'title']
+export function filterCourses<C extends Course>(
+  courses: C[],
+  filters: CourseFilters,
+  today: string,
+): Stated<C>[] {
+  const listed = withStates(courses, today).filter(({ course, state }) => {
+    if (filters.status && state.status !== filters.status) return false
+    if (filters.audience.length && !filters.audience.some((value) => value === course.audience))
+      return false
+    if (filters.category.length && !filters.category.includes(course.category)) return false
+    if (filters.language.length && !filters.language.some((value) => value === course.language))
+      return false
+    const groups = currentGroups(course, today)
+    if (filters.format.length) {
+      const formats = [course.format, ...groups.map(({ group }) => group.format)]
+      if (!formats.some((format) => format && filters.format.includes(format))) return false
+    }
+    if (filters.voucher && !course.voucherEligible) return false
+    if (filters.start) {
+      const starts = groups.filter((item) => item.status === 'upcoming')
+      if (!starts.some(({ group }) => monthOf(group.startDate) === filters.start)) return false
+    }
+    return true
+  })
+  return filters.sort === 'price'
+    ? listed.sort((a, b) => priceOf(a) - priceOf(b) || compareCourses(a, b))
+    : listed
 }

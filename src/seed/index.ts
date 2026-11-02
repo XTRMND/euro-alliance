@@ -252,6 +252,28 @@ async function seedPrograms(payload: Payload) {
     payload.logger.info(`Seeded the program «${program.title}».`)
   }
 
+  // «Предстоящи курсове по …» became «Курсове по …» (the user, 02.11.2026): the sections list every
+  // course with its state. Only headings that still start with the old words change.
+  const old = 'Предстоящи курсове '
+  const { docs: dated } = await payload.find({
+    collection: 'programs',
+    locale: 'bg',
+    depth: 0,
+    pagination: false,
+    where: { 'upcoming.heading': { like: old } },
+  })
+  for (const doc of dated) {
+    const heading = doc.upcoming?.heading
+    if (!heading?.startsWith(old)) continue
+    await payload.update({
+      collection: 'programs',
+      id: doc.id,
+      locale: 'bg',
+      data: { upcoming: { ...doc.upcoming, heading: `Курсове ${heading.slice(old.length)}` } },
+    })
+    payload.logger.info(`Renamed «${heading}» on «${doc.title}».`)
+  }
+
   // The ЦПО list, in order, while it's empty (the client's edits always win).
   if ((await payload.count({ collection: 'professions' })).totalDocs === 0) {
     for (const profession of professions) {

@@ -1,46 +1,96 @@
 import { describe, expect, it } from 'vitest'
-import { courseState } from '@/lib/course-state'
+import { courseState, currentGroups, groupStatus, withStates } from '@/lib/course-state'
 
 const today = '2026-10-31T22:00:00.000Z' // 1 November 2026 in Sofia
 
-describe('course states (126:1940)', () => {
-  it('is open with a price and seats', () => {
-    expect(
-      courseState({ startDate: '2026-11-03T12:00:00.000Z', seats: 5, price: 520 }, today),
-    ).toEqual({ enrolment: 'open', pricing: 'regular', seats: 5, fewSeats: false })
+type Group = {
+  id: string
+  startDate: string
+  endDate?: string
+  seats?: number
+  price?: number
+  regularPrice?: number
+}
+const course = (groups: Group[], fields: { voucherEligible?: boolean } = {}) => ({
+  groups,
+  ...fields,
+})
+const upcoming = { id: 'u', startDate: '2026-11-03T12:00:00.000Z' }
+const running = { id: 'r', startDate: '2026-10-04T12:00:00.000Z' }
+
+describe('course states (the groups model of 02.11.2026)', () => {
+  it('counts a group as upcoming from its start day, running after it, over after its end', () => {
+    expect(groupStatus({ startDate: '2026-11-01T12:00:00.000Z' }, today)).toBe('upcoming')
+    expect(groupStatus(running, today)).toBe('running')
+    expect(groupStatus({ ...running, endDate: '2026-10-20T12:00:00.000Z' }, today)).toBe('ended')
+    expect(groupStatus({ ...running, endDate: '2026-12-20T12:00:00.000Z' }, today)).toBe('running')
   })
 
-  it('marks a promotion only when the regular price is higher', () => {
-    expect(courseState({ price: 495, regularPrice: 560 }, today).pricing).toBe('promotion')
-    expect(courseState({ price: 495, regularPrice: 495 }, today).pricing).toBe('regular')
+  it('keeps a started group without an end date running: end dates are never guessed', () => {
+    expect(groupStatus({ startDate: '2022-06-27T12:00:00.000Z' }, today)).toBe('running')
   })
 
-  it('prices a voucher course as the voucher value', () => {
-    expect(
-      courseState({ price: 460.16, regularPrice: 560, voucherEligible: true }, today).pricing,
-    ).toBe('voucher')
-  })
-
-  it('highlights one or two free seats', () => {
-    expect(courseState({ seats: 2 }, today).fewSeats).toBe(true)
-    expect(courseState({ seats: 3 }, today).fewSeats).toBe(false)
-  })
-
-  it('closes enrolment when full or started', () => {
-    expect(courseState({ seats: 0 }, today).enrolment).toBe('closed')
-    expect(courseState({ startDate: '2026-10-30T12:00:00.000Z', seats: 2 }, today)).toMatchObject({
-      enrolment: 'closed',
-      fewSeats: false,
+  it('shows the soonest upcoming group, else the latest running one, else no date', () => {
+    const later = { id: 'l', startDate: '2026-12-01T12:00:00.000Z' }
+    expect(courseState(course([later, running, upcoming]), today).group?.id).toBe('u')
+    const older = { id: 'o', startDate: '2026-09-01T12:00:00.000Z' }
+    expect(courseState(course([older, running]), today)).toMatchObject({
+      status: 'running',
+      group: { id: 'r' },
+      enrolment: 'inquiry',
     })
-    expect(courseState({ startDate: '2026-11-01T12:00:00.000Z' }, today).enrolment).toBe('open')
+    expect(courseState(course([]), today)).toMatchObject({ status: 'none', enrolment: 'inquiry' })
+    const ended = { ...running, endDate: '2026-10-20T12:00:00.000Z' }
+    expect(courseState(course([ended]), today).status).toBe('none')
   })
 
-  it('shows no price and no seats when the CMS has none', () => {
-    expect(courseState({}, today)).toEqual({
-      enrolment: 'open',
-      pricing: 'none',
-      seats: undefined,
-      fewSeats: false,
-    })
+  it('opens enrolment only for an upcoming group with seats', () => {
+    expect(courseState(course([{ ...upcoming, seats: 5 }]), today).enrolment).toBe('open')
+    expect(courseState(course([{ ...upcoming, seats: 0 }]), today).enrolment).toBe('inquiry')
+    expect(courseState(course([upcoming]), today).enrolment).toBe('open')
+  })
+
+  it('prices from the shown group: promotion, voucher, none', () => {
+    const priced = { ...upcoming, price: 495, regularPrice: 560 }
+    expect(courseState(course([priced]), today).pricing).toBe('promotion')
+    expect(courseState(course([{ ...priced, regularPrice: 495 }]), today).pricing).toBe('regular')
+    expect(courseState(course([priced], { voucherEligible: true }), today).pricing).toBe('voucher')
+    expect(courseState(course([upcoming]), today).pricing).toBe('none')
+  })
+
+  it('highlights one or two free seats of an upcoming group', () => {
+    expect(courseState(course([{ ...upcoming, seats: 2 }]), today).fewSeats).toBe(true)
+    expect(courseState(course([{ ...upcoming, seats: 3 }]), today).fewSeats).toBe(false)
+    expect(courseState(course([{ ...running, seats: 2 }]), today).fewSeats).toBe(false)
+  })
+
+  it('lists the groups that aren’t over, upcoming first', () => {
+    const ended = {
+      id: 'e',
+      startDate: '2026-01-01T12:00:00.000Z',
+      endDate: '2026-02-01T12:00:00.000Z',
+    }
+    expect(currentGroups(course([running, ended, upcoming]), today).map((g) => g.group.id)).toEqual(
+      ['u', 'r'],
+    )
+  })
+
+  it('orders lists: upcoming (soonest), running (latest start), then without a date (by title)', () => {
+    const courses = [
+      { title: 'В', ...course([]) },
+      { title: 'Б', ...course([running]) },
+      { title: 'А', ...course([]) },
+      { title: 'Г', ...course([{ id: 'x', startDate: '2026-12-01T12:00:00.000Z' }]) },
+      { title: 'Д', ...course([upcoming]) },
+      { title: 'Е', ...course([{ id: 'y', startDate: '2026-10-20T12:00:00.000Z' }]) },
+    ]
+    expect(withStates(courses, today).map(({ course }) => course.title)).toEqual([
+      'Д',
+      'Г',
+      'Е',
+      'Б',
+      'А',
+      'В',
+    ])
   })
 })

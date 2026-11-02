@@ -3,7 +3,7 @@ import {
   activeFilterCount,
   courseFiltersQuery,
   emptyCourseFilters,
-  monthStartInSofia,
+  monthOf,
   parseCourseFilters,
 } from '@/lib/course-filters'
 
@@ -54,8 +54,16 @@ describe('course filters in the URL', () => {
     expect(parseCourseFilters({ nachalo: '2026-13' }).start).toBeUndefined()
   })
 
-  it('start a month at midnight in Bulgaria', () => {
-    expect(monthStartInSofia('2026-11')).toBe('2026-10-31T22:00:00.000Z')
-    expect(monthStartInSofia('2026-07')).toBe('2026-06-30T21:00:00.000Z')
+  it('read the month of a date in Bulgaria', () => {
+    expect(monthOf('2026-10-31T22:00:00.000Z')).toBe('2026-11')
+    expect(monthOf('2026-06-30T21:00:00.000Z')).toBe('2026-07')
+  })
+
+  it('read and write the state filter', () => {
+    expect(parseCourseFilters({ sastoyanie: 'v-hod' }).status).toBe('running')
+    expect(parseCourseFilters({ sastoyanie: 'nyakakvo' }).status).toBeUndefined()
+    expect(courseFiltersQuery({ ...emptyCourseFilters, status: 'none' })).toBe(
+      '?sastoyanie=bez-data',
+    )
   })
 })

@@ -5,7 +5,8 @@
     "level": "Ниво",
     "languagesCount": "{count, plural, one {език} other {езика}}",
     "copyAddress": "Копирай адреса",
-    "addressCopied": "Адресът е копиран"
+    "addressCopied": "Адресът е копиран",
+    "grade": "Клас"
   },
   "header": {
     "skipLink": "Към съдържанието",
@@ -59,7 +60,9 @@
       "program": "Програма",
       "document": "Документ",
       "included": "Включено",
-      "price": "Цена"
+      "price": "Цена",
+      "end": "Край",
+      "office": "Офис"
     },
     "checkLevel": "Провери нивото си",
     "regularPrice": "Редовна цена <old>{price}</old>",
@@ -75,7 +78,16 @@
     "related": "Подобни курсове",
     "allCourses": "Всички курсове",
     "previous": "Предишни курсове",
-    "next": "Следващи курсове"
+    "next": "Следващи курсове",
+    "status": {
+      "running": "В ход",
+      "none": "Няма насрочена дата",
+      "runningSince": "В ход от {date}"
+    },
+    "inquire": "Запитване",
+    "inquireTitle": "Попитайте за записване",
+    "groups": "Групи",
+    "askPrice": "Попитайте"
   },
   "courses": {
     "audience": {
@@ -115,7 +127,8 @@
       "anyMonth": "Всеки месец",
       "reset": "Изчисти филтрите",
       "resetShort": "Изчисти",
-      "apply": "Покажи {count, plural, one {# курс} other {# курса}}"
+      "apply": "Покажи {count, plural, one {# курс} other {# курса}}",
+      "status": "Състояние"
     },
     "sort": {
       "label": "Сортиране:",
@@ -125,7 +138,13 @@
     "showMore": "Покажи още курсове",
     "shown": "Показани {shown} от {total}",
     "empty": "Няма курсове с тези филтри.",
-    "breadcrumb": "Курсове"
+    "breadcrumb": "Курсове",
+    "status": {
+      "all": "Всички",
+      "upcoming": "Предстоящи",
+      "running": "В ход",
+      "none": "Без дата"
+    }
   },
   "home": {
     "allCourses": "Всички <long>курсове</long>",

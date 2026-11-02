@@ -340,6 +340,10 @@ export interface Course {
   };
   title: string;
   /**
+   * Както е било на стария сайт, преди аудиторията и формата да минат в етикетите.
+   */
+  originalTitle?: string | null;
+  /**
    * Попълва се от заглавието, ако е празно.
    */
   slug?: string | null;
@@ -373,38 +377,69 @@ export interface Course {
    * Например «12 клас». Показва се след аудиторията.
    */
   audienceNote?: string | null;
+  /**
+   * Обичайният формат; всяка група може да има свой.
+   */
   format?: ('in-person' | 'online') | null;
   /**
    * Например «Вечерна група». Ако е празно: «С ваучер» за курс с ваучер, иначе формата.
    */
   cardTag?: string | null;
   /**
-   * Например B2 или A1–B1. Празно: без балонче за ниво.
+   * Например B2, A1–B1 или 11–12. Празно: без балонче за ниво.
    */
   level?: string | null;
-  startDate?: string | null;
-  seats?: number | null;
   /**
-   * Например «пн и ср или вт и чт».
+   * Клас за подготовка за изпит по класове, например 11–12 за ДЗИ.
    */
-  days?: string | null;
-  /**
-   * Например 18:00–20:50.
-   */
-  hours?: string | null;
+  levelUnit?: ('level' | 'grade') | null;
   duration?: string | null;
-  schedule?: string | null;
   /**
-   * Например «пн и ср, 18:00–20:50». При записване посетителят избира един; с един или без графици въпросът не се задава.
+   * Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.
    */
-  schedules?:
+  groups?:
     | {
-        label: string;
+        /**
+         * По желание, например «Съботни групи».
+         */
+        label?: string | null;
+        startDate: string;
+        endDate?: string | null;
+        seats?: number | null;
+        /**
+         * Например «пн и ср или вт и чт».
+         */
+        days?: string | null;
+        /**
+         * Например 18:00–20:50.
+         */
+        hours?: string | null;
+        format?: ('in-person' | 'online') | null;
+        office?: (number | null) | Office;
+        /**
+         * Празно: цената не се показва. Само официални цени.
+         */
+        price?: number | null;
+        currency?: ('EUR' | 'BGN') | null;
+        /**
+         * При промоция: по-високата цена, показва се зачертана.
+         */
+        regularPrice?: number | null;
+        /**
+         * Например «Промоция», «Базова цена», «Стойност на ваучера».
+         */
+        priceLabel?: string | null;
+        /**
+         * Например «или 495 € на ниво при самостоятелно плащане».
+         */
+        priceNote?: string | null;
+        /**
+         * От стария сайт, за пренасочването.
+         */
+        legacyUrl?: string | null;
         id?: string | null;
       }[]
     | null;
-  venue?: string | null;
-  city?: string | null;
   /**
    * Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».
    */
@@ -416,19 +451,6 @@ export interface Course {
   program?: string | null;
   document?: string | null;
   included?: string | null;
-  /**
-   * Празно: цената не се показва. Само официални цени.
-   */
-  price?: number | null;
-  currency?: ('EUR' | 'BGN') | null;
-  /**
-   * При промоция: по-високата редовна цена, показва се зачертана.
-   */
-  regularPrice?: number | null;
-  /**
-   * Например «за целия курс» или «промоция».
-   */
-  priceNote?: string | null;
   voucherEligible?: boolean | null;
   /**
    * От стария сайт, за пренасочването.
@@ -1948,6 +1970,7 @@ export interface CoursesSelect<T extends boolean = true> {
         image?: T;
       };
   title?: T;
+  originalTitle?: T;
   slug?: T;
   description?: T;
   category?: T;
@@ -1958,29 +1981,32 @@ export interface CoursesSelect<T extends boolean = true> {
   format?: T;
   cardTag?: T;
   level?: T;
-  startDate?: T;
-  seats?: T;
-  days?: T;
-  hours?: T;
+  levelUnit?: T;
   duration?: T;
-  schedule?: T;
-  schedules?:
+  groups?:
     | T
     | {
         label?: T;
+        startDate?: T;
+        endDate?: T;
+        seats?: T;
+        days?: T;
+        hours?: T;
+        format?: T;
+        office?: T;
+        price?: T;
+        currency?: T;
+        regularPrice?: T;
+        priceLabel?: T;
+        priceNote?: T;
+        legacyUrl?: T;
         id?: T;
       };
-  venue?: T;
-  city?: T;
   entryLevel?: T;
   levelName?: T;
   program?: T;
   document?: T;
   included?: T;
-  price?: T;
-  currency?: T;
-  regularPrice?: T;
-  priceNote?: T;
   voucherEligible?: T;
   legacyUrl?: T;
   updatedAt?: T;

@@ -1,29 +1,35 @@
 import { getTranslations } from 'next-intl/server'
 import { CourseCard } from '@/components/cards/CourseCard'
+import { withStates } from '@/lib/course-state'
 import { matchesUpcomingFilter, upcomingFilters } from '@/lib/courses'
+import { startOfTodayInSofia } from '@/lib/format'
 import { routes } from '@/lib/routes'
 import type { Course } from '@/payload-types'
 import { SectionHead } from './SectionHead'
 import { UpcomingTabs } from './UpcomingTabs'
 import styles from './UpcomingCourses.module.css'
 
-// «Предстоящи курсове» (48:227 / 115:439): published courses starting from today, soonest first,
-// four at a time, with tabs for students, adults, voucher and online courses. A tab with no
-// courses isn't shown, and with no upcoming courses the section isn't either.
+// «Предстоящи курсове» (48:227 / 115:439): the courses with an upcoming group (the soonest
+// first), then those running (src/lib/course-state.ts), four at a time, with tabs for students,
+// adults, voucher and online courses. Never a single card (the user, 02.11.2026): a tab with
+// fewer than two courses isn't shown, and with fewer than two the section isn't either.
 
 export const upcomingPerTab = 4
 
 export async function UpcomingCourses({ title, courses }: { title: string; courses: Course[] }) {
-  if (courses.length === 0) return null
+  const dated = withStates(courses, startOfTodayInSofia())
+    .filter(({ state }) => state.status !== 'none')
+    .map(({ course }) => course)
+  if (dated.length < 2) return null
   const t = await getTranslations('home')
 
-  const items = courses.map((course) => ({
+  const items = dated.map((course) => ({
     id: course.id,
     filters: upcomingFilters.filter((filter) => matchesUpcomingFilter(course, filter)),
     card: <CourseCard course={course} />,
   }))
   const tabs = upcomingFilters
-    .filter((filter) => items.some((item) => item.filters.includes(filter)))
+    .filter((filter) => items.filter((item) => item.filters.includes(filter)).length > 1)
     .map((filter) => ({ filter, label: t(`upcoming.filters.${filter}`) }))
 
   return (

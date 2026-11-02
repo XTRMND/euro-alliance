@@ -3,7 +3,8 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { tags } from '@/hooks/revalidate'
 import type { CourseFilters } from '@/lib/course-filters'
-import { findCourse, findCourseMonths, findCourses, findRelatedCourses } from '@/lib/course-query'
+import { courseMonths } from '@/lib/course-filters'
+import { findAllCourses, findCourse, listCourses, relatedCourses } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import type { Media, Program } from '@/payload-types'
 
@@ -97,29 +98,12 @@ export const getTranslationLanguages = unstable_cache(
   { tags: [tags.global('translation')] },
 )
 
-const upcomingCourses = unstable_cache(
-  async (from: string, limit: number) =>
-    (
-      await (
-        await payload()
-      ).find({
-        collection: 'courses',
-        locale: 'bg',
-        depth: 0,
-        where: { startDate: { greater_than_equal: from } },
-        sort: 'startDate',
-        limit,
-        overrideAccess: false,
-      })
-    ).docs,
-  ['upcoming-courses'],
+/** Every published course; the lists filter and order them in code (src/lib/course-query.ts). */
+export const getAllCourses = unstable_cache(
+  async () => findAllCourses(await payload()),
+  ['all-courses'],
   { tags: [tags.collection('courses')] },
 )
-
-/** Published courses starting today or later, soonest first. The day is part of the cache key. */
-export function getUpcomingCourses(limit = 24) {
-  return upcomingCourses(startOfTodayInSofia(), limit)
-}
 
 /** The latest published news with their covers' tints. */
 export const getLatestNews = unstable_cache(
@@ -142,49 +126,31 @@ export const getLatestNews = unstable_cache(
   { tags: [tags.collection('news'), tags.collection('media')] },
 )
 
-const listedCourses = unstable_cache(
-  async (filters: CourseFilters, today: string) => findCourses(await payload(), filters, today),
-  ['listed-courses'],
-  { tags: [tags.collection('courses')] },
-)
-
-/** The course listing for these filters. The filters and the day are part of the cache key. */
-export function getListedCourses(filters: CourseFilters) {
-  return listedCourses(filters, startOfTodayInSofia())
+/** The course listing for these filters, on the day in Bulgaria. */
+export async function getListedCourses(filters: CourseFilters) {
+  return listCourses(await getAllCourses(), filters, startOfTodayInSofia())
 }
 
-const courseMonths = unstable_cache(
-  async (today: string) => findCourseMonths(await payload(), today),
-  ['course-months'],
-  { tags: [tags.collection('courses')] },
-)
-
-/** The months in which listed courses start, for the «Начало» filter. */
-export function getCourseMonths() {
-  return courseMonths(startOfTodayInSofia())
+/** The months in which upcoming groups start, for the «Начало» filter. */
+export async function getCourseMonths() {
+  return courseMonths(await getAllCourses(), startOfTodayInSofia())
 }
 
 /** A published course by slug, or null. */
 export const getCourse = unstable_cache(
   async (slug: string) => findCourse(await payload(), slug),
   ['course'],
-  { tags: [tags.collection('courses')] },
-)
-
-const relatedCourses = unstable_cache(
-  async (course: { id: number; category: string; language?: string | null }, today: string) =>
-    findRelatedCourses(await payload(), course, today),
-  ['related-courses'],
-  { tags: [tags.collection('courses')] },
+  { tags: [tags.collection('courses'), tags.collection('offices')] },
 )
 
 /** «Подобни курсове» for a course page. */
-export function getRelatedCourses(course: {
+export async function getRelatedCourses(course: {
   id: number
   category: string
   language?: string | null
 }) {
   return relatedCourses(
+    await getAllCourses(),
     { id: course.id, category: course.category, language: course.language },
     startOfTodayInSofia(),
   )

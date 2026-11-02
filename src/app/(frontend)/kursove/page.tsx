@@ -78,6 +78,13 @@ export default async function CoursesPage({ searchParams }: PageProps<'/kursove'
           apply: t('courses.filters.apply', { count: totalDocs }),
           sortLabel: t('courses.sort.label'),
           sort: { soonest: t('courses.sort.soonest'), price: t('courses.sort.price') },
+          status: t('courses.filters.status'),
+          statuses: {
+            all: t('courses.status.all'),
+            upcoming: t('courses.status.upcoming'),
+            running: t('courses.status.running'),
+            none: t('courses.status.none'),
+          },
           count: t('courses.count', { count: totalDocs }),
           showMore: t('courses.showMore'),
           shown: t('courses.shown', { shown: docs.length, total: totalDocs }),

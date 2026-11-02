@@ -21,6 +21,8 @@ import * as migration_20261101_222512_redirects from './20261101_222512_redirect
 import * as migration_20261101_224812_seo_meta from './20261101_224812_seo_meta';
 import * as migration_20261102_082459_programs_legacy_url from './20261102_082459_programs_legacy_url';
 import * as migration_20261102_091944_media_text_in_image from './20261102_091944_media_text_in_image';
+import * as migration_20261102_100531_course_groups from './20261102_100531_course_groups';
+import * as migration_20261102_103633_course_level_unit from './20261102_103633_course_level_unit';
 
 export const migrations = [
   {
@@ -136,6 +138,16 @@ export const migrations = [
   {
     up: migration_20261102_091944_media_text_in_image.up,
     down: migration_20261102_091944_media_text_in_image.down,
-    name: '20261102_091944_media_text_in_image'
+    name: '20261102_091944_media_text_in_image',
+  },
+  {
+    up: migration_20261102_100531_course_groups.up,
+    down: migration_20261102_100531_course_groups.down,
+    name: '20261102_100531_course_groups',
+  },
+  {
+    up: migration_20261102_103633_course_level_unit.up,
+    down: migration_20261102_103633_course_level_unit.down,
+    name: '20261102_103633_course_level_unit'
   },
 ];
