@@ -3,7 +3,7 @@ import { HomeHero } from '@/components/home/HomeHero'
 import { LatestNews } from '@/components/home/LatestNews'
 import { Partners } from '@/components/home/Partners'
 import { ProgramIndex } from '@/components/home/ProgramIndex'
-import { UpcomingCourses } from '@/components/home/UpcomingCourses'
+import { UpcomingCourses, upcomingCourses } from '@/components/home/UpcomingCourses'
 import { SendDocument } from '@/components/sections/SendDocument'
 import { InquiryBand } from '@/components/shell/InquiryBand'
 import { LanguageStrip } from '@/components/visuals/LanguageStrip'
@@ -19,6 +19,7 @@ import {
 import styles from './page.module.css'
 import { routes } from '@/lib/routes'
 import { pageMetadata } from '@/lib/seo'
+import { startOfTodayInSofia } from '@/lib/format'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { organizationLd } from '@/lib/structured-data'
 
@@ -54,7 +55,7 @@ export default async function HomePage() {
       <JsonLd data={organizationLd(site, offices)} />
       <HomeHero hero={home.hero} />
       <LanguageStrip />
-      {home.upcoming?.title && (
+      {home.upcoming?.title && upcomingCourses(courses, startOfTodayInSofia()).length > 0 && (
         <div className={styles.deferred}>
           <UpcomingCourses title={home.upcoming.title} courses={courses} />
         </div>

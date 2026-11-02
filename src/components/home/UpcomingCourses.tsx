@@ -16,11 +16,21 @@ import styles from './UpcomingCourses.module.css'
 
 export const upcomingPerTab = 4
 
-export async function UpcomingCourses({ title, courses }: { title: string; courses: Course[] }) {
-  const dated = withStates(courses, startOfTodayInSofia())
+/**
+ * The section's courses: upcoming, then running, in the list order; none when fewer than two.
+ * The page asks first, so a hidden section leaves no deferred wrapper (its stand-in height
+ * collapsing as it nears the screen shifted the inquiry band: CLS).
+ */
+export function upcomingCourses(courses: Course[], today: string): Course[] {
+  const dated = withStates(courses, today)
     .filter(({ state }) => state.status !== 'none')
     .map(({ course }) => course)
-  if (dated.length < 2) return null
+  return dated.length < 2 ? [] : dated
+}
+
+export async function UpcomingCourses({ title, courses }: { title: string; courses: Course[] }) {
+  const dated = upcomingCourses(courses, startOfTodayInSofia())
+  if (dated.length === 0) return null
   const t = await getTranslations('home')
 
   const items = dated.map((course) => ({
