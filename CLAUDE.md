@@ -62,7 +62,7 @@ Use only official information from the client or from euro-alliance.net. **Never
 - When a value is unknown, list it under **Open items** in the PR description so the user can ask the client.
 - Unit tests and component fixtures may use obviously fake values (`Test course A`) that can never reach production data.
 - Copy shown in the approved Figma file is approved content and may be used as seed data.
-- Real photos only, never stock. If a photo is missing, the section that needs it stays hidden until the client supplies one.
+- Real photos only, never stock, on the About page, in the homepage hero and for document scans. News covers and the homepage's small photo («Photo B» in 48:184) may be Unsplash photos the user picks (the user's decision, 02.11.2026). Courses never have a photo: the Course card and the course page use the design's Course visual and sticker. If a photo is missing, the slot that needs it shows its no-image state, or its section stays hidden, until one is supplied.
 
 ### Verified client facts (use exactly as written)
 
@@ -155,7 +155,7 @@ Components whose own sizes sit between these steps (card titles at 28–32 px, p
 - **Program heroes:** language pages use the notebook hero with a flag sticker. All other program pages use the course-page hero (halftone panel, sticker, tape, navy count bubble), never the notebook.
 - **Count / level bubble:** navy circle, sand number, small label, tilted −8°.
 - **Halftone:** navy dots, 42% on course card panels, 7% on textbook cards. **Never halftone dots over a regular photo.**
-- **Photos:** real only. Medium tint (colour + 45% duotone), polaroid or taped. A photo must be understandable without a caption. Tints: hero 88%; news cards 30% on news pages and 55% on the homepage (Tint=Strong); about page photos 45%. They clear to full colour on hover where the design says so.
+- **Photos:** real (the client's) on the About page, the homepage hero and scans; news covers and the homepage's small photo may be Unsplash (§ 3). Medium tint (colour + 45% duotone), polaroid or taped. A photo must be understandable without a caption. Tints: hero 88%; news cards 30% on news pages and 55% on the homepage (Tint=Strong); about page photos 45%. They clear to full colour on hover where the design says so.
 - **About hero:** torn-paper window showing the team photo (forum 2026), with the small «А» bubble.
 - **Lists and pills:** pills always have a visible label above them. Lists use Index card or List row. Paired cards have equal heights. 32 px between cards.
 - **Highlighter:** a sand highlighter on one phrase per headline, never more.
@@ -254,9 +254,14 @@ Decided by the user on 01.11.2026:
 - «Екип» stays out until the client sends team photos; then it links to the About page's team section.
 - The EU logo strip in Figma (Project card 259:574) is the client's official file. It's in `public/logos/eu-pkip-logo-strip.jpg` byte for byte and seeded as a `logo` upload: never tinted, halftoned, recompressed or recoloured. It shows in the footer funding notice and, from PR 13, on the project card.
 
+Decided by the user on 02.11.2026 (images, PR 21):
+- No photo from the old site is imported. `pnpm import:images` sorts the crawl's 325 images by use (`scripts/import/out/contact-sheet/`), and the import report lists the old pages that had photos, to ask the client for real ones where the design needs them; the 9 images inside article texts aren't imported either (no design for them). The 8 `/Courses` thumbnails (stock) aren't used. Kept as they are: the certificate and licence scans, the EU logo strips, the partner logos and the classroom photo, already seeded (the scans are the old site's files, re-encoded by Figma at the same size; the classroom photo isn't on the old site).
+- The gaps: news covers and the homepage's small photo, picked by the user from the old cover or Unsplash candidates in a local picker (not committed) into `scripts/import/out/photo-decisions.json`, and imported as the last step of PR 21. The user downloads the picked photos from unsplash.com (not through the API) into `scripts/import/in/unsplash/`, matched by the photo id in the file name; the credit goes in Media's «Автор». Until then those slots show their no-image state. About page photos are the client's only (waiting, below).
+- A cover shows in a slot only if it fills it without being enlarged (`src/lib/media/slots.ts`): a card 420 × 220, the lead story 680 × 420, the article banner as a 1024 px screen shows it, 908 × 407 (wider screens enlarge it up to 1.4×). A cover with text in it (Media «Има текст в изображението», for posters) stays out of the banner.
+
 Waiting on the client:
 - The tour operator certificate: its number and exact wording (not in the `site` global until supplied).
-- Team photos and classroom photos (the team section is built but stays hidden until photos exist).
+- Team photos and classroom photos (the team section is built but stays hidden until photos exist). Real photos only, no Unsplash. The About hero's team photo (forum 2026) is a 900 px copy of a 2048 × 1536 news cover on the old site: use the original?
 - Whether free teacher training under ОП «Наука и образование за интелигентен растеж» still runs. If not, remove that card.
 - English content.
 - Viewer access to GA4 and Search Console, and the GA4 measurement ID for the new site (PR 20).
@@ -276,7 +281,7 @@ Design questions for the user (found in PR 3; the build follows the default in b
 - Page 02 Foundations is empty. Was it meant to hold the type and spacing scale? [tokens measured from the components]
 - Card gap: Figma rows use 24 px, § 6 says 32 px. [24 px, `--gap-cards`]
 - Home's section titles are plain frames (52/0.96, 38 on mobile), not Section heading instances (52/1, 36 on mobile). [the component, PR 8]
-- The Course card description in Figma says "Image from filtered stock", which clashes with real photos only. The card shows sticker art. [sticker art, no photo, PR 9]
+- The Course card description in Figma says "Image from filtered stock". Decided 02.11.2026: no photo, the halftone panel with the course's sticker (and the Course visual on the course page).
 - Focus ring: not in Figma. [3 px brand/primary outline, 2 px offset; sand on navy]
 - Control borders: the unchecked checkbox and radio and the off toggle use border/default (#DCE1E7), about 1.3:1 on white and paper. WCAG 1.4.11 asks 3:1 for the parts that show a control and its state, and axe doesn't check this. Proposal: a 1.5 px text/muted border on unchecked boxes and on the off track (5.8:1). [as in Figma, PR 4]
 - Buttons: Figma has Default and Hover only. [focus = Hover plus the focus ring; pressed = Hover; disabled = 50% opacity. Avoid disabled buttons where a validation message can explain instead]
@@ -302,7 +307,7 @@ From the visuals (PR 7):
 - Landing motion of other hero art: only the Course visual has a start pose (Pose=Intro). [`landing.art` fades in; each page PR reads its «Prototype · … landing» frame]
 
 From the homepage (PR 8):
-- Hero collage: Figma's «Photo B (stock, colour)» is stock, so it isn't used. The `home` global has an optional second photo for a real one. [hidden until supplied]
+- Hero collage: Figma's «Photo B (stock, colour)» is the `home` global's optional second photo. It may be an Unsplash photo the user picks (02.11.2026); hidden until then.
 - Hero photo tint: Figma's render is desaturated before the navy screen and sand multiply layers, which design context doesn't report. The pipeline now does the same (`blend` method). [matches the render]
 - Backgrounds: Figma's «Предстоящи курсове», «Преводи и легализация» and partner sections are white, not paper as § 6 says. [Figma]
 - Landing motion (from «Prototype · Начало landing», 149:4372): the copy rises 20 px (the prototype), not 30 px. The H1 and the photo move without fading in, because they're the LCP candidates (`docs/motion.md` § 2); the prototype fades them. No timing in Figma. [`docs/motion.md` timing]
@@ -391,7 +396,7 @@ From the Translations page (PR 14):
 
 From the news pages (PR 15):
 - No news is seeded: the articles in Figma are the client's (pages 1–2 of the old «Новини») and arrive with the import (PR 21). Until then /novini shows its hero and «Все още няма публикувани новини.» (not in Figma), and the article's parts are on /dev/news with fake articles. For the import: «Ден на народните будители» is a poster with text in it, «Супер промоция за нови ученици» a flyer with a price, and «Опреснителни занятия» looks like stock.
-- The listing shows the newest as the lead story on page 1 and six cards a page; Figma shows only page 1. [as described] «Предишна» and the pagination's hover aren't in Figma. [added]
+- The listing shows the newest as the lead story on page 1 and six cards a page; Figma shows only page 1. [as described] «Предишна» and the pagination's hover aren't in Figma. [added] With many pages (34 after the import) the numbers are windowed: 1 … 9 10 11 … 34. [added]
 - The contents rail's labels in Figma are shorter than the H2s they point to. [the H2s' text]
 - «Актуални новини» in Figma includes the article itself, and repeats a card of «Още новини». [the three latest without the article; «Още новини» is the related articles, then the ones just older]
 - The link card: Figma links the address (new window) and also has a button. [one link, the whole card, in a new window, said to screen readers]
