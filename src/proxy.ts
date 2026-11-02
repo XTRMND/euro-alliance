@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { Pool } from 'pg'
-import { isSitePath, normalizePath, staticRedirects } from '@/lib/redirects'
+import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
 
 // Old addresses (docs/content-import.md § 5): a single 301 to the new page, whatever the case and
 // with or without a trailing slash (next.config's redirects can't ignore case, and Next's own
@@ -31,7 +31,10 @@ async function storedRedirects(): Promise<Map<string, string>> {
 }
 
 async function redirectFor(pathname: string): Promise<string | undefined> {
-  const path = normalizePath(pathname)
+  const english = normalizePath(pathname)
+  const path = withoutEnglish(english)
+  // /en on its own is the old English homepage.
+  if (path === '/' && english !== '/') return '/'
   return staticRedirects[path] ?? (pool ? (await storedRedirects()).get(path) : undefined)
 }
 

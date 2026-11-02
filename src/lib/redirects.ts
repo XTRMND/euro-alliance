@@ -15,46 +15,52 @@ export function normalizePath(pathname: string): string {
   return path.startsWith('/') ? path || '/' : `/${path}`
 }
 
+// The old language pages' addresses (scripts/import/out/inventory.json, 02.11.2026).
 const oldLanguages: Record<string, Language> = {
-  english: 'english',
-  german: 'german',
-  french: 'french',
-  spanish: 'spanish',
-  italian: 'italian',
-  bulgarian: 'bulgarian',
+  'english-language': 'english',
+  'german-language': 'german',
+  'french-language': 'french',
+  'spanish-language': 'spanish',
+  'italian-language': 'italian',
+  'bulgarian-language': 'bulgarian',
 }
 
-const languageRows = Object.entries(oldLanguages).flatMap(([old, language]) => [
-  [
-    `/language-education/language-educations-for-adults/${old}`,
-    routes.languageProgram(language as Exclude<Language, 'russian'>, 'adults'),
-  ],
-  [
-    `/language-education/language-education-for-students/${old}`,
-    routes.languageProgram(language, 'students'),
-  ],
-])
+const students = '/language-education/language-education-for-students'
+const adults = '/language-education/language-educations-for-adults'
+const certificates = `${routes.languageProgram('english', 'adults')}#${anchors.certificates}`
 
 /** The fixed map, old (normalized) → new. */
 export const staticRedirects: Record<string, string> = Object.fromEntries([
-  ...languageRows,
-  [
-    '/language-education/language-education-for-students/russian',
-    routes.languageProgram('russian', 'students'),
-  ],
+  ...Object.entries(oldLanguages).flatMap(([old, language]) => [
+    [`${students}/${old}`, routes.languageProgram(language, 'students')],
+    [
+      `${adults}/${old === 'french-language' ? 'french-language-adults' : old}`,
+      routes.languageProgram(language as Exclude<Language, 'russian'>, 'adults'),
+    ],
+  ]),
+  [`${students}/russian-language`, routes.languageProgram('russian', 'students')],
+  // The section pages without a page of their own: the language course listing.
+  [students, routes.courses('languages')],
+  [adults, routes.courses('languages')],
   // Open items (CLAUDE.md § 12): the proposed targets.
-  [
-    '/language-education/language-certificates',
-    `${routes.languageProgram('english', 'adults')}#${anchors.certificates}`,
-  ],
-  ['/language-education/entry-level-tests', routes.contact('test-za-nivo')],
+  [`${students}/language-certificates`, certificates],
+  [`${adults}/language-certificates`, certificates],
+  [`${adults}/accreditation-of-language-skills`, certificates],
+  [`${students}/entry-level-tests`, routes.contact('test-za-nivo')],
+  [`${adults}/entry-level-tests-for-adults`, routes.contact('test-za-nivo')],
+  ['/professional-education', routes.professions()],
+  ['/courses', routes.courses()],
   ['/vouchers', routes.vouchers()],
   ['/professional-education/professions-and-specialty', routes.professions()],
   ['/professional-education/pedagogical-specialists', routes.teachers()],
   ['/professional-education/training-for-farmers', routes.farmers()],
   ['/computer-education', routes.computerCourses()],
+  ['/translations', routes.translations()],
   ['/translations/document-translations', routes.translations()],
+  ['/translations/interpreting', `${routes.translations()}#ustni-prevodi`],
+  ['/translations/translations-price', routes.translations()],
   ['/translations/upload-new-translation-document', routes.contact('prevodi')],
+  ['/contact-us', routes.contact()],
   ['/about-us/our-history', routes.about('history')],
   ['/about-us/our-team', routes.about('team')],
   ['/about-us/standarts', routes.about('standards')],
@@ -65,6 +71,15 @@ export const staticRedirects: Record<string, string> = Object.fromEntries([
   ['/about-us/personal-data-gdpr', routes.privacy()],
   ['/news', routes.news()],
 ])
+
+/**
+ * The old site's English copies (/en/…, some linked as /en/en/…) go to the Bulgarian page until
+ * the English site exists: the address without its /en prefixes ('/' for /en itself).
+ */
+export function withoutEnglish(path: string): string {
+  const stripped = path.replace(/^(\/en)+(?=\/|$)/, '')
+  return stripped || '/'
+}
 
 const siteSegments = new Set<string>([...Object.values(segments), 'dev'])
 

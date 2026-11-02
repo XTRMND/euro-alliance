@@ -96,24 +96,29 @@ Patterns from the old site, mapped to the proposed routes. **Derive the definiti
 
 ### Language education
 
+The real addresses, from the crawl of 02.11.2026 (`scripts/import/legacy-urls.json`); the map is `src/lib/redirects.ts`.
+
 | Old | New |
 |---|---|
-| `/Language-Education/Language-Educations-for-Adults/English` | `/ezitsi/angliyski/vazrastni` |
-| `/Language-Education/Language-Educations-for-Adults/German` | `/ezitsi/nemski/vazrastni` |
-| `/Language-Education/Language-Educations-for-Adults/French` | `/ezitsi/frenski/vazrastni` |
-| `/Language-Education/Language-Educations-for-Adults/Spanish` | `/ezitsi/ispanski/vazrastni` |
-| `/Language-Education/Language-Educations-for-Adults/Italian` | `/ezitsi/italianski/vazrastni` |
-| `/Language-Education/Language-Educations-for-Adults/Bulgarian` | `/ezitsi/balgarski/vazrastni` |
-| `/Language-Education/Language-Education-For-Students/{English…Bulgarian}` | `/ezitsi/{language}/uchenitsi` (Bulgarian → the БЕЛ page) |
-| `/Language-Education/Language-Education-For-Students/Russian` | `/ezitsi/ruski/uchenitsi` |
-| `…/Language-Certificates` | **Open:** proposed `/ezitsi/angliyski/vazrastni#sertifikati` (where the homepage «Изпити и сертификати» card leads) |
-| `…/Entry-Level-Tests` | **Open:** the section of the language pages that covers entry-level tests, if the design has one; otherwise `/kursove` |
+| `/Language-Education/Language-Educations-for-Adults/{English,German,Spanish,Italian,Bulgarian}-Language`, `…/French-Language-Adults` | `/ezitsi/{language}/vazrastni` |
+| `/Language-Education/Language-Education-For-Students/{English,German,French,Spanish,Italian,Bulgarian}-Language`, `…/Russian-language` | `/ezitsi/{language}/uchenitsi` (Bulgarian → the БЕЛ page) |
+| `/Language-Education/Language-Educations-for-Adults`, `/Language-Education/Language-Education-For-Students` | `/kursove?kategoria=ezitsi` (no page of their own) |
+| `…/Language-Certificates` (both), `…/Accreditation-of-Language-Skills` | **Proposed:** `/ezitsi/angliyski/vazrastni#sertifikati` |
+| `…/Entry-Level-Tests`, `…/Entry-Level-Tests-for-Adults` | **Proposed:** `/kontakti?tema=test-za-nivo` |
 
 ### Programmes, translations, about, news
 
 | Old | New |
 |---|---|
 | `/Vouchers` | `/vaucheri` |
+| `/Courses` | `/kursove` |
+| `/Courses/{id}/{slug}` | `/kursove/{new-slug}`, from the import |
+| `/Professional-Education` | **Proposed:** `/profesionalno-obuchenie/profesii` |
+| `/Contact-Us` | `/kontakti` |
+| `/Translations` | `/prevodi` |
+| `/Translations/Interpreting` | `/prevodi#ustni-prevodi` |
+| `/Translations/Translations-Price` | `/prevodi` (prices dropped) |
+| `/en`, `/en/…` (and `/en/en/…`) | **Proposed:** the Bulgarian page of the same address, until the English site exists |
 | `/Professional-Education/Professions-and-specialty` | `/profesionalno-obuchenie/profesii` |
 | `/Professional-Education/Pedagogical-specialists` | `/profesionalno-obuchenie/pedagogicheski-spetsialisti` |
 | `/Professional-Education/Training-for-farmers` | `/profesionalno-obuchenie/zemedeltsi` |

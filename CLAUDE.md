@@ -436,6 +436,7 @@ From the search (PR 18):
 - The index is ours, not Payload's search plugin (the About page is a global). The migration creates the `pg_trgm` extension: the production database's owner must be allowed to (it's a trusted extension from PostgreSQL 13).
 
 From the 404 page and the redirects (PR 19):
+- The crawl (PR 21) gave the old site's real addresses (the language pages end in `-Language`), and the map follows them: every old content page has a redirect (a unit test checks `scripts/import/legacy-urls.json`). Also proposed: the two language section pages → the language course listing, `/Professional-Education` → ЦПО професии, and the old English copies (`/en/…`) → the Bulgarian page until the English site exists.
 - Redirect targets for the open rows, as proposed in `docs/content-import.md` § 5: Language-Certificates → the English adults page's certificates (`/ezitsi/angliyski/vazrastni#sertifikati`), Entry-Level-Tests → the level-test inquiry (`/kontakti?tema=test-za-nivo`), Online-Education → About's e-learning (`/za-nas#elektronno-obuchenie`), Learning → `/za-nas`. Confirm against the old pages' content (the inventory, PR 21).
 - The old language pages other than English redirect to pages that have no content yet, so they end on the 404 page until the client adds those programs.
 - Unknown old addresses get the 404 page; they aren't logged by the app (the server's access log has them). Collect them after launch?
