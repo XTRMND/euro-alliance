@@ -59,6 +59,26 @@ export const offices = [
 // (no official price list) and «Екип» (until the client sends team photos).
 const englishAdults = routes.languageProgram('english', 'adults')
 
+/**
+ * Navigation links seeded before 02.11.2026 that now go to filtered course listings (a general
+ * label never goes to one specific page): label, old address, new address. The seed moves a link
+ * only while it still has its old address.
+ */
+export const navigationMoves: [string, string, string][] = [
+  [
+    'Езици за ученици',
+    routes.languageProgram('english', 'students'),
+    routes.courses({ category: 'languages', audience: 'students' }),
+  ],
+  [
+    'Езици за възрастни',
+    englishAdults,
+    routes.courses({ category: 'languages', audience: 'adults' }),
+  ],
+  ['Професионално обучение', routes.professions(), routes.courses('vocational')],
+  ['Изпити и сертификати', `${englishAdults}#${anchors.certificates}`, routes.courses('exams')],
+]
+
 const vocational = {
   label: 'Професионално обучение',
   children: [
@@ -80,7 +100,7 @@ export const navigation = {
   menu: [
     { label: 'Курсове', href: routes.courses() },
     { label: 'Езици', href: routes.courses('languages') },
-    { label: 'Изпити и сертификати', href: `${englishAdults}#${anchors.certificates}` },
+    { label: 'Изпити и сертификати', href: routes.courses('exams') },
     vocational,
     { label: 'Преводи', href: routes.translations() },
     { label: 'Новини', href: routes.news() },
@@ -91,9 +111,15 @@ export const navigation = {
       heading: 'Обучение',
       links: [
         { label: 'Курсове', href: routes.courses() },
-        { label: 'Езици за ученици', href: routes.languageProgram('english', 'students') },
-        { label: 'Езици за възрастни', href: englishAdults },
-        { label: 'Професионално обучение', href: routes.professions() },
+        {
+          label: 'Езици за ученици',
+          href: routes.courses({ category: 'languages', audience: 'students' }),
+        },
+        {
+          label: 'Езици за възрастни',
+          href: routes.courses({ category: 'languages', audience: 'adults' }),
+        },
+        { label: 'Професионално обучение', href: routes.courses('vocational') },
         { label: 'Ваучери', href: routes.vouchers() },
       ],
     },

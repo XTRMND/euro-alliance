@@ -45,8 +45,15 @@ describe('upcoming course tabs', () => {
 
 describe('destinations', () => {
   it('give «Изпити и сертификати» and «Компютърни курсове» their fixed targets', () => {
-    expect(destinations.certificates.href).toBe('/ezitsi/angliyski/vazrastni#sertifikati')
+    expect(destinations.certificates.href).toBe('/kursove?kategoria=izpiti-i-sertifikati')
     expect(destinations.computerCourses.href).toBe(routes.computerCourses())
+  })
+
+  it('send general labels to a filtered listing, not to one page', () => {
+    expect(destinations.languagesStudents.href).toBe(
+      '/kursove?kategoria=ezitsi&auditoria=uchenitsi',
+    )
+    expect(destinations.languagesAdults.href).toBe('/kursove?kategoria=ezitsi&auditoria=vazrastni')
   })
 
   it('resolve only known destinations', () => {

@@ -34,6 +34,9 @@ describe('the fixed redirects', () => {
     expect(
       staticRedirects['/language-education/language-education-for-students/russian-language'],
     ).toBe('/ezitsi/ruski/uchenitsi')
+    expect(staticRedirects['/language-education/language-educations-for-adults']).toBe(
+      '/kursove?kategoria=ezitsi&auditoria=vazrastni',
+    )
     expect(staticRedirects['/about-us/personal-data-gdpr']).toBe('/poveritelnost')
     expect(staticRedirects['/contact-us']).toBe('/kontakti')
   })

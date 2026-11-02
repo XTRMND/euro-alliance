@@ -47,6 +47,32 @@ describe('seed', () => {
     expect(logos.tints?.docs ?? []).toEqual([])
   })
 
+  it('moves the old language links to filtered listings, and keeps a link the client changed', async () => {
+    const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
+    const footer = (nav.footer ?? []).map((column) => ({
+      ...column,
+      links: (column.links ?? []).map((link) =>
+        link.label === 'Езици за възрастни'
+          ? { ...link, href: '/ezitsi/angliyski/vazrastni' }
+          : link.label === 'Езици за ученици'
+            ? { ...link, href: '/ezitsi/nemski/uchenitsi' }
+            : link,
+      ),
+    }))
+    await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: { footer } })
+    await seed(payload)
+
+    const links = (await payload.findGlobal({ slug: 'navigation', locale: 'bg' })).footer?.flatMap(
+      (column) => column.links ?? [],
+    )
+    expect(links?.find((link) => link.label === 'Езици за възрастни')?.href).toBe(
+      '/kursove?kategoria=ezitsi&auditoria=vazrastni',
+    )
+    expect(links?.find((link) => link.label === 'Езици за ученици')?.href).toBe(
+      '/ezitsi/nemski/uchenitsi',
+    )
+  })
+
   it('seeds «Професионално обучение» as a group of three programmes', async () => {
     const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg' })
     const group = nav.header?.left?.find((link) => link.label === 'Професионално обучение')

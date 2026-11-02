@@ -1,11 +1,9 @@
-import { anchors, routes } from './routes'
+import { routes } from './routes'
 
 // Fixed link targets the client picks from in the CMS (homepage program cards and hero buttons),
-// so a card can never point at a page that doesn't exist. «Изпити и сертификати» and «Компютърни
-// курсове» have fixed targets (docs/motion.md § 8): the certificates section of the language
-// pages and the Computer courses page. The language pages are the English ones, as in the footer.
-
-const englishAdults = routes.languageProgram('english', 'adults')
+// so a card can never point at a page that doesn't exist. A general label goes to a general view,
+// never one specific page (the user's rule, 02.11.2026): «Езици за ученици» / «Езици за възрастни»
+// and «Изпити и сертификати» are the course listing filtered to that category and audience.
 
 export const destinations = {
   courses: { label: 'Курсове', href: routes.courses() },
@@ -13,13 +11,13 @@ export const destinations = {
   languageCourses: { label: 'Курсове: езици', href: routes.courses('languages') },
   languagesStudents: {
     label: 'Езици за ученици',
-    href: routes.languageProgram('english', 'students'),
+    href: routes.courses({ category: 'languages', audience: 'students' }),
   },
-  languagesAdults: { label: 'Езици за възрастни', href: englishAdults },
-  certificates: {
-    label: 'Изпити и сертификати',
-    href: `${englishAdults}#${anchors.certificates}`,
+  languagesAdults: {
+    label: 'Езици за възрастни',
+    href: routes.courses({ category: 'languages', audience: 'adults' }),
   },
+  certificates: { label: 'Изпити и сертификати', href: routes.courses('exams') },
   professions: { label: 'ЦПО професии', href: routes.professions() },
   vouchers: { label: 'Ваучери', href: routes.vouchers() },
   /** Reports `voucher_apply_click` (docs/measurement.md). */

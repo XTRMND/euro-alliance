@@ -133,14 +133,26 @@ export const devRoutes = {
   news: '/dev/news',
 } as const
 
+/** A filtered view of the course listing: the filters live in the address (CLAUDE.md § 12). */
+export type CourseView = {
+  category?: CourseCategory
+  audience?: keyof typeof courseAudienceSegments
+}
+
 function withQuery(path: string, name: string, value: string | undefined): string {
   return value ? `${path}?${new URLSearchParams({ [name]: value })}` : path
 }
 
 export const routes = {
   home: () => '/',
-  courses: (category?: CourseCategory) =>
-    withQuery(`/${segments.courses}`, queryParams.category, category && courseCategories[category]),
+  /** The course listing, filtered to a category, or to a category and an audience. */
+  courses: (view?: CourseCategory | CourseView) => {
+    const { category, audience } = typeof view === 'string' ? { category: view } : (view ?? {})
+    const query = new URLSearchParams()
+    if (category) query.set(queryParams.category, courseCategories[category])
+    if (audience) query.set(queryParams.audience, courseAudienceSegments[audience])
+    return query.size ? `/${segments.courses}?${query}` : `/${segments.courses}`
+  },
   course: (slug: string) => `/${segments.courses}/${slug}`,
   languageProgram: <L extends Language>(language: L, audience: AudienceFor<L>) =>
     `/${segments.languages}/${languageSegments[language]}/${audienceSegments[audience]}`,

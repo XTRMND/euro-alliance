@@ -11,6 +11,7 @@ import {
   home,
   homePhoto,
   navigation,
+  navigationMoves,
   offices,
   partners,
 } from './data'
@@ -70,6 +71,27 @@ export async function seed(payload: Payload) {
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {
     await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: navigation })
     payload.logger.info('Seeded the navigation.')
+  } else {
+    // Links seeded earlier that now go to filtered course listings; one the client changed stays.
+    let moved = 0
+    const move = (value: unknown): unknown => {
+      if (Array.isArray(value)) return value.map(move)
+      if (!value || typeof value !== 'object') return value
+      const item = Object.fromEntries(
+        Object.entries(value).map(([key, field]) => [key, move(field)]),
+      ) as { label?: string; href?: string }
+      const to = navigationMoves.find(([label, from]) => item.label === label && item.href === from)
+      if (to) {
+        moved++
+        item.href = to[2]
+      }
+      return item
+    }
+    const data = { header: move(nav.header), menu: move(nav.menu), footer: move(nav.footer) }
+    if (moved) {
+      await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: data as never })
+      payload.logger.info(`Moved ${moved} navigation links to filtered course listings.`)
+    }
   }
 
   for (const office of offices) {

@@ -40,8 +40,8 @@ export const staticRedirects: Record<string, string> = Object.fromEntries([
   ]),
   [`${students}/russian-language`, routes.languageProgram('russian', 'students')],
   // The section pages without a page of their own: the language course listing.
-  [students, routes.courses('languages')],
-  [adults, routes.courses('languages')],
+  [students, routes.courses({ category: 'languages', audience: 'students' })],
+  [adults, routes.courses({ category: 'languages', audience: 'adults' })],
   // Open items (CLAUDE.md § 12): the proposed targets.
   [`${students}/language-certificates`, certificates],
   [`${adults}/language-certificates`, certificates],

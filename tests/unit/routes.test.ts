@@ -88,6 +88,9 @@ describe('routes', () => {
     expect(routes.home()).toBe('/')
     expect(routes.courses()).toBe('/kursove')
     expect(routes.courses('languages')).toBe('/kursove?kategoria=ezitsi')
+    expect(routes.courses({ category: 'languages', audience: 'adults' })).toBe(
+      '/kursove?kategoria=ezitsi&auditoria=vazrastni',
+    )
     expect(routes.course('angliyski-b1')).toBe('/kursove/angliyski-b1')
     expect(routes.languageProgram('english', 'adults')).toBe('/ezitsi/angliyski/vazrastni')
     expect(routes.languageProgram('russian', 'students')).toBe('/ezitsi/ruski/uchenitsi')
