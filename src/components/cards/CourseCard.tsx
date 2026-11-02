@@ -83,7 +83,7 @@ export async function CourseCard({
             </p>
           )}
           {state.status === 'none' && (
-            <p className={styles.price}>
+            <p className={[styles.price, styles.ask].join(' ')}>
               {t('course.askPrice')}
               <span className={styles.note}>{t('course.askPriceNote')}</span>
             </p>

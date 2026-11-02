@@ -172,6 +172,16 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 - Document the recommended TLS settings for the user's servers (TLS 1.2 and 1.3 only, forward-secret ECDHE suites) for the SSL Labs result; the user applies them.
 - **Done when:** Mozilla Observatory scores A or better on staging; nothing breaks with the CSP (Playwright run with CSP violations failing the test).
 
+### 24a. Follow-ups from the user's review (02.11.2026)
+
+Done before PRs 25–27, each on `main`:
+
+- Language pages: the nine from the English template, and Bulgarian as one page with the tabs «БЕЛ | За чужденци» (`2cd5314`, `f011a65`). *Already done.*
+- Course logic: groups, the three card states, the status filter, filters in the address, the footer language links to the filtered listing (`bdaaec0`, `5031518`, `f011a65`). *Already done.*
+- Redirects for the old language pages, both Bulgarian ones included (students → БЕЛ, adults → За чужденци): all 40 old addresses, `/en/` copies too, answer one redirect to a 200 page. *Already done; checked against the inventory.*
+- Small fixes: «Всички новини» (`b62f7c8`, already done); the course card's button stays on the price row, its label on one line, down to 320px (e2e test).
+- The business-logic link check (`5031518`). *Already done.*
+
 ### 25. Accessibility pass: `a11y/accessibility`
 
 - axe at 1440 and 390 on every page and open state; manual keyboard pass; screen-reader spot checks (VoiceOver and NVDA) of the header, menu, filters, wizard, consent and search; heading order and landmark audit; zoom to 200% and text spacing check.

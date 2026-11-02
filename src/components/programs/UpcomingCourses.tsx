@@ -32,7 +32,7 @@ export function UpcomingCourses({ program, upcoming }: { program: Program; upcom
   return (
     <section id={upcomingId} className={styles.upcoming} aria-labelledby={`${upcomingId}-title`}>
       <SectionHeading id={`${upcomingId}-title`} title={program.upcoming.heading} />
-      <SwipeRow columns={4} itemWidth={280} className={styles.courses}>
+      <SwipeRow columns={3} wideColumns={4} itemWidth={280} className={styles.courses}>
         {upcoming.courses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}

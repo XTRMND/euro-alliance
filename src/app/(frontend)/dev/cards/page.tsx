@@ -88,7 +88,7 @@ export default function CardsPage() {
       <h1 className={styles.title}>Карти</h1>
 
       <section aria-label="Course card" className={styles.section}>
-        <SwipeRow columns={4} itemWidth={280}>
+        <SwipeRow columns={3} wideColumns={4} itemWidth={280}>
           {courses.map((item) => (
             <CourseCard key={item.id} course={item} headingLevel="h2" />
           ))}

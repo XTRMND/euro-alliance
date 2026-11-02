@@ -63,3 +63,36 @@ test('an unknown course is a 404', async ({ page }) => {
   const response = await page.goto(routes.course('nyama-takav-kurs'))
   expect(response?.status()).toBe(404)
 })
+
+// The card's button stays on the price row with its label on one line (the user, 02.11.2026),
+// inside the card, down to the narrowest: three in a row at 1024px, one at 320px.
+for (const width of [1440, 1280, 1024, 768, 390, 320]) {
+  test(`the course card keeps its button on the price row at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto(devRoutes.cards)
+
+    const rows = await page.locator('article').evaluateAll((cards) =>
+      cards.flatMap((card) => {
+        const button = card.querySelector<HTMLElement>('[class*="enrol"]')
+        const price = button?.parentElement?.firstElementChild as HTMLElement | null
+        if (!button || !price || price === button) return []
+        const b = button.getBoundingClientRect()
+        const p = price.getBoundingClientRect()
+        const c = card.getBoundingClientRect()
+        const lineHeight = parseFloat(getComputedStyle(button).lineHeight)
+        const paddings = parseFloat(getComputedStyle(button).paddingTop) * 2
+        return [
+          {
+            label: button.textContent,
+            sameRow: b.top < p.bottom && b.bottom > p.top && b.left >= p.right,
+            oneLine: b.height <= lineHeight + paddings + 1,
+            inside: p.left >= c.left && b.right <= c.right + 0.5,
+          },
+        ]
+      }),
+    )
+
+    expect(rows.length).toBeGreaterThan(0)
+    expect(rows.filter((row) => !row.sameRow || !row.oneLine || !row.inside)).toEqual([])
+  })
+}

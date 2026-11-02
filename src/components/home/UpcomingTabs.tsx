@@ -36,7 +36,13 @@ export function UpcomingTabs({ label, tabs, items, perTab }: UpcomingTabsProps) 
           ))}
         </div>
       )}
-      <SwipeRow columns={4} itemWidth={280} gap={{ column: 24 }} className={styles.cards}>
+      <SwipeRow
+        columns={2}
+        wideColumns={4}
+        itemWidth={280}
+        gap={{ column: 24 }}
+        className={styles.cards}
+      >
         {shown.map((item) => (
           <div key={item.id} className={styles.card}>
             {item.card}

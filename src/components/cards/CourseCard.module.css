@@ -99,9 +99,10 @@
   color: var(--color-text-muted);
 }
 
+/* The price and the button share one row, always (the user, 02.11.2026): the button never wraps
+   or shrinks; the price gives way, its label wrapping under the amount. */
 .foot {
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
   align-items: center;
   justify-content: space-between;
@@ -116,6 +117,12 @@
   letter-spacing: -0.003em;
   color: var(--color-text-primary);
   white-space: nowrap;
+  min-width: 0;
+}
+
+/* «Попитайте» is a word, not an amount: a size smaller, so it shares the row with the button. */
+.ask {
+  font: var(--type-h3);
 }
 
 /* A long label («за цена и следваща група») wraps under the amount rather than widening the card
@@ -130,6 +137,7 @@
 }
 
 .enrol {
+  flex-shrink: 0;
   margin-left: auto;
   padding: 13px;
   font: 600 0.9375rem / 1.2 var(--font-body);

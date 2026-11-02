@@ -11,6 +11,8 @@ type SwipeRowProps = {
   children: ReactNode
   /** Columns from 1024px (two from 768px). */
   columns: 2 | 3 | 4
+  /** Columns from 1440px, where they differ (course cards: four only at Figma's 1440 width). */
+  wideColumns?: 4
   /** Card width in the swipe row. */
   itemWidth: number
   /** Gaps of the grid (the swipe row uses the column gap); the card gap by default. */
@@ -25,6 +27,7 @@ type SwipeRowProps = {
 export function SwipeRow({
   children,
   columns,
+  wideColumns,
   itemWidth,
   gap = {},
   focusable,
@@ -33,6 +36,7 @@ export function SwipeRow({
 }: SwipeRowProps) {
   const style = {
     '--columns': columns,
+    ...(wideColumns && { '--wide-columns': wideColumns }),
     '--item-width': `${itemWidth}px`,
     ...(gap.row !== undefined && { '--row-gap': `${gap.row}px` }),
     ...(gap.column !== undefined && { '--column-gap': `${gap.column}px` }),
@@ -42,6 +46,7 @@ export function SwipeRow({
     <ul
       className={[styles.row, className].filter(Boolean).join(' ')}
       style={style}
+      data-wide={wideColumns ? '' : undefined}
       tabIndex={focusable ? 0 : undefined}
       aria-labelledby={focusable ? labelledBy : undefined}
     >

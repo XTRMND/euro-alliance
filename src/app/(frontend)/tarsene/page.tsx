@@ -113,7 +113,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <h2 id="search-courses" className={styles.heading}>
                 {t('tab.courses')}
               </h2>
-              <SwipeRow columns={4} itemWidth={280} gap={{ column: 24 }}>
+              <SwipeRow columns={3} wideColumns={4} itemWidth={280} gap={{ column: 24 }}>
                 {courses.map((course) => (
                   <CourseCard key={course.id} course={course} />
                 ))}
