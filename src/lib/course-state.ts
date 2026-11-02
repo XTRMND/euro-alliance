@@ -11,7 +11,8 @@ import type { Course } from '@/payload-types'
 // The group a card or a page shows is the soonest upcoming one, else the latest to have started.
 // Enrolment is open only for an upcoming group with free seats (or no seat count); otherwise the
 // button asks about joining. Few seats: 1 or 2 free, highlighted. Price: a voucher course shows
-// the voucher's value; a regular price above the price makes a promotion (struck through).
+// the voucher's value; a regular price above the price makes a promotion (struck through). A free
+// course (the farmers' courses) shows «Безплатно» instead of a price, and always an inquiry.
 
 export const fewSeatsBelow = 3
 
@@ -23,7 +24,7 @@ export type CourseStatus = 'upcoming' | 'running' | 'none'
 
 export const courseStatuses = ['upcoming', 'running', 'none'] as const
 
-type StatefulCourse = Pick<Course, 'groups' | 'voucherEligible'>
+type StatefulCourse = Pick<Course, 'groups' | 'voucherEligible' | 'free'>
 
 /** `today` is midnight in Bulgaria as an ISO string (startOfTodayInSofia). */
 export function groupStatus(
@@ -59,7 +60,7 @@ export type CourseState = {
   group?: CourseGroup
   /** Open: an upcoming group with seats, «Запиши се». Otherwise an inquiry about joining. */
   enrolment: 'open' | 'inquiry'
-  pricing: 'voucher' | 'promotion' | 'regular' | 'none'
+  pricing: 'free' | 'voucher' | 'promotion' | 'regular' | 'none'
   /** Free seats when the CMS has a number. */
   seats?: number
   fewSeats: boolean
@@ -75,14 +76,16 @@ export function courseState(course: StatefulCourse, today: string): CourseState 
   return {
     status,
     group,
-    enrolment: status === 'upcoming' && seats !== 0 ? 'open' : 'inquiry',
-    pricing: !hasPrice
-      ? 'none'
-      : course.voucherEligible
-        ? 'voucher'
-        : typeof group?.regularPrice === 'number' && group.regularPrice > group.price!
-          ? 'promotion'
-          : 'regular',
+    enrolment: !course.free && status === 'upcoming' && seats !== 0 ? 'open' : 'inquiry',
+    pricing: course.free
+      ? 'free'
+      : !hasPrice
+        ? 'none'
+        : course.voucherEligible
+          ? 'voucher'
+          : typeof group?.regularPrice === 'number' && group.regularPrice > group.price!
+            ? 'promotion'
+            : 'regular',
     seats,
     fewSeats: status === 'upcoming' && seats !== undefined && seats > 0 && seats < fewSeatsBelow,
   }

@@ -550,7 +550,8 @@
     "category": "farmers",
     "topic": "farming",
     "duration": "150 уч. часа (19 дни)",
-    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026)"
+    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026); free: «безплатно» on the old farmers page (the user, 02.11.2026: L8)",
+    "free": true
   },
   {
     "slug": "ustoychivo-upravlenie-ekologia-i-inovatsii-v-zemedelskite-stopanstva",
@@ -560,7 +561,8 @@
     "category": "farmers",
     "topic": "farming",
     "duration": "50 уч. часа (7 дни)",
-    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026)"
+    "source": "The old farmers page (free, under the Strategic Plan 2023–2027); docs/course-list.md (approved by the user, 02.11.2026); free: «безплатно» on the old farmers page (the user, 02.11.2026: L8)",
+    "free": true
   },
   {
     "slug": "kompyutri-periferia-i-mrezhi",

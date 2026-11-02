@@ -11,7 +11,7 @@ type Group = {
   price?: number
   regularPrice?: number
 }
-const course = (groups: Group[], fields: { voucherEligible?: boolean } = {}) => ({
+const course = (groups: Group[], fields: { voucherEligible?: boolean; free?: boolean } = {}) => ({
   groups,
   ...fields,
 })
@@ -56,6 +56,19 @@ describe('course states (the groups model of 02.11.2026)', () => {
     expect(courseState(course([{ ...priced, regularPrice: 495 }]), today).pricing).toBe('regular')
     expect(courseState(course([priced], { voucherEligible: true }), today).pricing).toBe('voucher')
     expect(courseState(course([upcoming]), today).pricing).toBe('none')
+  })
+
+  it('shows a free course as free, with an inquiry, with or without a group', () => {
+    expect(courseState(course([], { free: true }), today)).toMatchObject({
+      status: 'none',
+      pricing: 'free',
+      enrolment: 'inquiry',
+    })
+    expect(courseState(course([{ ...upcoming, seats: 5 }], { free: true }), today)).toMatchObject({
+      status: 'upcoming',
+      pricing: 'free',
+      enrolment: 'inquiry',
+    })
   })
 
   it('highlights one or two free seats of an upcoming group', () => {

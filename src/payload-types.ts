@@ -454,6 +454,10 @@ export interface Course {
   program?: string | null;
   document?: string | null;
   included?: string | null;
+  /**
+   * Вместо цена показва «Безплатно», с бутон «Запитване» (например обученията по Стратегическия план).
+   */
+  free?: boolean | null;
   voucherEligible?: boolean | null;
   /**
    * От стария сайт, за пренасочването.
@@ -2030,6 +2034,7 @@ export interface CoursesSelect<T extends boolean = true> {
   program?: T;
   document?: T;
   included?: T;
+  free?: T;
   voucherEligible?: T;
   legacyUrl?: T;
   updatedAt?: T;

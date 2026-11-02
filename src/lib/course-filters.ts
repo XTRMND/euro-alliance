@@ -153,7 +153,8 @@ export function courseMonths(courses: Pick<Course, 'groups' | 'voucherEligible'>
 
 type Stated<C> = { course: C; state: CourseState }
 
-const priceOf = ({ state }: Stated<unknown>) => state.group?.price ?? Number.POSITIVE_INFINITY
+const priceOf = ({ state }: Stated<unknown>) =>
+  state.pricing === 'free' ? 0 : (state.group?.price ?? Number.POSITIVE_INFINITY)
 
 /**
  * The listing: every course with its state, narrowed by every filter that's on, in the list

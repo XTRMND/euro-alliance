@@ -48,6 +48,14 @@ test.describe('course states (dev gallery)', () => {
     await expect(undated.getByRole('link', { name: 'Запитване' })).toBeVisible()
   })
 
+  test('a free course: «Безплатно» instead of a price, and «Запитване»', async ({ page }) => {
+    await page.goto(devRoutes.course)
+    const free = state(page, 'Безплатно')
+    await expect(free.getByText('Безплатно', { exact: true }).first()).toBeVisible()
+    await expect(free.getByText('Попитайте', { exact: true })).toHaveCount(0)
+    await expect(free.getByRole('link', { name: 'Запитване' }).first()).toBeVisible()
+  })
+
   test('empty fields are left out', async ({ page }) => {
     await page.goto(devRoutes.course)
     const ticket = state(page, 'Липсващи полета')

@@ -109,7 +109,15 @@ export async function CourseDetails({
       stubProps={{ 'data-closed': (state.status === 'upcoming' && state.seats === 0) || undefined }}
       stub={
         <>
-          {state.pricing !== 'none' && (
+          {state.pricing === 'free' && (
+            <>
+              <p className={ticket.label}>{t('field.price')}</p>
+              <p className={styles.price}>
+                <span className={styles.amount}>{t('free')}</span>
+              </p>
+            </>
+          )}
+          {state.pricing !== 'none' && state.pricing !== 'free' && (
             <>
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>
@@ -130,7 +138,7 @@ export async function CourseDetails({
               {group?.priceNote && <p className={styles.extra}>{group.priceNote}</p>}
             </>
           )}
-          {state.status === 'none' && (
+          {state.status === 'none' && state.pricing !== 'free' && (
             <>
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>

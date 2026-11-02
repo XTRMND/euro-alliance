@@ -88,7 +88,8 @@
     "inquireTitle": "Ask about joining",
     "groups": "Groups",
     "askPrice": "Ask us",
-    "askPriceNote": "for the price and the next group"
+    "askPriceNote": "for the price and the next group",
+    "free": "Free"
   },
   "courses": {
     "audience": {

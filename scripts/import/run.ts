@@ -335,6 +335,8 @@ type CourseEntry = {
   format?: 'in-person' | 'online'
   cardTag?: string
   voucherEligible?: boolean
+  /** «Безплатно» instead of a price (the farmers' courses). */
+  free?: boolean
   groups: { legacyId: string; label?: string; priceLabel?: string }[]
   source: string
 }

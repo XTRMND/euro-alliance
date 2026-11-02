@@ -68,6 +68,7 @@ const states: { name: string; course: Course }[] = [
   { name: 'Няма места', course: withGroup({ seats: 0 }) },
   { name: 'В ход', course: withGroup({ startDate: '2098-12-01T12:00:00.000Z' }) },
   { name: 'Няма насрочена дата', course: { ...base, groups: [] } },
+  { name: 'Безплатно', course: { ...base, groups: [], free: true } },
   {
     name: 'Липсващи полета',
     course: {
@@ -87,7 +88,7 @@ const action = (course: Course) => {
     <Button href={routes.enrol(base.slug!)} variant={closed ? 'secondary' : 'primary'}>
       {!closed
         ? 'Запиши се'
-        : state.status === 'upcoming'
+        : state.status === 'upcoming' && state.seats === 0
           ? 'Уведоми ме за следващия курс'
           : 'Запитване'}
     </Button>

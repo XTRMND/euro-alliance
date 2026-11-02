@@ -337,6 +337,15 @@ export const Courses: CollectionConfig = {
       ],
     },
     {
+      name: 'free',
+      type: 'checkbox',
+      label: 'Безплатно',
+      admin: {
+        description:
+          'Вместо цена показва «Безплатно», с бутон «Запитване» (например обученията по Стратегическия план).',
+      },
+    },
+    {
       name: 'voucherEligible',
       type: 'checkbox',
       label: 'С ваучер от Агенцията по заетостта',

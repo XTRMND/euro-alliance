@@ -82,7 +82,11 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
     closed ? (
       <EnrolButton
         href={`#${enrolAnchor}`}
-        label={state.status === 'upcoming' ? t('course.notify') : t('course.inquire')}
+        label={
+          state.status === 'upcoming' && state.seats === 0
+            ? t('course.notify')
+            : t('course.inquire')
+        }
         event={null}
         variant="secondary"
         className={className}
@@ -180,11 +184,13 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
       <InquiryBand />
       <EnrolBar
         price={
-          state.status === 'none'
-            ? t('course.askPrice')
-            : state.pricing === 'none' || !state.group
-              ? undefined
-              : formatPrice(state.group.price!, state.group.currency ?? 'EUR')
+          state.pricing === 'free'
+            ? t('course.free')
+            : state.status === 'none'
+              ? t('course.askPrice')
+              : state.pricing === 'none' || !state.group
+                ? undefined
+                : formatPrice(state.group.price!, state.group.currency ?? 'EUR')
         }
         note={
           state.status === 'upcoming' && state.seats === 0

@@ -88,7 +88,8 @@
     "inquireTitle": "Попитайте за записване",
     "groups": "Групи",
     "askPrice": "Попитайте",
-    "askPriceNote": "за цена и следваща група"
+    "askPriceNote": "за цена и следваща група",
+    "free": "Безплатно"
   },
   "courses": {
     "audience": {

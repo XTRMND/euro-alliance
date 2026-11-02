@@ -64,6 +64,7 @@ export function courseLd(course: Course, today: string): Ld {
     description: course.description,
     url: course.slug ? absolute(routes.course(course.slug)) : undefined,
     provider: { '@id': absolute('/#organization') },
+    isAccessibleForFree: course.free || undefined,
     hasCourseInstance: groups.length
       ? groups.map((group) => {
           const format = group.format ?? course.format
@@ -79,14 +80,16 @@ export function courseLd(course: Course, today: string): Ld {
           })
         })
       : undefined,
-    offers: offer
-      ? {
-          '@type': 'Offer',
-          category: 'Paid',
-          price: offer.price,
-          priceCurrency: offer.currency ?? 'EUR',
-        }
-      : undefined,
+    offers: course.free
+      ? { '@type': 'Offer', category: 'Free', price: 0, priceCurrency: 'EUR' }
+      : offer
+        ? {
+            '@type': 'Offer',
+            category: 'Paid',
+            price: offer.price,
+            priceCurrency: offer.currency ?? 'EUR',
+          }
+        : undefined,
   })
 }
 
