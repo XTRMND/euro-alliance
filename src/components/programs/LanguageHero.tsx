@@ -59,17 +59,17 @@ export function LanguageHero({ program, language, breadcrumb, tabs, actions }: L
         {program.hero.lead && (
           <p className={[styles.lead, landing.copy].join(' ')}>{program.hero.lead}</p>
         )}
-        {phrases.length > 0 && (
-          <ProgramHeroArt
-            title={notebook?.title ?? ''}
-            phrases={phrases}
-            lang={bcp47[language]}
-            flag={language}
-            highlight={notebook?.highlight ? notebook.highlight - 1 : -1}
-            note={note}
-            className={styles.art}
-          />
-        )}
+        {/* Always the notebook with the flag; its phrases only where the CMS has them (no source
+            has first phrases beyond English, and they're never invented). */}
+        <ProgramHeroArt
+          title={notebook?.title ?? ''}
+          phrases={phrases}
+          lang={bcp47[language]}
+          flag={language}
+          highlight={notebook?.highlight ? notebook.highlight - 1 : -1}
+          note={note}
+          className={styles.art}
+        />
         <div className={[styles.actions, landing.copy].join(' ')}>{actions}</div>
       </div>
     </div>

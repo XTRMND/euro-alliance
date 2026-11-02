@@ -7,15 +7,19 @@
 // cover set since is kept. Writes scripts/import/out/report.md.
 //   pnpm import:run, with IMPORT_DRY_RUN=1 to write nothing and IMPORT_ONLY=news|courses|pages for
 //   one part (environment variables: `payload run` doesn't pass arguments on to the script).
+//   IMPORT_ONLY=covers applies the user's photo picks (out/photo-decisions.json), the last step:
+//   it never runs as part of the rest.
 import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import config from '@payload-config'
 import * as cheerio from 'cheerio'
 import { getPayload, type Payload } from 'payload'
 import { normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
 import { type Audience, type Language, routes } from '@/lib/routes'
 import { slugify } from '@/lib/slug'
+import { type Destination, destinations } from '@/lib/destinations'
+import { richText } from '@/seed/programs'
 import { htmlToLexical, plainText, typeset } from './html-to-lexical'
 
 const out = new URL('./out/', import.meta.url)
@@ -23,6 +27,7 @@ const userAgent = 'EuroAlliance-site-migration/1.0 (content migration to the new
 const dryRun = process.env.IMPORT_DRY_RUN === '1'
 const only = process.env.IMPORT_ONLY
 const runs = (part: string) => !only || only === part
+const unsplashDir = new URL('./in/unsplash/', import.meta.url)
 
 type InventoryPage = {
   url: string
@@ -44,10 +49,26 @@ const report = {
     textImages: [] as string[],
   },
   courses: { created: 0, updated: 0, prices: [] as string[], pastStart: [] as string[] },
-  pages: { created: 0, updated: 0, kept: [] as string[], made: [] as string[] },
+  pages: {
+    created: 0,
+    updated: 0,
+    kept: [] as string[],
+    made: [] as string[],
+    /** Bulgarian pages on hold (the user checks them in Figma first). */
+    held: [] as string[],
+  },
   images: { downloaded: 0, reused: 0, failed: [] as string[], skippedInText: 0 },
   documents: { uploaded: 0, failed: [] as string[] },
   links: { mapped: 0, external: 0, unmapped: new Set<string>() },
+  covers: {
+    decisions: false,
+    original: 0,
+    unsplash: 0,
+    none: 0,
+    /** Picked Unsplash photos not yet in in/unsplash/. */
+    notDownloaded: [] as string[],
+    notFound: [] as string[],
+  },
 }
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
@@ -84,20 +105,21 @@ const extensions: Record<string, string> = {
   'application/pdf': 'pdf',
 }
 
-/** Uploads a file to media once (named by its content hash) and returns the media document. */
-async function media(
+type MediaFields = {
+  alt: string
+  kind: 'photo' | 'scan'
+  altReviewed?: boolean
+  credit?: string
+  textInImage?: boolean
+}
+
+/** Uploads a file to media once (by its name) and returns the media document. */
+async function upload(
   payload: Payload,
-  url: string,
-  alt: string,
-  kind: 'photo' | 'scan',
+  file: { data: Buffer; type: string },
+  name: string,
+  fields: MediaFields,
 ): Promise<{ id: number; url?: string | null } | null> {
-  const file = await download(url)
-  if (!file) {
-    report.images.failed.push(url)
-    return null
-  }
-  const ext = extensions[file.type] ?? url.split('.').pop()?.toLowerCase() ?? 'bin'
-  const name = `import-${createHash('sha256').update(file.data).digest('hex').slice(0, 16)}.${ext}`
   const existing = await payload.find({
     collection: 'media',
     where: { filename: { equals: name } },
@@ -106,14 +128,256 @@ async function media(
   })
   if (existing.docs[0]) {
     report.images.reused++
+    // The flag may change between runs; the alt text and credit an editor reviewed stay.
+    const flag = fields.textInImage
+    if (!dryRun && flag !== undefined && existing.docs[0].textInImage !== flag)
+      await payload.update({
+        collection: 'media',
+        id: existing.docs[0].id,
+        data: { textInImage: flag },
+      })
     return existing.docs[0]
   }
   if (dryRun) return { id: 0, url: null }
   return payload.create({
     collection: 'media',
-    data: { alt, kind, altReviewed: false },
+    data: { altReviewed: false, ...fields },
     file: { data: file.data, mimetype: file.type, name, size: file.data.length },
   })
+}
+
+/** Uploads a file from the old site once (named by its content hash). */
+async function media(
+  payload: Payload,
+  url: string,
+  fields: MediaFields,
+): Promise<{ id: number; url?: string | null } | null> {
+  const file = await download(url)
+  if (!file) {
+    report.images.failed.push(url)
+    return null
+  }
+  const ext = extensions[file.type] ?? url.split('.').pop()?.toLowerCase() ?? 'bin'
+  const name = `import-${createHash('sha256').update(file.data).digest('hex').slice(0, 16)}.${ext}`
+  return upload(payload, file, name, fields)
+}
+
+type Decision = {
+  title: string
+  legacyUrl: string | null
+  choice: 'original' | 'unsplash' | 'none'
+  original?: { src: string }
+  textInImage?: boolean
+  unsplash?: { id: string; page: string; photographer: string }
+}
+
+/**
+ * The news covers and the homepage's small photo the user picked (out/photo-decisions.json, from
+ * the local picker): the old cover, an Unsplash photo downloaded by hand into in/unsplash/ and
+ * found by its id in the file name, or none. Alt texts are drafts (altReviewed: false) unless the
+ * old site had one.
+ */
+async function importCovers(payload: Payload, altOf: Map<string, string>) {
+  const file = new URL('photo-decisions.json', out)
+  if (!existsSync(file)) return
+  report.covers.decisions = true
+  const { slots } = JSON.parse(await readFile(file, 'utf8')) as {
+    slots: Record<string, Decision>
+  }
+  const downloads = existsSync(unsplashDir) ? await readdir(unsplashDir) : []
+  for (const [slot, decision] of Object.entries(slots)) {
+    const home = slot === 'home:photo-b'
+    const drafted = home
+      ? 'Снимка към началната страница'
+      : `Снимка към новината „${typeset(decision.title)}“`
+    let cover: number | null = null
+    if (decision.choice === 'original' && decision.original) {
+      const doc = await media(payload, decision.original.src, {
+        alt: altOf.get(decision.original.src) || drafted,
+        kind: 'photo',
+        textInImage: Boolean(decision.textInImage),
+      })
+      if (!doc) continue
+      cover = doc.id
+      report.covers.original++
+    } else if (decision.choice === 'unsplash' && decision.unsplash) {
+      const { id, page, photographer } = decision.unsplash
+      const name = downloads.find((download) => download.includes(id))
+      if (!name) {
+        report.covers.notDownloaded.push(`${decision.title}: ${page}`)
+        continue
+      }
+      const ext = name.split('.').pop()!.toLowerCase()
+      const doc = await upload(
+        payload,
+        {
+          data: await readFile(new URL(name, unsplashDir)),
+          type: ext === 'png' ? 'image/png' : ext === 'webp' ? 'image/webp' : 'image/jpeg',
+        },
+        `unsplash-${id}.${ext}`,
+        { alt: drafted, kind: 'photo', credit: `${photographer} / Unsplash` },
+      )
+      if (!doc) continue
+      cover = doc.id
+      report.covers.unsplash++
+    } else report.covers.none++
+    if (dryRun) continue
+    if (home) {
+      const current = await payload.findGlobal({ slug: 'home', depth: 0, locale: 'bg' })
+      await payload.updateGlobal({
+        slug: 'home',
+        locale: 'bg',
+        data: { hero: { ...current.hero, photoSecondary: cover } } as never,
+      })
+      continue
+    }
+    const found = await payload.find({
+      collection: 'news',
+      where: { legacyUrl: { equals: decision.legacyUrl } },
+      limit: 1,
+      depth: 0,
+      draft: true,
+    })
+    if (!found.docs[0]) {
+      report.covers.notFound.push(decision.title)
+      continue
+    }
+    await payload.update({
+      collection: 'news',
+      id: found.docs[0].id,
+      locale: 'bg',
+      data: { cover } as never,
+    })
+  }
+}
+
+type Part = string | { text: string; destination: Destination }
+
+/** A language page from scripts/import/language-pages.json (sources and notes left out here). */
+type LanguagePage = {
+  language: Language
+  audience: Audience
+  oldUrl: string
+  hero: { heading: string; highlight?: string | null; lead?: string | null }
+  features: { title: string; text?: string | null }[] | null
+  systemsBlock: { heading: string; lead?: string | null; linkLabel?: string | null } | null
+  systems:
+    | {
+        name: string
+        kicker?: string | null
+        count?: string | null
+        countLabel?: string | null
+        description?: string | null
+        levels: string[]
+        strip?: { label: string; note: string } | null
+      }[]
+    | null
+  certificatesBlock: { heading: string; lead?: string | null } | null
+  certificates:
+    { name: string; issuer?: string | null; code?: string | null; prep?: string | null }[] | null
+  faq: { question: string; answer: Part[] }[] | null
+  coursesHeading: string
+  hidden: string[]
+}
+
+/** Upserts a textbook system or a certificate by name, published, and returns its id. */
+async function upsertByName(
+  payload: Payload,
+  collection: 'textbook-systems' | 'certificates',
+  data: { name: string } & Record<string, unknown>,
+): Promise<number> {
+  const found = await payload.find({
+    collection,
+    where: { name: { equals: data.name } },
+    limit: 1,
+    depth: 0,
+    draft: true,
+  })
+  const values = { ...data, _status: 'published' } as never
+  const doc = found.docs[0]
+    ? await payload.update({ collection, id: found.docs[0].id, locale: 'bg', data: values })
+    : await payload.create({ collection, locale: 'bg', data: values })
+  return doc.id
+}
+
+/**
+ * A language page's Program on the English template (src/seed/programs.ts): the hero with the
+ * flag (no notebook phrases: no source has them), «Как можете да учите», the textbook systems,
+ * the certificates and the questions, each only when the page has content for it; the courses
+ * section «Курсове по …».
+ */
+async function languagePageData(payload: Payload, page: LanguagePage) {
+  const systemIds: number[] = []
+  for (const { levels, strip, ...system } of page.systems ?? [])
+    systemIds.push(
+      await upsertByName(payload, 'textbook-systems', {
+        ...system,
+        levels: levels.map((level) => ({ level })),
+        ...(strip ? { strip } : {}),
+      }),
+    )
+  const certificateIds: number[] = []
+  for (const certificate of page.certificates ?? [])
+    certificateIds.push(await upsertByName(payload, 'certificates', certificate))
+  const sections = [
+    page.features?.length && {
+      blockType: 'features',
+      heading: 'Как можете да учите',
+      items: page.features,
+    },
+    systemIds.length && {
+      blockType: 'textbookSystems',
+      heading: page.systemsBlock?.heading ?? 'Учебни системи и нива',
+      lead: page.systemsBlock?.lead,
+      systems: systemIds,
+      ...(page.systemsBlock?.linkLabel
+        ? { link: { label: page.systemsBlock.linkLabel, destination: 'levelTest' } }
+        : {}),
+      columns: 'two',
+    },
+    certificateIds.length && {
+      blockType: 'certificates',
+      heading: page.certificatesBlock?.heading ?? 'Сертификати',
+      lead: page.certificatesBlock?.lead,
+      certificates: certificateIds,
+    },
+    page.faq?.length && {
+      blockType: 'faq',
+      heading: 'Често задавани въпроси',
+      items: page.faq.map(({ question, answer }) => ({
+        question,
+        answer: richText(
+          answer.map((part) =>
+            typeof part === 'string'
+              ? part
+              : { text: part.text, url: destinations[part.destination].href },
+          ),
+        ),
+      })),
+    },
+  ].filter(Boolean)
+  return {
+    title: `${page.hero.heading} за ${page.audience === 'adults' ? 'възрастни' : 'ученици'}`,
+    type: 'language',
+    language: page.language,
+    audience: page.audience,
+    hero: {
+      heading: page.hero.heading,
+      highlight: page.hero.highlight,
+      lead: page.hero.lead,
+      ctas: [
+        { label: 'Виж предстоящите курсове', destination: 'languageCourses' },
+        { label: 'Направи входния тест', destination: 'levelTest' },
+      ],
+    },
+    upcoming: {
+      heading: page.coursesHeading,
+      linkLabel: `Всички к${page.coursesHeading.slice(1)}`,
+    },
+    sections,
+    legacyUrl: page.oldUrl,
+    _status: 'published' as const,
+  }
 }
 
 /** «30.10.26 г.» → 2026-10-30. */
@@ -167,12 +431,10 @@ async function main() {
   const copies = new Set<string>()
   async function documentLink(href: string, label: string): Promise<string | null> {
     if (documentUrl.has(href)) return documentUrl.get(href)!
-    const doc = await media(
-      payload,
-      href,
-      label || decodeURI(href.split('/').pop() ?? 'Документ'),
-      'scan',
-    )
+    const doc = await media(payload, href, {
+      alt: label || decodeURI(href.split('/').pop() ?? 'Документ'),
+      kind: 'scan',
+    })
     if (!doc?.url && !dryRun) {
       report.documents.failed.push(href)
       return null
@@ -355,82 +617,39 @@ async function main() {
     }
   }
 
-  // ── Pages: the language pages the new site doesn't have yet ─────────────
+  // ── Pages: the language pages, on the English template ──────────────────
+  // One page per language and audience (the user, 02.11.2026) from scripts/import/language-pages.json:
+  // each language's old page and the English pages' language-neutral Figma copy, with a source per
+  // field; a section with no content is left out. Pages from the approved Figma copy (English) stay.
+  // Bulgarian (БЕЛ, Bulgarian for foreigners) is on hold: not built, and a page an earlier run made
+  // from the old site is unpublished.
   if (runs('pages')) {
-    for (const page of bulgarian) {
-      const path = normalizePath(pathOf(page.url))
-      const target = staticRedirects[path]
-      const match = target?.match(/^\/ezitsi\/([a-z]+)\/([a-z]+)$/)
-      if (!match) {
-        if (!/^\/(news|courses)\//.test(path) && path !== '/news' && !page.url.includes('?'))
-          report.pages.kept.push(pathOf(page.url))
-        continue
-      }
-      const language = Object.entries({
-        angliyski: 'english',
-        nemski: 'german',
-        frenski: 'french',
-        ispanski: 'spanish',
-        italianski: 'italian',
-        balgarski: 'bulgarian',
-        ruski: 'russian',
-      }).find(([segment]) => segment === match[1])?.[1] as Language
-      const audience = (match[2] === 'vazrastni' ? 'adults' : 'students') as Audience
+    const pages = JSON.parse(
+      await readFile(new URL('./language-pages.json', import.meta.url), 'utf8'),
+    ) as LanguagePage[]
+    for (const page of pages) {
       const existing = await payload.find({
         collection: 'programs',
         where: {
           and: [
             { type: { equals: 'language' } },
-            { language: { equals: language } },
-            { audience: { equals: audience } },
+            { language: { equals: page.language } },
+            { audience: { equals: page.audience } },
           ],
         },
         limit: 1,
         depth: 0,
         draft: true,
       })
-      // Pages built from the approved Figma copy keep it; the import updates only its own.
       const ours = existing.docs[0] as { legacyUrl?: string | null } | undefined
-      if (ours && ours.legacyUrl !== page.url) {
-        report.pages.kept.push(`${pathOf(page.url)} (the new page from Figma stays)`)
+      if (ours && !ours.legacyUrl) {
+        report.pages.kept.push(`${page.language} ${page.audience} (the page from Figma stays)`)
         continue
       }
-      const $ = await html(page)
-      $('script,style,noscript,form').remove()
-      const intro = $('section.main-container').first()
-      const heading = typeset(page.title.replace(/^Евро Алианс\s*\/\/\s*/, '').trim())
-      const sections = $('section.full-width-section').toArray()
-      const lead =
-        intro
-          .find('p')
-          .toArray()
-          .map((p) => $(p).text().replace(/\s+/g, ' ').trim())
-          .find((text) => text.length > 40) ?? ''
-      const blocks = [intro, ...sections.map((section) => $(section))]
-        .map((section) => {
-          const title = section.find('h2').first().text().replace(/\s+/g, ' ').trim()
-          section.find('h2').first().remove()
-          section.find('img').remove()
-          const converted = htmlToLexical(section.html() ?? '', mapLink)
-          return { title, converted }
-        })
-        .filter(({ converted }) => plainText(converted.root).length > 0)
-        .map(({ title, converted }) => ({
-          blockType: 'richText',
-          heading: title ? typeset(title) : undefined,
-          body: { root: converted.root },
-        }))
-      const data = {
-        title: heading,
-        type: 'language',
-        language,
-        audience,
-        hero: { heading, lead: typeset(lead) || undefined },
-        sections: blocks,
-        legacyUrl: page.url,
-        _status: 'published' as const,
-      }
-      report.pages.made.push(`${pathOf(page.url)} → ${target}`)
+      const data = dryRun ? {} : await languagePageData(payload, page)
+      report.pages.made.push(
+        `${pathOf(page.oldUrl)} → ${routes.languageProgram(page.language, page.audience as 'students')}: ${page.hidden.length ? `hidden ${page.hidden.join(', ')}` : 'every section'}`,
+      )
       if (dryRun) continue
       if (existing.docs[0]) {
         await payload.update({
@@ -445,6 +664,39 @@ async function main() {
         report.pages.created++
       }
     }
+    const held = await payload.find({
+      collection: 'programs',
+      where: {
+        and: [
+          { type: { equals: 'language' } },
+          { language: { equals: 'bulgarian' } },
+          { legacyUrl: { exists: true } },
+        ],
+      },
+      depth: 0,
+      draft: true,
+    })
+    for (const doc of held.docs) {
+      report.pages.held.push(doc.title)
+      if (!dryRun && doc._status === 'published')
+        await payload.update({
+          collection: 'programs',
+          id: doc.id,
+          locale: 'bg',
+          data: { _status: 'draft' },
+        })
+    }
+  }
+
+  if (only === 'covers') {
+    // The old site's alt texts, by image address.
+    const altOf = new Map<string, string>()
+    for (const page of inventory.pages as (InventoryPage & {
+      images?: { src: string; alt: string | null }[]
+    })[])
+      for (const image of page.images ?? [])
+        if (image.alt?.trim()) altOf.set(image.src, typeset(image.alt.trim()))
+    await importCovers(payload, altOf)
   }
 
   await writeReport(inventory)
@@ -505,9 +757,9 @@ async function writeReport(inventory: Inventory) {
     `- Prices, as written:`,
     ...r.courses.prices.map((price) => `  - ${price}`),
     `- Courses that have already started (published, but no longer listed): ${r.courses.pastStart.join('; ') || 'none'}.`,
-    `- Language pages made from the old site (the hero and the text; no textbook cards, certificates or FAQ):`,
+    `- Language pages on the English template, from each old page and the neutral Figma copy (scripts/import/language-pages.json has a source for every field):`,
     ...r.pages.made.map((page) => `  - ${page}`),
-    `- Old pages not imported (the new site has its own, from the approved Figma copy, or they're sections): ${r.pages.kept.length}.`,
+    `- Pages kept from the approved Figma copy: ${r.pages.kept.join('; ') || 'none'}. On hold until the user has checked them in Figma, unpublished: ${r.pages.held.join('; ') || 'none'}.`,
     `- Documents linked from the texts, now in Media: ${r.documents.uploaded}. Missing on the old site too, so their links were removed (the text stays): ${r.documents.failed.join(', ') || 'none'}.`,
     `- Links to the old site without a new address: ${[...r.links.unmapped].join(', ') || 'none'}; ${r.links.mapped} links rewritten to the new addresses, ${r.links.external} to other sites kept.`,
     '',
@@ -515,6 +767,22 @@ async function writeReport(inventory: Inventory) {
     '',
     `No photo from the old site is imported (the user's decision of 02.11.2026). News covers and the homepage's small photo are picked from the old covers or Unsplash (scripts/import/out/photo-decisions.json) and imported last; until then those slots show their no-image state. The About page's photos are the client's own only. Courses take the design's Course visual and sticker.`,
     '',
+    ...(only === 'covers'
+      ? [
+          r.covers.decisions
+            ? `- Covers and the homepage photo, from the user's picks: ${r.covers.original} old covers, ${r.covers.unsplash} Unsplash photos, ${r.covers.none} without. Their alt texts are drafts to review in Media (\`altReviewed: false\`).`
+            : '- No picks yet: out/photo-decisions.json is missing.',
+          ...(r.covers.notDownloaded.length
+            ? [
+                `- Picked on Unsplash but not in scripts/import/in/unsplash/ yet:`,
+                ...r.covers.notDownloaded.map((photo) => `  - ${photo}`),
+              ]
+            : []),
+          ...(r.covers.notFound.length
+            ? [`- Picks for news not in the database: ${r.covers.notFound.join('; ')}`]
+            : []),
+        ]
+      : []),
     `- Images inside article texts, left out (the article text has no design for images): ${r.images.skippedInText}, in:`,
     ...r.news.textImages.map((article) => `  - ${article}`),
     ...(await imageGaps()),

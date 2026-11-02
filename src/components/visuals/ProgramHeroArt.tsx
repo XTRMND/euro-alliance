@@ -59,7 +59,7 @@ export function ProgramHeroArt({
             <span />
             <span />
           </span>
-          <p className={styles.title}>{title}</p>
+          {title && <p className={styles.title}>{title}</p>}
           <ul className={styles.phrases}>
             {phrases.slice(0, 3).map(({ phrase, translation }, index) => (
               <li key={index} style={{ '--row': index } as CSSProperties}>
