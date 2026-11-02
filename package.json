@@ -15,7 +15,7 @@
     "test:watch": "vitest",
     "test:int": "vitest run --config vitest.int.config.ts",
     "test:e2e": "playwright test",
-    "lhci": "lhci autorun --config=lighthouserc.cjs && lhci autorun --config=lighthouserc.desktop.cjs",
+    "lhci": "node scripts/lighthouse-cpu.mjs && lhci autorun --config=lighthouserc.cjs && lhci autorun --config=lighthouserc.desktop.cjs",
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",

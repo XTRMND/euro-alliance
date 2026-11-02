@@ -51,6 +51,16 @@ const lcpFlagged = new Set([
   '/za-nas',
 ])
 
+/** Lighthouse's CPU slowdown for this machine (lighthouse-reports/cpu.json), or its default 4×. */
+function cpuSlowdown() {
+  try {
+    return JSON.parse(require('node:fs').readFileSync('lighthouse-reports/cpu.json', 'utf8'))
+      .multiplier
+  } catch {
+    return 4
+  }
+}
+
 /** The Chrome that chrome-launcher (Lighthouse's) finds, for puppeteer-core. */
 function chromePath() {
   const launcher = require.resolve('chrome-launcher', {
@@ -93,6 +103,8 @@ module.exports = {
       // puppeteer-core with the Chrome that Lighthouse finds.
       puppeteerScript: './lighthouse-consent.cjs',
       chromePath: chromePath(),
+      // The phone's CPU, calibrated to this machine (scripts/lighthouse-cpu.mjs runs first).
+      settings: { throttling: { cpuSlowdownMultiplier: cpuSlowdown() } },
     },
     assert: { assertMatrix: assertMatrix({ performance: 0.9 }) },
     upload: {
