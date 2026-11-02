@@ -60,6 +60,19 @@ export const Media: CollectionConfig = {
     },
     { name: 'credit', type: 'text', label: 'Автор', localized: true },
     {
+      // A poster or a photo with a caption in it: cropped to the article banner's wide slot, the
+      // text would be cut, so it shows only on cards (src/lib/media/slots.ts).
+      name: 'textInImage',
+      type: 'checkbox',
+      label: 'Има текст в изображението',
+      defaultValue: false,
+      admin: {
+        description:
+          'Плакат или снимка с надпис: не се показва като широк банер в новина, където текстът би се изрязал.',
+        condition: (data) => data?.kind === 'photo',
+      },
+    },
+    {
       // The four tints of a photo, so a page gets them with the photo (DuotoneImage).
       name: 'tints',
       type: 'join',

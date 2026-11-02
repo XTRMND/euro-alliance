@@ -229,6 +229,10 @@ export interface Media {
   altReviewed?: boolean | null;
   kind: 'photo' | 'art' | 'scan' | 'logo';
   credit?: string | null;
+  /**
+   * Плакат или снимка с надпис: не се показва като широк банер в новина, където текстът би се изрязал.
+   */
+  textInImage?: boolean | null;
   tints?: {
     docs?: (number | MediaTint)[];
     hasNextPage?: boolean;
@@ -1854,6 +1858,7 @@ export interface MediaSelect<T extends boolean = true> {
   altReviewed?: T;
   kind?: T;
   credit?: T;
+  textInImage?: T;
   tints?: T;
   updatedAt?: T;
   createdAt?: T;

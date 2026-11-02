@@ -212,7 +212,8 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 | `alt` | **required** (localized). Decorative images aren't uploaded here; they live in the code. |
 | `altReviewed` | checkbox *(proposed)*; false when alt text was drafted during import |
 | `kind` | `photo` / `art` / `scan` / `logo` (required) |
-| `credit` | optional |
+| `credit` | optional; the photographer of an Unsplash photo |
+| `textInImage` | checkbox, photos only: a poster or a photo with text in it stays out of the wide article banner (`src/lib/media/slots.ts`) |
 
 **What each kind gets on upload:**
 

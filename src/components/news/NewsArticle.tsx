@@ -5,6 +5,7 @@ import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { InquiryBand } from '@/components/shell/InquiryBand'
 import { DuotoneImage } from '@/components/visuals/DuotoneImage'
 import { formatDateLong } from '@/lib/format'
+import { bannerShows } from '@/lib/media/slots'
 import { newsOutline, nodeText, readingMinutes, type LexicalBody } from '@/lib/news'
 import { routes } from '@/lib/routes'
 import type { Media, News } from '@/payload-types'
@@ -15,8 +16,9 @@ import { ArticleSidebar } from './ArticleSidebar'
 import styles from './NewsArticle.module.css'
 
 // A news article (183:2574 / 188:2385): the hero (breadcrumb, date chip, H1, the cover in its 30%
-// tint), then the contents rail, the text and the sidebar side by side from 1280px (the sidebar
-// under the text from 1024, everything stacked below with the contents box), and «Още новини».
+// tint, unless it's smaller than the banner or has text in it: src/lib/media/slots.ts), then the
+// contents rail, the text and the sidebar side by side from 1280px (the sidebar under the text
+// from 1024, everything stacked below with the contents box), and «Още новини».
 // Landing from «Prototype · Новина landing» (188:4957): the copy fades up; the cover, the likely
 // LCP element, only rises.
 
@@ -32,7 +34,8 @@ type NewsArticleProps = {
 
 export async function NewsArticle({ article, latest, more, url }: NewsArticleProps) {
   const t = await getTranslations('news')
-  const cover = typeof article.cover === 'object' ? (article.cover as Media | null) : null
+  const media = typeof article.cover === 'object' ? (article.cover as Media | null) : null
+  const cover = media && bannerShows(media) ? media : null
   const outline = newsOutline(article.body as LexicalBody)
   const minutes = readingMinutes(
     article.lead,

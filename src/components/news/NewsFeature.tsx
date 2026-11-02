@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { DuotoneImage } from '@/components/visuals/DuotoneImage'
 import { formatDateLong } from '@/lib/format'
+import { fillsSlot, newsSlots } from '@/lib/media/slots'
 import { routes } from '@/lib/routes'
 import type { Media, News } from '@/payload-types'
 import styles from './NewsFeature.module.css'
@@ -9,7 +10,8 @@ import styles from './NewsFeature.module.css'
 // News feature (181:365): the lead story on the news listing. The cover in its 30% tint, taped,
 // clearing to colour on hover; the date on a sand chip, the title, the excerpt and «Прочети
 // новината». One link: the title's, stretched over the card. Below 1024px it's a News card with
-// the excerpt under it (188:2219): no chip, tape or «Прочети новината».
+// the excerpt under it (188:2219): no chip, tape or «Прочети новината». A cover smaller than the
+// slot isn't shown (src/lib/media/slots.ts).
 
 type NewsFeatureProps = {
   news: Pick<News, 'title' | 'slug' | 'date' | 'cover' | 'excerpt'>
@@ -17,7 +19,8 @@ type NewsFeatureProps = {
 
 export async function NewsFeature({ news }: NewsFeatureProps) {
   const t = await getTranslations('news')
-  const cover = typeof news.cover === 'object' ? (news.cover as Media | null) : null
+  const media = typeof news.cover === 'object' ? (news.cover as Media | null) : null
+  const cover = media && fillsSlot(media, newsSlots.lead) ? media : null
   return (
     <article className={['duotone-hover', styles.feature].join(' ')} data-clear-on-centre="">
       {cover && (
