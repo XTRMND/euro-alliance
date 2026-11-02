@@ -3,6 +3,7 @@ import { getMessages, getTranslations } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
 import { Footer } from '@/components/shell/Footer'
+import { HeadScripts } from '@/components/shell/HeadScripts'
 import { Header } from '@/components/shell/Header'
 import { SkipLink } from '@/components/shell/SkipLink'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
@@ -66,6 +67,7 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
         <script dangerouslySetInnerHTML={{ __html: handFontScript }} />
       </head>
       <body>
+        <HeadScripts />
         <SkipLink />
         <CookieConsent labels={messages.consent} />
         {measurementId && <GoogleAnalytics measurementId={measurementId} />}

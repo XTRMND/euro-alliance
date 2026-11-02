@@ -445,6 +445,7 @@ From the 404 page and the redirects (PR 19):
 - The redirects are answered by a proxy, not `next.config`, so they ignore case and stay one hop (`docs/content-import.md` § 5).
 - 404 on a phone: Figma sets the scrap's «404» at 88 px, off-centre, not scaled with the scrap. [as Figma] The search placeholder wraps to two lines in the frame; a text field can't, so it's cut short on a phone. The scrap's shadow is CSS (in Figma's SVG it was cut off at the file's edges, as on the About photo).
 - No Lighthouse on the 404 page: a 404 status stops the audit.
+- Next 16 answers every `notFound()` (unknown addresses and missing content) with an empty HTML shell and builds the 404 page in the browser, where React doesn't run the layout's inline scripts. `HeadScripts` runs them again there (Consent Mode's defaults before GA, the handwriting font); each runs once. Found 02.11.2026: before, the 404 page had no consent defaults and no Caveat.
 
 From the analytics (PR 20):
 - GA4 needs the measurement ID (`GA4_MEASUREMENT_ID`): the client's existing property or a new one. Until it's set, no tag loads. The property's owner marks `wizard_submit` as the key event (README).

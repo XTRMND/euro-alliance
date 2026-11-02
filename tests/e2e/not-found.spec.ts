@@ -24,6 +24,20 @@ test('an unknown address is a real 404, with search and places to start', async 
   await expect(page).toHaveURL(/\/tarsene\?q=/)
 })
 
+// Next builds the 404 page in the browser from an empty shell, where the layout's inline scripts
+// don't run: HeadScripts runs them (src/components/shell/HeadScripts.tsx).
+test('the 404 page runs the consent defaults and loads the handwriting', async ({ page }) => {
+  await page.goto('/nyama-takava-stranitsa')
+  await expect(page.locator('html')).toHaveAttribute('data-hand-font', '')
+  const defaults = await page.evaluate(() =>
+    (window as unknown as { dataLayer?: unknown[][] }).dataLayer
+      ?.map((entry) => Array.from(entry))
+      .filter((entry) => entry[0] === 'consent' && entry[1] === 'default'),
+  )
+  expect(defaults).toHaveLength(1)
+  expect(defaults?.[0][2]).toMatchObject({ analytics_storage: 'denied', ad_storage: 'denied' })
+})
+
 for (const width of [1440, 390]) {
   test(`the 404 page has no axe violations at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 })

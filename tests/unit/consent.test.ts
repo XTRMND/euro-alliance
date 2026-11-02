@@ -1,3 +1,4 @@
+import { runInNewContext } from 'node:vm'
 import { describe, expect, it } from 'vitest'
 import {
   consentChoice,
@@ -44,5 +45,17 @@ describe('Consent Mode', () => {
     expect(script).toContain("'consent','default'")
     expect(script).toContain('"analytics_storage":"denied"')
     expect(script).toContain('ea_consent')
+  })
+
+  it('runs once, however often the script is added (HeadScripts adds it again)', () => {
+    // The page's global object, as in a browser: `window` is the global itself.
+    const page: { window?: unknown; dataLayer?: unknown[][]; document: { cookie: string } } = {
+      document: { cookie: '' },
+    }
+    page.window = page
+    runInNewContext(consentHeadScript(), page)
+    runInNewContext(consentHeadScript(), page)
+    const defaults = page.dataLayer?.filter((entry) => entry[1] === 'default')
+    expect(defaults).toHaveLength(1)
   })
 })

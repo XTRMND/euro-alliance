@@ -5,5 +5,8 @@
 // after the LCP: the notebook's text shows a generic cursive for a moment, then Caveat. The text
 // is positioned absolutely, so the swap moves nothing.
 
+/** Set on `window` by the script, which runs once (HeadScripts may run it again). */
+export const handFontScriptFlag = 'eaHandFontScript'
+
 /** The inline script that marks <html> once the page has loaded (globals.css turns Caveat on). */
-export const handFontScript = `addEventListener('load',function(){document.documentElement.setAttribute('data-hand-font','')})`
+export const handFontScript = `(function(){if(window.${handFontScriptFlag})return;window.${handFontScriptFlag}=1;var on=function(){document.documentElement.setAttribute('data-hand-font','')};if(document.readyState==='complete')on();else addEventListener('load',on)})()`

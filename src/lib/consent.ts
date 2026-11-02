@@ -95,13 +95,16 @@ export const siteCookies: Record<'essential' | ConsentCategory, string[]> = {
   marketing: [],
 }
 
+/** Set on `window` by the consent head script, which runs once (HeadScripts may run it again). */
+export const consentScriptFlag = 'eaConsentScript'
+
 /**
  * The inline script that runs before anything else: `gtag` (a queue in `dataLayer` until gtag.js
  * loads), Consent Mode's defaults, the stored choice applied, and `data-consent` on <html> so the
  * banner is hidden from the first paint.
  */
 export function consentHeadScript(): string {
-  return `(function(){window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};var g=window.gtag;g('consent','default',${JSON.stringify({ ...consentModeDefaults, wait_for_update: 500 })});var m=document.cookie.match(/(?:^|; )${consentCookie}=([^;]*)/);if(!m)return;try{var c=JSON.parse(decodeURIComponent(m[1]));if(c.v!==${consentVersion})return;document.documentElement.setAttribute('data-consent','set');var s=function(o){return o?'granted':'denied'};g('consent','update',{analytics_storage:s(c.statistics),ad_storage:s(c.marketing),ad_user_data:s(c.marketing),ad_personalization:s(c.marketing),functionality_storage:s(c.functional),personalization_storage:s(c.functional)})}catch(e){}})()`
+  return `(function(){if(window.${consentScriptFlag})return;window.${consentScriptFlag}=1;window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){dataLayer.push(arguments)};var g=window.gtag;g('consent','default',${JSON.stringify({ ...consentModeDefaults, wait_for_update: 500 })});var m=document.cookie.match(/(?:^|; )${consentCookie}=([^;]*)/);if(!m)return;try{var c=JSON.parse(decodeURIComponent(m[1]));if(c.v!==${consentVersion})return;document.documentElement.setAttribute('data-consent','set');var s=function(o){return o?'granted':'denied'};g('consent','update',{analytics_storage:s(c.statistics),ad_storage:s(c.marketing),ad_user_data:s(c.marketing),ad_personalization:s(c.marketing),functionality_storage:s(c.functional),personalization_storage:s(c.functional)})}catch(e){}})()`
 }
 
 /** The choice stored in this browser (client only). */
