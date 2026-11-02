@@ -28,3 +28,7 @@ npm-debug.log*
 
 # Uploads (local storage)
 /media/
+
+# The import's working files (docs/content-import.md): the inventory, the old site's HTML and
+# images, the extracted records and the report.
+/scripts/import/out/

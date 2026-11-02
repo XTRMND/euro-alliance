@@ -1,0 +1,2300 @@
+[
+  {
+    "url": "https://euro-alliance.net/",
+    "status": 200,
+    "type": "home",
+    "title": "Евро Алианс // Езиково и професионално обучение Езикови преводи и легализация"
+  },
+  {
+    "url": "https://euro-alliance.net/en",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Welcome"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове"
+  },
+  {
+    "url": "https://euro-alliance.net/Translations",
+    "status": 200,
+    "type": "translations",
+    "title": "Евро Алианс // Преводи"
+  },
+  {
+    "url": "https://euro-alliance.net/News",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Our-History",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Нашата история"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Online-Education",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Електронно обучение - e - learning"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Projects",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Проекти"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Learning",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Обучение"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Documents",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Документи"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Our-Team",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Нашия екип"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Standarts",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Стандарти"
+  },
+  {
+    "url": "https://euro-alliance.net/About-us/Personal-data-GDPR",
+    "status": 200,
+    "type": "about",
+    "title": "Евро Алианс // Защита на личните данни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Езиково Обучение за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/English-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Английски език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/German-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Немски език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/French-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Френски език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Spanish-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Испански език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Italian-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Италиански език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Bulgarian-Language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Български език за ученици"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Language-Certificates",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Езикови Сертификати"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Russian-language",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Руски език"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Education-For-Students/Entry-Level-Tests",
+    "status": 200,
+    "type": "language-students",
+    "title": "Евро Алианс // Тестове за входно ниво"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Езиково Обучение за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/English-Language",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Английски език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/German-Language",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Немски език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/French-Language-Adults",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Френски език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Spanish-Language",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Испански език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Italian-Language",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Италиански език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Bulgarian-Language",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Български език за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Language-Certificates",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Езикови сертификати"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Entry-Level-Tests-for-Adults",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Евро Алианс // Входящи тестове за възрастни"
+  },
+  {
+    "url": "https://euro-alliance.net/Language-Education/Language-Educations-for-Adults/Accreditation-of-Language-Skills",
+    "status": 200,
+    "type": "language-adults",
+    "title": "Признаване на езикови знания"
+  },
+  {
+    "url": "https://euro-alliance.net/Vouchers",
+    "status": 200,
+    "type": "vouchers",
+    "title": "Евро Алианс // Ваучери"
+  },
+  {
+    "url": "https://euro-alliance.net/Professional-Education/Professions-and-specialty",
+    "status": 200,
+    "type": "professions",
+    "title": "Евро Алианс // Професионално обучение"
+  },
+  {
+    "url": "https://euro-alliance.net/Professional-Education/Pedagogical-specialists",
+    "status": 200,
+    "type": "teachers",
+    "title": "Евро Алианс // Професионално обучение"
+  },
+  {
+    "url": "https://euro-alliance.net/Professional-Education/Training-for-farmers",
+    "status": 200,
+    "type": "farmers",
+    "title": "Евро Алианс // ОБУЧЕНИЕ ЗА ЗЕМЕДЕЛЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/Translations/Interpreting",
+    "status": 200,
+    "type": "translations",
+    "title": "Euro Alliance // Преводи от български език"
+  },
+  {
+    "url": "https://euro-alliance.net/Translations/Document-Translations",
+    "status": 200,
+    "type": "translations",
+    "title": "Euro Alliance // Преводи от чужди езици"
+  },
+  {
+    "url": "https://euro-alliance.net/Translations/Upload-New-Translation-Document",
+    "status": 200,
+    "type": "translations",
+    "title": "Евро Алианс // Изпращане на документ за превод"
+  },
+  {
+    "url": "https://euro-alliance.net/Translations/Translations-Price",
+    "status": 200,
+    "type": "translations",
+    "title": "Преводи // Ценоразпис"
+  },
+  {
+    "url": "https://euro-alliance.net/Contact-Us",
+    "status": 200,
+    "type": "contact",
+    "title": "Евро Алианс // Контакти"
+  },
+  {
+    "url": "https://euro-alliance.net/Professional-Education",
+    "status": 200,
+    "type": "vocational",
+    "title": "Евро Алианс // Професионално обучение"
+  },
+  {
+    "url": "https://euro-alliance.net/Computer-Education",
+    "status": 200,
+    "type": "computer",
+    "title": "Евро Алианс // Компютърно обучение"
+  },
+  {
+    "url": "https://euro-alliance.net/News/213/%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%9D%D0%90%D0%A0%D0%9E%D0%94%D0%9D%D0%98%D0%A2%D0%95-%D0%91%D0%A3%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ДЕН НА НАРОДНИТЕ БУДИТЕЛИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/212/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8-%D0%B8-%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8-%D1%81%D1%82%D0%B0%D0%B6%D0%BE%D0%B2%D0%B5-%D0%BF%D0%BE-GreenHost",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Национални и транснационални стажове по GreenHost"
+  },
+  {
+    "url": "https://euro-alliance.net/News/211/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0-GreenHost-%D0%B2-CETT-Barcelona",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Транснационална среща по проекта GreenHost в CETT Barcelona"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/1/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%922-%D0%92%D1%8A%D0%B7%D1%80%D0%B0%D1%81%D1%82%D0%BD%D0%B8-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - Английски език В2 Възрастни ОНЛАЙН"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/64/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%BD%D0%B8%D0%B2%D0%BE-%D0%901-%D0%902-%D0%921-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98-%D0%9E%D0%A2-%D0%90%D0%97",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - Английски език ниво А1 А2 В1 С ВАУЧЕРИ ОТ АЗ"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/73/%D0%9F%D0%9E%D0%94%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9A%D0%90-%D0%BF%D0%BE-%D0%91%D0%95%D0%9B-%D0%B7%D0%B0-%D0%94%D0%97%D0%98",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - ПОДГОТОВКА по БЕЛ за ДЗИ"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/74/%D0%9F%D0%9E%D0%94%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9A%D0%90-%D0%BF%D0%BE-%D0%91%D0%95%D0%9B-%D0%B7%D0%B0-%D0%9D%D0%92%D0%9E",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - ПОДГОТОВКА по БЕЛ за НВО"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/70/%D0%A1%D0%95%D0%94%D0%9C%D0%98%D0%A7%D0%9D%D0%98-%D0%92%D0%95%D0%A7%D0%95%D0%A0%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%BE%D1%82-%D0%BD%D0%B8%D0%B2%D0%B0-%D0%A02-%D0%A03-%D0%A04-S1-S2-%D0%BE%D1%82-2%D1%80%D0%B8-%D0%B4%D0%BE-7%D0%BC%D0%B8-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - СЕДМИЧНИ ВЕЧЕРНИ ГРУПИ УЧЕНИЦИ от нива Р2, Р3, Р4, S1, S2 (от 2-ри до 7-ми клас)"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Translations",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Translations"
+  },
+  {
+    "url": "https://euro-alliance.net/en/News",
+    "status": 200,
+    "type": "other",
+    "title": "News Seo"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Our-History",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About Us // Our History"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Online-Education",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Online Education"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Projects",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About us // Projects"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Learning",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About Us // Learning"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Documents",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About us // Documents"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Our-Team",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About // Team"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Standarts",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // About us // Standarts"
+  },
+  {
+    "url": "https://euro-alliance.net/en/About-us/Personal-data-GDPR",
+    "status": 200,
+    "type": "other",
+    "title": "About us // Personal data GDPR"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/English-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - English Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/German-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - German Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/French-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - French Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Spanish-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - Spanish Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Italian-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - Italian Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Bulgarian-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Students - Bulgarian Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Language-Certificates",
+    "status": 200,
+    "type": "certificates",
+    "title": "Euro Alliance // Language Certificates"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Russian-language",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Russian language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Education-For-Students/Entry-Level-Tests",
+    "status": 200,
+    "type": "entry-tests",
+    "title": "Euro Alliance // Entry Level Tests"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/English-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - English Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/German-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - German Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/French-Language-Adults",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - French Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Spanish-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - Spanish Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Italian-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - Italian Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Bulgarian-Language",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Language Education for Adults - Bulgarian Language"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Language-Certificates",
+    "status": 200,
+    "type": "certificates",
+    "title": "Euro Alliance // Language Certificates for Adults"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Entry-Level-Tests-for-Adults",
+    "status": 200,
+    "type": "entry-tests",
+    "title": "Euro Alliance // Entry Level Tests for Adults"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Language-Education/Language-Educations-for-Adults/Accreditation-of-Language-Skills",
+    "status": 200,
+    "type": "other",
+    "title": "Признаване на езикови знания"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Vouchers",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Vouchers"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Professional-Education/Professions-and-specialty",
+    "status": 200,
+    "type": "professions",
+    "title": "Euro Alliance // Professional-Education"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Professional-Education/Pedagogical-specialists",
+    "status": 200,
+    "type": "teachers",
+    "title": "Euro Alliance // Pedagogical-specialists"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Professional-Education/Training-for-farmers",
+    "status": 200,
+    "type": "farmers",
+    "title": "EURO ALLIANCE // Training for farmers"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Translations/Interpreting",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Translations Foreign to Bulgarian"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Translations/Document-Translations",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Translations Bulgarian to Foreign"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Translations/Upload-New-Translation-Document",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Upload Translation Document"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Translations/Translations-Price",
+    "status": 200,
+    "type": "other",
+    "title": "Translations // Price"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Contact-Us",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Contact"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Professional-Education",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Professional-Education"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Computer-Education",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Computer Education"
+  },
+  {
+    "url": "https://euro-alliance.net/en/News/213/%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%9D%D0%90%D0%A0%D0%9E%D0%94%D0%9D%D0%98%D0%A2%D0%95-%D0%91%D0%A3%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98",
+    "status": 200,
+    "type": "other",
+    "title": "News Seo"
+  },
+  {
+    "url": "https://euro-alliance.net/en/News/212/%D0%9D%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8-%D0%B8-%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8-%D1%81%D1%82%D0%B0%D0%B6%D0%BE%D0%B2%D0%B5-%D0%BF%D0%BE-GreenHost",
+    "status": 200,
+    "type": "other",
+    "title": "News Seo"
+  },
+  {
+    "url": "https://euro-alliance.net/en/News/211/%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0-GreenHost-%D0%B2-CETT-Barcelona",
+    "status": 200,
+    "type": "other",
+    "title": "News Seo"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/1/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%922-%D0%92%D1%8A%D0%B7%D1%80%D0%B0%D1%81%D1%82%D0%BD%D0%B8-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/64/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%BD%D0%B8%D0%B2%D0%BE-%D0%901-%D0%902-%D0%921-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98-%D0%9E%D0%A2-%D0%90%D0%97",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/73/%D0%9F%D0%9E%D0%94%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9A%D0%90-%D0%BF%D0%BE-%D0%91%D0%95%D0%9B-%D0%B7%D0%B0-%D0%94%D0%97%D0%98",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/74/%D0%9F%D0%9E%D0%94%D0%93%D0%9E%D0%A2%D0%9E%D0%92%D0%9A%D0%90-%D0%BF%D0%BE-%D0%91%D0%95%D0%9B-%D0%B7%D0%B0-%D0%9D%D0%92%D0%9E",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/70/%D0%A1%D0%95%D0%94%D0%9C%D0%98%D0%A7%D0%9D%D0%98-%D0%92%D0%95%D0%A7%D0%95%D0%A0%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%BE%D1%82-%D0%BD%D0%B8%D0%B2%D0%B0-%D0%A02-%D0%A03-%D0%A04-S1-S2-%D0%BE%D1%82-2%D1%80%D0%B8-%D0%B4%D0%BE-7%D0%BC%D0%B8-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/71/%D0%A1%D0%95%D0%94%D0%9C%D0%98%D0%A7%D0%9D%D0%98-%D0%94%D0%9D%D0%95%D0%92%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%BE%D1%82-%D0%BD%D0%B8%D0%B2%D0%B0-S1-%D0%B8-S2-%D0%BE%D1%82-5%D1%82%D0%B8-%D0%B4%D0%BE-7%D0%BC%D0%B8-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - СЕДМИЧНИ ДНЕВНИ ГРУПИ УЧЕНИЦИ от нива S1 и S2 (от 5-ти до 7-ми клас)"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/69/%D0%A1%D0%AA%D0%91%D0%9E%D0%A2%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - СЪБОТНИ ГРУПИ УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/4/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%BD%D0%B8%D0%B2%D0%BE-%D0%901-%D0%902-%D0%921-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98-%D0%9E%D0%A2-%D0%90%D0%97",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - Английски език ниво А1 А2 В1 С ВАУЧЕРИ ОТ АЗ"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/53/%D0%9F%D0%B5%D0%B4%D0%B0%D0%B3%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8-%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - Педагогически специалисти"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=1",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=2",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=3",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=4",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/71/%D0%A1%D0%95%D0%94%D0%9C%D0%98%D0%A7%D0%9D%D0%98-%D0%94%D0%9D%D0%95%D0%92%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%BE%D1%82-%D0%BD%D0%B8%D0%B2%D0%B0-S1-%D0%B8-S2-%D0%BE%D1%82-5%D1%82%D0%B8-%D0%B4%D0%BE-7%D0%BC%D0%B8-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/69/%D0%A1%D0%AA%D0%91%D0%9E%D0%A2%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/4/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%BD%D0%B8%D0%B2%D0%BE-%D0%901-%D0%902-%D0%921-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98-%D0%9E%D0%A2-%D0%90%D0%97",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/Courses/53/%D0%9F%D0%B5%D0%B4%D0%B0%D0%B3%D0%BE%D0%B3%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8-%D1%81%D0%BF%D0%B5%D1%86%D0%B8%D0%B0%D0%BB%D0%B8%D1%81%D1%82%D0%B8",
+    "status": 200,
+    "type": "other",
+    "title": "Euro Alliance // Courses"
+  },
+  {
+    "url": "https://euro-alliance.net/en/en/News?page=1",
+    "status": 200,
+    "type": "other",
+    "title": ""
+  },
+  {
+    "url": "https://euro-alliance.net/en/en/News?page=2",
+    "status": 200,
+    "type": "other",
+    "title": ""
+  },
+  {
+    "url": "https://euro-alliance.net/en/en/News?page=3",
+    "status": 200,
+    "type": "other",
+    "title": ""
+  },
+  {
+    "url": "https://euro-alliance.net/en/en/News?page=4",
+    "status": 200,
+    "type": "other",
+    "title": ""
+  },
+  {
+    "url": "https://euro-alliance.net/News/210/GreenHost-%D0%BD%D0%B0-%D1%82%D1%83%D1%80%D0%BD%D0%B8%D1%80%D0%B0-CoVE-Football-CUP-%D0%B2-%D0%93%D1%80%D0%B0%D1%86",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost на турнира CoVE Football CUP в Грац"
+  },
+  {
+    "url": "https://euro-alliance.net/News/209/%D0%A4%D0%BE%D1%80%D1%83%D0%BC%D0%B0-%D0%B7%D0%B0-%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8-%D0%BF%D0%BE%D1%81%D1%82%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-2026",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Форума за професионални постижения 2026"
+  },
+  {
+    "url": "https://euro-alliance.net/News/205/%D0%A1%D0%A3%D0%9F%D0%95%D0%A0-%D0%9F%D0%A0%D0%9E%D0%9C%D0%9E%D0%A6%D0%98%D0%AF-%D0%97%D0%90-%D0%9D%D0%9E%D0%92%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СУПЕР ПРОМОЦИЯ ЗА НОВИ УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=5",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/204/%D0%9E%D0%9F%D0%A0%D0%95%D0%A1%D0%9D%D0%98%D0%A2%D0%95%D0%9B%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОПРЕСНИТЕЛНИ ЗАНЯТИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/208/%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BD%D0%B0-%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D1%82%D0%B5%D0%BB%D0%BD%D0%B8%D1%82%D0%B5-%D0%BE%D1%82%D0%BF%D0%B0%D0%B4%D1%8A%D1%86%D0%B8-GreenHostCoVe",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Управление на хранителните отпадъци GreenHostCoVe"
+  },
+  {
+    "url": "https://euro-alliance.net/News/207/%D0%A3%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BD%D0%B0-%D0%BF%D0%BE%D1%82%D1%80%D0%B5%D0%B1%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%D1%82%D0%BE-%D0%BD%D0%B0-%D0%B2%D0%BE%D0%B4%D0%B0-GreenHostCoVe",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Управление на потреблението на вода GreenHostCoVe"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=6",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/203/%D0%A3%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D0%BE%D1%81%D1%82-%D0%B2-%D0%BA%D1%83%D0%BB%D0%B8%D0%BD%D0%B0%D1%80%D0%BD%D0%B8%D1%82%D0%B5-%D0%B8%D0%B7%D0%BA%D1%83%D1%81%D1%82%D0%B2%D0%B0-%D0%9F%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%BD%D0%B0-%D1%81%D0%BB%D0%B5%D0%B4%D0%B2%D0%B0%D1%89%D0%BE%D1%82%D0%BE-%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%BE-%D0%BF%D0%BE%D0%BA%D0%BE%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Устойчивост в кулинарните изкуства: Подготовка на следващото зелено поколение!"
+  },
+  {
+    "url": "https://euro-alliance.net/News/201/%D0%94%D0%B8%D0%B3%D0%B8%D1%82%D0%B0%D0%BB%D0%BD%D0%B8%D1%82%D0%B5-%D1%83%D0%BC%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B2-%D1%85%D0%BE%D1%82%D0%B5%D0%BB%D0%B8%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%BE%D1%82%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Дигиталните умения в хотелиерството"
+  },
+  {
+    "url": "https://euro-alliance.net/News/197/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20262027-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2026/2027 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=7",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/199/GreenHost-%D0%BD%D0%B0-%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F%D1%82%D0%B0-Real-Options-2026",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost на конференцията Real Options 2026"
+  },
+  {
+    "url": "https://euro-alliance.net/News/200/%D0%A4%D1%80%D0%B0%D0%BD%D1%87%D0%B0%D0%B9%D0%B7-%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D1%8A%D1%82--%D0%B5%D0%B4%D0%B8%D0%BD-%D0%BE%D1%82-%D0%BD%D0%B0%D0%B9%D0%BC%D0%BE%D1%89%D0%BD%D0%B8%D1%82%D0%B5-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8-%D0%B7%D0%B0-%D0%B5%D0%BA%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%87%D0%BD%D0%B8-%D0%BD%D0%B0%D0%B2%D0%B8%D1%86%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Франчайз моделът - един от най-мощните инструменти за екологични навици"
+  },
+  {
+    "url": "https://euro-alliance.net/News/198/%D0%A0%D0%B5%D0%B3%D0%B8%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%B2-%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0-GreenHost",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Регистрации в платформата по проекта GreenHost"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=8",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/196/24-%D0%BC%D0%B0%D0%B9-%D0%94%D0%B5%D0%BD-%D0%BD%D0%B0-%D0%BA%D0%BD%D0%B8%D0%B6%D0%BE%D0%B2%D0%BD%D0%BE%D1%81%D1%82%D1%82%D0%B0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 24 май Ден на книжовността"
+  },
+  {
+    "url": "https://euro-alliance.net/News/195/4%D1%82%D0%B0-%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BD%D0%B0-1920-%D0%BC%D0%B0%D0%B9-2026-%D0%B3",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 4-та Транснационална проектна среща на 19-20 май 2026 г."
+  },
+  {
+    "url": "https://euro-alliance.net/News/194/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2026-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ 2026 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=9",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/193/%D0%A1%D1%8A%D0%B1%D0%B8%D1%82%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0-GreenHost-%D0%B2-%D0%90%D0%B3%D1%80%D0%B0%D1%80%D0%B5%D0%BD-%D1%83%D0%BD%D0%B8%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%82%D0%B5%D1%82-%D0%9F%D0%BB%D0%BE%D0%B2%D0%B4%D0%B8%D0%B2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Събитие по проекта GreenHost в Аграрен университет Пловдив"
+  },
+  {
+    "url": "https://euro-alliance.net/News/192/%D0%91%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D1%81%D0%B8%D0%BC%D1%83%D0%BB%D0%B0%D1%86%D0%B8%D1%8F-5-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-GreenHost",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Бизнес симулация 5 по проект GreenHost"
+  },
+  {
+    "url": "https://euro-alliance.net/News/191/%D0%91%D1%8A%D0%B4%D0%B5%D1%89%D0%B5%D1%82%D0%BE-%D0%BD%D0%B0-%D1%82%D1%83%D1%80%D0%B8%D0%B7%D0%BC%D0%B0-GreenHost-Project",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Бъдещето на туризма GreenHost Project"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=10",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/190/%D0%91%D1%8A%D0%B4%D0%B5%D1%89%D0%B5%D1%82%D0%BE-%D0%BD%D0%B0-%D1%82%D1%83%D1%80%D0%B8%D0%B7%D0%BC%D0%B0-%D0%B5-%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%BE-GreenHost-Project",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Бъдещето на туризма е зелено GreenHost Project"
+  },
+  {
+    "url": "https://euro-alliance.net/News/189/%D0%A1%D1%8A%D0%B1%D0%B8%D1%82%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%B0-GreenHost-CoVE-%D0%B2-CETT-Barcelona",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Събитие по проекта GreenHost CoVE в CETT Barcelona"
+  },
+  {
+    "url": "https://euro-alliance.net/News/187/4%D1%82%D0%B0-%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D0%BD%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BD%D0%B0-1920-%D0%BC%D0%B0%D0%B9-2026-%D0%B3-%D0%B2-%D0%9C%D0%B0%D1%80%D0%B8%D0%B1%D0%BE%D1%80",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 4-та Транснационална проектна среща на 19-20 май 2026 г. в Марибор"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=11",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/186/%D0%A1%D1%82%D0%B0%D1%80%D1%82-%D0%BD%D0%B0-%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%82%D0%B0-GreenHost",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Старт на платформата GreenHost"
+  },
+  {
+    "url": "https://euro-alliance.net/News/188/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE-Project-GreenHost-The-Development",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Видео Project GreenHost The Development"
+  },
+  {
+    "url": "https://euro-alliance.net/News/182/%D0%9A%D0%B0%D0%BA-GreenHost-%D1%83%D0%BB%D0%B5%D1%81%D0%BD%D1%8F%D0%B2%D0%B0-%D1%81%D1%8A%D1%87%D0%B5%D1%82%D0%B0%D0%B2%D0%B0%D0%BD%D0%B5%D1%82%D0%BE-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83-%D1%81%D1%82%D1%83%D0%B4%D0%B5%D0%BD%D1%82%D0%B8-%D0%B8-%D0%B8%D0%BD%D0%B4%D1%83%D1%81%D1%82%D1%80%D0%B8%D1%8F",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Как GreenHost улеснява съчетаването между студенти и индустрия"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=12",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/183/%D0%9F%D0%BE%D0%B2%D0%B8%D1%88%D0%B0%D0%B2%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%B8%D1%82%D0%B5-%D0%BF%D0%BE%D1%81%D1%82%D0%B8%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D1%83%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D0%BE%D1%81%D1%82",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Повишаване на професионалните постижения и устойчивост"
+  },
+  {
+    "url": "https://euro-alliance.net/News/184/%D0%92%D0%B8%D0%B7%D0%B8%D1%8F%D1%82%D0%B0-%D0%BD%D0%B0-GreenHost-%D0%B7%D0%B0-%D1%85%D0%BE%D1%82%D0%B5%D0%BB%D0%B8%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%BE-%D0%B8-%D1%80%D0%B5%D1%81%D1%82%D0%BE%D1%80%D0%B0%D0%BD%D1%82%D1%8C%D0%BE%D1%80%D1%81%D1%82%D0%B2%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Визията на GreenHost за хотелиерство и ресторантьорство"
+  },
+  {
+    "url": "https://euro-alliance.net/News/185/GreenHost-%D0%B2-%D0%A0%D0%B5%D0%B4%D0%B6%D0%BE-%D0%95%D0%BC%D0%B8%D0%BB%D0%B8%D1%8F-%D0%95%D0%B2%D1%80%D0%BE%D0%BF%D0%B5%D0%B9%D1%81%D0%BA%D0%BE-%D1%81%D1%8A%D1%82%D1%80%D1%83%D0%B4%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE-%D0%B7%D0%B0-%D1%83%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D0%BE-%D0%B3%D0%BE%D1%81%D1%82%D0%BE%D0%BF%D1%80%D0%B8%D0%B5%D0%BC%D1%81%D1%82%D0%B2%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost в Реджо Емилия: Европейско сътрудничество за устойчиво гостоприемство"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=13",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/181/%D0%9F%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%8A%D0%BA%D0%B8-%D0%BD%D0%B0-GreenHost-%D0%B7%D0%B0-%D0%BF%D0%BE%D1%81%D0%B8%D0%BB%D0%B5%D0%BD-%D0%B5%D0%B2%D1%80%D0%BE%D0%BF%D0%B5%D0%B9%D1%81%D0%BA%D0%B8-%D1%82%D1%83%D1%80%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8-%D1%81%D0%B5%D0%BA%D1%82%D0%BE%D1%80",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Препоръки на GreenHost за по-силен европейски туристически сектор"
+  },
+  {
+    "url": "https://euro-alliance.net/News/178/GreenHost-%D0%A1%D0%B2%D0%B5%D1%82%D0%BE%D0%B2%D0%B5%D0%BD-%D0%B4%D0%B5%D0%BD-%D0%BD%D0%B0-%D1%83%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D0%BE%D1%81%D1%82%D1%82%D0%B0-%D0%B2-%D1%82%D1%83%D1%80%D0%B8%D0%B7%D0%BC%D0%B0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost Световен ден на устойчивостта в туризма"
+  },
+  {
+    "url": "https://euro-alliance.net/News/177/%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%9A%D0%A3%D0%A0%D0%A1%D0%9E%D0%92%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОНЛАЙН ОБУЧЕНИЕ ЗА КУРСОВЕ ЗА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=14",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/180/GreenHost-%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%B1%D1%80%D0%B8-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B8-%D0%94%D0%BE%D1%81%D1%82%D1%8A%D0%BF%D0%B5%D0%BD-%D1%82%D1%83%D1%80%D0%B8%D0%B7%D1%8A%D0%BC-%D0%B2-%D0%A5%D0%B0%D0%BB%D0%BA%D0%B8%D0%B4%D0%B8%D0%BA%D0%B8-%D0%93%D1%8A%D1%80%D1%86%D0%B8%D1%8F",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost Пример за добри практики: Достъпен туризъм в Халкидики, Гърция"
+  },
+  {
+    "url": "https://euro-alliance.net/News/176/%D0%9F%D0%A0%D0%9E%D0%95%D0%9A%D0%A2-%D0%97%D0%90-%D0%9F%D0%A0%D0%9E%D0%A4%D0%95%D0%A1%D0%98%D0%9E%D0%9D%D0%90%D0%9B%D0%9D%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%9D%D0%90-%D0%97%D0%95%D0%9C%D0%95%D0%94%D0%95%D0%9B%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОЕКТ ЗА ПРОФЕСИОНАЛНО ОБУЧЕНИЕ НА ЗЕМЕДЕЛЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/175/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A9%D0%90%D0%A1%D0%A2%D0%9B%D0%98%D0%92%D0%90-2026-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТА КОЛЕДА И ЩАСТЛИВА 2026 ГОДИНА !"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=15",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/179/GreenHost-%D0%92%D0%BA%D0%BB%D1%8E%D1%87%D0%B2%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D1%85%D0%BE%D1%80%D0%B0-%D1%81-%D1%83%D0%B2%D1%80%D0%B5%D0%B6%D0%B4%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B2-%D1%82%D1%83%D1%80%D0%B8%D0%B7%D0%BC%D0%B0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost Включване на хора с увреждания в туризма"
+  },
+  {
+    "url": "https://euro-alliance.net/News/174/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%8A%D1%82-GreenHost-%D0%B2-%D0%A0%D0%B5%D0%B4%D0%B6%D0%BE-%D0%95%D0%BC%D0%B8%D0%BB%D0%B8%D1%8F",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Проектът GreenHost в Реджо Емилия"
+  },
+  {
+    "url": "https://euro-alliance.net/News/172/GreenHost-%D0%BD%D0%B0-%D0%A4%D0%BE%D1%80%D1%83%D0%BC%D0%B0-%D0%B7%D0%B0-%D0%BF%D1%80%D0%BE%D1%84%D0%B5%D1%81%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D0%BD%D0%BE-%D1%83%D1%81%D1%8A%D0%B2%D1%8A%D1%80%D1%88%D0%B5%D0%BD%D1%81%D1%82%D0%B2%D0%B0%D0%BD%D0%B5-2025",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost на Форума за професионално усъвършенстване 2025"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=16",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/173/%D0%94%D0%B5%D0%BD-%D0%BD%D0%B0-%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D0%B8%D1%82%D0%B5-%D0%B1%D1%83%D0%B4%D0%B8%D1%82%D0%B5%D0%BB%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Ден на народните будители"
+  },
+  {
+    "url": "https://euro-alliance.net/News/171/GreenHost-%D1%81%D0%B5-%D0%BF%D1%80%D0%B8%D1%81%D1%8A%D0%B5%D0%B4%D0%B8%D0%BD%D1%8F%D0%B2%D0%B0-%D0%BA%D1%8A%D0%BC-%D0%BE%D0%B1%D1%89%D0%BD%D0%BE%D1%81%D1%82%D1%82%D0%B0-%D0%A1%D0%BE%D0%A0-CoVEs",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - GreenHost се присъединява към общността СоР CoVEs"
+  },
+  {
+    "url": "https://euro-alliance.net/News/170/%D0%9E%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D0%B0-%D0%B7%D0%B0-%D1%83%D0%BC%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B8-%D1%81%D1%8A%D1%82%D1%80%D1%83%D0%B4%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Онлайн платформа за умения и сътрудничество"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=17",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/169/%D0%9D%D0%BE%D0%B2%D0%B8-%D0%BE%D0%B1%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%BD%D0%B8-%D0%BC%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%B0%D0%BB%D0%B8-%D0%B7%D0%B0-%D0%BF%D1%80%D0%B5%D0%BF%D0%BE%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D0%B8-%D0%B8-%D0%BE%D0%B1%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Нови обучителни материали за преподаватели и обучители"
+  },
+  {
+    "url": "https://euro-alliance.net/News/168/%D0%94%D0%BD%D0%B5%D0%B2%D0%B5%D0%BD-pe%D0%B4-%D0%B7a-%D0%B8%D0%BD%D0%BE%D0%B2%D0%B0%D1%86%D0%B8%D0%B8--%D0%9A%D0%B0%D1%80%D1%82%D0%B0-%D0%BD%D0%B0-%D0%B2%D1%8A%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8%D1%82%D0%B5-%D0%B2-%D0%95%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Дневен peд зa иновации - Карта на възможностите в ЕС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/166/%D0%98%D0%B7%D0%B3%D1%80%D0%B0%D0%B6%D0%B4%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D1%85%D1%80%D0%B0%D0%BD%D0%B8%D0%BB%D0%B8%D1%89%D0%B5-%D0%B7%D0%B0-%D0%B4%D0%BE%D0%B1%D1%80%D0%B8-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Изграждане на онлайн хранилище за добри практики"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=18",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/167/%D0%9C%D0%B0%D1%80%D0%B8%D0%B1%D0%BE%D1%80-%D0%9D%D0%B0%D0%B9%D0%B4%D0%BE%D0%B1%D1%80%D0%B0-%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%B0-%D1%81%D1%82%D0%BE%D0%BB%D0%B8%D1%86%D0%B0-2025",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Марибор Най-добра зелена столица 2025"
+  },
+  {
+    "url": "https://euro-alliance.net/News/163/%D0%A1%D1%8A%D0%B7%D0%B4%D0%B0%D0%B2%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D0%BE%D0%BD%D0%BB%D0%B0%D0%B9%D0%BD-%D0%B1%D0%B0%D0%B7%D0%B0-%D0%B4%D0%B0%D0%BD%D0%BD%D0%B8-%D1%81-%D0%B4%D0%BE%D0%B1%D1%80%D0%B8-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Създаване на онлайн база данни с добри практики"
+  },
+  {
+    "url": "https://euro-alliance.net/News/164/%D0%98%D0%BD%D0%BE%D0%B2%D0%B0%D1%82%D0%B8%D0%B2%D0%BD%D0%B8-%D0%BE%D0%B1%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D0%BD%D0%B8-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%B8-%D0%B7%D0%B0-%D1%83%D1%81%D1%82%D0%BE%D0%B9%D1%87%D0%B8%D0%B2%D0%BE%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B2-%D1%85%D0%BE%D1%82%D0%B5%D0%BB%D0%B8%D0%B5%D1%80%D1%81%D1%82%D0%B2%D0%BE%D1%82%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Иновативни обучителни програми за устойчивоуправление в хотелиерството"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=19",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/161/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20252026-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2025/2026 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/165/%D0%92%D0%B8%D0%B4%D0%B5%D0%BE-%D0%BA%D0%BB%D0%B8%D0%BF-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-Green-Host-CoVE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Видео клип проект Green Host CoVE"
+  },
+  {
+    "url": "https://euro-alliance.net/News/162/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%9F%D0%BE%D0%B4%D0%BE%D0%B1%D1%80%D1%8F%D0%B2%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%B8%D0%B7%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BA%D0%B0%D0%BF%D0%B0%D1%86%D0%B8%D1%82%D0%B5%D1%82-%D0%BD%D0%B0-%EF%BF%BD%EF%BF%BD%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1%EF%BF%BD%EF%BF%BD-%D0%9E%D0%9E%D0%94",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Проект \"Подобряване на производствения капацитет на „ЕВРО-АЛИАНС“ ООД\""
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=20",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/160/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-24-%D0%9C%D0%90%D0%99",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ 24 МАЙ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/159/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2025-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ АЛИАНС КОНТЕСТ 2025 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/158/%D0%9F%D0%9E%D0%A7%D0%98%D0%92%D0%9D%D0%98-%D0%94%D0%9D%D0%98-%D0%9C%D0%90%D0%99-2025",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПОЧИВНИ ДНИ МАЙ 2025"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=21",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/144/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%92%D0%95%D0%9B%D0%98%D0%9A-%D0%94%D0%95%D0%9D",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ ВЕЛИК ДЕН !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/157/%D0%9F%D0%BE%D0%B4%D0%B3%D0%BE%D1%82%D0%BE%D0%B2%D0%BA%D0%B0-%D0%B8-%D1%8F%D0%B2%D1%8F%D0%B2%D0%B0%D0%BD%D0%B5-%D0%BD%D0%B0-Cambridge-%D1%81%D0%B5%D1%80%D1%82%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82-%D0%BD%D0%B8%D0%B2%D0%BE-Advanced-CAE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Подготовка и явяване на Cambridge сертификат ниво Advanced (CAE)"
+  },
+  {
+    "url": "https://euro-alliance.net/News/156/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2025-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ 2025 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=22",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/152/3%D1%82%D0%B8-%D0%BC%D0%B0%D1%80%D1%82-%D0%94%D0%B5%D0%BD%D1%8F%D1%82-%D0%BD%D0%B0-%D0%9E%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%D1%82%D0%BE-%D0%BD%D0%B0-%D0%91%D1%8A%D0%BB%D0%B3%D0%B0%D1%80%D0%B8%D1%8F",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 3-ти март, Денят на Освобождението на България"
+  },
+  {
+    "url": "https://euro-alliance.net/News/153/%D0%92%D1%82%D0%BE%D1%80%D0%B0-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83%D0%BD%D0%B0%D1%80%D0%BE%D0%B4%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-GreenHost",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Втора международна среща по проект GreenHost"
+  },
+  {
+    "url": "https://euro-alliance.net/News/151/%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%9A%D0%A3%D0%A0%D0%A1%D0%9E%D0%92%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОНЛАЙН ОБУЧЕНИЕ ЗА КУРСОВЕ ЗА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=23",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/155/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-GreenHost-CoVE-%D0%9F%D0%BE%D0%B3%D0%BB%D0%B5%D0%B4-%D0%BA%D1%8A%D0%BC-%D0%B1%D1%8A%D0%B4%D0%B5%D1%89%D0%B5%D1%82%D0%BE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Проект GreenHost CoVE Поглед към бъдещето"
+  },
+  {
+    "url": "https://euro-alliance.net/News/150/%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%92%D0%98-%D0%9F%D0%9E%D0%96%D0%95%D0%9B%D0%90%D0%92%D0%90-%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A3%D0%A1%D0%9F%D0%95%D0%A8%D0%9D%D0%90-2025-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЕВРО-АЛИАНС ВИ ПОЖЕЛАВА, ВЕСЕЛА КОЛЕДА И УСПЕШНА 2025 ГОДИНА !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/149/22-%D1%81%D0%B5%D0%BF%D1%82%D0%B5%D0%BC%D0%B2%D1%80%D0%B8-%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%9D%D0%95%D0%97%D0%90%D0%92%D0%98%D0%A1%D0%98%D0%9C%D0%9E%D0%A1%D0%A2%D0%A2%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 22 септември ДЕН НА НЕЗАВИСИМОСТТА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=24",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/148/%D0%93%D1%80%D0%B0%D1%84%D0%B8%D0%BA-%D0%BD%D0%B0-%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%B7%D0%B0-%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%86%D0%B8-20242025",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - График на курсове по английски език за ученици 2024/2025"
+  },
+  {
+    "url": "https://euro-alliance.net/News/147/%D0%9F%D1%8A%D1%80%D0%B2%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%BD%D0%B0-%D0%BF%D0%B0%D1%82%D0%BD%D1%8C%D0%BE%D1%80%D0%B8%D1%82%D0%B5-%D0%BF%D0%BE-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%EF%BF%BD%EF%BF%BDGreenHost%EF%BF%BD%EF%BF%BD",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Първа среща на патньорите по проект „GreenHost“"
+  },
+  {
+    "url": "https://euro-alliance.net/News/146/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20242025-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2024/2025 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=25",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/145/24-%D0%9C%D0%90%D0%99",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 24 МАЙ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/143/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%96%D0%94%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%9E%D0%91%D0%95%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98%D0%A2%D0%95-%D0%92-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2024-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАЖДАВАНЕ НА ПОБЕДИТЕЛИТЕ В АЛИАНС КОНТЕСТ 2024 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/142/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2024-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ АЛИАНС КОНТЕСТ 2024 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=26",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/141/%D0%9A%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81-%D0%B7%D0%B0-3D-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%BF%D0%BE-%D1%81%D0%BB%D1%83%D1%87%D0%B0%D0%B9-22-%D0%B0%D0%BF%D1%80%D0%B8%D0%BB-%EF%BF%BD%EF%BF%BD-%EF%BF%BD%EF%BF%BD%D0%94%D0%B5%D0%BD-%D0%BD%D0%B0-%D0%97%D0%B5%D0%BC%D1%8F%D1%82%D0%B0%EF%BF%BD%EF%BF%BD",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Конкурс за 3D проект по случай 22 април – „Ден на Земята“"
+  },
+  {
+    "url": "https://euro-alliance.net/News/140/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2024-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ 2024 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/138/3%D1%82%D0%B8-%D0%BC%D0%B0%D1%80%D1%82-%D0%94%D0%B5%D0%BD%D1%8F%D1%82-%D0%BD%D0%B0-%D0%9E%D1%81%D0%B2%D0%BE%D0%B1%D0%BE%D0%B6%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5%D1%82%D0%BE-%D0%BD%D0%B0-%D0%91%D1%8A%D0%BB%D0%B3%D0%B0%D1%80%D0%B8%D1%8F",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 3-ти март, Денят на Освобождението на България"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=27",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/139/%D0%91%D0%B0%D0%B1%D0%B0-%D0%9C%D0%B0%D1%80%D1%82%D0%B0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Баба Марта"
+  },
+  {
+    "url": "https://euro-alliance.net/News/137/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%91%D0%9B%D0%90%D0%93%D0%9E%D0%94%D0%90%D0%A2%D0%9D%D0%90-%D0%9D%D0%9E%D0%92%D0%90-2024-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТА КОЛЕДА И БЛАГОДАТНА НОВА 2024 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/31/%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%9D%D0%90%D0%A0%D0%9E%D0%94%D0%9D%D0%98%D0%A2%D0%95-%D0%91%D0%A3%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ДЕН НА НАРОДНИТЕ БУДИТЕЛИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=28",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/136/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20232024-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2023/2024 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/135/24-%D0%9C%D0%90%D0%99-%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%A1%D0%9A%D0%90%D0%A2%D0%90-%D0%90%D0%97%D0%91%D0%A3%D0%9A%D0%90%D0%9F%D0%A0%D0%9E%D0%A1%D0%92%D0%95%D0%A2%D0%90-%D0%98-%D0%9A%D0%A3%D0%9B%D0%A2%D0%A3%D0%A0%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 24 МАЙ, ДЕН НА БЪЛГАРСКАТА АЗБУКА,ПРОСВЕТА И КУЛТУРА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/134/%D0%9B%D0%95%D0%A2%D0%95%D0%9D-%D0%98%D0%9D%D0%A2%D0%95%D0%9D%D0%97%D0%98%D0%92%D0%95%D0%9D-%D0%9A%D0%A3%D0%A0%D0%A1-%D0%9D%D0%98%D0%92%D0%9E-%D0%921-%D1%81%D0%BB%D0%B5%D0%B4-6%D1%82%D0%B8-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЛЕТЕН ИНТЕНЗИВЕН КУРС НИВО В1 след 6-ти клас"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=29",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/133/%D0%9A%D0%9B%D0%90%D0%A1%D0%98%D0%A0%D0%90%D0%9D%D0%95-%D0%9E%D0%A2-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2023-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КЛАСИРАНЕ ОТ АЛИАНС КОНТЕСТ 2023 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/132/%D0%A1%D0%92%D0%95%D0%A2%D0%9B%D0%98-%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D%D0%A1%D0%9A%D0%98-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СВЕТЛИ ВЕЛИКДЕНСКИ ПРАЗНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/131/%D0%98%D0%97%D0%9F%D0%98%D0%A2%D0%98-%D0%97%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2-%D0%9D%D0%90-CAMBRIDGE-ESOL-2023",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ИЗПИТИ ЗА СЕРТИФИКАТ НА CAMBRIDGE ESOL 2023"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=30",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/130/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2023-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ 2023 състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/128/3%D1%82%D0%B8-%D0%9C%D0%90%D0%A0%D0%A2-%D0%9D%D0%90%D0%A6%D0%98%D0%9E%D0%9D%D0%90%D0%9B%D0%95%D0%9D-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%9A-%D0%9D%D0%90-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 3-ти МАРТ, НАЦИОНАЛЕН ПРАЗНИК НА БЪЛГАРИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/129/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%94%D0%98-%D0%BE%D1%82-%D0%BA%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BC%D0%B0--%EF%BF%BD%EF%BF%BD%D0%90%D0%B7-%D0%B8-%D0%93%D0%BB%D0%BE%D0%B1%D0%B0%D0%BB%D0%BD%D0%B8%D1%8F-%D1%81%D0%B2%D1%8F%D1%82%EF%BF%BD%EF%BF%BD--Me-and-the-Wider-world",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАДИ от конкурс на тема:  „Аз и Глобалния свят“  Me and the Wider world"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=31",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/127/%D0%9A%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81-%D0%BD%D0%B0-%D1%82%D0%B5%D0%BC%D0%B0-%D0%90%D0%B7-%D0%B8-%D0%93%D0%BB%D0%BE%D0%B1%D0%B0%D0%BB%D0%BD%D0%B8%D1%8F-%D1%81%D0%B2%D1%8F%D1%82--Me-and-the-Wider-world",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Конкурс на тема Аз и Глобалния свят / Me and the Wider world"
+  },
+  {
+    "url": "https://euro-alliance.net/News/126/%D0%9C%D0%95%D0%96%D0%94%D0%A3%D0%A1%D0%A0%D0%9E%D0%A7%D0%9D%D0%90-%D0%92%D0%90%D0%9A%D0%90%D0%9D%D0%A6%D0%98%D0%AF-%D0%92-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - МЕЖДУСРОЧНА ВАКАНЦИЯ В ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/124/%D0%9A%D0%A3%D0%A0%D0%A1-%D0%97%D0%90-%D0%97%D0%95%D0%9C%D0%95%D0%94%D0%95%D0%9B%D0%A1%D0%9A%D0%98-%D0%9F%D0%A0%D0%9E%D0%98%D0%97%D0%92%D0%9E%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98--23-%D0%A4%D0%95%D0%92%D0%A0%D0%A3%D0%90%D0%A0%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КУРС ЗА ЗЕМЕДЕЛСКИ ПРОИЗВОДИТЕЛИ - 23 ФЕВРУАРИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=32",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/125/%D0%A1%D0%95%D0%9C%D0%98%D0%9D%D0%90%D0%A0-%D0%97%D0%90-%D0%97%D0%95%D0%9C%D0%95%D0%94%D0%95%D0%9B%D0%A1%D0%9A%D0%98-%D0%9F%D0%A0%D0%9E%D0%98%D0%97%D0%92%D0%9E%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98--28-%D0%A4%D0%95%D0%92%D0%A0%D0%A3%D0%90%D0%A0%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СЕМИНАР ЗА ЗЕМЕДЕЛСКИ ПРОИЗВОДИТЕЛИ - 28 ФЕВРУАРИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/122/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A9%D0%90%D0%A1%D0%A2%D0%9B%D0%98%D0%92%D0%90-%D0%9D%D0%9E%D0%92%D0%90-2023-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЩАСТЛИВА НОВА 2023 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/121/%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%95%D0%9D-%D0%91%D0%9B%D0%90%D0%93%D0%9E%D0%A2%D0%92%D0%9E%D0%A0%D0%98%D0%A2%D0%95%D0%9B%D0%95%D0%9D-%D0%91%D0%90%D0%97%D0%90%D0%A0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КОЛЕДЕН БЛАГОТВОРИТЕЛЕН БАЗАР"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=33",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/120/%D0%9E%D0%9F%D0%A0%D0%95%D0%A1%D0%9D%D0%98%D0%A2%D0%95%D0%9B%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-20222023",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОПРЕСНИТЕЛНИ ЗАНЯТИЯ 2022/2023"
+  },
+  {
+    "url": "https://euro-alliance.net/News/119/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20222023-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2022/2023 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/118/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ ВЕЛИКДЕН"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=34",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/117/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%96%D0%94%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%AA%D0%A0%D0%92%D0%95%D0%9D%D0%A6%D0%98%D0%A2%D0%95-%D0%92-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАЖДАВАНЕ НА ПЪРВЕНЦИТЕ В АЛИАНС КОНТЕСТ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/116/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%9E%D0%A2-%D0%A1%D0%AA%D0%A1%D0%A2%D0%95%D0%97%D0%90%D0%9D%D0%98%D0%95-%D0%9F%D0%9E-%D0%90%D0%9D%D0%93%D0%9B%D0%98%D0%99%D0%A1%D0%9A%D0%98-%D0%95%D0%97%D0%98%D0%9A-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ ОТ СЪСТЕЗАНИЕ ПО АНГЛИЙСКИ ЕЗИК \"АЛИАНС КОНТЕСТ\""
+  },
+  {
+    "url": "https://euro-alliance.net/News/115/%D0%9F%D0%A0%D0%9E%D0%9B%D0%95%D0%A2%D0%9D%D0%90-%D0%92%D0%90%D0%9A%D0%90%D0%9D%D0%A6%D0%98%D0%AF-%D0%98-%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%9E-%D0%92%D0%A0%D0%95%D0%9CE-%D0%9D%D0%90-%D0%9E%D0%A4%D0%98%D0%A1-%D0%9F%D0%9B%D0%9E%D0%92%D0%94%D0%98%D0%92",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОЛЕТНА ВАКАНЦИЯ И РАБОТНО ВРЕМE НА ОФИС ПЛОВДИВ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=35",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/114/%D0%98%D0%97%D0%9F%D0%98%D0%A2%D0%98-%D0%97%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2-%D0%9D%D0%90-CAMBRIDGE-ESOL-2022",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ИЗПИТИ ЗА СЕРТИФИКАТ НА CAMBRIDGE ESOL 2022"
+  },
+  {
+    "url": "https://euro-alliance.net/News/113/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News/112/3%D1%82%D0%B8-%D0%9C%D0%90%D0%A0%D0%A2-%D0%9D%D0%90%D0%A6%D0%98%D0%9E%D0%9D%D0%90%D0%9B%D0%95%D0%9D-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%9A-%D0%9D%D0%90-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 3-ти МАРТ, НАЦИОНАЛЕН ПРАЗНИК НА БЪЛГАРИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=36",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/111/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%91%D0%90%D0%91%D0%90-%D0%9C%D0%90%D0%A0%D0%A2%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТА БАБА МАРТА !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/110/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A9%D0%90%D0%A1%D0%A2%D0%9B%D0%98%D0%92%D0%90-%D0%9D%D0%9E%D0%92%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЩАСТЛИВА НОВА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/109/%D0%92%D0%A0%D0%AA%D0%A9%D0%90%D0%9D%D0%95-%D0%9A%D0%AA%D0%9C-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%9E-%D0%98-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%9D%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВРЪЩАНЕ КЪМ ПРИСЪСТВЕНО И ОНЛАЙН ОБУЧЕНИЕ НА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=37",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/108/%D0%9F%D0%A0%D0%95%D0%9C%D0%98%D0%9D%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%92%D0%A1%D0%98%D0%A7%D0%9A%D0%98-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%9E%D0%A2-29-%D0%BE%D0%BA%D1%82%D0%BE%D0%BC%D0%B2%D1%80%D0%B8-2021",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРЕМИНАВАНЕ НА ОНЛАЙН ОБУЧЕНИЕ ЗА ВСИЧКИ УЧЕНИЦИ ОТ 29 октомври 2021"
+  },
+  {
+    "url": "https://euro-alliance.net/News/107/%D0%9F%D0%A0%D0%95%D0%9C%D0%98%D0%9D%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%9E-%D0%98-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%9D%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРЕМИНАВАНЕ НА ПРИСЪСТВЕНО И ОНЛАЙН ОБУЧЕНИЕ НА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/106/%D0%91%D0%95%D0%97%D0%9F%D0%9B%D0%90%D0%A2%D0%9D%D0%98-%D0%9E%D0%9F%D0%A0%D0%95%D0%A1%D0%9D%D0%98%D0%A2%D0%95%D0%9B%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-2021",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - БЕЗПЛАТНИ ОПРЕСНИТЕЛНИ ЗАНЯТИЯ 2021"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=38",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/105/%D0%9E%D0%91%D0%AF%D0%92%D0%90-%D0%97%D0%90-%D0%9F%D0%A0%D0%9E%D0%92%D0%95%D0%96%D0%94%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%9E%D0%A6%D0%95%D0%94%D0%A3%D0%A0%D0%90-%D0%A1-%D0%9F%D0%A3%D0%91%D0%9B%D0%98%D0%A7%D0%9D%D0%90-%D0%9F%D0%9E%D0%9A%D0%90%D0%9D%D0%90-%D1%81%D1%8A%D0%B3%D0%BB-%D0%9F%D0%9C%D0%A1-%EF%BF%BD%EF%BF%BD16001072016-%D0%B3",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОБЯВА ЗА ПРОВЕЖДАНЕ НА ПРОЦЕДУРА С ПУБЛИЧНА ПОКАНА, съгл. ПМС №160/01.07.2016 г."
+  },
+  {
+    "url": "https://euro-alliance.net/News/104/%D0%95%D0%97%D0%98%D0%9A%D0%9E%D0%92-%D0%A6%D0%95%D0%9D%D0%A2%D0%AA%D0%A0-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%A1-%D0%9D%D0%9E%D0%92%D0%90-%D0%9F%D0%9B%D0%90%D0%A2%D0%A4%D0%9E%D0%A0%D0%9C%D0%90-%D0%97%D0%90-%D0%92%D0%A0%D0%AA%D0%97%D0%9A%D0%90-%D0%A1-%D0%A0%D0%9E%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЕЗИКОВ ЦЕНТЪР ЕВРО-АЛИАНС С НОВА ПЛАТФОРМА ЗА ВРЪЗКА С РОДИТЕЛИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/103/%D0%9A%D0%9E%D0%9C%D0%91%D0%98%D0%9D%D0%98%D0%A0%D0%90%D0%9D-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D-%D0%9A%D0%A3%D0%A0%D0%A1-%D0%9F%D0%9E-%D0%90%D0%9D%D0%93%D0%9B%D0%98%D0%99%D0%A1%D0%9A%D0%98-%D0%95%D0%97%D0%98%D0%9A-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КОМБИНИРАН ОНЛАЙН&ПРИСЪСТВЕН КУРС ПО АНГЛИЙСКИ ЕЗИК ЗА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=39",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/101/%D0%9D%D0%9E%D0%92%D0%9E-%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%9E-%D0%9C%D0%AF%D0%A1%D0%A2%D0%9E-%D0%97%D0%90-%D0%9F%D0%A0%D0%95%D0%92%D0%9E%D0%94%D0%90%D0%A7",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НОВО РАБОТНО МЯСТО ЗА ПРЕВОДАЧ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/102/%D0%9D%D0%9E%D0%92%D0%9E-%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%9D%D0%9E-%D0%9C%D0%AF%D0%A1%D0%A2%D0%9E-%D0%97%D0%90-%D0%A1%D0%AA%D0%A2%D0%A0%D0%A3%D0%94%D0%9D%D0%98%D0%9A",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НОВО РАБОТНО МЯСТО ЗА СЪТРУДНИК"
+  },
+  {
+    "url": "https://euro-alliance.net/News/98/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%9D%D0%9E%D0%92%D0%90%D0%A2%D0%90-20212022-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА НОВАТА 2021/2022 УЧЕБНА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=40",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/99/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%9B%D0%B5%D1%82%D0%B5%D0%BD-%D0%B8%D0%BD%D1%82%D0%B5%D0%BD%D0%B7%D0%B8%D0%B2%D0%B5%D0%BD-%D0%BA%D1%83%D1%80%D1%81-%D0%BD%D0%B8%D0%B2%D0%BE-%D0%921",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Английски език Летен интензивен курс ниво В1"
+  },
+  {
+    "url": "https://euro-alliance.net/News/100/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%9F%D0%AA%D0%A0%D0%92%D0%98-%D0%AE%D0%9D%D0%98--%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%94%D0%95%D0%A2%D0%95%D0%A2%D0%9E",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ ПЪРВИ ЮНИ - ДЕН НА ДЕТЕТО"
+  },
+  {
+    "url": "https://euro-alliance.net/News/97/24-%D0%9C%D0%90%D0%99-%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%A1%D0%9A%D0%90%D0%A2%D0%90-%D0%90%D0%97%D0%91%D0%A3%D0%9A%D0%90%D0%9F%D0%A0%D0%9E%D0%A1%D0%92%D0%95%D0%A2%D0%90-%D0%98-%D0%9A%D0%A3%D0%9B%D0%A2%D0%A3%D0%A0%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 24 МАЙ, ДЕН НА БЪЛГАРСКАТА АЗБУКА,ПРОСВЕТА И КУЛТУРА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=41",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/96/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D-2021",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ ВЕЛИКДЕН 2021"
+  },
+  {
+    "url": "https://euro-alliance.net/News/95/%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%9E%D0%A2-26-%D0%90%D0%9F%D0%A0%D0%98%D0%9B-2021",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРИСЪСТВЕНИ ЗАНЯТИЯ ОТ 26 АПРИЛ 2021"
+  },
+  {
+    "url": "https://euro-alliance.net/News/94/%D0%9E%D0%A2-12-%D0%90%D0%9F%D0%A0%D0%98%D0%9B-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%9E%D0%A2-1%D0%92%D0%98-%D0%94%D0%9E-4%D0%A2%D0%98-%D0%9A%D0%9B%D0%90%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОТ 12 АПРИЛ ПРИСЪСТВЕНО ОБУЧЕНИЕ ЗА УЧЕНИЦИ ОТ 1-ВИ ДО 4-ТИ КЛАС"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=42",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/93/%D0%9F%D0%A0%D0%9E%D0%94%D0%AA%D0%9B%D0%96%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%94%D0%98%D0%A1%D0%A2%D0%90%D0%9D%D0%A6%D0%98%D0%9E%D0%9D%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОДЪЛЖАВАНЕ НА ДИСТАНЦИОННИ ЗАНЯТИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/92/%D0%9F%D0%A0%D0%95%D0%9A%D0%A0%D0%90%D0%A2%D0%AF%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%9E%D0%A2-22-%D0%94%D0%9E-31-%D0%9C%D0%90%D0%A0%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРЕКРАТЯВАНЕ НА ПРИСЪСТВЕНИ ЗАНЯТИЯ ОТ 22 ДО 31 МАРТ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/91/%D0%9F%D0%A0%D0%95%D0%9C%D0%98%D0%9D%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-5%D0%A2%D0%98-%D0%94%D0%9E-12%D0%A2%D0%98-%D0%9A%D0%9B%D0%90%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРЕМИНАВАНЕ НА ОНЛАЙН ОБУЧЕНИЕ ЗА 5-ТИ ДО 12-ТИ КЛАС"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=43",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/Courses/9/%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA-%D0%9B%D0%B5%D1%82%D0%B5%D0%BD-%D0%B8%D0%BD%D1%82%D0%B5%D0%BD%D0%B7%D0%B8%D0%B2%D0%B5%D0%BD-%D0%BA%D1%83%D1%80%D1%81-%D0%921",
+    "status": 200,
+    "type": "other",
+    "title": "Евро Алианс // Предстоящи курсове - Английски език Летен интензивен курс В1"
+  },
+  {
+    "url": "https://euro-alliance.net/News/89/%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%9E%D0%A2-%D0%9C%D0%90%D0%A0%D0%A2-2021",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРИСЪСТВЕНИ ЗАНЯТИЯ ОТ МАРТ 2021"
+  },
+  {
+    "url": "https://euro-alliance.net/News/90/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-3%D0%A2%D0%98-%D0%9C%D0%90%D0%A0%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ 3-ТИ МАРТ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/88/%D0%A0%D0%95%D0%93%D0%98%D0%A1%D0%A2%D0%A0%D0%90%D0%A6%D0%98%D0%AF-%D0%98-%D0%9F%D0%A0%D0%9E%D0%92%D0%95%D0%96%D0%94%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%98%D0%97%D0%9F%D0%98%D0%A2%D0%98-CAMBRIDGE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕГИСТРАЦИЯ И ПРОВЕЖДАНЕ НА ИЗПИТИ CAMBRIDGE"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=44",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/87/%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98-%D0%9E%D0%A2-1%D0%92%D0%98-%D0%94%D0%9E-4-%D0%9A%D0%9B%D0%90%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРИСЪСТВЕНО ОБУЧЕНИЕ ЗА УЧЕНИЦИ ОТ 1-ВИ ДО 4 КЛАС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/84/%D0%9F%D0%A0%D0%9E%D0%94%D0%AA%D0%9B%D0%96%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%94%D0%98%D0%A1%D0%A2%D0%90%D0%9D%D0%A6%D0%98%D0%9E%D0%9D%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%B7%D0%B0-%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D1%86%D0%B8-%D1%81%D0%BB%D0%B5%D0%B4-5-%D0%BA%D0%BB%D0%B0%D1%81",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОДЪЛЖАВАНЕ НА ДИСТАНЦИОННИ ЗАНЯТИЯ за ученици след 5 клас"
+  },
+  {
+    "url": "https://euro-alliance.net/News/86/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A9%D0%90%D0%A1%D0%A2%D0%9B%D0%98%D0%92%D0%90-%D0%9D%D0%9E%D0%92%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЩАСТЛИВА НОВА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=45",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/85/%D0%9F%D0%9B%D0%90%D0%A9%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%A2%D0%90%D0%9A%D0%A1%D0%98-%D0%97%D0%90-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПЛАЩАНЕ НА ТАКСИ ЗА ОБУЧЕНИЕ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/83/%D0%97%D0%90-%D0%A0%D0%9E%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98-%D0%9D%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗА РОДИТЕЛИ НА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/82/%D0%9F%D0%9E%D0%94%D0%9D%D0%9E%D0%92%D0%AF%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF%D0%A2%D0%90-%D0%92-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%A4%D0%9E%D0%A0%D0%9C%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПОДНОВЯВАНЕ НА ЗАНЯТИЯТА В ОНЛАЙН ФОРМА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=46",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/81/%D0%92%D0%A0%D0%95%D0%9C%D0%95%D0%9D%D0%9D%D0%9E-%D0%9F%D0%A0%D0%95%D0%9A%D0%A0%D0%90%D0%A2%D0%AF%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВРЕМЕННО ПРЕКРАТЯВАНЕ НА ПРИСЪСТВЕНИ ЗАНЯТИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/80/%D0%91%D0%95%D0%97%D0%9F%D0%9B%D0%90%D0%A2%D0%9D%D0%98-%D0%9E%D0%9F%D0%A0%D0%95%D0%A1%D0%9D%D0%98%D0%A2%D0%95%D0%9B%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-2020",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - БЕЗПЛАТНИ ОПРЕСНИТЕЛНИ ЗАНЯТИЯ 2020"
+  },
+  {
+    "url": "https://euro-alliance.net/News/79/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%9D%D0%9E%D0%92%D0%90%D0%A2%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА НОВАТА УЧЕБНА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=47",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/77/%D0%9F%D0%9E%D0%94%D0%9D%D0%9E%D0%92%D0%AF%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%98%D0%A1%D0%AA%D0%A1%D0%A2%D0%92%D0%95%D0%9D%D0%98-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%97%D0%90-%D0%94%D0%95%D0%A6%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПОДНОВЯВАНЕ НА ПРИСЪСТВЕНИ ЗАНЯТИЯ ЗА ДЕЦА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/78/%D0%9B%D0%95%D0%A2%D0%95%D0%9D-%D0%95%D0%97%D0%98%D0%9A%D0%9E%D0%92-%D0%9A%D0%A3%D0%A0%D0%A1-%D0%90%D0%9D%D0%93%D0%9B%D0%98%D0%99%D0%A1%D0%9A%D0%98-%D0%95%D0%97%D0%98%D0%9A-%D0%9D%D0%98%D0%92%D0%9E-%D0%921-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЛЕТЕН ЕЗИКОВ КУРС АНГЛИЙСКИ ЕЗИК НИВО В1 ЗА УЧЕНИЦИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/76/1-%D0%AE%D0%9D%D0%98--%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%94%D0%95%D0%A2%D0%95%D0%A2%D0%9E",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 1 ЮНИ - ДЕН НА ДЕТЕТО"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=48",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/75/%D0%9F%D0%9E%D0%94%D0%9D%D0%9E%D0%92%D0%AF%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%A0%D0%90%D0%91%D0%9E%D0%A2%D0%90-%D0%9D%D0%90-%D0%9E%D0%A4%D0%98%D0%A1%D0%98-%D0%98-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%AF-%D0%9D%D0%90-%D0%92%D0%AA%D0%97%D0%A0%D0%90%D0%A1%D0%A2%D0%9D%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПОДНОВЯВАНЕ НА РАБОТА НА ОФИСИ И ОБУЧЕНИЯ НА ВЪЗРАСТНИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/72/%D0%9F%D0%9B%D0%90%D0%A9%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%A2%D0%90%D0%9A%D0%A1%D0%98-%D0%98-%D0%A3%D0%A1%D0%9B%D0%A3%D0%93%D0%98-%D0%92-%D0%91%D0%A0%D0%9E%D0%99-%D0%98-%D0%9F%D0%9E-%D0%91%D0%90%D0%9D%D0%9A%D0%9E%D0%92%D0%90-%D0%A1%D0%9C%D0%95%D0%A2%D0%9A%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПЛАЩАНЕ НА ТАКСИ И УСЛУГИ В БРОЙ И ПО БАНКОВА СМЕТКА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/69/%D0%A3%D0%94%D0%AA%D0%9B%D0%96%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%95%D0%9F%D0%98%D0%94%D0%95%D0%9C%D0%98%D0%A7%D0%9D%D0%90-%D0%9E%D0%91%D0%A1%D0%A2%D0%90%D0%9D%D0%9E%D0%92%D0%9A%D0%90-%D0%92-%D0%A0-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - УДЪЛЖАВАНЕ НА ЕПИДЕМИЧНА ОБСТАНОВКА В Р БЪЛГАРИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=49",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/73/%D0%A0%D0%95%D0%A8%D0%95%D0%9D%D0%98%D0%AF-%D0%9D%D0%90-%D0%A0%D0%AA%D0%9A%D0%9E%D0%92%D0%9E%D0%94%D0%A1%D0%A2%D0%92%D0%9E%D0%A2%D0%9E-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%98%D0%A2%D0%95-%D0%97%D0%90%D0%9D%D0%AF%D0%A2%D0%98%D0%AF-%D0%A1%D0%9B%D0%95%D0%94-%D0%9A%D0%90%D0%A0%D0%90%D0%9D%D0%A2%D0%98%D0%9D%D0%90%D0%A2%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕШЕНИЯ НА РЪКОВОДСТВОТО ЗА УЧЕБНИТЕ ЗАНЯТИЯ СЛЕД КАРАНТИНАТА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/74/%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D-2020",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕЛИКДЕН 2020"
+  },
+  {
+    "url": "https://euro-alliance.net/News/34/CAMBRIDGE-%D0%98%D0%97%D0%9F%D0%98%D0%A2%D0%98-%D0%97%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2-2020",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - CAMBRIDGE ИЗПИТИ ЗА СЕРТИФИКАТ 2020"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=50",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/71/%D0%A1%D0%A2%D0%90%D0%A0%D0%A2-%D0%9D%D0%90-%D0%9E%D0%9D%D0%9B%D0%90%D0%99%D0%9D-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%92-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СТАРТ НА ОНЛАЙН ОБУЧЕНИЕ В ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/70/%D0%94%D0%98%D0%A1%D0%A2%D0%90%D0%9D%D0%A6%D0%98%D0%9E%D0%9D%D0%9D%D0%9E-%D0%95%D0%9B%D0%95%D0%9A%D0%A2%D0%A0%D0%9E%D0%9D%D0%9D%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%92-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ДИСТАНЦИОННО ЕЛЕКТРОННО ОБУЧЕНИЕ В ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/39/3-%D0%9C%D0%90%D0%A0%D0%A2--%D0%9D%D0%90%D0%A6%D0%98%D0%9E%D0%9D%D0%90%D0%9B%D0%95%D0%9D-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%9A-%D0%9D%D0%90-%D0%91%D0%AA%D0%9B%D0%93%D0%90%D0%A0%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 3 МАРТ - НАЦИОНАЛЕН ПРАЗНИК НА БЪЛГАРИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=51",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/68/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%9E%D0%A2-%D0%9A%D0%9E%D0%9D%D0%9A%D0%A3%D0%A0%D0%A1-BE-ECO-EVERY-DAY",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ ОТ КОНКУРС BE ECO EVERY DAY"
+  },
+  {
+    "url": "https://euro-alliance.net/News/66/%D0%92%D0%B5%D1%81%D0%B5%D0%BB%D0%B8-%D0%9A%D0%BE%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8-%D0%B8-%D0%9D%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%D0%B4%D0%B8%D1%88%D0%BD%D0%B8-%D0%BF%D1%80%D0%B0%D0%B7%D0%BD%D0%B8%D1%86%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Весели Коледни и Новогодишни празници !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/65/%D0%9A%D0%9E%D0%9D%D0%A6%D0%95%D0%A0%D0%A2-%D0%A1%D0%9F%D0%95%D0%9A%D0%A2%D0%90%D0%9A%D0%AA%D0%9B-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%9D%D0%90-%D0%9C%D0%90%D0%93%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КОНЦЕРТ СПЕКТАКЪЛ \"КОЛЕДНА МАГИЯ\""
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=52",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/64/%D0%9A%D0%9E%D0%9D%D0%A6%D0%95%D0%A0%D0%A2-%D0%A1%D0%9F%D0%95%D0%9A%D0%A2%D0%90%D0%9A%D0%AA%D0%9B-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%9D%D0%90-%D0%9C%D0%90%D0%93%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КОНЦЕРТ СПЕКТАКЪЛ \"КОЛЕДНА МАГИЯ\""
+  },
+  {
+    "url": "https://euro-alliance.net/News/63/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-20192020-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2019/2020 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/62/%D0%97%D0%90%D0%92%D0%AA%D0%A0%D0%A8%D0%98-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90-%D0%92-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАВЪРШИ УЧЕБНАТА ГОДИНА В ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=53",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/25/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-24-%D0%9C%D0%90%D0%99",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ 24 МАЙ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/61/%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98-%D0%9D%D0%90-%D0%97%D0%90%D0%95%D0%A2%D0%98-%D0%9B%D0%98%D0%A6%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ОБУЧЕНИЕ С ВАУЧЕРИ НА ЗАЕТИ ЛИЦА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/44/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%96%D0%94%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%9F%D0%9E%D0%91%D0%95%D0%94%D0%98%D0%A2%D0%95%D0%9B%D0%98%D0%A2%D0%95-%D0%9E%D0%A2-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-2019",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАЖДАВАНЕ НА ПОБЕДИТЕЛИТЕ ОТ АЛИАНС КОНТЕСТ 2019"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=54",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/41/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%9E%D0%A2-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-%D0%A1%D0%AA%D0%A1%D0%A2%D0%95%D0%97%D0%90%D0%9D%D0%98%D0%95-%D0%9F%D0%9E-%D0%90%D0%9D%D0%93%D0%9B%D0%98%D0%99%D0%A1%D0%9A%D0%98-%D0%95%D0%97%D0%98%D0%9A-2019",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ ОТ АЛИАНС КОНТЕСТ СЪСТЕЗАНИЕ ПО АНГЛИЙСКИ ЕЗИК 2019"
+  },
+  {
+    "url": "https://euro-alliance.net/News/42/%D0%A1%D1%8A%D0%BE%D0%B1%D1%89%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B7%D0%B0-%D0%9F%D1%80%D0%BE%D0%BB%D0%B5%D1%82%D0%BD%D0%B0-%D0%B2%D0%B0%D0%BA%D0%B0%D0%BD%D1%86%D0%B8%D1%8F-2019",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Съобщение за Пролетна ваканция 2019"
+  },
+  {
+    "url": "https://euro-alliance.net/News/37/%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2-%D1%81%D1%8A%D1%81%D1%82%D0%B5%D0%B7%D0%B0%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE-%D0%B0%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - АЛИАНС КОНТЕСТ състезание по английски език"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=55",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/60/%D0%9F%D0%A0%D0%9E%D0%9C%D0%AF%D0%9D%D0%90-%D0%9D%D0%90-%D0%93%D0%A0%D0%90%D0%A4%D0%98%D0%9A-%D0%9D%D0%90-%D0%A1%D0%AA%D0%91%D0%9E%D0%A2%D0%9D%D0%98-%D0%93%D0%A0%D0%A3%D0%9F%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОМЯНА НА ГРАФИК НА СЪБОТНИ ГРУПИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/59/%D0%A0%D0%95%D0%97%D0%A3%D0%9B%D0%A2%D0%90%D0%A2%D0%98-%D0%9E%D0%A2-%D0%9A%D0%9E%D0%9D%D0%9A%D0%A3%D0%A0%D0%A1-20-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%98-%D0%9F%D0%A0%D0%98%D0%AF%D0%A2%D0%95%D0%9B%D0%A1%D0%A2%D0%92%D0%9E",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - РЕЗУЛТАТИ ОТ КОНКУРС 20 ГОДИНИ ПРИЯТЕЛСТВО"
+  },
+  {
+    "url": "https://euro-alliance.net/News/58/%D0%91%D0%95%D0%97%D0%9F%D0%9B%D0%90%D0%A2%D0%9D%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%9D%D0%90-%D0%9F%D0%A0%D0%95%D0%94%D0%9F%D0%A0%D0%98%D0%95%D0%9C%D0%90%D0%A7%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - БЕЗПЛАТНО ОБУЧЕНИЕ НА ПРЕДПРИЕМАЧИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=56",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/54/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9D%D0%9E%D0%92%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЧЕСТИТА НОВА ГОДИНА!"
+  },
+  {
+    "url": "https://euro-alliance.net/News/56/%D0%94%D0%AF%D0%94%D0%9E-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%92-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ДЯДО КОЛЕДА В ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/55/%D0%9F%D0%A0%D0%9E%D0%95%D0%9A%D0%A2%D0%98-%D0%9D%D0%90-%D0%A2%D0%95%D0%9C%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%9D%D0%90-%D0%97%D0%92%D0%95%D0%97%D0%94%D0%90-%D0%97%D0%90-%D0%A2%D0%95%D0%91",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ПРОЕКТИ НА ТЕМА \"КОЛЕДНА ЗВЕЗДА ЗА ТЕБ\""
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=57",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/52/%D0%9A%D0%A3%D0%A0%D0%A1-%D0%9D%D0%BE%D0%B2%D0%B0-%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F-%D0%BD%D0%B0-%D0%91%D0%94%D0%A1-EN-ISOIEC-170252018-%D0%9F%D0%BE%D0%B4%D1%85%D0%BE%D0%B4-%D0%BD%D0%B0-%D0%98%D0%90-%D0%91%D0%A1%D0%90-%D0%B7%D0%B0-%D0%BF%D1%80%D0%B5%D1%85%D0%BE%D0%B4",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КУРС Нова версия на БДС EN ISO/IEC 17025:2018. Подход на ИА БСА за преход"
+  },
+  {
+    "url": "https://euro-alliance.net/News/53/%D0%9A%D0%A3%D0%A0%D0%A1-%D1%81%D1%8A%D0%B3%D0%BB%D0%B0%D1%81%D0%BD%D0%BE-%D0%91%D0%94%D0%A1-EN-ISOIEC-170202012",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КУРС съгласно БДС EN ISO/IEC 17020:2012"
+  },
+  {
+    "url": "https://euro-alliance.net/News/29/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%9D%D0%9E%D0%92%D0%90%D0%A2%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90-20182019",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА НОВАТА УЧЕБНА ГОДИНА 2018/2019"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=58",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/51/%D0%92%D0%A0%D0%AA%D0%A7%D0%92%D0%90%D0%9D%D0%95-%D0%9D%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2%D0%98-%D0%9D%D0%90-%D0%97%D0%90%D0%92%D0%AA%D0%A0%D0%A8%D0%98%D0%9B%D0%98-%D0%A1-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВРЪЧВАНЕ НА СЕРТИФИКАТИ НА ЗАВЪРШИЛИ С ВАУЧЕРИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/50/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90%D0%A2%D0%90-2018-2019-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА УЧЕБНАТА 2018 2019 ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/49/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9B%D0%AF%D0%A2%D0%9D%D0%90-%D0%92%D0%90%D0%9A%D0%90%D0%9D%D0%A6%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА ЛЯТНА ВАКАНЦИЯ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=59",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/47/%D0%A1%D1%82%D0%B0%D1%80%D1%82%D0%B8%D1%80%D0%B0-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%97%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B7%D0%B0-%D0%9B%D0%B8%D0%B4%D0%B5%D1%80%D0%B8--2018",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Стартира Проект Знания за Лидери ! 2018"
+  },
+  {
+    "url": "https://euro-alliance.net/News/48/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%9F%D0%AA%D0%A0%D0%92%D0%98-%D0%AE%D0%9D%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ ПЪРВИ ЮНИ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/46/CAMBRIDGE-%D0%9F%D0%A0%D0%9E%D0%91%D0%95%D0%9D-%D0%98%D0%97%D0%9F%D0%98%D0%A2-CAE",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - CAMBRIDGE ПРОБЕН ИЗПИТ CAE"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=60",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/45/%D0%9B%D0%95%D0%A2%D0%95%D0%9D-%D0%95%D0%97%D0%98%D0%9A%D0%9E%D0%92-%D0%9B%D0%90%D0%93%D0%95%D0%A0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЛЕТЕН ЕЗИКОВ ЛАГЕР"
+  },
+  {
+    "url": "https://euro-alliance.net/News/43/%D0%A1%D0%92%D0%95%D0%A2%D0%9B%D0%98-%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D%D0%A1%D0%9A%D0%98-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%A6%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СВЕТЛИ ВЕЛИКДЕНСКИ ПРАЗНИЦИ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/40/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-8-%D0%9C%D0%90%D0%A0%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ 8 МАРТ !"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=61",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/38/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%94%D0%95%D0%9D%D0%98-%D0%9F%D0%A0%D0%9E%D0%95%D0%9A%D0%A2%D0%98-%D0%9E%D0%A2-%D0%9A%D0%9E%D0%9D%D0%9A%D0%A3%D0%A0%D0%A1%D0%90-Our-family-Europe",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАДЕНИ ПРОЕКТИ ОТ КОНКУРСА Our family Europe"
+  },
+  {
+    "url": "https://euro-alliance.net/News/36/%D0%9A%D0%9E%D0%9D%D0%9A%D0%A3%D0%A0%D0%A1-%D0%9D%D0%B0%D1%88%D0%B5%D1%82%D0%BE-%D1%81%D0%B5%D0%BC%D0%B5%D0%B9%D1%81%D1%82%D0%B2%D0%BE-%D0%95%D0%B2%D1%80%D0%BE%D0%BF%D0%B0--Our-family-Europe",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - КОНКУРС Нашето семейство Европа  Our family Europe"
+  },
+  {
+    "url": "https://euro-alliance.net/News/35/19-%D0%B3%D0%BE%D0%B4%D0%B8%D0%BD%D0%B8-%D0%95%D0%B2%D1%80%D0%BE%D0%90%D0%BB%D0%B8%D0%B0%D0%BD%D1%81",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 19 години Евро-Алианс !"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=62",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/33/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9D%D0%9E%D0%92%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЧЕСТИТА НОВА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/32/%D0%92-%D0%9D%D0%90%D0%92%D0%95%D0%A7%D0%95%D0%A0%D0%98%D0%95%D0%A2%D0%9E-%D0%9D%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - В НАВЕЧЕРИЕТО НА КОЛЕДА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/30/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9D%D0%9E%D0%92%D0%90-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТА НОВА УЧЕБНА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=63",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/28/%D0%95%D0%97%D0%98%D0%9A%D0%9E%D0%92%D0%9E-%D0%9E%D0%91%D0%A3%D0%A7%D0%95%D0%9D%D0%98%D0%95-%D0%92-%D0%A2%D0%A0%D0%98-%D0%9D%D0%98%D0%92%D0%90-%D0%B7%D0%B0-%D0%92%D0%AA%D0%97%D0%A0%D0%90%D0%A1%D0%A2%D0%9D%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЕЗИКОВО ОБУЧЕНИЕ В ТРИ НИВА за ВЪЗРАСТНИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/27/%D0%A1%D0%A2%D0%90%D0%A0%D0%A2%D0%98%D0%A0%D0%90-%D0%9F%D0%A0%D0%98%D0%95%D0%9C%D0%90%D0%9D%D0%95%D0%A2%D0%9E-%D0%9D%D0%90-%D0%97%D0%90%D0%AF%D0%92%D0%9B%D0%95%D0%9D%D0%98%D0%AF-%D0%97%D0%90-%D0%92%D0%90%D0%A3%D0%A7%D0%95%D0%A0%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СТАРТИРА ПРИЕМАНЕТО НА ЗАЯВЛЕНИЯ ЗА ВАУЧЕРИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/26/1-%D0%AE%D0%9D%D0%98--%D0%94%D0%95%D0%9D-%D0%9D%D0%90-%D0%94%D0%95%D0%A2%D0%95%D0%A2%D0%9E",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - 1 ЮНИ - ДЕН НА ДЕТЕТО"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=64",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/1/%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82-%D0%97%D0%BD%D0%B0%D0%BD%D0%B8%D1%8F-%D0%B7%D0%B0-%D0%9B%D0%B8%D0%B4%D0%B5%D1%80%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Проект Знания за Лидери !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/24/%D0%A1%D0%90%D0%95-%D0%98%D0%97%D0%9F%D0%98%D0%A2-%D0%97%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2-%D0%9D%D0%90-CAMBRIDGE-ESOL",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - САЕ ИЗПИТ ЗА СЕРТИФИКАТ НА CAMBRIDGE ESOL"
+  },
+  {
+    "url": "https://euro-alliance.net/News/14/%D0%A1%D0%AA%D0%9E%D0%91%D0%A9%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-6-%D0%BC%D0%B0%D0%B9-2017-%D0%93%D0%B5%D1%80%D0%B3%D1%8C%D0%BE%D0%B2%D0%B4%D0%B5%D0%BD",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - СЪОБЩЕНИЕ ЗА 6 май 2017 Гергьовден !"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=65",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/3/%D0%9B%D0%B5%D1%82%D0%BD%D0%B8-%D0%B5%D0%B7%D0%B8%D0%BA%D0%BE%D0%B2%D0%B8-%D0%BA%D1%83%D1%80%D1%81%D0%BE%D0%B2%D0%B5-2017",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Летни езикови курсове 2017"
+  },
+  {
+    "url": "https://euro-alliance.net/News/22/%D0%A7%D0%B5%D1%81%D1%82%D0%B8%D1%82-%D0%92%D0%95%D0%9B%D0%98%D0%9A%D0%94%D0%95%D0%9D",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Честит ВЕЛИКДЕН !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/23/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%96%D0%94%D0%90%D0%92%D0%90%D0%9D%D0%95-%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1-%D0%9A%D0%9E%D0%9D%D0%A2%D0%95%D0%A1%D0%A2",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАЖДАВАНЕ АЛИАНС КОНТЕСТ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=66",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/21/%D0%98%D0%97%D0%9F%D0%98%D0%A2%D0%98-%D0%97%D0%90-%D0%A1%D0%95%D0%A0%D0%A2%D0%98%D0%A4%D0%98%D0%9A%D0%90%D0%A2-%D0%9D%D0%90-CAMBRIDGE-ESOL",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ИЗПИТИ ЗА СЕРТИФИКАТ НА CAMBRIDGE ESOL"
+  },
+  {
+    "url": "https://euro-alliance.net/News/20/%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2-%D0%9D%D0%90%D0%A6%D0%98%D0%9E%D0%9D%D0%90%D0%9B%D0%95%D0%9D-%D0%9F%D0%A0%D0%90%D0%97%D0%9D%D0%98%D0%9A",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЧЕСТИТ НАЦИОНАЛЕН ПРАЗНИК !"
+  },
+  {
+    "url": "https://euro-alliance.net/News/18/%D0%9D%D0%90%D0%93%D0%A0%D0%90%D0%94%D0%95%D0%9D%D0%98-%D0%9F%D0%A0%D0%9E%D0%95%D0%9A%D0%A2%D0%98--%D0%92%D0%B4%D1%8A%D1%85%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD%D0%B8-%D0%BE%D1%82-%D0%A3%D1%81%D0%BF%D0%B5%D1%85%D0%B0",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НАГРАДЕНИ ПРОЕКТИ - Вдъхновени от #Успеха"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=67",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/17/%D0%98%D0%BD%D1%84%D0%BE%D1%80%D0%BC%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0-%D1%81%D1%80%D0%B5%D1%89%D0%B0-%D0%B7%D0%B0-%D1%83%D1%81%D0%BB%D0%BE%D0%B2%D0%B8%D1%8F%D1%82%D0%B0-%D0%B7%D0%B0-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%81-%D0%B2%D0%B0%D1%83%D1%87%D0%B5%D1%80%D0%B8",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Информационна среща за условията за обучение с ваучери"
+  },
+  {
+    "url": "https://euro-alliance.net/News/16/Inspired_by_Success",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Inspired_by_Success"
+  },
+  {
+    "url": "https://euro-alliance.net/News/13/%D0%BD%D0%BE%D0%B2%D0%BE--%D0%A1%D0%AA%D0%9E%D0%91%D0%A9%D0%95%D0%9D%D0%98%D0%95-%D0%97%D0%90-%D0%93%D0%A0%D0%98%D0%9F%D0%9D%D0%90-%D0%92%D0%90%D0%9A%D0%90%D0%9D%D0%A6%D0%98%D0%AF",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ново ! СЪОБЩЕНИЕ ЗА ГРИПНА ВАКАНЦИЯ"
+  },
+  {
+    "url": "https://euro-alliance.net/News?page=68",
+    "status": 200,
+    "type": "news-listing",
+    "title": "Евро Алианс Новини"
+  },
+  {
+    "url": "https://euro-alliance.net/News/12/%D0%92%D0%95%D0%A1%D0%95%D0%9B%D0%90-%D0%9A%D0%9E%D0%9B%D0%95%D0%94%D0%90-%D0%98-%D0%A7%D0%95%D0%A1%D0%A2%D0%98%D0%A2%D0%90-%D0%9D%D0%9E%D0%92%D0%90-2017-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ВЕСЕЛА КОЛЕДА И ЧЕСТИТА НОВА 2017 ГОДИНА !!!"
+  },
+  {
+    "url": "https://euro-alliance.net/News/11/%D0%9A%D0%BE%D0%BB%D0%B5%D0%B4%D0%B0-%D0%B2-%D0%95%D0%B2%D1%80%D0%BE-%D0%90%D0%BB%D0%B8%D0%B0%D0%BD%D1%81",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Коледа в Евро Алианс"
+  },
+  {
+    "url": "https://euro-alliance.net/News/10/%D0%94%D0%B0%D1%82%D0%B8-%D0%BD%D0%B0-%D0%B8%D0%B7%D0%BF%D0%B8%D1%82%D0%B8-%D0%BD%D0%B0-Cambridge-ESOL",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Дати на изпити на Cambridge ESOL"
+  },
+  {
+    "url": "https://euro-alliance.net/News/9/%D0%94%D0%BD%D0%B8-%D0%BD%D0%B0-%D0%BE%D1%82%D0%B2%D0%BE%D1%80%D0%B5%D0%BD%D0%B8-%D0%B2%D1%80%D0%B0%D1%82%D0%B8-%D0%B2-%D0%95%D0%92%D0%A0%D0%9E%D0%90%D0%9B%D0%98%D0%90%D0%9D%D0%A1",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Дни на отворени врати в ЕВРО-АЛИАНС"
+  },
+  {
+    "url": "https://euro-alliance.net/News/8/%D0%9D%D0%9E%D0%92%D0%98-%D0%98%D0%9D%D0%A2%D0%95%D0%A0%D0%90%D0%9A%D0%A2%D0%98%D0%92%D0%9D%D0%98-%D0%94%D0%AA%D0%A1%D0%9A%D0%98",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - НОВИ ИНТЕРАКТИВНИ ДЪСКИ"
+  },
+  {
+    "url": "https://euro-alliance.net/News/7/%D0%97%D0%90%D0%9F%D0%98%D0%A1%D0%92%D0%90%D0%9D%D0%95-%D0%97%D0%90-%D0%9D%D0%9E%D0%92%D0%90%D0%A2%D0%90-20162017-%D0%A3%D0%A7%D0%95%D0%91%D0%9D%D0%90-%D0%93%D0%9E%D0%94%D0%98%D0%9D%D0%90",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - ЗАПИСВАНЕ ЗА НОВАТА 2016/2017 УЧЕБНА ГОДИНА"
+  },
+  {
+    "url": "https://euro-alliance.net/News/6/%D0%95%D0%B2%D1%80%D0%BE%D0%90%D0%BB%D0%B8%D0%B0%D0%BD%D1%81-%D1%81-%D0%B8%D0%B7%D1%86%D1%8F%D0%BB%D0%BE-%D0%BE%D0%B1%D0%BD%D0%BE%D0%B2%D0%B5%D0%BD-%D1%81%D0%B0%D0%B9%D1%82",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Евро-Алианс с изцяло обновен сайт"
+  },
+  {
+    "url": "https://euro-alliance.net/News/2/%D0%98%D0%B7%D0%BF%D0%B8%D1%82%D0%B8-%D0%BD%D0%B0-Cambridge-ESOL",
+    "status": 200,
+    "type": "news-article",
+    "title": "Евро Алианс Новини - Изпити на Cambridge ESOL"
+  }
+]
