@@ -150,7 +150,8 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 ### 21. Content import: `feat/content-import`
 
 - `scripts/import/` per `docs/content-import.md`: inventory, extract, transform, images, load, report. Per-article news redirects. The redirect test extended to every URL in the inventory.
-- Images (the user's decisions of 02.11.2026, CLAUDE.md § 12): no old photo is imported; the news covers and the homepage's small photo are the user's picks (old cover or Unsplash), imported as the last step, replacing the no-image states.
+- Images (the user's decisions of 02.11.2026, CLAUDE.md § 12): every Figma image in its slot, Figma images of real articles as their covers; the user's picks (old cover or Unsplash) only where Figma has nothing, imported as the last step.
+- Courses (same day): every known course, with zero or more dated groups; statuses, the status filter and the homepage rule in CLAUDE.md § 12. The course list goes to the user before the import.
 - **Done when:** a dry run and a real run against staging both succeed; the report is attached. Everything is imported as published (the client approved all content, 02.11.2026) and the client reviews it on staging.
 
 ### 22. SEO: `feat/seo`
