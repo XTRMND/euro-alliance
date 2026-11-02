@@ -24,11 +24,13 @@
   --color-text-on-brand: #ffffff;
   --color-border-default: #dce1e7;
 
-  /* Type families (src/styles/fonts.ts sets the --font-sofia-* variables; --font-hand becomes
-     Caveat once the page has loaded, globals.css and src/styles/font-hand.ts) */
+  /* Type families (src/styles/fonts.ts sets the --font-sofia-* variables). The handwriting is
+     --font-hand until the page has loaded, then --font-hand-loaded, set by the few rules that use
+     it under html[data-hand-font] (src/styles/font-hand.ts) */
   --font-display: var(--font-sofia-sans-extra-condensed), 'Arial Narrow', sans-serif;
   --font-body: var(--font-sofia-sans), Arial, sans-serif;
   --font-hand: cursive;
+  --font-hand-loaded: Caveat, cursive;
 
   /* Type styles, for `font:` (weight size/line-height family) */
   --type-display-weight: 800; /* ExtraBold at 390, Black from 768 up */

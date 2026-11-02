@@ -125,6 +125,11 @@
   rotate: 5deg;
 }
 
+/* Caveat once the page has loaded (src/styles/font-hand.ts), on this element only. */
+:global(html[data-hand-font]) .note {
+  font-family: var(--font-hand-loaded);
+}
+
 /* From 768px the «404» is Figma's desktop size, centred on the paper. */
 @media (min-width: 768px) {
   .code {

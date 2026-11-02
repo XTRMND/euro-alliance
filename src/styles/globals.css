@@ -1,16 +1,12 @@
 /* Global base styles for the public site. Component styles live in CSS Modules. */
 
 /* Caveat, the handwriting, used only once the page has loaded (src/styles/font-hand.ts): until
-   then --font-hand is a generic cursive, and the font isn't fetched. */
+   then the handwriting is a generic cursive, and the font isn't fetched. */
 @font-face {
   font-family: Caveat;
   font-weight: 400 700;
   font-display: swap;
   src: url('/fonts/Caveat.woff2') format('woff2');
-}
-
-html[data-hand-font] {
-  --font-hand: Caveat, cursive;
 }
 
 *,

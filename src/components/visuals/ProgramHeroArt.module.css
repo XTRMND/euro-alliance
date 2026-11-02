@@ -171,6 +171,12 @@
   transform: rotate(-6deg);
 }
 
+/* Caveat once the page has loaded (src/styles/font-hand.ts), scoped to the handwriting so the
+   switch restyles only these elements, not the whole page. */
+:global(html[data-hand-font]) :is(.title, .phrase, .translation, .note) {
+  font-family: var(--font-hand-loaded);
+}
+
 .noteTitle {
   margin: 0;
   font-size: calc(24 * var(--u));
