@@ -98,7 +98,13 @@ describe('seed', () => {
       collection: 'media-tints',
       where: { source: { equals: photo.id } },
     })
-    expect(tints.map((tint) => tint.tint).sort()).toEqual(['about', 'hero', 'homeNews', 'news'])
+    expect(tints.map((tint) => tint.tint).sort()).toEqual([
+      'about',
+      'hero',
+      'homeAbout',
+      'homeNews',
+      'news',
+    ])
     expect(home.programs?.cards?.map((card) => card.destination)).toEqual([
       'languagesStudents',
       'languagesAdults',

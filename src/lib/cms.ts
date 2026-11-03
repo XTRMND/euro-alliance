@@ -6,6 +6,7 @@ import type { CourseFilters } from '@/lib/course-filters'
 import { courseMonths } from '@/lib/course-filters'
 import { findAllCourses, findCourse, listCourses, relatedCourses } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
+import { tintNames } from '@/lib/media/tints'
 import type { Media, Program } from '@/payload-types'
 
 // Payload reads for the public site. They run as an anonymous visitor (overrideAccess: false), so
@@ -64,7 +65,7 @@ async function attachTints(values: unknown[]) {
     collection: 'media-tints',
     where: { source: { in: media.map((m) => m.id) } },
     depth: 0,
-    limit: media.length * 4,
+    limit: media.length * tintNames.length,
     pagination: false,
     overrideAccess: false,
   })
