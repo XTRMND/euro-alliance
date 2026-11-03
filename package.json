@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3200",
     "build": "next build && node scripts/prepare-standalone.mjs",
-    "start": "node --env-file-if-exists=.env .next/standalone/server.js",
+    "start": "PORT=${PORT:-3200} node --env-file-if-exists=.env .next/standalone/server.js",
     "typecheck": "next typegen && tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",

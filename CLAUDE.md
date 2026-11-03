@@ -211,9 +211,9 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Local database | `docker compose up -d` (PostgreSQL 18 on port 5432; set `DB_PORT` if it's taken) |
 | Environment | `cp .env.example .env`, then set `PAYLOAD_SECRET` |
 | Migrate and seed | `pnpm migrate`, then `pnpm seed` (fills in missing company facts and offices; never overwrites) |
-| Dev server | `pnpm dev` (http://localhost:3000, admin at `/admin`; the first account created is the admin) |
+| Dev server | `pnpm dev` (http://localhost:3200, admin at `/admin`; the first account created is the admin) |
 | Production build | `pnpm build` (standalone server in `.next/standalone`) |
-| Run the build | `pnpm start` (reads `.env` if present; pages need the database) |
+| Run the build | `pnpm start` (port 3200 unless `PORT` is set; reads `.env` if present; pages need the database) |
 | Typecheck | `pnpm typecheck` |
 | Lint and format | `pnpm lint`, `pnpm format:check` (`pnpm format` fixes formatting) |
 | Unit tests | `pnpm test` (`pnpm test:watch` while working) |

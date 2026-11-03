@@ -25,7 +25,7 @@ pnpm seed                # company facts and the three offices
 pnpm dev
 ```
 
-The site runs at http://localhost:3000 and the CMS at http://localhost:3000/admin. The first account you create there becomes the admin; later accounts are editors.
+The site runs at http://localhost:3200 and the CMS at http://localhost:3200/admin. The first account you create there becomes the admin; later accounts are editors.
 
 ## Everyday commands
 

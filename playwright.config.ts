@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 // Runs against the production build: `pnpm build && pnpm test:e2e`. Its own port, so a dev
-// server on 3000 is never mistaken for the build under test.
+// server on 3200 is never mistaken for the build under test.
 const port = 3100
 const baseURL = process.env.E2E_BASE_URL ?? `http://localhost:${port}`
 

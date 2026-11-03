@@ -14,7 +14,7 @@ type Meta = {
 
 /** The site's public address, without a trailing slash. */
 export function siteUrl(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000').replace(/\/+$/, '')
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3200').replace(/\/+$/, '')
 }
 
 /** A description of at most 160 characters, cut at a word. */
