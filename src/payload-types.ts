@@ -269,7 +269,7 @@ export interface Media {
 export interface MediaTint {
   id: number;
   source: number | Media;
-  tint: 'hero' | 'homeNews' | 'about' | 'news';
+  tint: 'hero' | 'homeNews' | 'about' | 'homeAbout' | 'news';
   updatedAt: string;
   createdAt: string;
   url?: string | null;

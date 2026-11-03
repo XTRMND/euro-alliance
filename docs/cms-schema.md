@@ -221,7 +221,7 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 
 | Kind | Treatment |
 |---|---|
-| `photo` | **Four pre-composited tints**: 88% (hero), 55% (homepage news), 45% (about and general photos), 30% (news pages). Stored as uploads in the hidden `media-tints` collection, at most 2880 px wide, JPEG without EXIF. |
+| `photo` | **Five pre-composited tints**: 88% (hero), 55% (homepage news), 45% (about and general photos), 38% (the homepage's About island), 30% (news pages). Stored as uploads in the hidden `media-tints` collection, at most 2880 px wide, JPEG without EXIF. |
 | `art` | Original only. Optional halftone derivative later if a design needs it. |
 | `scan` | Original only; no colour treatment. |
 | `logo` | **Served exactly as uploaded** (EU publicity rules). No recompression, tint, crop or reformat. |
@@ -230,7 +230,7 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 
 **Duotone, as measured in Figma (PR 2).** Figma uses two treatments, and the code reproduces both (`src/lib/media/tints.ts`):
 
-- **55%, 45% and 30%** (News card 62:240, Polaroid 259:582, Torn window 259:588): the colour photo with a duotone copy on top at the tint's opacity. The duotone is a gradient map of the photo's luminance with three stops, not two: brand/primary-strong #183169 → brand/accent #C0AA81 (at 48%) → bg/warm #F7F3EC, with luminance raised to the power 1.34. Fitted to the Figma images within RMSE 6/255.
+- **55%, 45%, 38% and 30%** (News card 62:240, Polaroid 259:582, Torn window 259:588): the colour photo with a duotone copy on top at the tint's opacity. The duotone is a gradient map of the photo's luminance with three stops, not two: brand/primary-strong #183169 → brand/accent #C0AA81 (at 48%) → bg/warm #F7F3EC, with luminance raised to the power 1.34. Fitted to the Figma images within RMSE 6/255.
 - **88%, the homepage hero** (57:301): the photo in greyscale under Figma's blend layers, navy #183169 in *screen* mode and sand #E6D6B8 in *multiply* mode, each at 88%. Figma's render is desaturated first (a filter on the image fill that design context doesn't report; measured in PR 8, mean colour within 1/255). #E6D6B8 appears only here and is not a colour token.
 
 **Rendering (`DuotoneImage`):** the component takes `tint` (88 / 55 / 45 / 30) and `clearOnHover`. It serves the pre-composited variant for that tint as a single image, which is best for LCP. With `clearOnHover`, the colour original sits underneath, lazy-loaded, and the composite fades to `opacity: 0` on hover (`docs/motion.md` § 5).

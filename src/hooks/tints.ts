@@ -14,7 +14,7 @@ export async function deleteTints(payload: Payload, source: number, req?: Payloa
   await payload.delete({ collection: 'media-tints', where: { source: { equals: source } }, req })
 }
 
-/** Stores the four pre-composited tints of a photo (docs/cms-schema.md § 4). */
+/** Stores the pre-composited tints of a photo (docs/cms-schema.md § 4). */
 export async function createTints(
   payload: Payload,
   doc: Media,

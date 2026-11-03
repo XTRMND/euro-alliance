@@ -27,6 +27,9 @@ export const tints = {
   hero: { percent: 88, method: 'blend' },
   homeNews: { percent: 55, method: 'duotone' },
   about: { percent: 45, method: 'duotone' },
+  // The homepage's About island: lighter than About's, stronger than the news pages' (the user,
+  // 03.11.2026).
+  homeAbout: { percent: 38, method: 'duotone' },
   news: { percent: 30, method: 'duotone' },
 } as const satisfies Record<string, { percent: number; method: TintMethod }>
 

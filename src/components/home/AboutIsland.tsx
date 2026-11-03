@@ -35,8 +35,8 @@ export function AboutIsland({ about }: { about: Home['about'] }) {
                 <Polaroid
                   photo={photo}
                   caption={about.caption}
-                  // Lighter than About's 45% (the user, 03.11.2026).
-                  tint="news"
+                  // 38%: lighter than About's 45% (the user, 03.11.2026).
+                  tint="homeAbout"
                   sizes="(min-width: 1024px) min(435px, 31vw), min(80vw, 412px)"
                   className={styles.polaroid}
                 />

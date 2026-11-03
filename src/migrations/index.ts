@@ -28,6 +28,7 @@ import * as migration_20261102_134639_missing_addresses from './20261102_134639_
 import * as migration_20261102_140644_course_free from './20261102_140644_course_free';
 import * as migration_20261102_151729_course_stickers from './20261102_151729_course_stickers';
 import * as migration_20261103_090104_home_about from './20261103_090104_home_about';
+import * as migration_20261103_091658_home_about_tint from './20261103_091658_home_about_tint';
 
 export const migrations = [
   {
@@ -178,6 +179,11 @@ export const migrations = [
   {
     up: migration_20261103_090104_home_about.up,
     down: migration_20261103_090104_home_about.down,
-    name: '20261103_090104_home_about'
+    name: '20261103_090104_home_about',
+  },
+  {
+    up: migration_20261103_091658_home_about_tint.up,
+    down: migration_20261103_091658_home_about_tint.down,
+    name: '20261103_091658_home_about_tint'
   },
 ];
