@@ -3,8 +3,10 @@ import { CourseCard } from '@/components/cards/CourseCard'
 import { withStates } from '@/lib/course-state'
 import { matchesUpcomingFilter, upcomingFilters } from '@/lib/courses'
 import { startOfTodayInSofia } from '@/lib/format'
+import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import { routes } from '@/lib/routes'
 import type { Course } from '@/payload-types'
+import landing from '@/styles/landing.module.css'
 import { SectionHead } from './SectionHead'
 import { UpcomingTabs } from './UpcomingTabs'
 import styles from './UpcomingCourses.module.css'
@@ -44,7 +46,8 @@ export async function UpcomingCourses({ title, courses }: { title: string; cours
 
   return (
     <section className={styles.section} aria-labelledby="upcoming-title">
-      <div className={styles.inner}>
+      <RevealOnScroll />
+      <div className={[styles.inner, landing.revealItems].join(' ')}>
         <SectionHead
           title={title}
           id="upcoming-title"

@@ -155,7 +155,7 @@ Components whose own sizes sit between these steps (card titles at 28–32 px, p
 - **Program heroes:** language pages use the notebook hero with a flag sticker. All other program pages use the course-page hero (halftone panel, sticker, tape, navy count bubble), never the notebook.
 - **Count / level bubble:** navy circle, sand number, small label, tilted −8°.
 - **Halftone:** navy dots, 42% on course card panels, 7% on textbook cards. **Never halftone dots over a regular photo.**
-- **Photos:** Figma's (all approved) and the client's; Unsplash only for slots Figma doesn't cover (§ 3). Medium tint (colour + 45% duotone), polaroid or taped. A photo must be understandable without a caption. Tints: hero 88%; news cards 30% on news pages and 55% on the homepage (Tint=Strong); about page photos 45%. They clear to full colour on hover where the design says so.
+- **Photos:** Figma's (all approved) and the client's; Unsplash only for slots Figma doesn't cover (§ 3). Medium tint (colour + 45% duotone), polaroid or taped. A photo must be understandable without a caption. Tints: hero 88%; news cards 30% on news pages and 55% on the homepage (Tint=Strong); about page photos 45%; the homepage's About island 38%. They clear to full colour on hover where the design says so.
 - **About hero:** torn-paper window showing the team photo (forum 2026), with the small «А» bubble.
 - **Lists and pills:** pills always have a visible label above them. Lists use Index card or List row. Paired cards have equal heights. 32 px between cards.
 - **Highlighter:** a sand highlighter on one phrase per headline, never more.
@@ -491,11 +491,11 @@ From the security headers (PR 24):
 - TLS settings for the user's servers or CDN: README, «Security headers and TLS» (Mozilla intermediate, ECDHE only).
 
 From the homepage's About island (03.11.2026, 323:5189 / 324:9930):
-- The team photo takes the 30% tint (the user: lighter than About's 45%, which the Polaroid's Figma description gives). It's the About hero's upload, so the sharper original (Y2) replaces both.
+- The team photo takes a 38% tint (the user: lighter than About's 45%, which the Polaroid's Figma description gives, then stronger than the 30% tried first). It's the About hero's upload, so the sharper original (Y2) replaces both.
 - The sticker rests at −4.2°: the frame doesn't give the direction, read from the render. On hover it swings to +5° and grows 1.107×, up and to the right, as the course card's swings 9°; the polaroid straightens. Both on hovering the art, which isn't interactive, so there's no keyboard state.
 - The mobile frame sets «всеки ученик» at 40px beside a 38px line. [38, the heading's size]
 - Between 768 and 1023px the art keeps the phone's composition, up to 480px wide; side by side from 1024px, the art scaled to 39% of the screen.
-- The fade-up as it comes into view is the only one on the homepage: the other sections don't move (`docs/motion.md` § 2). Give them the same? [only the island]
+- Every homepage section below the first screen fades up once as it comes into view (the user, 03.11.2026: «yes»), except the navy inquiry band, which is on every page (`docs/motion.md` § 2).
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.

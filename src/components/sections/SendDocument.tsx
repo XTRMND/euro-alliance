@@ -1,7 +1,9 @@
 import { getTranslations } from 'next-intl/server'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { Button } from '@/components/ui/Button'
+import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import { Sticker } from '@/components/visuals/Sticker'
+import landing from '@/styles/landing.module.css'
 import { Dropzone } from './Dropzone'
 import { LanguagePair } from './LanguagePair'
 import styles from './SendDocument.module.css'
@@ -26,6 +28,8 @@ type SendDocumentProps = {
   tone?: 'white' | 'paper'
   /** The Translations page shows the dropzone's sticker on a phone only (Figma). */
   artOnMobileOnly?: boolean
+  /** Fades up the first time it comes into view (the homepage's sections below the hero). */
+  reveal?: boolean
 }
 
 export async function SendDocument({
@@ -38,6 +42,7 @@ export async function SendDocument({
   anchor,
   tone = 'white',
   artOnMobileOnly = false,
+  reveal = false,
 }: SendDocumentProps) {
   const t = await getTranslations('sendDocument')
   const hasPair = languages.length >= 2
@@ -49,7 +54,8 @@ export async function SendDocument({
       className={[styles.section, tone === 'paper' && styles.paper].filter(Boolean).join(' ')}
       aria-labelledby={id}
     >
-      <div className={styles.inner}>
+      {reveal && <RevealOnScroll />}
+      <div className={[styles.inner, reveal && landing.revealItems].filter(Boolean).join(' ')}>
         <div className={styles.copy}>
           <SectionHeading title={title} lead={lead} id={id} />
           {hasPair && (

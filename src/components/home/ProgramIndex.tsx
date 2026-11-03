@@ -1,7 +1,9 @@
 import { ProgramCard } from '@/components/cards/ProgramCard'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import { hrefOf } from '@/lib/destinations'
 import type { Home } from '@/payload-types'
+import landing from '@/styles/landing.module.css'
 import styles from './ProgramIndex.module.css'
 
 // «Какво предлагаме» (51:273 / 115:684): the title on a sand highlighter, then the program cards,
@@ -21,7 +23,8 @@ export function ProgramIndex({ programs }: { programs: Home['programs'] }) {
       className={styles.section}
       aria-labelledby={programs?.title ? 'programs-title' : undefined}
     >
-      <div className={styles.inner}>
+      <RevealOnScroll />
+      <div className={[styles.inner, landing.revealItems].join(' ')}>
         {programs?.title && (
           <h2 id="programs-title" className={styles.title}>
             <span className={styles.highlight}>{programs.title}</span>

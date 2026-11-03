@@ -68,6 +68,7 @@ export default async function HomePage() {
         {translations?.title && (
           <SendDocument
             id="translations-title"
+            reveal
             title={translations.title}
             lead={translations.lead}
             steps={(translations.steps ?? []).map((step) => step.text)}

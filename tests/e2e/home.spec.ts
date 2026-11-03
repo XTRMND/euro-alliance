@@ -111,7 +111,7 @@ test.describe('sections', () => {
     }
   })
 
-  test('show the About island: the team photo in its 30% tint, the sticker and the history link', async ({
+  test('show the About island: the team photo in its 38% tint, the sticker and the history link', async ({
     page,
   }) => {
     await page.goto(routes.home())
@@ -122,7 +122,7 @@ test.describe('sections', () => {
     )
     await expect(island.getByRole('img', { name: /Екипът на ЕВРО-АЛИАНС/ })).toHaveAttribute(
       'src',
-      /-news\.jpg/,
+      /-homeAbout\.jpg/,
     )
     await expect(island.getByText('Нашият екип, 2026')).toBeVisible()
     await expect(island.getByRole('link', { name: 'Повече за нашата история' })).toHaveAttribute(
@@ -142,33 +142,40 @@ test.describe('sections', () => {
     await expect(polaroid).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)')
   })
 
-  test('fade the About island up once, the first time it comes into view', async ({ page }) => {
+  test('fade each section below the first screen up once, as it comes into view', async ({
+    page,
+  }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto(routes.home())
-    const selector = 'section[aria-labelledby="about-island-title"]'
-    const island = page.locator(selector)
+    const below = ['programs-title', 'about-island-title', 'translations-title', 'partners-title']
+    const waiting = () =>
+      page
+        .locator('main section[data-reveal="waiting"]')
+        .evaluateAll((sections) => sections.map((s) => s.getAttribute('aria-labelledby')))
 
-    await expect(island).toHaveAttribute('data-reveal', 'waiting')
-    await island.scrollIntoViewIfNeeded()
-    await expect(island).toHaveAttribute('data-reveal', 'shown')
-    const animations = await animationsIn(page, selector)
-    expect(animations.map((animation) => animation.name).sort()).toEqual([
-      expect.stringContaining('fade-up'),
-      expect.stringContaining('fade-up'),
-    ])
-    expect(animations.every((animation) => animation.iterations === 1)).toBe(true)
+    await expect.poll(waiting).toEqual(expect.arrayContaining(below))
+    for (const name of await waiting()) {
+      const section = page.locator(`section[aria-labelledby="${name}"]`)
+      await section.scrollIntoViewIfNeeded()
+      await expect(section).toHaveAttribute('data-reveal', 'shown')
+      // The partners' logo strip runs its own loop beside the fade-up.
+      const reveals = (await animationsIn(page, `section[aria-labelledby="${name}"]`)).filter(
+        (animation) => animation.name.includes('fade-up'),
+      )
+      expect(reveals.length).toBeGreaterThan(0)
+      expect(reveals.every((animation) => animation.iterations === 1)).toBe(true)
+    }
   })
 
-  test('keep the About island still and shown with reduced motion', async ({ page }) => {
+  test('keep every section still and shown with reduced motion', async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' })
-    await page.goto(routes.home())
-    const selector = 'section[aria-labelledby="about-island-title"]'
-    const island = page.locator(selector)
+    await page.goto(routes.home(), { waitUntil: 'networkidle' })
+    const island = page.locator('section[aria-labelledby="about-island-title"]')
 
     await island.scrollIntoViewIfNeeded()
     await expect(island.getByRole('heading', { level: 2 })).toHaveCSS('opacity', '1')
-    await expect(island).not.toHaveAttribute('data-reveal')
-    expect(await animationsIn(page, selector)).toEqual([])
+    await expect(page.locator('main [data-reveal]')).toHaveCount(0)
+    expect(await animationsIn(page, 'main')).toEqual([])
   })
 
   test('send a chosen file on to the contact wizard', async ({ page }) => {

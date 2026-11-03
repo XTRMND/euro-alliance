@@ -53,19 +53,30 @@
 }
 
 /* Sections below the first screen fade up the same way once, the first time they come into view
-   (RevealOnScroll): .revealCopy like .copy, .revealArt a stagger later. They're hidden only while
-   JavaScript holds them for that moment; none of it with reduced motion. */
+   (RevealOnScroll): .revealCopy like .copy, .revealArt a stagger later; or the children of a
+   .revealItems block in order, a stagger apart (the third and later together). They're hidden
+   only while JavaScript holds them for that moment; none of it with reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal='waiting'] .revealCopy,
-  [data-reveal='waiting'] .revealArt {
+  [data-reveal='waiting'] .revealArt,
+  [data-reveal='waiting'] .revealItems > * {
     opacity: 0;
   }
 
-  [data-reveal='shown'] .revealCopy {
+  [data-reveal='shown'] .revealCopy,
+  [data-reveal='shown'] .revealItems > * {
     animation: fade-up var(--motion-landing) var(--ease-out) both;
   }
 
   [data-reveal='shown'] .revealArt {
     animation: fade-up var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+
+  [data-reveal='shown'] .revealItems > :nth-child(2) {
+    animation-delay: var(--landing-stagger);
+  }
+
+  [data-reveal='shown'] .revealItems > :nth-child(n + 3) {
+    animation-delay: calc(2 * var(--landing-stagger));
   }
 }

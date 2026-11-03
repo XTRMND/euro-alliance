@@ -2,8 +2,10 @@ import { getTranslations } from 'next-intl/server'
 import { NewsCard } from '@/components/cards/NewsCard'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { ClearOnCentre } from '@/components/visuals/ClearOnCentre'
+import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import { routes } from '@/lib/routes'
 import type { News } from '@/payload-types'
+import landing from '@/styles/landing.module.css'
 import { SectionHead } from './SectionHead'
 import styles from './LatestNews.module.css'
 
@@ -18,7 +20,8 @@ export async function LatestNews({ title, news }: { title: string; news: NewsIte
 
   return (
     <section className={styles.section} aria-labelledby="news-title">
-      <div className={styles.inner}>
+      <RevealOnScroll />
+      <div className={[styles.inner, landing.revealItems].join(' ')}>
         <SectionHead
           title={title}
           id="news-title"

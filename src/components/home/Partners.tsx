@@ -1,5 +1,7 @@
 import { LogoStrip, type PartnerLogo } from '@/components/visuals/LogoStrip'
+import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import type { Home, Media } from '@/payload-types'
+import landing from '@/styles/landing.module.css'
 import styles from './Partners.module.css'
 
 // «Партньори и акредитации» (52:284 / 115:902): a small capitals title over the moving logo strip.
@@ -16,7 +18,8 @@ export function Partners({ partners }: { partners: Home['partners'] }) {
       className={styles.section}
       aria-labelledby={partners?.title ? 'partners-title' : undefined}
     >
-      <div className={styles.inner}>
+      <RevealOnScroll />
+      <div className={[styles.inner, landing.revealItems].join(' ')}>
         {partners?.title && (
           <h2 id="partners-title" className={styles.title}>
             {partners.title}
