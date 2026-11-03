@@ -31,17 +31,26 @@ export const Users: CollectionConfig = {
   fields: [
     { name: 'name', type: 'text', label: 'Име' },
     {
-      name: 'role',
-      type: 'select',
-      label: 'Роля',
-      required: true,
-      defaultValue: 'editor',
-      saveToJWT: true,
-      options: [
-        { label: 'Администратор', value: 'admin' },
-        { label: 'Редактор', value: 'editor' },
+      // Hidden at /admin/create-first-user, where nobody is logged in: the hook above makes that
+      // account the admin whatever the field says. The condition sits on a row, not on the field,
+      // so the column stays NOT NULL (Payload makes a conditional field nullable).
+      type: 'row',
+      admin: { condition: (_data, _siblingData, { user }) => Boolean(user) },
+      fields: [
+        {
+          name: 'role',
+          type: 'select',
+          label: 'Роля',
+          required: true,
+          defaultValue: 'editor',
+          saveToJWT: true,
+          options: [
+            { label: 'Администратор', value: 'admin' },
+            { label: 'Редактор', value: 'editor' },
+          ],
+          access: { create: isAdminField, update: isAdminField },
+        },
       ],
-      access: { create: isAdminField, update: isAdminField },
     },
   ],
 }

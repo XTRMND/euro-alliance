@@ -1,6 +1,7 @@
 import config from '@payload-config'
-import { getPayload, type Payload } from 'payload'
+import { createLocalReq, getPayload, registerFirstUserOperation, type Payload } from 'payload'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { Users } from '@/collections/Users'
 import type { User } from '@/payload-types'
 import { seed } from '@/seed'
 
@@ -18,11 +19,18 @@ beforeAll(async () => {
   const { totalDocs } = await payload.count({ collection: 'users' })
   expect(totalDocs).toBe(0)
 
-  // Asks to be an editor; the first account becomes the admin regardless.
-  admin = await payload.create({
-    collection: 'users',
+  // Through /admin/create-first-user's operation. The role is hidden there and defaults to
+  // «editor»; the first account becomes the admin regardless.
+  await registerFirstUserOperation({
+    collection: payload.collections.users,
     data: { email: 'admin@test.invalid', password: 'test-password-1', role: 'editor' },
+    req: await createLocalReq({}, payload),
   })
+  const { docs } = await payload.find({
+    collection: 'users',
+    where: { email: { equals: 'admin@test.invalid' } },
+  })
+  admin = docs[0]
   editor = await payload.create({
     collection: 'users',
     data: { email: 'editor@test.invalid', password: 'test-password-2', role: 'editor' },
@@ -41,6 +49,32 @@ describe('users', () => {
   it('makes the first account the admin', () => {
     expect(admin.role).toBe('admin')
     expect(editor.role).toBe('editor')
+  })
+
+  it('hides the role only where nobody is logged in', () => {
+    const row = Users.fields.find(
+      (f) => f.type === 'row' && f.fields.some((sub) => 'name' in sub && sub.name === 'role'),
+    )
+    const shows = (user: User | null) =>
+      row?.admin?.condition?.({}, {}, { blockData: {}, operation: 'create', path: [], user })
+
+    expect([shows(null), shows(admin), shows(editor)]).toEqual([false, true, true])
+  })
+
+  it('lets the admin set roles', async () => {
+    const created = await payload.create({
+      collection: 'users',
+      data: { email: 'second-admin@test.invalid', password: 'test-password-5', role: 'admin' },
+      ...asUser(admin),
+    })
+    const updated = await payload.update({
+      collection: 'users',
+      id: created.id,
+      data: { role: 'editor' },
+      ...asUser(admin),
+    })
+
+    expect([created.role, updated.role]).toEqual(['admin', 'editor'])
   })
 
   it('shows editors only their own account', async () => {
