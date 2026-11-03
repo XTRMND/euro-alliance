@@ -61,7 +61,8 @@
   aspect-ratio: 520 / 440;
 }
 
-.polaroid {
+/* Under .collage so it outranks the Polaroid's own width whatever order the CSS loads in. */
+.collage .polaroid {
   position: absolute;
   width: 58%;
 }
