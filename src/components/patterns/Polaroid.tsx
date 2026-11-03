@@ -15,6 +15,8 @@ type PolaroidProps = {
   /** The duotone: 45% (About's photos) unless a page asks for another. */
   tint?: Tint
   sizes?: string
+  /** next/image quality (75 by default); 90 where a tilted photo shows large. */
+  quality?: number
   className?: string
 }
 
@@ -24,12 +26,19 @@ export function Polaroid({
   clearOnHover,
   tint = 'about',
   sizes = '(min-width: 768px) 300px, 80vw',
+  quality,
   className,
 }: PolaroidProps) {
   return (
     <figure className={[styles.polaroid, className].filter(Boolean).join(' ')}>
       <div className={styles.photo}>
-        <DuotoneImage media={photo} tint={tint} sizes={sizes} clearOnHover={clearOnHover} />
+        <DuotoneImage
+          media={photo}
+          tint={tint}
+          sizes={sizes}
+          quality={quality}
+          clearOnHover={clearOnHover}
+        />
       </div>
       {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </figure>

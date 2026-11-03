@@ -38,6 +38,8 @@ export function AboutIsland({ about }: { about: Home['about'] }) {
                   // 38%: lighter than About's 45% (the user, 03.11.2026).
                   tint="homeAbout"
                   sizes="(min-width: 1024px) min(435px, 31vw), min(80vw, 412px)"
+                  // Tilted and as large as it is: no second lossy pass at 75, as on About.
+                  quality={90}
                   className={styles.polaroid}
                 />
                 <Tape className={styles.tape} />
