@@ -1,9 +1,11 @@
 .polaroid {
+  --unit: var(--polaroid-unit, 1px);
+
   display: grid;
-  gap: 8px;
-  width: min(100%, 320px);
+  gap: calc(8 * var(--unit));
+  width: min(100%, calc(320 * var(--unit)));
   margin: 0;
-  padding: 10px 10px 14px;
+  padding: calc(10 * var(--unit)) calc(10 * var(--unit)) calc(14 * var(--unit));
   background: var(--color-bg-page);
   box-shadow: var(--shadow-photo);
   transform: rotate(var(--polaroid-rotate, 0deg));
@@ -15,6 +17,6 @@
 }
 
 .caption {
-  font: 700 0.9375rem / 1.3 var(--font-display);
+  font: 700 calc(15 * var(--unit)) / 1.3 var(--font-display);
   color: var(--color-brand-primary-strong);
 }

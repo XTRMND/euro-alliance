@@ -8,14 +8,14 @@ export function Highlight({ children, className }: { children: ReactNode; classN
 }
 
 /** Renders `text` with `phrase` highlighted, if the phrase appears in it. */
-export function withHighlight(text: string, phrase?: string | null): ReactNode {
+export function withHighlight(text: string, phrase?: string | null, className?: string): ReactNode {
   if (!phrase) return text
   const at = text.indexOf(phrase)
   if (at === -1) return text
   return (
     <>
       {text.slice(0, at)}
-      <Highlight>{phrase}</Highlight>
+      <Highlight className={className}>{phrase}</Highlight>
       {text.slice(at + phrase.length)}
     </>
   )
