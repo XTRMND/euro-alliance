@@ -143,18 +143,24 @@ export default function TokensPage() {
           Оформление и движение
         </h2>
         <dl className={styles.values}>
-          {['page-max', 'content-max', 'page-margin', 'space-section', 'gap-cards', ...motion].map(
-            (name) => (
-              <div key={name}>
-                <dt>
-                  <code>--{name}</code>
-                </dt>
-                <dd>
-                  <TokenValue name={`--${name}`} />
-                </dd>
-              </div>
-            ),
-          )}
+          {[
+            'page-max',
+            'content-max',
+            'page-margin',
+            'space-section',
+            'gap-cards',
+            'gap-course-cards',
+            ...motion,
+          ].map((name) => (
+            <div key={name}>
+              <dt>
+                <code>--{name}</code>
+              </dt>
+              <dd>
+                <TokenValue name={`--${name}`} />
+              </dd>
+            </div>
+          ))}
         </dl>
       </section>
     </div>

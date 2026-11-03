@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import { CourseCard } from '@/components/cards/CourseCard'
 import { NewsCard } from '@/components/cards/NewsCard'
 import { Highlight } from '@/components/patterns/Highlight'
-import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { CourseGrid } from '@/components/patterns/CourseGrid'
 import { SearchField } from '@/components/search/SearchField'
 import { SearchResult } from '@/components/search/SearchResult'
 import { SearchTabs } from '@/components/search/SearchTabs'
@@ -113,11 +113,11 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
               <h2 id="search-courses" className={styles.heading}>
                 {t('tab.courses')}
               </h2>
-              <SwipeRow columns={3} wideColumns={4} itemWidth={280} gap={{ column: 24 }}>
+              <CourseGrid>
                 {courses.map((course) => (
                   <CourseCard key={course.id} course={course} />
                 ))}
-              </SwipeRow>
+              </CourseGrid>
             </section>
           )}
           {pages.length > 0 && (

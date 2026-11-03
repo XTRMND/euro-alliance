@@ -13,30 +13,37 @@
   transition: box-shadow var(--motion-card) var(--ease-out);
 }
 
+/* The panel scales with the card (the user, 03.11.2026): Figma's 274 × 172 at any width, the
+   halftone and the sticker with it. --u is one of Figma's pixels at the panel's width. */
 .art {
   --halftone-opacity: 0.42;
+  --u: calc(100cqw / 274);
 
+  container-type: inline-size;
   position: relative;
-  height: 172px;
+  aspect-ratio: 274 / 172;
   border-radius: 10px;
   background: var(--color-bg-warm);
 }
 
-/* 168px, 4°, centred 6px left of the middle; on hover 186px, −5°, up and to the right. The sticker
-   may break out of the panel but never past the card's top or sides (the user, 02.11.2026): on
-   hover a tall or square photo rises and grows only as far as keeps its top 2px inside the card
-   (95.65 = the photo's centre at rest, 85.65px down the 172px panel, plus 10 of the card's 12px
-   padding); a wide one takes the full pose. --base is the photo's half-height at −5°, unscaled,
-   from its share of the box (Sticker). The sides and the resting pose fit at every card width. */
+/* 168, 4°, centred 6 left of the middle; on hover 186, −5°, up and to the right (panel units).
+   The sticker may break out of the panel but never past the card's top or sides (the user,
+   02.11.2026): on hover a tall or square photo rises and grows only as far as keeps its top inside
+   the card. --reach is how far above its resting centre its top may go: 85.65 (the centre, down
+   the 172 panel) plus the card's 12px padding less 2px, counted as 7 units so it holds up to
+   1.43px a unit (a 392px panel; cards stop at 380). A wide photo takes the full pose. --base is
+   the photo's half-height at −5°, unscaled, from its share of the box (Sticker). The sides and the
+   resting pose fit at every card width. */
 .art .sticker {
   --base: calc(84 * var(--sticker-h, 1) * 0.9962 + 84 * var(--sticker-w, 1) * 0.0872);
-  --hover-scale: min(1.107, calc(95.65 / var(--base)));
-  --hover-lift: max(-17.11px, calc((var(--hover-scale) * var(--base) - 95.65) * 1px));
+  --reach: 92.65;
+  --hover-scale: min(1.107, calc(var(--reach) / var(--base)));
+  --hover-lift: max(-17.11, calc(var(--hover-scale) * var(--base) - var(--reach)));
 
   position: absolute;
-  top: calc(50% - 0.35px);
-  left: calc(50% - 6.06px);
-  width: 168px;
+  top: calc(50% - 0.35 * var(--u));
+  left: calc(50% - 6.06 * var(--u));
+  width: calc(168 * var(--u));
   translate: -50% -50%;
   rotate: 4deg;
   transition:
@@ -49,8 +56,8 @@
   --bubble-rotate: 8deg;
 
   position: absolute;
-  top: calc(50% - 38.99px);
-  left: calc(50% + 54.38px);
+  top: calc(50% - 38.99 * var(--u));
+  left: calc(50% + 54.38 * var(--u));
   translate: -50% -50%;
   transition: translate var(--motion-card) var(--ease-out);
 }
@@ -185,24 +192,24 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .card:focus-within .sticker {
-    translate: calc(-50% + 13.81px) calc(-50% + var(--hover-lift));
+    translate: calc(-50% + 13.81 * var(--u)) calc(-50% + var(--hover-lift) * var(--u));
     rotate: -5deg;
     scale: var(--hover-scale);
   }
 
   .card:focus-within .level {
-    translate: calc(-50% + 9px) calc(-50% - 12px);
+    translate: calc(-50% + 9 * var(--u)) calc(-50% - 12 * var(--u));
   }
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .card:hover .sticker {
-    translate: calc(-50% + 13.81px) calc(-50% + var(--hover-lift));
+    translate: calc(-50% + 13.81 * var(--u)) calc(-50% + var(--hover-lift) * var(--u));
     rotate: -5deg;
     scale: var(--hover-scale);
   }
 
   .card:hover .level {
-    translate: calc(-50% + 9px) calc(-50% - 12px);
+    translate: calc(-50% + 9 * var(--u)) calc(-50% - 12 * var(--u));
   }
 }

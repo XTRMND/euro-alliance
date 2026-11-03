@@ -1,0 +1,45 @@
+/* The frame is the container the column count is read from: n columns once n × 280px and the
+   n − 1 gaps fit (container queries can't read custom properties, so the widths are written out:
+   592, 904 and 1216 for 2, 3 and 4). Each column is at most 380px; spare room stays on the
+   right. */
+.frame {
+  container-type: inline-size;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 380px);
+  gap: var(--gap-course-cards);
+  justify-content: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  min-width: 0;
+}
+
+.item > * {
+  flex: 1;
+  min-width: 0;
+}
+
+@container (min-width: 592px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 380px));
+  }
+}
+
+@container (min-width: 904px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 380px));
+  }
+}
+
+@container (min-width: 1216px) {
+  .grid {
+    grid-template-columns: repeat(4, minmax(0, 380px));
+  }
+}

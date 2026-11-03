@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
-import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { Fragment, useState, type ReactNode } from 'react'
+import { CourseGrid } from '@/components/patterns/CourseGrid'
 import type { UpcomingFilter } from '@/lib/courses'
 import styles from './UpcomingTabs.module.css'
 
@@ -36,19 +36,11 @@ export function UpcomingTabs({ label, tabs, items, perTab }: UpcomingTabsProps) 
           ))}
         </div>
       )}
-      <SwipeRow
-        columns={2}
-        wideColumns={4}
-        itemWidth={280}
-        gap={{ column: 24 }}
-        className={styles.cards}
-      >
+      <CourseGrid>
         {shown.map((item) => (
-          <div key={item.id} className={styles.card}>
-            {item.card}
-          </div>
+          <Fragment key={item.id}>{item.card}</Fragment>
         ))}
-      </SwipeRow>
+      </CourseGrid>
     </>
   )
 }

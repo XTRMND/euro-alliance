@@ -1,6 +1,6 @@
 import { CourseCard } from '@/components/cards/CourseCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
-import { SwipeRow } from '@/components/patterns/SwipeRow'
+import { CourseGrid } from '@/components/patterns/CourseGrid'
 import { Button } from '@/components/ui/Button'
 import { getListedCourses } from '@/lib/cms'
 import { courseFiltersQuery } from '@/lib/course-filters'
@@ -32,11 +32,11 @@ export function UpcomingCourses({ program, upcoming }: { program: Program; upcom
   return (
     <section id={upcomingId} className={styles.upcoming} aria-labelledby={`${upcomingId}-title`}>
       <SectionHeading id={`${upcomingId}-title`} title={program.upcoming.heading} />
-      <SwipeRow columns={3} wideColumns={4} itemWidth={280} className={styles.courses}>
+      <CourseGrid>
         {upcoming.courses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
-      </SwipeRow>
+      </CourseGrid>
       {program.upcoming.linkLabel && (
         <Button href={upcoming.listing} variant="link" className={styles.all}>
           {program.upcoming.linkLabel}

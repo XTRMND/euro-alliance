@@ -44,9 +44,3 @@
     grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
   }
 }
-
-@media (min-width: 1440px) {
-  .row[data-wide] {
-    grid-template-columns: repeat(var(--wide-columns), minmax(0, 1fr));
-  }
-}

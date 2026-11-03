@@ -47,7 +47,7 @@ export async function CourseCard({
     <article className={[styles.card, className].filter(Boolean).join(' ')}>
       <div className={styles.art}>
         <Halftone pattern="course-card" />
-        <Sticker topic={course.topic} sizes="186px" className={styles.sticker} />
+        <Sticker topic={course.topic} sizes="242px" className={styles.sticker} />
         {course.level && (
           <CountBubble
             size="small"

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { CourseCard } from '@/components/cards/CourseCard'
 import { NewsCard } from '@/components/cards/NewsCard'
 import { ProgramCard } from '@/components/cards/ProgramCard'
+import { CourseGrid } from '@/components/patterns/CourseGrid'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { courseTopics } from '@/lib/courses'
 import { destinations } from '@/lib/destinations'
@@ -94,19 +95,19 @@ export default function CardsPage() {
       <h1 className={styles.title}>Карти</h1>
 
       <section aria-label="Course card" className={styles.section}>
-        <SwipeRow columns={3} wideColumns={4} itemWidth={280}>
+        <CourseGrid>
           {courses.map((item) => (
             <CourseCard key={item.id} course={item} headingLevel="h2" />
           ))}
-        </SwipeRow>
+        </CourseGrid>
       </section>
 
       <section aria-label="Course card, every sticker" className={styles.section}>
-        <SwipeRow columns={3} wideColumns={4} itemWidth={280}>
+        <CourseGrid>
           {everySticker.map((item) => (
             <CourseCard key={item.id} course={item} headingLevel="h2" />
           ))}
-        </SwipeRow>
+        </CourseGrid>
       </section>
 
       <section aria-label="Program card" className={styles.section}>

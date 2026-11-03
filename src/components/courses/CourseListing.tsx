@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useOptimistic, useRef, useTransition, type ReactNode } from 'react'
+import { CourseGrid } from '@/components/patterns/CourseGrid'
 import { Button } from '@/components/ui/Button'
 import { ChipButton } from '@/components/ui/Chip'
 import { type CourseStatus, courseStatuses } from '@/lib/course-state'
@@ -168,13 +169,9 @@ export function CourseListing({ filters, total, options, labels, cards }: Course
         </p>
 
         {cards.length > 0 ? (
-          <ul ref={results} className={styles.grid}>
-            {cards.map((card, i) => (
-              <li key={i} data-index={i} className={styles.cell}>
-                {card}
-              </li>
-            ))}
-          </ul>
+          <CourseGrid ref={results} indexed>
+            {cards}
+          </CourseGrid>
         ) : (
           <div className={styles.empty}>
             <p>{labels.empty}</p>

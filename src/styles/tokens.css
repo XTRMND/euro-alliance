@@ -53,6 +53,7 @@
   --page-margin: clamp(24px, 3.2px + 5.333vw, 80px); /* 24 → 80 */
   --space-section: clamp(48px, 33.14px + 3.81vw, 88px); /* 48 → 88 */
   --gap-cards: 24px;
+  --gap-course-cards: 32px; /* course card grids (the user, 03.11.2026) */
 
   /* Shape */
   --radius-button: 10px;

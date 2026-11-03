@@ -47,15 +47,3 @@
     padding-inline: 0;
   }
 }
-
-.cards {
-  --row-space: 8px;
-}
-
-.card {
-  display: flex;
-}
-
-.card > * {
-  flex: 1;
-}

@@ -290,7 +290,7 @@ Waiting on the user:
 
 Design questions for the user (found in PR 3; the build follows the default in brackets until answered):
 - Page 02 Foundations is empty. Was it meant to hold the type and spacing scale? [tokens measured from the components]
-- Card gap: Figma rows use 24 px, § 6 says 32 px. [24 px, `--gap-cards`]
+- Card gap: Figma rows use 24 px, § 6 says 32 px. [24 px, `--gap-cards`; course card grids 32 px, `--gap-course-cards` (the user, 03.11.2026)]
 - Home's section titles are plain frames (52/0.96, 38 on mobile), not Section heading instances (52/1, 36 on mobile). [the component, PR 8]
 - The Course card description in Figma says "Image from filtered stock". Decided 02.11.2026: no photo, the halftone panel with the course's sticker (and the Course visual on the course page).
 - Focus ring: not in Figma. [3 px brand/primary outline, 2 px offset; sand on navy]
@@ -475,7 +475,8 @@ From SEO (PR 22):
 - The sitemap lists the fixed pages and everything in the search index (what's published). The search page, the dev pages and old addresses aren't in it.
 
 From the review follow-ups (PR 24a, 02.11.2026):
-- The course card's button stays on the price row, its label on one line (the user). A card needs about 260px for that, so course card rows have four cards only from 1440px (Figma's width), three from 1024px, and two on the homepage until 1440px (its four cards make two rows of two, never three and one). «Попитайте» is set in the H3 size, a step below the prices, so it fits beside «Запитване». [as described]
+- The course card's button stays on the price row, its label on one line (the user). A card needs about 260px for that. «Попитайте» is set in the H3 size, a step below the prices, so it fits beside «Запитване». [as described]
+- Course card grids (the user, 03.11.2026; replaces the fixed 3/4 columns and the homepage's two-by-two): the listing, the homepage, the language and program pages and the search take as many 280px columns as fit, 32px apart, as `repeat(auto-fill, minmax(280px, 1fr))` counts them, but a card is never wider than 380px and spare room stays on the right (`src/components/patterns/CourseGrid`). One column on a phone (no more sideways swipe). With the site's page margin (24 → 80px, not 40) that's 2 columns from about 670px, 3 from about 1020px, 4 from about 1370px; the homepage's four cards show three and one between those last two. The listing's sidebar takes 328px from 1024px, so it has one column at 1024, two at 1280 and three at 1440. The card's image panel keeps Figma's 274 × 172 proportions at any width, the halftone and the sticker scaling with it. The course page's «Подобни курсове» stays a carousel.
 
 From the accessibility pass (PR 25):
 - New checks (`tests/e2e/a11y.spec.ts`): axe on the open states not covered elsewhere (header dropdown, mobile menu with its group, a licence in full size, the article's contents box, the wizard's Step 2 for every topic); reflow at 320px on every page (WCAG 1.4.10); WCAG 1.4.12 text spacing at 390 and 1440 (no sideways scroll, no text cut off); a keyboard pass on every page (skip link first, every Tab stop on screen with a visible focus state).

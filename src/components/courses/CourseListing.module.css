@@ -192,22 +192,6 @@ label.group .legend {
   color: var(--color-brand-primary-strong);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 18px;
-  padding: 0;
-  list-style: none;
-}
-
-.cell {
-  display: flex;
-}
-
-.cell > * {
-  flex: 1;
-}
-
 .empty {
   display: grid;
   gap: 18px;
@@ -298,11 +282,6 @@ label.group .legend {
 }
 
 @media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 26px;
-  }
-
   .moreButton {
     justify-self: center;
   }
@@ -341,12 +320,5 @@ label.group .legend {
 
   .sortDesktop {
     display: flex;
-  }
-}
-
-/* Three cards beside the sidebar once they get Figma's 300px. */
-@media (min-width: 1280px) {
-  .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

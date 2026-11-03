@@ -8,10 +8,6 @@
   scroll-margin-top: 80px;
 }
 
-.courses {
-  --row-space: 6px;
-}
-
 .all {
   justify-self: start;
 }
