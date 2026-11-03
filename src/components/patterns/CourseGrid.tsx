@@ -4,8 +4,8 @@ import styles from './CourseGrid.module.css'
 // Course card grids: the listing, the homepage, the language and program pages and the search
 // (the user, 03.11.2026). As many columns as fit at 280px, 32px apart (the count
 // `repeat(auto-fill, minmax(280px, 1fr))` gives), but a card is never wider than 380px: with room
-// to spare the cards keep that width, packed to the left. One column on a phone. The count comes
-// from the grid's own width, so it holds beside the listing's sidebar too.
+// to spare the cards keep that width and the room goes between them. One column on a phone. The
+// count comes from the grid's own width, so it holds beside the listing's sidebar too.
 
 type CourseGridProps = {
   children: ReactNode
