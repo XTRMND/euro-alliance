@@ -619,6 +619,7 @@ export interface Program {
                 | 'otherInquiry'
                 | 'news'
                 | 'about'
+                | 'aboutHistory'
                 | 'contact'
                 | 'privacy'
                 | 'cookies'
@@ -759,6 +760,7 @@ export interface Program {
                       | 'otherInquiry'
                       | 'news'
                       | 'about'
+                      | 'aboutHistory'
                       | 'contact'
                       | 'privacy'
                       | 'cookies'
@@ -831,6 +833,7 @@ export interface Program {
                       | 'otherInquiry'
                       | 'news'
                       | 'about'
+                      | 'aboutHistory'
                       | 'contact'
                       | 'privacy'
                       | 'cookies'
@@ -883,6 +886,7 @@ export interface Program {
                     | 'otherInquiry'
                     | 'news'
                     | 'about'
+                    | 'aboutHistory'
                     | 'contact'
                     | 'privacy'
                     | 'cookies'
@@ -961,6 +965,7 @@ export interface Program {
                     | 'otherInquiry'
                     | 'news'
                     | 'about'
+                    | 'aboutHistory'
                     | 'contact'
                     | 'privacy'
                     | 'cookies'
@@ -1284,6 +1289,7 @@ export interface Program {
                     | 'otherInquiry'
                     | 'news'
                     | 'about'
+                    | 'aboutHistory'
                     | 'contact'
                     | 'privacy'
                     | 'cookies'
@@ -3036,6 +3042,7 @@ export interface Home {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies'
@@ -3063,6 +3070,7 @@ export interface Home {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies'
@@ -3156,12 +3164,109 @@ export interface Home {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies';
           id?: string | null;
         }[]
       | null;
+  };
+  /**
+   * Секцията след «Какво предлагаме»: снимка в полароид, стикер и текст. Без заглавие не се показва.
+   */
+  about?: {
+    kicker?: string | null;
+    heading?: string | null;
+    /**
+     * Част от заглавието; стои на свой ред.
+     */
+    highlight?: string | null;
+    lead?: string | null;
+    /**
+     * С пясъчната черта отляво.
+     */
+    quote?: string | null;
+    /**
+     * Показва се в полароид, с лек тон в цветовете на сайта.
+     */
+    photo?: (number | null) | Media;
+    caption?: string | null;
+    sticker?:
+      | (
+          | 'english'
+          | 'german'
+          | 'french'
+          | 'italian'
+          | 'spanish'
+          | 'russian'
+          | 'bulgarian'
+          | 'exam-prep'
+          | 'exams'
+          | 'student'
+          | 'teaching'
+          | 'professional'
+          | 'corporate'
+          | 'computer'
+          | 'farming'
+          | 'translation'
+          | 'accounting'
+          | 'customs'
+          | 'banking'
+          | 'management'
+          | 'small-business'
+          | 'office'
+          | 'sales'
+          | 'marketing'
+          | 'business-it'
+          | 'security'
+          | 'hotel'
+          | 'cooking'
+          | 'catering'
+          | 'tour-guide'
+          | 'travel'
+          | 'animation'
+          | 'plant-protection'
+          | 'floristry'
+          | 'real-estate'
+          | 'hardware-and-networks'
+          | 'word-processing'
+          | 'spreadsheets'
+          | 'presentations'
+          | 'internet-and-email'
+          | 'databases'
+          | 'web-and-graphic-design'
+          | 'specialised-software'
+        )
+      | null;
+    cta?: {
+      label?: string | null;
+      destination?:
+        | (
+            | 'courses'
+            | 'languageCourses'
+            | 'languagesStudents'
+            | 'languagesAdults'
+            | 'certificates'
+            | 'professions'
+            | 'vouchers'
+            | 'voucherInquiry'
+            | 'teachers'
+            | 'farmers'
+            | 'computerCourses'
+            | 'translations'
+            | 'sendDocument'
+            | 'levelTest'
+            | 'otherInquiry'
+            | 'news'
+            | 'about'
+            | 'aboutHistory'
+            | 'contact'
+            | 'privacy'
+            | 'cookies'
+          )
+        | null;
+    };
   };
   translations?: {
     title?: string | null;
@@ -3193,6 +3298,7 @@ export interface Home {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies'
@@ -3342,6 +3448,7 @@ export interface About {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies'
@@ -3369,6 +3476,7 @@ export interface About {
             | 'otherInquiry'
             | 'news'
             | 'about'
+            | 'aboutHistory'
             | 'contact'
             | 'privacy'
             | 'cookies'
@@ -3486,6 +3594,7 @@ export interface About {
                 | 'otherInquiry'
                 | 'news'
                 | 'about'
+                | 'aboutHistory'
                 | 'contact'
                 | 'privacy'
                 | 'cookies'
@@ -3717,6 +3826,24 @@ export interface HomeSelect<T extends boolean = true> {
               linkLabel?: T;
               destination?: T;
               id?: T;
+            };
+      };
+  about?:
+    | T
+    | {
+        kicker?: T;
+        heading?: T;
+        highlight?: T;
+        lead?: T;
+        quote?: T;
+        photo?: T;
+        caption?: T;
+        sticker?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              destination?: T;
             };
       };
   translations?:

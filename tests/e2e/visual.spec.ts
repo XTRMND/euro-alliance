@@ -51,6 +51,13 @@ for (const { name, path } of snapshots) {
         await Promise.all(images.map((image) => image.decode().catch(() => undefined)))
       })
 
+      // Sections that fade up as they come into view (RevealOnScroll) are shown as they end up.
+      await page.evaluate(() => {
+        for (const section of document.querySelectorAll<HTMLElement>('[data-reveal]')) {
+          section.dataset.reveal = 'shown'
+        }
+      })
+
       await expect(page).toHaveScreenshot(`${name}-${width}.png`, { fullPage: true })
     })
   }

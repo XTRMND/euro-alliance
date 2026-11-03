@@ -31,6 +31,7 @@ Put these in `src/styles/tokens.css` next to the colour tokens and use them ever
 - **Implementation:** CSS keyframes with `animation-fill-mode: both`, no JavaScript. Server-rendered HTML animates on its own, so there's no flash and no dependency on hydration.
 - **LCP guard:** never fade the LCP element in from `opacity: 0` (on the homepage that is likely the hero photo). Animate the copy and the art only, and confirm the LCP element in the Lighthouse report for each page.
 - **Reduced motion:** none of this runs. Everything renders in its resting state.
+- **Sections below the first screen** (the homepage's About island, 03.11.2026): the same fade-up, once, the first time the section comes into view: the copy at 0 ms, the art 120 ms later (`RevealOnScroll`, `landing.module.css`'s `.revealCopy` / `.revealArt`). This needs JavaScript: the section is hidden only after the script has found it off screen, so without JavaScript, already on screen or with reduced motion it simply shows. The other homepage sections don't do this yet.
 
 ## 3. Language strip and partner logos
 
@@ -83,6 +84,7 @@ Production changes from the demo:
 | Course card (62:229) | card lifts; sticker tilts | `--motion-card` | from a hover variant if one exists; else proposed `translateY(-6px)` with a deeper shadow, sticker `rotate(+6deg)` from rest |
 | News card photo (62:240) | duotone layer fades to full colour | `--motion-news` | tint layer opacity → 0 |
 | Program cards (homepage) | straighten | `--motion-card` | rotation → 0deg |
+| About island (homepage) | the polaroid straightens; the sticker tilts like a course card's | `--motion-card` | polaroid 4° → 0°; sticker −4.2° → 5°, 1.107×, up and right; on hovering the art |
 | Feature card (129:348) | white → navy | `--motion-card` | background brand/primary, text text/on-brand |
 | About photos | clear to full colour where the design says so | `--motion-news` | as news |
 

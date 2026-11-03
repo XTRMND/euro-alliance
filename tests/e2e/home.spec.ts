@@ -4,7 +4,7 @@ import { devRoutes, routes } from '@/lib/routes'
 import { partners } from '@/seed/data'
 
 // The homepage (PR 8) against the seeded database: Figma's copy, the classroom photo, the program
-// cards and the partner logos. Courses and news are never seeded, so their sections are hidden
+// cards, the About island and the partner logos. Courses and news are never seeded, so their sections are hidden
 // here; their cards are checked on the dev gallery with test data.
 
 /** Names of the CSS animations running on elements inside `selector`. */
@@ -109,6 +109,66 @@ test.describe('sections', () => {
     for (const { name } of partners) {
       await expect(strip.getByRole('img', { name, exact: true })).toHaveCount(1)
     }
+  })
+
+  test('show the About island: the team photo in its 30% tint, the sticker and the history link', async ({
+    page,
+  }) => {
+    await page.goto(routes.home())
+    const island = page.getByRole('region', { name: 'Вярваме в потенциала на всеки ученик' })
+
+    await expect(island.getByRole('heading', { level: 2 }).locator('span')).toHaveText(
+      'всеки ученик',
+    )
+    await expect(island.getByRole('img', { name: /Екипът на ЕВРО-АЛИАНС/ })).toHaveAttribute(
+      'src',
+      /-news\.jpg/,
+    )
+    await expect(island.getByText('Нашият екип, 2026')).toBeVisible()
+    await expect(island.getByRole('link', { name: 'Повече за нашата история' })).toHaveAttribute(
+      'href',
+      destinations.aboutHistory.href,
+    )
+  })
+
+  test("straighten the About island's polaroid on hover", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto(routes.home())
+    const polaroid = page.locator('section[aria-labelledby="about-island-title"] figure')
+
+    await polaroid.scrollIntoViewIfNeeded()
+    await expect(polaroid).not.toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)')
+    await polaroid.hover()
+    await expect(polaroid).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)')
+  })
+
+  test('fade the About island up once, the first time it comes into view', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto(routes.home())
+    const selector = 'section[aria-labelledby="about-island-title"]'
+    const island = page.locator(selector)
+
+    await expect(island).toHaveAttribute('data-reveal', 'waiting')
+    await island.scrollIntoViewIfNeeded()
+    await expect(island).toHaveAttribute('data-reveal', 'shown')
+    const animations = await animationsIn(page, selector)
+    expect(animations.map((animation) => animation.name).sort()).toEqual([
+      expect.stringContaining('fade-up'),
+      expect.stringContaining('fade-up'),
+    ])
+    expect(animations.every((animation) => animation.iterations === 1)).toBe(true)
+  })
+
+  test('keep the About island still and shown with reduced motion', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await page.goto(routes.home())
+    const selector = 'section[aria-labelledby="about-island-title"]'
+    const island = page.locator(selector)
+
+    await island.scrollIntoViewIfNeeded()
+    await expect(island.getByRole('heading', { level: 2 })).toHaveCSS('opacity', '1')
+    await expect(island).not.toHaveAttribute('data-reveal')
+    expect(await animationsIn(page, selector)).toEqual([])
   })
 
   test('send a chosen file on to the contact wizard', async ({ page }) => {

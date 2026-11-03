@@ -51,3 +51,21 @@
     transform: rotate(-40deg);
   }
 }
+
+/* Sections below the first screen fade up the same way once, the first time they come into view
+   (RevealOnScroll): .revealCopy like .copy, .revealArt a stagger later. They're hidden only while
+   JavaScript holds them for that moment; none of it with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal='waiting'] .revealCopy,
+  [data-reveal='waiting'] .revealArt {
+    opacity: 0;
+  }
+
+  [data-reveal='shown'] .revealCopy {
+    animation: fade-up var(--motion-landing) var(--ease-out) both;
+  }
+
+  [data-reveal='shown'] .revealArt {
+    animation: fade-up var(--motion-landing) var(--ease-out) var(--landing-stagger) both;
+  }
+}

@@ -27,6 +27,7 @@ import * as migration_20261102_104535_bulgarian from './20261102_104535_bulgaria
 import * as migration_20261102_134639_missing_addresses from './20261102_134639_missing_addresses';
 import * as migration_20261102_140644_course_free from './20261102_140644_course_free';
 import * as migration_20261102_151729_course_stickers from './20261102_151729_course_stickers';
+import * as migration_20261103_090104_home_about from './20261103_090104_home_about';
 
 export const migrations = [
   {
@@ -172,6 +173,11 @@ export const migrations = [
   {
     up: migration_20261102_151729_course_stickers.up,
     down: migration_20261102_151729_course_stickers.down,
-    name: '20261102_151729_course_stickers'
+    name: '20261102_151729_course_stickers',
+  },
+  {
+    up: migration_20261103_090104_home_about.up,
+    down: migration_20261103_090104_home_about.down,
+    name: '20261103_090104_home_about'
   },
 ];

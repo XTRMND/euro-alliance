@@ -490,6 +490,13 @@ From the security headers (PR 24):
 - The admin runs under the same policy. Its avatar is now Payload's own, not Gravatar, so no editor's email hash goes to a third party.
 - TLS settings for the user's servers or CDN: README, «Security headers and TLS» (Mozilla intermediate, ECDHE only).
 
+From the homepage's About island (03.11.2026, 323:5189 / 324:9930):
+- The team photo takes the 30% tint (the user: lighter than About's 45%, which the Polaroid's Figma description gives). It's the About hero's upload, so the sharper original (Y2) replaces both.
+- The sticker rests at −4.2°: the frame doesn't give the direction, read from the render. On hover it swings to +5° and grows 1.107×, up and to the right, as the course card's swings 9°; the polaroid straightens. Both on hovering the art, which isn't interactive, so there's no keyboard state.
+- The mobile frame sets «всеки ученик» at 40px beside a 38px line. [38, the heading's size]
+- Between 768 and 1023px the art keeps the phone's composition, up to 480px wide; side by side from 1024px, the art scaled to 39% of the screen.
+- The fade-up as it comes into view is the only one on the homepage: the other sections don't move (`docs/motion.md` § 2). Give them the same? [only the island]
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.

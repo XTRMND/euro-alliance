@@ -134,6 +134,48 @@ export const Home: GlobalConfig = {
       ],
     },
     {
+      name: 'about',
+      type: 'group',
+      label: 'За ЕВРО-АЛИАНС',
+      admin: {
+        description:
+          'Секцията след «Какво предлагаме»: снимка в полароид, стикер и текст. Без заглавие не се показва.',
+      },
+      fields: [
+        { name: 'kicker', type: 'text', label: 'Надзаглавие', localized: true },
+        {
+          type: 'row',
+          fields: [
+            { name: 'heading', type: 'text', label: 'Заглавие', localized: true },
+            {
+              name: 'highlight',
+              type: 'text',
+              label: 'Подчертана фраза',
+              localized: true,
+              admin: { description: 'Част от заглавието; стои на свой ред.' },
+            },
+          ],
+        },
+        { name: 'lead', type: 'textarea', label: 'Текст', localized: true },
+        {
+          name: 'quote',
+          type: 'textarea',
+          label: 'Акцент',
+          localized: true,
+          admin: { description: 'С пясъчната черта отляво.' },
+        },
+        {
+          type: 'row',
+          fields: [
+            photo('photo', 'Снимка', 'Показва се в полароид, с лек тон в цветовете на сайта.'),
+            { name: 'caption', type: 'text', label: 'Надпис под снимката', localized: true },
+          ],
+        },
+        { name: 'sticker', type: 'select', label: 'Стикер', options: topicOptions },
+        action('cta', 'Бутон'),
+      ],
+    },
+    {
       name: 'translations',
       type: 'group',
       label: 'Преводи',

@@ -1,4 +1,4 @@
-import { routes } from './routes'
+import { aboutSections, routes } from './routes'
 
 // Fixed link targets the client picks from in the CMS (homepage program cards and hero buttons),
 // so a card can never point at a page that doesn't exist. A general label goes to a general view,
@@ -31,6 +31,7 @@ export const destinations = {
   otherInquiry: { label: 'Запитване: друго', href: routes.contact('drugo') },
   news: { label: 'Новини', href: routes.news() },
   about: { label: 'За нас', href: routes.about() },
+  aboutHistory: { label: 'За нас: история', href: `${routes.about()}#${aboutSections.history}` },
   contact: { label: 'Контакти', href: routes.contact() },
   privacy: { label: 'Защита на личните данни', href: routes.privacy() },
   cookies: { label: 'Политика за бисквитките', href: routes.cookies() },

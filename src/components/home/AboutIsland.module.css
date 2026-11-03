@@ -1,0 +1,197 @@
+/* About island (323:5189 / 324:9930): paper, 96px above and 112px below (64 and 72 on a phone).
+   The art comes first, 40px above the copy; from 1024px they sit side by side, centred on each
+   other, 96px apart at 1440. Sideways the paper clips: the sticker's corner reaches into the page
+   margin on a phone, as in the frame. */
+
+.section {
+  overflow-x: clip;
+  background: var(--color-bg-warm);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: clamp(64px, 52.11px + 3.048vw, 96px) var(--page-margin)
+    clamp(72px, 57.14px + 3.81vw, 112px);
+}
+
+/* The art is placed in Figma's own units (--u), scaled with its box (container query units): the
+   phone's 350 × 370 frame up to 480px wide, the desktop's 560 × 560 one from 1024px. Positions
+   are the layers' resting boxes before their tilt. */
+.visual {
+  --u: calc(100cqw / 350);
+  --sticker-box: 130.53;
+
+  container-type: inline-size;
+  position: relative;
+  flex: none;
+  width: min(100%, 480px);
+  aspect-ratio: 350 / 370;
+}
+
+/* The Course visual's halftone panel, its corners rounded 16px (scaled with it). */
+.panel {
+  --halftone-opacity: 0.36;
+
+  position: absolute;
+  top: 0;
+  left: calc(100 * var(--u));
+  width: calc(248 * var(--u));
+  aspect-ratio: 400 / 540;
+  border-radius: calc(var(--radius-card) * 248 / 400);
+}
+
+/* The polaroid at 4°, Figma's 320 × 270 (1.45 times that on desktop). */
+.visual .polaroid {
+  --polaroid-unit: var(--u);
+  --polaroid-rotate: 4deg;
+
+  position: absolute;
+  top: calc(72.83 * var(--u));
+  left: calc(-9.8 * var(--u));
+}
+
+.visual .tape {
+  top: calc(52.91 * var(--u));
+  left: calc(121.16 * var(--u));
+  width: calc(96 * var(--u));
+  height: calc(27.2 * var(--u));
+  transform: rotate(-6deg);
+}
+
+/* The sticker leans the other way from the course cards' at rest (−4.2°, read from the render). */
+.visual .sticker {
+  position: absolute;
+  top: calc(223.5 * var(--u));
+  left: calc(240.77 * var(--u));
+  width: calc(var(--sticker-box) * var(--u));
+  rotate: -4.18deg;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: clamp(20px, 17.03px + 0.762vw, 28px); /* 20 → 28 */
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.kicker {
+  font: 600 clamp(0.875rem, 0.8286rem + 0.19vw, 1rem) / 1.2 var(--font-body); /* 14 → 16 */
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title {
+  font: 800 clamp(2.375rem, 1.864rem + 2.095vw, 3.75rem) / 1 var(--font-display); /* 38 → 60 */
+  color: var(--color-brand-primary-strong);
+}
+
+/* «всеки ученик» on its own line, 6px below (4 on a phone), on the sand block at 1.5°. */
+.title .highlight {
+  display: table;
+  margin-top: 0.1em;
+  padding: 0 clamp(10px, 0.2em, 12px) 4px;
+  transform: rotate(1.5deg);
+}
+
+.lead {
+  font: var(--type-lead);
+  color: var(--color-text-primary);
+}
+
+/* The result beside a sand bar, 5px wide and 16px from the text on a phone (6 and 20 on desktop). */
+.result {
+  --bar: 5px;
+
+  display: flex;
+  gap: 16px;
+  font: 700 clamp(1.5rem, 1.384rem + 0.476vw, 1.8125rem) / 1.15 var(--font-display); /* 24 → 29 */
+  color: var(--color-brand-primary-strong);
+}
+
+.result::before {
+  content: '';
+  flex: none;
+  width: var(--bar);
+  border-radius: 3px;
+  background: var(--color-brand-accent);
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    flex-direction: row;
+    gap: clamp(48px, 6.667vw, 96px);
+    align-items: center;
+  }
+
+  .visual {
+    --u: calc(100cqw / 560);
+    --sticker-box: 200;
+
+    width: min(560px, 38.9vw);
+    aspect-ratio: 1;
+  }
+
+  .panel {
+    left: calc(170 * var(--u));
+    width: calc(400 * var(--u));
+    border-radius: var(--radius-card);
+  }
+
+  .visual .polaroid {
+    --polaroid-unit: calc(1.45 * var(--u));
+
+    top: calc(111.7 * var(--u));
+    left: calc(-4.22 * var(--u));
+  }
+
+  .visual .tape {
+    top: calc(97.64 * var(--u));
+    left: calc(197.45 * var(--u));
+    width: calc(120 * var(--u));
+    height: calc(34 * var(--u));
+  }
+
+  .visual .sticker {
+    top: calc(340.86 * var(--u));
+    left: calc(387.3 * var(--u));
+  }
+
+  .result {
+    --bar: 6px;
+
+    gap: 20px;
+  }
+}
+
+/* On hover the polaroid straightens and the sticker tilts like a course card's: it swings 9°,
+   grows to 1.107 and lifts up and to the right, by the card's share of its box. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .visual .polaroid {
+    transition: transform var(--motion-card) var(--ease-out);
+  }
+
+  .visual .sticker {
+    transition:
+      translate var(--motion-card) var(--ease-out),
+      rotate var(--motion-card) var(--ease-out),
+      scale var(--motion-card) var(--ease-out);
+  }
+
+  .visual:hover .polaroid {
+    --polaroid-rotate: 0deg;
+  }
+
+  .visual:hover .sticker {
+    translate: calc(var(--sticker-box) * 0.0822 * var(--u))
+      calc(var(--sticker-box) * -0.1018 * var(--u));
+    rotate: 5deg;
+    scale: 1.107;
+  }
+}

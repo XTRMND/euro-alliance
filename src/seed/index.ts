@@ -157,6 +157,12 @@ async function seedHome(payload: Payload) {
     })
     data.hero = { ...(data.hero ?? current.hero), photoSecondary: photo.id }
   }
+  // The About island (323:5189), added to a homepage seeded before it was: Figma's copy and the
+  // team photo the About page's hero shows (one upload for both).
+  if (isEmpty(current.about?.heading)) {
+    const photo = await uploadOnce(payload, aboutPhotos.hero)
+    data.about = { ...home.about, photo: photo.id }
+  }
   for (const key of ['upcoming', 'programs', 'translations', 'news'] as const) {
     if (isEmpty(current[key]?.title)) data[key] = home[key]
   }

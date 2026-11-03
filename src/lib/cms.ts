@@ -79,7 +79,7 @@ export const getHome = unstable_cache(
     const home = await (
       await payload()
     ).findGlobal({ slug: 'home', locale: 'bg', depth: 1, overrideAccess: false })
-    await attachTints([home.hero.photo, home.hero.photoSecondary])
+    await attachTints([home.hero.photo, home.hero.photoSecondary, home.about?.photo])
     return home
   },
   ['home'],

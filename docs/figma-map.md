@@ -39,7 +39,7 @@ The order follows `docs/pr-plan.md`. Components first, then pages from the most 
 
 | PR | Page | Desktop (1440) | Mobile (390) | Notes |
 |---|---|---|---|---|
-| 8 | Home | [`48:184`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=48-184) | [`115:233`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=115-233) |  |
+| 8 | Home | [`48:184`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=48-184) | [`115:233`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=115-233) | About island (after «Какво предлагаме», 03.11.2026): [`323:5189`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=323-5189) / [`324:9930`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=324-9930) |
 | 9 | Courses (listing) | [`80:880`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=80-880) | [`116:557`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=116-557) | Filters sheet (mobile): [`116:1190`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=116-1190) |
 | 10 | Course | [`81:1226`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=81-1226) | [`117:895`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=117-895) | Course states board: [`126:1940`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=126-1940) |
 | 11 | Contact | [`119:1795`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=119-1795) | [`121:1145`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=121-1145) |  |

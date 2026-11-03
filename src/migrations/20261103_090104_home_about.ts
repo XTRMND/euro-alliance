@@ -1,0 +1,133 @@
+import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+
+export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
+  await db.execute(sql`
+   CREATE TYPE "public"."enum_home_about_sticker" AS ENUM('english', 'german', 'french', 'italian', 'spanish', 'russian', 'bulgarian', 'exam-prep', 'exams', 'student', 'teaching', 'professional', 'corporate', 'computer', 'farming', 'translation', 'accounting', 'customs', 'banking', 'management', 'small-business', 'office', 'sales', 'marketing', 'business-it', 'security', 'hotel', 'cooking', 'catering', 'tour-guide', 'travel', 'animation', 'plant-protection', 'floristry', 'real-estate', 'hardware-and-networks', 'word-processing', 'spreadsheets', 'presentations', 'internet-and-email', 'databases', 'web-and-graphic-design', 'specialised-software');
+  CREATE TYPE "public"."enum_home_about_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'aboutHistory', 'contact', 'privacy', 'cookies');
+  ALTER TYPE "public"."enum_programs_hero_ctas_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_programs_blocks_features_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_programs_blocks_steps_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_programs_blocks_textbook_systems_link_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_programs_blocks_system_cards_link_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_programs_blocks_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_version_hero_ctas_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_blocks_features_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_blocks_steps_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_blocks_textbook_systems_link_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_blocks_system_cards_link_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum__programs_v_blocks_callout_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_home_programs_cards_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_home_hero_primary_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_home_hero_secondary_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_home_translations_cta_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_about_licences_links_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_about_hero_primary_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TYPE "public"."enum_about_hero_secondary_destination" ADD VALUE 'aboutHistory' BEFORE 'contact';
+  ALTER TABLE "home" ADD COLUMN "about_photo_id" integer;
+  ALTER TABLE "home" ADD COLUMN "about_sticker" "enum_home_about_sticker";
+  ALTER TABLE "home" ADD COLUMN "about_cta_destination" "enum_home_about_cta_destination";
+  ALTER TABLE "home_locales" ADD COLUMN "about_kicker" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_heading" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_highlight" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_lead" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_quote" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_caption" varchar;
+  ALTER TABLE "home_locales" ADD COLUMN "about_cta_label" varchar;
+  ALTER TABLE "home" ADD CONSTRAINT "home_about_photo_id_media_id_fk" FOREIGN KEY ("about_photo_id") REFERENCES "public"."media"("id") ON DELETE set null ON UPDATE no action;
+  CREATE INDEX "home_about_about_photo_idx" ON "home" USING btree ("about_photo_id");`)
+}
+
+export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+  await db.execute(sql`
+   ALTER TABLE "home" DROP CONSTRAINT "home_about_photo_id_media_id_fk";
+  
+  ALTER TABLE "programs_hero_ctas" ALTER COLUMN "destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_hero_ctas_destination";
+  CREATE TYPE "public"."enum_programs_hero_ctas_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_hero_ctas" ALTER COLUMN "destination" SET DATA TYPE "public"."enum_programs_hero_ctas_destination" USING "destination"::"public"."enum_programs_hero_ctas_destination";
+  ALTER TABLE "programs_blocks_features" ALTER COLUMN "callout_cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_blocks_features_callout_cta_destination";
+  CREATE TYPE "public"."enum_programs_blocks_features_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_blocks_features" ALTER COLUMN "callout_cta_destination" SET DATA TYPE "public"."enum_programs_blocks_features_callout_cta_destination" USING "callout_cta_destination"::"public"."enum_programs_blocks_features_callout_cta_destination";
+  ALTER TABLE "programs_blocks_steps" ALTER COLUMN "callout_cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_blocks_steps_callout_cta_destination";
+  CREATE TYPE "public"."enum_programs_blocks_steps_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_blocks_steps" ALTER COLUMN "callout_cta_destination" SET DATA TYPE "public"."enum_programs_blocks_steps_callout_cta_destination" USING "callout_cta_destination"::"public"."enum_programs_blocks_steps_callout_cta_destination";
+  ALTER TABLE "programs_blocks_textbook_systems" ALTER COLUMN "link_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_blocks_textbook_systems_link_destination";
+  CREATE TYPE "public"."enum_programs_blocks_textbook_systems_link_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_blocks_textbook_systems" ALTER COLUMN "link_destination" SET DATA TYPE "public"."enum_programs_blocks_textbook_systems_link_destination" USING "link_destination"::"public"."enum_programs_blocks_textbook_systems_link_destination";
+  ALTER TABLE "programs_blocks_system_cards" ALTER COLUMN "link_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_blocks_system_cards_link_destination";
+  CREATE TYPE "public"."enum_programs_blocks_system_cards_link_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_blocks_system_cards" ALTER COLUMN "link_destination" SET DATA TYPE "public"."enum_programs_blocks_system_cards_link_destination" USING "link_destination"::"public"."enum_programs_blocks_system_cards_link_destination";
+  ALTER TABLE "programs_blocks_callout" ALTER COLUMN "cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_programs_blocks_callout_cta_destination";
+  CREATE TYPE "public"."enum_programs_blocks_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "programs_blocks_callout" ALTER COLUMN "cta_destination" SET DATA TYPE "public"."enum_programs_blocks_callout_cta_destination" USING "cta_destination"::"public"."enum_programs_blocks_callout_cta_destination";
+  ALTER TABLE "_programs_v_version_hero_ctas" ALTER COLUMN "destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_version_hero_ctas_destination";
+  CREATE TYPE "public"."enum__programs_v_version_hero_ctas_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_version_hero_ctas" ALTER COLUMN "destination" SET DATA TYPE "public"."enum__programs_v_version_hero_ctas_destination" USING "destination"::"public"."enum__programs_v_version_hero_ctas_destination";
+  ALTER TABLE "_programs_v_blocks_features" ALTER COLUMN "callout_cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_blocks_features_callout_cta_destination";
+  CREATE TYPE "public"."enum__programs_v_blocks_features_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_blocks_features" ALTER COLUMN "callout_cta_destination" SET DATA TYPE "public"."enum__programs_v_blocks_features_callout_cta_destination" USING "callout_cta_destination"::"public"."enum__programs_v_blocks_features_callout_cta_destination";
+  ALTER TABLE "_programs_v_blocks_steps" ALTER COLUMN "callout_cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_blocks_steps_callout_cta_destination";
+  CREATE TYPE "public"."enum__programs_v_blocks_steps_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_blocks_steps" ALTER COLUMN "callout_cta_destination" SET DATA TYPE "public"."enum__programs_v_blocks_steps_callout_cta_destination" USING "callout_cta_destination"::"public"."enum__programs_v_blocks_steps_callout_cta_destination";
+  ALTER TABLE "_programs_v_blocks_textbook_systems" ALTER COLUMN "link_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_blocks_textbook_systems_link_destination";
+  CREATE TYPE "public"."enum__programs_v_blocks_textbook_systems_link_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_blocks_textbook_systems" ALTER COLUMN "link_destination" SET DATA TYPE "public"."enum__programs_v_blocks_textbook_systems_link_destination" USING "link_destination"::"public"."enum__programs_v_blocks_textbook_systems_link_destination";
+  ALTER TABLE "_programs_v_blocks_system_cards" ALTER COLUMN "link_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_blocks_system_cards_link_destination";
+  CREATE TYPE "public"."enum__programs_v_blocks_system_cards_link_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_blocks_system_cards" ALTER COLUMN "link_destination" SET DATA TYPE "public"."enum__programs_v_blocks_system_cards_link_destination" USING "link_destination"::"public"."enum__programs_v_blocks_system_cards_link_destination";
+  ALTER TABLE "_programs_v_blocks_callout" ALTER COLUMN "cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum__programs_v_blocks_callout_cta_destination";
+  CREATE TYPE "public"."enum__programs_v_blocks_callout_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "_programs_v_blocks_callout" ALTER COLUMN "cta_destination" SET DATA TYPE "public"."enum__programs_v_blocks_callout_cta_destination" USING "cta_destination"::"public"."enum__programs_v_blocks_callout_cta_destination";
+  ALTER TABLE "home_programs_cards" ALTER COLUMN "destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_home_programs_cards_destination";
+  CREATE TYPE "public"."enum_home_programs_cards_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "home_programs_cards" ALTER COLUMN "destination" SET DATA TYPE "public"."enum_home_programs_cards_destination" USING "destination"::"public"."enum_home_programs_cards_destination";
+  ALTER TABLE "home" ALTER COLUMN "hero_primary_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_home_hero_primary_destination";
+  CREATE TYPE "public"."enum_home_hero_primary_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "home" ALTER COLUMN "hero_primary_destination" SET DATA TYPE "public"."enum_home_hero_primary_destination" USING "hero_primary_destination"::"public"."enum_home_hero_primary_destination";
+  ALTER TABLE "home" ALTER COLUMN "hero_secondary_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_home_hero_secondary_destination";
+  CREATE TYPE "public"."enum_home_hero_secondary_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "home" ALTER COLUMN "hero_secondary_destination" SET DATA TYPE "public"."enum_home_hero_secondary_destination" USING "hero_secondary_destination"::"public"."enum_home_hero_secondary_destination";
+  ALTER TABLE "home" ALTER COLUMN "translations_cta_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_home_translations_cta_destination";
+  CREATE TYPE "public"."enum_home_translations_cta_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "home" ALTER COLUMN "translations_cta_destination" SET DATA TYPE "public"."enum_home_translations_cta_destination" USING "translations_cta_destination"::"public"."enum_home_translations_cta_destination";
+  ALTER TABLE "about_licences_links" ALTER COLUMN "destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_about_licences_links_destination";
+  CREATE TYPE "public"."enum_about_licences_links_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "about_licences_links" ALTER COLUMN "destination" SET DATA TYPE "public"."enum_about_licences_links_destination" USING "destination"::"public"."enum_about_licences_links_destination";
+  ALTER TABLE "about" ALTER COLUMN "hero_primary_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_about_hero_primary_destination";
+  CREATE TYPE "public"."enum_about_hero_primary_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "about" ALTER COLUMN "hero_primary_destination" SET DATA TYPE "public"."enum_about_hero_primary_destination" USING "hero_primary_destination"::"public"."enum_about_hero_primary_destination";
+  ALTER TABLE "about" ALTER COLUMN "hero_secondary_destination" SET DATA TYPE text;
+  DROP TYPE "public"."enum_about_hero_secondary_destination";
+  CREATE TYPE "public"."enum_about_hero_secondary_destination" AS ENUM('courses', 'languageCourses', 'languagesStudents', 'languagesAdults', 'certificates', 'professions', 'vouchers', 'voucherInquiry', 'teachers', 'farmers', 'computerCourses', 'translations', 'sendDocument', 'levelTest', 'otherInquiry', 'news', 'about', 'contact', 'privacy', 'cookies');
+  ALTER TABLE "about" ALTER COLUMN "hero_secondary_destination" SET DATA TYPE "public"."enum_about_hero_secondary_destination" USING "hero_secondary_destination"::"public"."enum_about_hero_secondary_destination";
+  DROP INDEX "home_about_about_photo_idx";
+  ALTER TABLE "home" DROP COLUMN "about_photo_id";
+  ALTER TABLE "home" DROP COLUMN "about_sticker";
+  ALTER TABLE "home" DROP COLUMN "about_cta_destination";
+  ALTER TABLE "home_locales" DROP COLUMN "about_kicker";
+  ALTER TABLE "home_locales" DROP COLUMN "about_heading";
+  ALTER TABLE "home_locales" DROP COLUMN "about_highlight";
+  ALTER TABLE "home_locales" DROP COLUMN "about_lead";
+  ALTER TABLE "home_locales" DROP COLUMN "about_quote";
+  ALTER TABLE "home_locales" DROP COLUMN "about_caption";
+  ALTER TABLE "home_locales" DROP COLUMN "about_cta_label";
+  DROP TYPE "public"."enum_home_about_sticker";
+  DROP TYPE "public"."enum_home_about_cta_destination";`)
+}

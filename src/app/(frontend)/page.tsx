@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { AboutIsland } from '@/components/home/AboutIsland'
 import { HomeHero } from '@/components/home/HomeHero'
 import { LatestNews } from '@/components/home/LatestNews'
 import { Partners } from '@/components/home/Partners'
@@ -63,6 +64,7 @@ export default async function HomePage() {
       <InquiryBand />
       <div className={styles.deferred}>
         <ProgramIndex programs={home.programs} />
+        <AboutIsland about={home.about} />
         {translations?.title && (
           <SendDocument
             id="translations-title"
