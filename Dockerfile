@@ -14,6 +14,10 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# NEXT_PUBLIC_* values are baked in at build time, so each environment gets its own image:
+# --build-arg NEXT_PUBLIC_SITE_URL=https://staging.euro-alliance.net
+ARG NEXT_PUBLIC_SITE_URL
+ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN pnpm build
 
 FROM node:24.22.2-alpine AS runner

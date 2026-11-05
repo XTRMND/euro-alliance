@@ -1,0 +1,42 @@
+# Edge proxy on the VPS (/opt/edge/Caddyfile). Reload after a change:
+#   docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
+#
+# TLS: Caddy's defaults are TLS 1.2 and 1.3 with ECDHE suites only, OCSP stapling on, and plain
+# HTTP answered with a redirect to HTTPS (README, «Security headers and TLS»). The app sends its
+# own security headers, HSTS included; nothing here adds a second one.
+
+# Staging: password-protected and never indexed. robots.txt stays open so crawlers read its
+# «Disallow: /» instead of a 401. The browser's Basic credentials aren't passed to the app.
+# PRODUCTION: don't import this snippet. Production has no basic_auth and no X-Robots-Tag here;
+# the app's ALLOW_INDEXING=true decides robots.txt and the robots meta tag.
+(staging) {
+	header X-Robots-Tag "noindex, nofollow"
+	@protected not path /robots.txt
+	basic_auth @protected {
+		{$STAGING_AUTH_USER} {$STAGING_AUTH_HASH}
+	}
+	reverse_proxy staging-site:3000 {
+		header_up -Authorization
+	}
+}
+
+staging.euro-alliance.net {
+	import staging
+}
+
+# The Payload admin of the same app, under its own name.
+staging-cms.euro-alliance.net {
+	redir / /admin
+	import staging
+}
+
+# The CRM. Its own nginx (crm-proxy) keeps the IP allowlist; it reads the visitor's address
+# from X-Forwarded-For, which Caddy sets.
+crm.euro-alliance.net {
+	reverse_proxy crm-proxy:80
+}
+
+# The CRM was also reached by the bare IP over plain HTTP.
+http://185.123.188.101 {
+	redir https://crm.euro-alliance.net{uri}
+}

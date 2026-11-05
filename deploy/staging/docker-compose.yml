@@ -1,0 +1,62 @@
+# Staging on the VPS (/opt/euro-alliance-staging), behind the edge proxy (deploy/edge).
+# The image comes from CI (`deploy-staging` in .github/workflows/ci.yml); the VPS never builds.
+# Files next to this one: `.env` (POSTGRES_PASSWORD) and `site.env` (copy site.env.example).
+name: euro-alliance-staging
+
+services:
+  db:
+    image: postgres:18.6-alpine
+    container_name: staging-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: euro_alliance
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: euro_alliance
+    # Only on the VPS's loopback, for the content import over an SSH tunnel:
+    #   ssh -L 5433:127.0.0.1:5433 eac
+    ports:
+      - '127.0.0.1:5433:5432'
+    volumes:
+      # Postgres 18 images keep their data under /var/lib/postgresql/18/docker.
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U euro_alliance -d euro_alliance']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  site:
+    image: ${SITE_IMAGE:-musev/eac}:${SITE_TAG:-site-staging}
+    container_name: staging-site
+    restart: unless-stopped
+    env_file: site.env
+    environment:
+      DATABASE_URL: postgres://euro_alliance:${POSTGRES_PASSWORD}@db:5432/euro_alliance
+      # The VPS has 2 GB of RAM shared with the CRM.
+      NODE_OPTIONS: --max-old-space-size=512
+    volumes:
+      - media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'node -e "fetch(''http://localhost:3000/robots.txt'').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"',
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+    networks:
+      - default
+      - edge
+
+volumes:
+  db-data:
+  media:
+
+networks:
+  edge:
+    external: true
