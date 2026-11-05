@@ -101,7 +101,9 @@ jobs:
 
   e2e:
     needs: build
-    runs-on: ubuntu-latest
+    # Pinned: the visual baselines were rendered on 24.04, and ubuntu-latest moved to 26.04
+    # (05.11.2026), where the cached WebKit can't find libicudata.so.74.
+    runs-on: ubuntu-24.04
     # Pages read the CMS; the server migrates and seeds this database on its first request.
     services:
       postgres:
@@ -128,7 +130,7 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
+          key: playwright-${{ runner.os }}-${{ env.ImageOS }}-chromium-webkit-${{ hashFiles('pnpm-lock.yaml') }}
       - if: steps.playwright-cache.outputs.cache-hit != 'true'
         run: pnpm exec playwright install --with-deps chromium webkit
       - if: steps.playwright-cache.outputs.cache-hit == 'true'
