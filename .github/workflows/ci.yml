@@ -243,10 +243,17 @@ jobs:
       url: https://staging.euro-alliance.net
     steps:
       # The key may only run /opt/euro-alliance-staging/deploy.sh (a forced command on the VPS).
-      - uses: appleboy/ssh-action@v1.2.5
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.STAGING_DEPLOY_KEY }}
-          fingerprint: ${{ secrets.VPS_FINGERPRINT }}
-          script: /opt/euro-alliance-staging/deploy.sh
+      # The VPS's host key is pinned: `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` on it.
+      - name: Deploy on the VPS
+        env:
+          DEPLOY_KEY: ${{ secrets.STAGING_DEPLOY_KEY }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          HOST_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG/LKUWfyedkGclXdhyUeebmg8ePv3EX87jckKn4lw9m
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          echo "$VPS_HOST $HOST_KEY" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o HostKeyAlgorithms=ssh-ed25519 "$VPS_USER@$VPS_HOST" deploy

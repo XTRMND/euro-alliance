@@ -36,8 +36,8 @@ prune). e2e and Lighthouse don't hold the deploy. The VPS never builds.
 
 Repository secrets: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`, `VPS_HOST`, `VPS_USER`,
 `STAGING_DEPLOY_KEY` (private key; its public half is in root's `authorized_keys` as
-`command="/opt/euro-alliance-staging/deploy.sh",restrict ssh-ed25519 …`) and `VPS_FINGERPRINT`
-(`ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub`).
+`command="/opt/euro-alliance-staging/deploy.sh",restrict ssh-ed25519 …`). The VPS's ED25519 host
+key is pinned in the workflow (`HOST_KEY`); update it there if the server is rebuilt.
 
 By hand, on the VPS: `/opt/euro-alliance-staging/deploy.sh`. To roll back, set
 `SITE_TAG=site-staging-<sha>` in `/opt/euro-alliance-staging/.env` and run it again.
