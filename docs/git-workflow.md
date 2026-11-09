@@ -5,10 +5,10 @@ How Claude Code works with git on this project.
 ## 1. Repository
 
 - The user creates the GitHub repository. Claude Code clones it.
-- **Planned steps are pushed straight to `main`** (the user's decision, 31.10.2026). Branches and pull requests (§ 2, § 4, § 6) apply only when the user asks for one. Never force-push `main`.
-- Before every push, run the checks of every CI job locally. After it, confirm CI is green on `main`; if it isn't, fix forward straight away.
-- What § 4 lists for a PR is still written down: in the body of the step's last commit, with the screenshots in `docs/screenshots/` and open items in `CLAUDE.md` § 12.
-- Branch protection that requires a pull request would block these pushes, so `main` stays unprotected while this rule holds.
+- **Nothing is pushed to `main`** (the user, 09.11.2026; it replaces the straight-to-`main` rule of 31.10.2026). Every change goes through a branch (§ 2) and a pull request (§ 4), one per version (§ 6), which the user reviews and merges. Never force-push `main`.
+- Before every push, run the checks of every CI job locally. After it, confirm CI is green on the PR; if it isn't, fix it on the branch.
+- Screenshots go in `docs/screenshots/`, open items also in `CLAUDE.md` § 12.
+- `main` can now be protected (a pull request and green CI required): the user's setting on GitHub.
 
 ## 2. Branches
 
@@ -93,9 +93,13 @@ Add this template as `.github/pull_request_template.md` in PR 1:
 - When a visual change is intended, update the snapshots in the same PR and say so in the summary.
 - Cache dependencies and Playwright browsers between runs.
 
-## 6. Merging
+## 6. Versions, merging and releases
 
-- **Squash-merge** after the user's review. The squash commit message is the PR title in Conventional Commit form.
+- **One PR per version.** Each PR raises `version` in `package.json` ([SemVer](https://semver.org)): `0.x` until launch, `1.0.0` at launch (PR 27). Minor (`0.2.0` → `0.3.0`) for new features, content or tooling; patch (`0.3.0` → `0.3.1`) for fixes only; after launch, major for changes that break something outside the code (the URL scheme, a content change that needs manual steps). CI's `version` job fails a PR that doesn't raise it, or raises it to a version already tagged.
+- The PR title is the Conventional Commit with the version at the end: `feat(seed): staging seed (v0.2.0)`.
+- Two open PRs can't both take the next version: the one merged second raises its version again (and rebases) before it's merged.
+- **Squash-merge** after the user's review. The squash commit message is the PR title.
+- **Release:** when CI passes on `main` after the merge, `.github/workflows/release.yml` tags the merge commit `v<version>` and publishes a GitHub release whose notes are the PR's description. A version already tagged isn't released twice.
 - Delete the branch after merging.
 
 ## 7. Secrets and environment

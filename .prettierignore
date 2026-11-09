@@ -14,3 +14,6 @@ src/app/(payload)/
 # Hand-written docs keep their own table layout.
 *.md
 docs/reference/
+
+# The staging seed fixtures (pnpm seed:scrape), written as they are.
+seed/

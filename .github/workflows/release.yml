@@ -1,0 +1,42 @@
+name: Release
+
+# One release per version (docs/git-workflow.md § 6): once CI passes on main after a merge, the
+# merge commit is tagged v<version> from package.json and published as a GitHub release with the
+# merged PR's description as its notes. A version already tagged isn't released again.
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  release:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+      - name: Tag and publish the version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          version=$(node -p 'require("./package.json").version')
+          if git rev-parse -q --verify "refs/tags/v$version" >/dev/null; then
+            echo "v$version is already released."
+            exit 0
+          fi
+          pr=$(gh api "repos/$GITHUB_REPOSITORY/commits/$SHA/pulls" --jq '.[0].number // empty')
+          if [ -n "$pr" ]; then
+            gh pr view "$pr" --json body --jq .body > notes.md
+            gh release create "v$version" --target "$SHA" --title "v$version" --notes-file notes.md
+          else
+            gh release create "v$version" --target "$SHA" --title "v$version" --generate-notes
+          fi

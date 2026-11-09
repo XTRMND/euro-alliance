@@ -195,10 +195,11 @@ A page PR is done when all of these hold:
 
 ## 10. Git (summary; the full rules are `docs/git-workflow.md`)
 
-- **Planned steps go straight to `main`** (the user's decision, 31.10.2026). No branch or PR unless the user asks for one. Never force-push `main`.
-- One step from `docs/pr-plan.md` at a time, as small Conventional Commits that each build.
-- Before pushing, run every CI check locally (typecheck, lint, format, unit, build, e2e, Lighthouse). After pushing, confirm CI is green on `main`; if it isn't, fix forward straight away.
-- What a PR description would hold (summary, Figma links, deviations, open items) goes in the body of the step's last commit. Open items also go into § 12, and the Figma side-by-side screenshots into `docs/screenshots/`.
+- **Never push to `main`** (the user, 09.11.2026; it replaces the straight-to-`main` rule of 31.10.2026). Every change goes through a branch and a pull request, which the user reviews and merges. Never force-push `main`.
+- **One PR per version.** Each PR raises `version` in `package.json` (SemVer, `0.x` until launch, `1.0.0` at launch): minor for new features, content or tooling, patch for fixes only. Its title ends with the version, `feat(seed): staging seed (v0.2.0)`. Once it's merged and CI is green on `main`, the release workflow tags `v<version>` and publishes a GitHub release with the PR's description (`docs/git-workflow.md` § 6).
+- One step from `docs/pr-plan.md` per PR, as small Conventional Commits that each build. A PR that needs one still open branches from it and says so.
+- Before pushing, run every CI check locally (typecheck, lint, format, unit, build, e2e, Lighthouse). After pushing, confirm CI is green on the PR; if it isn't, fix it on the branch.
+- The PR description holds the summary, Figma links, deviations and open items. Open items also go into § 12, and the Figma side-by-side screenshots into `docs/screenshots/`.
 - Secrets only in env. Never commit `.env*` files other than `.env.example`.
 
 ## 11. Commands
@@ -211,6 +212,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Local database | `docker compose up -d` (PostgreSQL 18 on port 5432; set `DB_PORT` if it's taken) |
 | Environment | `cp .env.example .env`, then set `PAYLOAD_SECRET` |
 | Migrate and seed | `pnpm migrate`, then `pnpm seed` (fills in missing company facts and offices; never overwrites) |
+| Staging content | `pnpm seed:scrape` locally (the old site → fixtures in `seed/`, committed), then `SEED_TARGET=staging pnpm seed:staging [--dry-run]` on the box from the Dockerfile's `seed` stage (`docs/seeding.md`) |
 | Dev server | `pnpm dev` (http://localhost:3200, admin at `/admin`; the first account created is the admin) |
 | Production build | `pnpm build` (standalone server in `.next/standalone`) |
 | Run the build | `pnpm start` (port 3200 unless `PORT` is set; reads `.env` if present; pages need the database) |
@@ -227,7 +229,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Rebuild fonts | `scripts/build-fonts.sh` (needs `pip install fonttools brotli`) |
 | Docker image | `docker build -t euro-alliance .` |
 
-The content import arrives in PR 21.
+The content import is the staging seed (`docs/seeding.md`). `pnpm import:covers` applies the local photo picker's choices (local only).
 
 **Production start:** the Docker image has no CLI. On start, Payload applies pending migrations (`prodMigrations`) and seeds an empty database. Mount a volume at `/app/media` for uploads.
 
@@ -240,8 +242,8 @@ Decided:
 - pnpm and CSS Modules (PR 1).
 - Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
 - Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
-- Planned steps are pushed straight to `main` (§ 10).
-- Staging (the user, 05.11.2026): https://staging.euro-alliance.net and https://staging-cms.euro-alliance.net (the admin) on the CRM's VPS behind a shared Caddy, basic auth, never indexed; images on Docker Hub (`musev/eac:site-staging`), deployed by CI on every push to `main` once typecheck, lint, unit tests and the image build pass (e2e and Lighthouse don't hold it); `JOBS_AUTORUN=true` there. `deploy/README.md`. No per-PR previews.
+- Every change goes through a versioned pull request; nothing is pushed to `main` (§ 10, the user, 09.11.2026).
+- Staging (the user, 05.11.2026): https://staging.euro-alliance.net and https://staging-cms.euro-alliance.net (the admin) on the CRM's VPS behind a shared Caddy, basic auth, never indexed; images on Docker Hub (`musev/eac:site-staging`), deployed by CI on every push to `main` once typecheck, lint, unit tests and the image build pass (e2e and Lighthouse don't hold it); `JOBS_AUTORUN=true` there. `deploy/README.md`. No per-PR previews. Content: `docs/seeding.md`.
 - Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
@@ -497,6 +499,14 @@ From the homepage's About island (03.11.2026, 323:5189 / 324:9930):
 - The mobile frame sets «всеки ученик» at 40px beside a 38px line. [38, the heading's size]
 - Between 768 and 1023px the art keeps the phone's composition, up to 480px wide; side by side from 1024px, the art scaled to 39% of the screen.
 - Every homepage section below the first screen fades up once as it comes into view (the user, 03.11.2026: «yes»), except the navy inquiry band, which is on every page (`docs/motion.md` § 2).
+
+From the staging seed (09.11.2026, `docs/seeding.md`; branch `chore/seed-staging`):
+- The seed keeps the 02.11 decisions (the user, 09.11.2026): all 203 news as text, Figma's seven covers, no other photo from the old site, no galleries (no design).
+- A record edited in the admin is never overwritten by the seed, only reported (the user, 09.11.2026): `adminEditedAt` on news, courses, programs, textbook systems and certificates, set by `src/hooks/admin-edits.ts` for every change a signed-in user makes.
+- The repository is public: the four Alliance Contest results lists linked from news 142, 143, 159 and 194 (children's full names and scores) aren't in `seed/` (the user, 09.11.2026). Their links are removed, the text stays; `scripts/seed/withheld.json`, and any later document whose link reads as results is withheld too. Whether they go back on the site is the client's call.
+- New on the old site since 02.11: «Английски език ниво А2 В1 В2 С ВАУЧЕРИ ОТ АЗ» (/Courses/65). Not in the approved list (`scripts/import/courses.json`), so not imported and its old address has no redirect. A group of «Английски език A2–B2»? [not imported until the user adds it to the list]
+- **To fix** (the user, 09.11.2026): Figma's seven news covers are 900 px wide, below the article banner's 908 px slot (`src/lib/media/slots.ts`), so no article banner shows a photo; the cards and the lead story do. Sharper originals, or a banner slot of 900?
+- The teachers' programmes: the old site gives each its official code (38010001–38010029) and a longer title; the CMS keeps Figma's number («01») and shorter title.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.

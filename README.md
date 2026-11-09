@@ -22,6 +22,7 @@ docker compose up -d     # local PostgreSQL
 cp .env.example .env     # then set PAYLOAD_SECRET, e.g. `openssl rand -hex 32`
 pnpm migrate
 pnpm seed                # company facts and the three offices
+# Staging content: docs/seeding.md (pnpm seed:scrape locally, pnpm seed:staging on the box)
 pnpm dev
 ```
 

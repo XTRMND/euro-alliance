@@ -1,9 +1,10 @@
 // The old site's images, sorted by where they're used, before any of them is imported (PR 21):
 // news covers, images inside news texts, regular pages, course pages, and the site's chrome
 // (header, footer, partner strip, form captchas). Reads the crawl (pnpm import:inventory),
-// downloads each image once into out/files/ (the cache run.ts uses, one request a second), and
-// writes out/images.json and a contact sheet, out/contact-sheet/index.html, with a thumbnail, the
-// pixel size and the source page of every image. Run: `pnpm import:images`.
+// downloads each image once into out/files/ (the cache scripts/seed/scrape.ts and covers.ts use,
+// one request a second), and writes out/images.json and a contact sheet,
+// out/contact-sheet/index.html, with a thumbnail, the pixel size and the source page of every
+// image. Run: `pnpm import:images`.
 import { createHash } from 'node:crypto'
 import { existsSync } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
@@ -80,8 +81,8 @@ const hash = (url: string) => createHash('sha1').update(url).digest('hex')
 let lastRequest = 0
 
 /**
- * A file from the old site, cached in out/files/ under the same names as run.ts uses; the HTTP
- * status when it fails (0 without an answer).
+ * A file from the old site, cached in out/files/ under the names scripts/seed/scrape.ts and
+ * covers.ts use; the HTTP status when it fails (0 without an answer).
  */
 async function download(url: string): Promise<Buffer | number> {
   const cached = new URL(`files/${hash(url)}`, out)

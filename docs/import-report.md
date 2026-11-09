@@ -1,4 +1,4 @@
-<!-- A copy of scripts/import/out/report.md from the local run of 02.11.2026 (pnpm import:run against the local database). The run on staging writes its own. -->
+<!-- A copy of scripts/import/out/report.md from the local run of 02.11.2026 (the former pnpm import:run against the local database). The staging seed prints its own report (docs/seeding.md). -->
 
 # Content import report
 

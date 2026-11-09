@@ -332,6 +332,7 @@ export interface Office {
  */
 export interface Course {
   id: number;
+  adminEditedAt?: string | null;
   /**
    * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
    */
@@ -500,6 +501,7 @@ export interface Course {
  */
 export interface News {
   id: number;
+  adminEditedAt?: string | null;
   /**
    * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
    */
@@ -565,6 +567,7 @@ export interface News {
  */
 export interface Program {
   id: number;
+  adminEditedAt?: string | null;
   /**
    * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
    */
@@ -1369,6 +1372,7 @@ export interface TextbookSystem {
     label?: string | null;
     note?: string | null;
   };
+  adminEditedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -1379,6 +1383,7 @@ export interface TextbookSystem {
  */
 export interface Certificate {
   id: number;
+  adminEditedAt?: string | null;
   name: string;
   issuer?: string | null;
   /**
@@ -2049,6 +2054,7 @@ export interface OfficesSelect<T extends boolean = true> {
  * via the `definition` "courses_select".
  */
 export interface CoursesSelect<T extends boolean = true> {
+  adminEditedAt?: T;
   meta?:
     | T
     | {
@@ -2106,6 +2112,7 @@ export interface CoursesSelect<T extends boolean = true> {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  adminEditedAt?: T;
   meta?:
     | T
     | {
@@ -2134,6 +2141,7 @@ export interface NewsSelect<T extends boolean = true> {
  * via the `definition` "programs_select".
  */
 export interface ProgramsSelect<T extends boolean = true> {
+  adminEditedAt?: T;
   meta?:
     | T
     | {
@@ -2582,6 +2590,7 @@ export interface TextbookSystemsSelect<T extends boolean = true> {
         label?: T;
         note?: T;
       };
+  adminEditedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2591,6 +2600,7 @@ export interface TextbookSystemsSelect<T extends boolean = true> {
  * via the `definition` "certificates_select".
  */
 export interface CertificatesSelect<T extends boolean = true> {
+  adminEditedAt?: T;
   name?: T;
   issuer?: T;
   code?: T;

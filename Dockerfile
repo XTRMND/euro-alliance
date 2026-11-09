@@ -20,6 +20,21 @@ ARG NEXT_PUBLIC_SITE_URL
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
 RUN pnpm build
 
+# The staging seed (docs/seeding.md): the source and every dependency, to run
+# `pnpm seed:staging` against the staging database and media volume. Built only with
+# `--target seed`; the default build stops at `runner`, the last stage.
+FROM base AS seed
+WORKDIR /app
+ENV COREPACK_HOME=/opt/corepack \
+    MEDIA_DIR=/app/media
+# The pnpm version package.json names is fetched while building, so the seed runs offline.
+COPY package.json ./
+RUN mkdir -p /opt/corepack /app/media && pnpm --version && chown -R node:node /opt/corepack /app/media
+COPY --from=deps /app/node_modules ./node_modules
+COPY --chown=node:node . .
+USER node
+CMD ["pnpm", "seed:staging", "--dry-run"]
+
 FROM node:24.22.2-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production \

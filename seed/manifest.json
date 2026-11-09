@@ -1,0 +1,16 @@
+{
+  "scrapedAt": "2026-11-09T12:58:25.687Z",
+  "crawledAt": "2026-11-09T12:50:40.691Z",
+  "origin": "https://euro-alliance.net",
+  "counts": {
+    "news": 203,
+    "documents": 13,
+    "covers": 7,
+    "courses": 55,
+    "groups": 10,
+    "languagePages": 9,
+    "translationLanguages": 10,
+    "professions": 20,
+    "teacherProgrammes": 29
+  }
+}

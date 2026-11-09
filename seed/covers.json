@@ -1,0 +1,44 @@
+[
+  {
+    "legacyId": 213,
+    "file": "scripts/import/figma-covers/213.jpg",
+    "alt": "Плакат за 1 ноември, Деня на народните будители",
+    "textInImage": true
+  },
+  {
+    "legacyId": 205,
+    "file": "scripts/import/figma-covers/205.jpg",
+    "alt": "Листовка за промоция за нови ученици",
+    "textInImage": true
+  },
+  {
+    "legacyId": 204,
+    "file": "scripts/import/figma-covers/204.jpg",
+    "alt": "Изображение към новината за опреснителните занятия",
+    "textInImage": false
+  },
+  {
+    "legacyId": 210,
+    "file": "scripts/import/figma-covers/210.jpg",
+    "alt": "Участници в турнира CoVE Football Cup в Грац",
+    "textInImage": false
+  },
+  {
+    "legacyId": 209,
+    "file": "scripts/import/figma-covers/209.jpg",
+    "alt": "Екипът на Евро Алианс на Форума за професионални постижения 2026",
+    "textInImage": false
+  },
+  {
+    "legacyId": 212,
+    "file": "scripts/import/figma-covers/212.jpg",
+    "alt": "Стажанти по проекта GreenHost по време на занятие",
+    "textInImage": false
+  },
+  {
+    "legacyId": 211,
+    "file": "scripts/import/figma-covers/211.jpg",
+    "alt": "Среща по проекта GreenHost в CETT Barcelona",
+    "textInImage": false
+  }
+]

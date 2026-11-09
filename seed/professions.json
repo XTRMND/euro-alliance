@@ -1,0 +1,180 @@
+[
+  {
+    "directionCode": "041",
+    "name": "Оперативно счетоводство",
+    "code": "041101",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Митническо обслужване",
+    "code": "041102",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Банково, застрахователно и осигурително дело",
+    "code": "041201",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Мениджмънт и икономика",
+    "code": "041301",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Малък и среден бизнес",
+    "code": "041302",
+    "degrees": [
+      "II"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Административни и офис дейности",
+    "code": "041501",
+    "degrees": [
+      "I",
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Търговия и продажби",
+    "code": "041601",
+    "degrees": [
+      "I",
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Електронна търговия, маркетинг и реклама",
+    "code": "041602",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "041",
+    "name": "Икономическа информатика",
+    "code": "041603",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "073",
+    "name": "Експлоатация и сделки с недвижими имоти",
+    "code": "073205",
+    "degrees": [
+      "I",
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "081",
+    "name": "Агроекология и растителна защита",
+    "code": "081105",
+    "degrees": [
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "081",
+    "name": "Флористика и озеленяване",
+    "code": "081106",
+    "degrees": [
+      "I",
+      "II"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Хотелиерство",
+    "code": "101103",
+    "degrees": [
+      "I"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Готварство",
+    "code": "101301",
+    "degrees": [
+      "I",
+      "II"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Ресторантьортво и кетъринг",
+    "code": "101302",
+    "degrees": [
+      "I",
+      "II"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Хотелиерство",
+    "code": "101303",
+    "degrees": [
+      "I",
+      "II",
+      "III"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Екскурзовод",
+    "code": "101501",
+    "degrees": [
+      "III"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Организиране на туристически пътувания",
+    "code": "101502",
+    "degrees": [
+      "III"
+    ]
+  },
+  {
+    "directionCode": "101",
+    "name": "Туристическа анимация",
+    "code": "101504",
+    "degrees": [
+      "III"
+    ]
+  },
+  {
+    "directionCode": "103",
+    "name": "Гражданска, корпоративна сигурност и опазване на обществения ред",
+    "code": "103201",
+    "degrees": [
+      "III"
+    ]
+  }
+]
