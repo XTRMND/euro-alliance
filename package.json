@@ -17,7 +17,7 @@
     "test:e2e": "playwright test",
     "import:inventory": "node scripts/import/inventory.ts",
     "import:images": "node scripts/import/images.ts",
-    "import:run": "payload run scripts/import/run.ts",
+    "import:covers": "payload run scripts/import/covers.ts",
     "lhci": "node scripts/lighthouse-cpu.mjs && lhci autorun --config=lighthouserc.cjs && lhci autorun --config=lighthouserc.desktop.cjs",
     "payload": "payload",
     "generate:types": "payload generate:types",
@@ -25,6 +25,8 @@
     "migrate": "payload migrate",
     "migrate:create": "payload migrate:create",
     "seed": "payload run scripts/seed.ts",
+    "seed:scrape": "payload run scripts/seed/scrape.ts --",
+    "seed:staging": "payload run scripts/seed/staging.ts --",
     "media:regen": "payload run scripts/media-regen.ts"
   },
   "dependencies": {
