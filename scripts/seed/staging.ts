@@ -45,6 +45,9 @@ if (process.env.ALLOW_INDEXING === 'true')
   refuse('ALLOW_INDEXING=true marks production. This seed is for staging only.')
 // In production the app seeds itself when Payload starts (onInit), outside the dry run's guard.
 if (process.env.NODE_ENV === 'production') refuse('unset NODE_ENV (it is "production").')
+// The site's own process runs the job queues on staging (JOBS_AUTORUN=true in site.env); the seed
+// mustn't run them a second time.
+if (process.env.JOBS_AUTORUN === 'true') refuse('set JOBS_AUTORUN=false: the site runs the job queues.')
 if (!process.env.DATABASE_URL) refuse('DATABASE_URL is not set.')
 
 const target = new URL(process.env.DATABASE_URL!)

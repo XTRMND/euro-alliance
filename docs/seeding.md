@@ -15,64 +15,63 @@ The repository is public, so documents with personal data stay out of `seed/`: t
 
 ## On the staging box
 
-The Docker image has no CLI, so the seed runs from its own image (`--target seed` of the Dockerfile), on the app's network, with the app's environment file and media volume. Build it from a checkout of the commit staging runs, so the schema matches.
+Staging is on the VPS (`deploy/README.md`): `/opt/euro-alliance-staging`, the containers `staging-site` and `staging-postgres`, the media volume `euro-alliance-staging_media`. The site's image has no CLI and the VPS never builds, so the seed has its own image, built by CI from `main`:
+
+1. Once the merge is deployed (CI green on `main`), run **Actions → Seed image → Run workflow** on `main` (or `gh workflow run seed-image.yml --ref main`). It pushes `musev/eac:seed-staging` (about 1.9 GB) to Docker Hub.
+2. On the VPS (`ssh eac`):
 
 ```sh
-cd ~/euro-alliance                 # a checkout of the repository
-git fetch && git checkout <the commit staging runs>
-docker build --target seed -t euro-alliance-seed .
-
-APP=<the staging app's container>
-DB=<its PostgreSQL container>
-ENV_FILE=<the env file the app runs with: DATABASE_URL, PAYLOAD_SECRET>
-NET=$(docker inspect -f '{{range $name, $_ := .NetworkSettings.Networks}}{{$name}} {{end}}' "$APP" | awk '{print $1}')
-MEDIA=$(docker inspect -f '{{range .Mounts}}{{if eq .Destination "/app/media"}}{{if .Name}}{{.Name}}{{else}}{{.Source}}{{end}}{{end}}{{end}}' "$APP")
-echo "network: $NET, media: $MEDIA"   # both must be set
+cd /opt/euro-alliance-staging
+docker pull musev/eac:seed-staging
 STAMP=$(date +%Y%m%d-%H%M)
-mkdir -p ~/backups
+mkdir -p /root/backups
 
+# The database and secret the running site uses, and nothing else from its environment (no job
+# queues, no email). Memory capped: the VPS's 2 GB are shared with the CRM.
 seed() {
-  docker run --rm --network "$NET" --env-file "$ENV_FILE" -e SEED_TARGET=staging \
-    -v "$MEDIA:/app/media" euro-alliance-seed pnpm seed:staging "$@"
+  DATABASE_URL="$(docker exec staging-site printenv DATABASE_URL)" \
+  PAYLOAD_SECRET="$(docker exec staging-site printenv PAYLOAD_SECRET)" \
+  docker run --rm --memory 1g --network euro-alliance-staging_default \
+    -e DATABASE_URL -e PAYLOAD_SECRET -e SEED_TARGET=staging \
+    -v euro-alliance-staging_media:/app/media \
+    musev/eac:seed-staging pnpm seed:staging "$@"
 }
 ```
-
-If `DATABASE_URL` points at `localhost` (Postgres on the host, not in a container), replace `--network "$NET"` with `--network host`.
 
 ### 1. Back up
 
 The database, and the media volume (the seed adds files to it).
 
 ```sh
-docker exec "$DB" sh -c 'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc' > ~/backups/staging-$STAMP.dump
-docker exec -i "$DB" pg_restore -l < ~/backups/staging-$STAMP.dump | head -5   # a readable archive
-docker run --rm -v "$MEDIA:/media:ro" -v ~/backups:/backup alpine \
+docker exec staging-postgres pg_dump -U euro_alliance -d euro_alliance -Fc > /root/backups/staging-$STAMP.dump
+docker exec -i staging-postgres pg_restore -l < /root/backups/staging-$STAMP.dump | head -5   # a readable archive
+docker run --rm -v euro-alliance-staging_media:/media:ro -v /root/backups:/backup alpine \
   tar czf /backup/staging-media-$STAMP.tgz -C /media .
-ls -lh ~/backups/*$STAMP*
-docker exec "$DB" sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Atc "select count(*) from users"'   # note it
+ls -lh /root/backups/*$STAMP*
+docker exec staging-postgres psql -U euro_alliance -d euro_alliance -Atc "select count(*) from users"   # note it
 ```
 
 ### 2. Dry run
 
 ```sh
-seed --dry-run 2>&1 | tee ~/backups/seed-dry-run-$STAMP.log
+seed --dry-run 2>&1 | tee /root/backups/seed-dry-run-$STAMP.log
 ```
 
-Check the first line names the staging database, then read «Would write (N)» and the counts. On one seeded before, only what changed. On an empty database it's over 400 writes, and the count runs a few higher than the real run: a dry run can't see what it would have created earlier in the same run, such as a textbook system two pages share.
+Check the first line names the database `db:5432/euro_alliance`, then read «Would write (N)» and the counts. On one seeded before, only what changed. On an empty database it's over 400 writes, and the count runs a few higher than the real run: a dry run can't see what it would have created earlier in the same run, such as a textbook system two pages share.
 
 ### 3. Run
 
 ```sh
-seed 2>&1 | tee ~/backups/seed-$STAMP.log
-# The app caches its CMS reads (src/lib/cms.ts) and the seed can't reach that cache: clear it.
-docker exec "$APP" rm -rf /app/.next/cache/fetch-cache && docker restart "$APP"
+seed 2>&1 | tee /root/backups/seed-$STAMP.log
+# The site caches its CMS reads (src/lib/cms.ts) and the seed can't reach that cache: clear it.
+docker exec staging-site rm -rf /app/.next/cache/fetch-cache && docker restart staging-site
 ```
 
 ### 4. Check
 
 ```sh
 seed --dry-run 2>&1 | grep '^Would write'      # «Would write (0)»: a second run changes nothing
-docker exec "$DB" sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "
+docker exec staging-postgres psql -U euro_alliance -d euro_alliance -c "
   select (select count(*) from news) as news,
          (select count(*) from courses) as courses,
          (select count(*) from professions) as professions,
@@ -80,27 +79,27 @@ docker exec "$DB" sh -c 'psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "
          (select count(*) from offices) as offices,
          (select count(*) from legal_pages) as legal_pages,
          (select count(*) from users) as users;
-  select legacy_url, count(*) from news group by 1 having count(*) > 1;"'
+  select legacy_url, count(*) from news group by 1 having count(*) > 1;"
 ```
 
-Expected: 203 news, 55 courses, 20 professions, 29 teacher programmes, 3 offices and 2 legal pages (more only where the client has added their own), the same number of users as in step 1, and no duplicate rows. Then open on staging: `/novini` and an article with a cover (Ден на народните будители), `/kursove` and a course page, `/profesionalno-obuchenie/profesii`, `/profesionalno-obuchenie/pedagogicheski-spetsialisti`, `/prevodi` (the translation languages), `/ezitsi/nemski/uchenitsi`, `/poveritelnost` and `/biskvitki`.
+Expected: 203 news, 55 courses, 20 professions, 29 teacher programmes, 3 offices and 2 legal pages (more only where the client has added their own), the same number of users as in step 1, and no duplicate rows. Then open on https://staging.euro-alliance.net: `/novini` and an article with a cover (Ден на народните будители), `/kursove` and a course page, `/profesionalno-obuchenie/profesii`, `/profesionalno-obuchenie/pedagogicheski-spetsialisti`, `/prevodi` (the translation languages), `/ezitsi/nemski/uchenitsi`, `/poveritelnost` and `/biskvitki`.
 
 The report at the end of `seed-$STAMP.log` lists what's missing or estimated, for the client.
 
 ### Undo
 
-The database restore was tried on a test database (09.11.2026); the media restore (the `find … -delete` line) wasn't run. Check `$MEDIA` before running it.
+The database restore was tried on a test database (09.11.2026); the media restore (the `find … -delete` line) wasn't run. Check the volume name before running it.
 
 ```sh
-docker stop "$APP"
-docker exec -i "$DB" sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean --if-exists --single-transaction' < ~/backups/staging-$STAMP.dump
-docker run --rm -v "$MEDIA:/media" -v ~/backups:/backup alpine \
+docker stop staging-site
+docker exec -i staging-postgres pg_restore -U euro_alliance -d euro_alliance --clean --if-exists --single-transaction < /root/backups/staging-$STAMP.dump
+docker run --rm -v euro-alliance-staging_media:/media -v /root/backups:/backup alpine \
   sh -c "find /media -mindepth 1 -delete && tar xzf /backup/staging-media-$STAMP.tgz -C /media"
-docker start "$APP" && docker exec "$APP" rm -rf /app/.next/cache/fetch-cache && docker restart "$APP"
+docker start staging-site && docker exec staging-site rm -rf /app/.next/cache/fetch-cache && docker restart staging-site
 ```
 
 ## Refreshing the fixtures
 
-Locally: `pnpm seed:scrape` (about 7 minutes), then `git diff --stat seed/`. New old-site entries (a news article, a dated course) come in as they are. A dated course that the approved list (`scripts/import/courses.json`) doesn't take in is listed in the report, not imported. Commit `seed/` on a branch, open a PR, and run the steps above once it's deployed.
+Locally: `pnpm seed:scrape` (about 7 minutes), then `git diff --stat seed/`. New old-site entries (a news article, a dated course) come in as they are. A dated course that the approved list (`scripts/import/courses.json`) doesn't take in is listed in the report, not imported. Commit `seed/` on a branch, open a PR (with its version, `docs/git-workflow.md` § 6), and run the steps above once it's merged and deployed.
 
 `pnpm import:covers` applies the local photo picker's choices (`scripts/import/out/photo-decisions.json`). It's local only: staging is shown without them (02.11.2026).

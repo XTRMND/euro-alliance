@@ -58,19 +58,12 @@ Build the production image with the production `NEXT_PUBLIC_SITE_URL`: the stagi
 the staging address. Then check that `https://<production>/robots.txt` allows crawling and lists
 the sitemap, and that pages have no `noindex` (`docs/pr-plan.md` § 27).
 
-## Content import against staging
+## Content against staging
 
-The staging database listens on the VPS's loopback only (port 5433). Tunnel to it and point the
-import at it:
-
-```bash
-ssh -N -L 5433:127.0.0.1:5433 eac
-# POSTGRES_PASSWORD is in /opt/euro-alliance-staging/.env
-DATABASE_URL=postgres://euro_alliance:<password>@localhost:5433/euro_alliance pnpm import:run
-```
-
-Media uploaded by the import lands in the local `MEDIA_DIR`, not on the server: copy it into the
-`euro-alliance-staging_media` volume afterwards, and restart the site so its cached reads refresh.
+The staging seed runs on the VPS from its own image (`musev/eac:seed-staging`, built on demand by
+the «Seed image» workflow): backup, dry run, run and checks are in [`docs/seeding.md`](../docs/seeding.md).
+The database also listens on the VPS's loopback (port 5433) for a look over an SSH tunnel:
+`ssh -N -L 5433:127.0.0.1:5433 eac` (POSTGRES_PASSWORD is in `/opt/euro-alliance-staging/.env`).
 
 ## Useful
 
