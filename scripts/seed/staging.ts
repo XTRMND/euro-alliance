@@ -1,7 +1,8 @@
 // `pnpm seed:staging` (docs/seeding.md): fills the staging database from the fixtures in seed/
 // through Payload's Local API, so the upload hooks make the photo tints. Safe to run again: every
 // record is matched on a natural key (legacyUrl, slug, code, filename) and updated only when the
-// fixture differs; nothing is duplicated. Admin users aren't touched.
+// fixture differs; nothing is duplicated. A record a person has edited in the admin is never
+// overwritten, only reported (src/hooks/admin-edits.ts). Admin users aren't touched.
 //   1. The base seed (src/seed): company facts, offices, programme pages, the ЦПО and teachers'
 //      lists, funded projects, documents and licence scans, the privacy and cookie policies (the
 //      approved Figma texts). Fill-in only, as on every start: what's there stays.
@@ -59,6 +60,8 @@ console.log(
 const tally = new Tally(dryRun)
 const payload = recording(await getPayload({ config }), tally)
 const report = {
+  /** Records a person has edited in the admin: never overwritten, listed instead. */
+  edited: [] as string[],
   live: [] as string[],
   covers: [] as string[],
   courses: [] as string[],
@@ -73,10 +76,16 @@ type Collection = Parameters<Payload['find']>[0]['collection']
 
 type Data = Record<string, unknown>
 
+const nameOf = (doc: Doc) => String(doc.title ?? doc.name ?? doc.slug ?? `#${doc.id}`)
+
+/** «12.11.2026» */
+const day = (iso: unknown) => new Date(String(iso)).toLocaleDateString('bg-BG', { timeZone: 'Europe/Sofia' })
+
 /**
- * Creates the record, or updates it when a field differs, or leaves it (skipped). `where` is the
- * natural key; `data` may depend on the stored record. Returns the record (in a dry run, what it
- * would be).
+ * Creates the record, or updates it when a field differs, or leaves it (skipped). A record a
+ * person has edited in the admin (`adminEditedAt`, src/hooks/admin-edits.ts) is never
+ * overwritten: where the fixture differs, it's reported instead. `where` is the natural key;
+ * `data` may depend on the stored record. Returns the record (in a dry run, what it would be).
  */
 async function upsert(collection: Collection, where: Where, values: Data | ((doc?: Doc) => Data)) {
   const found = await payload.find({
@@ -94,6 +103,13 @@ async function upsert(collection: Collection, where: Where, values: Data | ((doc
   const changed = Object.keys(data).filter((key) => !same(data[key], doc[key]))
   if (!changed.length) {
     tally.add(collection, 'skipped')
+    return doc
+  }
+  if (doc.adminEditedAt) {
+    tally.add(collection, 'skipped')
+    report.edited.push(
+      `${collection} «${nameOf(doc)}», edited ${day(doc.adminEditedAt)}: the old site differs in ${changed.join(', ')}`,
+    )
     return doc
   }
   tally.detail = changed.join(', ')
@@ -303,6 +319,12 @@ console.log(`5/7 Courses (${fixtures.courses.length})…`)
     // as groups, so those go (their old addresses come to this course).
     const keep = matches.docs.find((doc) => doc.slug === course.slug) ?? matches.docs[0]
     for (const doc of matches.docs.filter((doc) => doc.id !== keep?.id)) {
+      if (doc.adminEditedAt) {
+        report.edited.push(
+          `courses «${doc.title}», edited ${day(doc.adminEditedAt)}: an old entry the approved course «${course.title}» takes in as a group; not deleted`,
+        )
+        continue
+      }
       await payload.delete({ collection: 'courses', id: doc.id })
       report.courses.push(`«${doc.title}» became a group of «${course.title}».`)
     }
@@ -582,6 +604,10 @@ const drafts = await payload.count({
 section(
   'Media with alt text to review («Алт текстът е проверен» off)',
   drafts.totalDocs ? [`${drafts.totalDocs} files`] : [],
+)
+section(
+  'Edited in the admin, so kept as edited (the old site says otherwise; update them by hand if needed)',
+  report.edited,
 )
 section('Old site vs the CMS (ЦПО and teachers)', report.live)
 section('Covers', report.covers)

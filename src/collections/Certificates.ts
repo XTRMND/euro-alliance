@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { revalidateCollection } from '@/hooks/revalidate'
+import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 // International exams (Certificate card 145:364) in the `#sertifikati` section of the language
 // pages: the issuer, the exam's name, the code on the seal and the book we prepare with.
@@ -10,8 +11,13 @@ export const Certificates: CollectionConfig = {
   admin: { useAsTitle: 'name', defaultColumns: ['name', 'code', 'issuer'] },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
-  hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },
+  hooks: {
+    beforeChange: [markAdminEdit],
+    afterChange: [revalidateCollection],
+    afterDelete: [revalidateCollection],
+  },
   fields: [
+    adminEditedAtField,
     { name: 'name', type: 'text', label: 'Име на изпита', required: true },
     {
       type: 'row',

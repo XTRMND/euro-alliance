@@ -7,6 +7,7 @@ import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { metaField } from '@/fields/meta'
 import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
 import { routes } from '@/lib/routes'
+import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 // docs/cms-schema.md § 3. Added with the homepage, the first page that shows news; the news pages
 // arrive in PR 15. The cover is a photo, shown in its duotone tint (55% on the homepage, 30% on
@@ -73,10 +74,12 @@ export const News: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {
+    beforeChange: [markAdminEdit],
     afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
     afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
   },
   fields: [
+    adminEditedAtField,
     metaField(),
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
     {

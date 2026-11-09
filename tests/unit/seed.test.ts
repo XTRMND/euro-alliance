@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 import { describe, expect, it, vi } from 'vitest'
 import { same } from '../../scripts/seed/compare'
+import { markAdminEdit } from '../../src/hooks/admin-edits'
 import { noteSkipped, recording, Tally } from '../../src/seed/tally'
 
 function fakePayload() {
@@ -81,5 +82,21 @@ describe('same', () => {
     expect(same(['a', 'b'], ['b', 'a'])).toBe(false)
     expect(same([1], [1, 2])).toBe(false)
     expect(same(460.16, '460.16')).toBe(true)
+  })
+})
+
+describe('markAdminEdit', () => {
+  const run = (user: object | null) =>
+    markAdminEdit({
+      data: { title: 'Test A' },
+      req: { user },
+    } as unknown as Parameters<typeof markAdminEdit>[0]) as Record<string, unknown>
+
+  it('dates a change a signed-in person makes', () => {
+    expect(run({ id: 1 }).adminEditedAt).toEqual(expect.any(String))
+  })
+
+  it('leaves the seed’s own writes (no user) unmarked', () => {
+    expect(run(null)).toEqual({ title: 'Test A' })
   })
 })

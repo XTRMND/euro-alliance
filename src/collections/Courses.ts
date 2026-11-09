@@ -7,6 +7,7 @@ import { courseAudiences, courseCategoryValues, courseFormats, courseTopics } fr
 import { languages, routes } from '@/lib/routes'
 import { metaField } from '@/fields/meta'
 import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
+import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 // docs/cms-schema.md § 3. A course is what the centre teaches; its dates belong to its groups
 // (the user's model of 02.11.2026): zero or more, each with a start and an optional end, schedule,
@@ -109,10 +110,12 @@ export const Courses: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {
+    beforeChange: [markAdminEdit],
     afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
     afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
   },
   fields: [
+    adminEditedAtField,
     metaField(),
     { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
     {

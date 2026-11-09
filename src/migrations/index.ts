@@ -29,6 +29,7 @@ import * as migration_20261102_140644_course_free from './20261102_140644_course
 import * as migration_20261102_151729_course_stickers from './20261102_151729_course_stickers';
 import * as migration_20261103_090104_home_about from './20261103_090104_home_about';
 import * as migration_20261103_091658_home_about_tint from './20261103_091658_home_about_tint';
+import * as migration_20261109_132504_admin_edited_at from './20261109_132504_admin_edited_at';
 
 export const migrations = [
   {
@@ -184,6 +185,11 @@ export const migrations = [
   {
     up: migration_20261103_091658_home_about_tint.up,
     down: migration_20261103_091658_home_about_tint.down,
-    name: '20261103_091658_home_about_tint'
+    name: '20261103_091658_home_about_tint',
+  },
+  {
+    up: migration_20261109_132504_admin_edited_at.up,
+    down: migration_20261109_132504_admin_edited_at.down,
+    name: '20261109_132504_admin_edited_at'
   },
 ];
