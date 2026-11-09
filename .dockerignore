@@ -15,3 +15,10 @@ blob-report
 .lighthouseci
 lighthouse-reports
 .DS_Store
+
+# Local uploads (MEDIA_DIR); the image's /app/media must stay empty for its volume
+media
+
+# The import's local working files (the crawl, the picker); the seed reads seed/ only
+scripts/import/out
+scripts/import/in
