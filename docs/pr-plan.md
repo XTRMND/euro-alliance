@@ -205,7 +205,7 @@ Adds `docs/launch.md` and works through it with the user:
 - [ ] Uptime monitoring and error logging in place.
 - [ ] Retention job scheduled and verified.
 - [ ] Every legacy URL from the inventory returns one 301 to a 200 page.
-- [ ] `robots.txt` allows production; staging is `noindex`.
+- [ ] `robots.txt` allows production; staging is `noindex`. Production: `ALLOW_INDEXING=true`, its own image built with the production `NEXT_PUBLIC_SITE_URL`, and a Caddy block without the `staging` snippet (no basic auth, no `X-Robots-Tag`), `deploy/README.md`.
 - [ ] Sitemap submitted in Search Console (needs the client's access).
 - [ ] GA4 receives events only after consent; real-time view checked.
 - [ ] HSTS raised from five minutes to two years (`hsts` in `src/lib/security-headers.ts`), with `includeSubDomains` only if the client confirmed every subdomain serves HTTPS.

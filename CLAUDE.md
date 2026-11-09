@@ -243,6 +243,7 @@ Decided:
 - Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
 - Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
 - Every change goes through a versioned pull request; nothing is pushed to `main` (§ 10, the user, 09.11.2026).
+- Staging (the user, 05.11.2026): https://staging.euro-alliance.net and https://staging-cms.euro-alliance.net (the admin) on the CRM's VPS behind a shared Caddy, basic auth, never indexed; images on Docker Hub (`musev/eac:site-staging`), deployed by CI on every push to `main` once typecheck, lint, unit tests and the image build pass (e2e and Lighthouse don't hold it); `JOBS_AUTORUN=true` there. `deploy/README.md`. No per-PR previews. Content: `docs/seeding.md`.
 - Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 
@@ -287,7 +288,6 @@ Waiting on the user:
 - Which CDN (purge API for `docs/cms-schema.md` § 9).
 - SMTP provider and sender domain (PR 11).
 - How scheduled jobs run (PR 11 built both): `JOBS_AUTORUN=true` in the app (single server only), or a system cron calling `/api/payload-jobs/run` every minute and `/handle-schedules` plus `/run?queue=nightly` nightly with `CRON_SECRET` (README). Until one is set up, failed inquiry emails aren't retried and retention doesn't run.
-- Container registry and preview environments.
 - Backups.
 
 Design questions for the user (found in PR 3; the build follows the default in brackets until answered):

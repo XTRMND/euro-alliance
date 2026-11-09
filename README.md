@@ -66,13 +66,13 @@ docs/                 the build brief: plan, Figma map, CMS schema, motion, i18n
 
 ## Deployment
 
-`docker build -t euro-alliance .` produces the image. At runtime it needs:
+`docker build -t euro-alliance --build-arg NEXT_PUBLIC_SITE_URL=https://<site> .` produces the image (`NEXT_PUBLIC_SITE_URL` is baked in at build time, so each environment gets its own image). Staging (https://staging.euro-alliance.net) deploys from CI on every green push to `main`: [`deploy/README.md`](deploy/README.md). At runtime it needs:
 
 - `DATABASE_URL`, `PAYLOAD_SECRET` and `NEXT_PUBLIC_SITE_URL`
 - the SMTP settings, once email is configured
 - a volume mounted at `/app/media` for uploads
 
-Set `ALLOW_INDEXING=true` in production only: anywhere else `robots.txt` disallows everything and every page is `noindex`. On start, the app applies any pending migrations and seeds an empty database. Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
+**Production:** set `ALLOW_INDEXING=true` in production only, and serve it without staging's basic auth and `X-Robots-Tag: noindex, nofollow` header (`deploy/README.md`, «Staging is never indexed»): anywhere else `robots.txt` disallows everything and every page is `noindex`. On start, the app applies any pending migrations and seeds an empty database. Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
 
 ### Background jobs
 

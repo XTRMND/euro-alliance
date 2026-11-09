@@ -1,0 +1,27 @@
+# The front door of the VPS (/opt/edge): Caddy owns ports 80 and 443, gets Let's Encrypt
+# certificates by itself, and passes each hostname to its stack over the shared `edge` network.
+# Create the network once: `docker network create edge`. Then `docker compose up -d`.
+services:
+  caddy:
+    image: caddy:2.10.2-alpine
+    container_name: edge-caddy
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp'
+    env_file: .env
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - edge
+
+volumes:
+  caddy_data:
+  caddy_config:
+
+networks:
+  edge:
+    external: true

@@ -110,6 +110,6 @@ Add this template as `.github/pull_request_template.md` in PR 1:
 
 ## 8. Preview deployments
 
-Preview deployments run on the **user's infrastructure**, not on a managed platform. The mechanism (a preview server per PR, a shared staging server, Docker images pushed to a registry) is an open item for the user. Until it's agreed, CI builds a Docker image on every PR so it's ready to deploy, and the PR screenshots come from the local production build.
+Preview deployments run on the **user's infrastructure**, not on a managed platform. There is one shared staging server (the user, 05.11.2026): every push to `main` is pushed to Docker Hub and, once the fast checks pass, deployed to https://staging.euro-alliance.net by the `deploy-staging` job ([`deploy/README.md`](../deploy/README.md)). There are no per-PR previews; CI still builds the image on every PR, and the PR screenshots come from the local production build.
 
 Staging and previews always set `INQUIRY_EMAIL_OVERRIDE` and `noindex` (header `X-Robots-Tag: noindex` and `robots.txt` disallow), and never load analytics.
