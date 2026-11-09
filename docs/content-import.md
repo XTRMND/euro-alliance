@@ -11,7 +11,7 @@ How to bring the current site's courses, news and pages into Payload, the propos
   - translation prices per topic (dropped).
 - **Photos:** every image in the approved Figma file is used in its slot, and a Figma image that belongs to a real article becomes its cover (the user's decision, 02.11.2026; CLAUDE.md § 12). Nothing else from the old site's photos is imported. Slots Figma doesn't cover may take the user's picks (the old cover or an Unsplash photo); About page photos beyond Figma's are the client's only.
 - **Be polite to their server:** one request per second, an identifying user agent, respect `robots.txt`. The site is small (the baseline crawl found 120 pages and 1473 images).
-- The import is code in `scripts/import/`, run against a local or staging database. It is idempotent: re-running it updates records (matched on `legacyUrl`) instead of duplicating them.
+- The import is code in `scripts/import/` and `scripts/seed/`: `pnpm seed:scrape` extracts the old site into fixtures committed in `seed/`, and `pnpm seed:staging` loads them (`docs/seeding.md`). It is idempotent: re-running it updates records (matched on `legacyUrl`, a slug or another natural key) only where they differ, instead of duplicating them.
 
 ## 2. Timing
 
@@ -53,15 +53,19 @@ One extractor per page type, using `cheerio` on the fetched HTML (Playwright onl
 
 - `pnpm import:images` downloads every image the crawl found once (one request a second, cached in `out/files/`), sorts it by use (news cover, inside an article's text, course, page, site chrome) and writes `out/images.json` and a contact sheet, `out/contact-sheet/index.html`.
 - None of them is imported (02.11.2026). The scans, EU logo strips and partner logos the design uses are already seeded, from the same files. The report lists the old pages that had photos, for the client.
-- `IMPORT_ONLY=covers` first gives seven articles the covers Figma shows for them (`figma-covers.json`, the images in `figma-covers/`). Covers for the news Figma doesn't cover, and the homepage's small photo if Figma's isn't used, come from `out/photo-decisions.json` (the user's picks: the old cover, an Unsplash photo, or none) as the import's last step (`IMPORT_ONLY=covers`): originals by content hash, Unsplash photos from `in/unsplash/` by the photo id in the file name, with the photographer in «Автор». A kept original with text in it is marked «Има текст в изображението». Alt text: the old alt where there is one, otherwise drafted with `altReviewed: false` and listed in the report.
+- The seven covers Figma shows for real articles (`figma-covers.json`, the images in `figma-covers/`) go onto their articles with the news in `pnpm seed:staging`, where an article has no cover yet.
+- `pnpm import:covers` (local only: staging is shown without them, 02.11.2026) applies the user's picks from the local photo picker, `out/photo-decisions.json` (the old cover, an Unsplash photo, or none): originals by content hash, Unsplash photos from `in/unsplash/` by the photo id in the file name, with the photographer in «Автор». A kept original with text in it is marked «Има текст в изображението». Alt text: the old alt where there is one, otherwise drafted with `altReviewed: false`.
 
 ### 3.5 Load
 
-`pnpm import:run` (or the agreed package manager) uses Payload's Local API. Options, as environment variables (`payload run` doesn't pass arguments on): `IMPORT_DRY_RUN=1` (no writes; the report says what would change), `IMPORT_ONLY=news|courses|pages`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records are **published**: the client approved all the content (02.11.2026) and reviews it on staging. The old site's English copies (`/en/…`) go in as the English locale where they're real translations, for the later English site.
+Two steps (`docs/seeding.md` has the commands for the staging box):
+
+- `pnpm seed:scrape`, locally: runs the inventory (§ 3.1) and extracts the news, the approved courses (`courses.json`, `course-pages.json`) with their old dated entries, the language pages (`language-pages.json`), the translation languages, the ЦПО and teachers' lists and the documents linked from the news into `seed/` (JSON, and the documents in `seed/media/`). Committed, so the box never reaches the old site. `--cached` extracts from the last crawl.
+- `pnpm seed:staging`, on the box: the base seed (`src/seed`, fill-in only), then the fixtures through Payload's Local API. `--dry-run` writes nothing and prints every write it would make; it refuses to run without `SEED_TARGET=staging`. Every imported record keeps `legacyUrl` (and `legacyId` for news). Imported records are **published**: the client approved all the content (02.11.2026) and reviews it on staging. The old site's English copies (`/en/…`) aren't imported (they redirect, CLAUDE.md § 12).
 
 ### 3.6 Report
 
-`scripts/import/out/report.md`, attached to PR 21: counts per collection versus the inventory, missing fields (prices, dates, photos), images without reviewed alt, legacy URLs with no mapping, and anything the extractors couldn't parse.
+`pnpm seed:staging` prints, after the counts per collection (created, updated, skipped), what's missing or estimated: courses without a level or a date, groups without a price, the estimated group ends and converted prices, news without a cover, images in article texts left out, documents the old site no longer serves, the teachers' programmes' hours and credits, the policies' dates, the old site's lists against the CMS's, and the old pages that had photos. `seed/notes.json` keeps what the extraction found.
 
 ## 4. URL scheme (agreed 31.10.2026)
 

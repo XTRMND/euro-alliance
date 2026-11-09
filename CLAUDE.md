@@ -211,6 +211,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Local database | `docker compose up -d` (PostgreSQL 18 on port 5432; set `DB_PORT` if it's taken) |
 | Environment | `cp .env.example .env`, then set `PAYLOAD_SECRET` |
 | Migrate and seed | `pnpm migrate`, then `pnpm seed` (fills in missing company facts and offices; never overwrites) |
+| Staging content | `pnpm seed:scrape` locally (the old site → fixtures in `seed/`, committed), then `SEED_TARGET=staging pnpm seed:staging [--dry-run]` on the box from the Dockerfile's `seed` stage (`docs/seeding.md`) |
 | Dev server | `pnpm dev` (http://localhost:3200, admin at `/admin`; the first account created is the admin) |
 | Production build | `pnpm build` (standalone server in `.next/standalone`) |
 | Run the build | `pnpm start` (port 3200 unless `PORT` is set; reads `.env` if present; pages need the database) |
@@ -227,7 +228,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 | Rebuild fonts | `scripts/build-fonts.sh` (needs `pip install fonttools brotli`) |
 | Docker image | `docker build -t euro-alliance .` |
 
-The content import arrives in PR 21.
+The content import is the staging seed (`docs/seeding.md`). `pnpm import:covers` applies the local photo picker's choices (local only).
 
 **Production start:** the Docker image has no CLI. On start, Payload applies pending migrations (`prodMigrations`) and seeds an empty database. Mount a volume at `/app/media` for uploads.
 
@@ -497,6 +498,13 @@ From the homepage's About island (03.11.2026, 323:5189 / 324:9930):
 - The mobile frame sets «всеки ученик» at 40px beside a 38px line. [38, the heading's size]
 - Between 768 and 1023px the art keeps the phone's composition, up to 480px wide; side by side from 1024px, the art scaled to 39% of the screen.
 - Every homepage section below the first screen fades up once as it comes into view (the user, 03.11.2026: «yes»), except the navy inquiry band, which is on every page (`docs/motion.md` § 2).
+
+From the staging seed (09.11.2026, `docs/seeding.md`; branch `chore/seed-staging`):
+- The seed keeps the 02.11 decisions (the user, 09.11.2026): all 203 news as text, Figma's seven covers, no other photo from the old site, no galleries (no design).
+- The repository is public: the four Alliance Contest results lists linked from news 142, 143, 159 and 194 (children's full names and scores) aren't in `seed/` (the user, 09.11.2026). Their links are removed, the text stays; `scripts/seed/withheld.json`, and any later document whose link reads as results is withheld too. Whether they go back on the site is the client's call.
+- New on the old site since 02.11: «Английски език ниво А2 В1 В2 С ВАУЧЕРИ ОТ АЗ» (/Courses/65). Not in the approved list (`scripts/import/courses.json`), so not imported and its old address has no redirect. A group of «Английски език A2–B2»? [not imported until the user adds it to the list]
+- Figma's seven news covers are 900 px wide, below the article banner's 908 px slot (`src/lib/media/slots.ts`), so no article banner shows a photo; the cards and the lead story do. Sharper originals, or a banner slot of 900? [as is]
+- The teachers' programmes: the old site gives each its official code (38010001–38010029) and a longer title; the CMS keeps Figma's number («01») and shorter title.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
