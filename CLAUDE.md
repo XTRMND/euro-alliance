@@ -503,7 +503,7 @@ From the staging seed (09.11.2026, `docs/seeding.md`; branch `chore/seed-staging
 - The seed keeps the 02.11 decisions (the user, 09.11.2026): all 203 news as text, Figma's seven covers, no other photo from the old site, no galleries (no design).
 - The repository is public: the four Alliance Contest results lists linked from news 142, 143, 159 and 194 (children's full names and scores) aren't in `seed/` (the user, 09.11.2026). Their links are removed, the text stays; `scripts/seed/withheld.json`, and any later document whose link reads as results is withheld too. Whether they go back on the site is the client's call.
 - New on the old site since 02.11: «Английски език ниво А2 В1 В2 С ВАУЧЕРИ ОТ АЗ» (/Courses/65). Not in the approved list (`scripts/import/courses.json`), so not imported and its old address has no redirect. A group of «Английски език A2–B2»? [not imported until the user adds it to the list]
-- Figma's seven news covers are 900 px wide, below the article banner's 908 px slot (`src/lib/media/slots.ts`), so no article banner shows a photo; the cards and the lead story do. Sharper originals, or a banner slot of 900? [as is]
+- **To fix** (the user, 09.11.2026): Figma's seven news covers are 900 px wide, below the article banner's 908 px slot (`src/lib/media/slots.ts`), so no article banner shows a photo; the cards and the lead story do. Sharper originals, or a banner slot of 900?
 - The teachers' programmes: the old site gives each its official code (38010001–38010029) and a longer title; the CMS keeps Figma's number («01») and shorter title.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
