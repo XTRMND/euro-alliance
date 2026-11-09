@@ -195,10 +195,11 @@ A page PR is done when all of these hold:
 
 ## 10. Git (summary; the full rules are `docs/git-workflow.md`)
 
-- **Planned steps go straight to `main`** (the user's decision, 31.10.2026). No branch or PR unless the user asks for one. Never force-push `main`.
-- One step from `docs/pr-plan.md` at a time, as small Conventional Commits that each build.
-- Before pushing, run every CI check locally (typecheck, lint, format, unit, build, e2e, Lighthouse). After pushing, confirm CI is green on `main`; if it isn't, fix forward straight away.
-- What a PR description would hold (summary, Figma links, deviations, open items) goes in the body of the step's last commit. Open items also go into § 12, and the Figma side-by-side screenshots into `docs/screenshots/`.
+- **Never push to `main`** (the user, 09.11.2026; it replaces the straight-to-`main` rule of 31.10.2026). Every change goes through a branch and a pull request, which the user reviews and merges. Never force-push `main`.
+- **One PR per version.** Each PR raises `version` in `package.json` (SemVer, `0.x` until launch, `1.0.0` at launch): minor for new features, content or tooling, patch for fixes only. Its title ends with the version, `feat(seed): staging seed (v0.2.0)`. Once it's merged and CI is green on `main`, the release workflow tags `v<version>` and publishes a GitHub release with the PR's description (`docs/git-workflow.md` § 6).
+- One step from `docs/pr-plan.md` per PR, as small Conventional Commits that each build. A PR that needs one still open branches from it and says so.
+- Before pushing, run every CI check locally (typecheck, lint, format, unit, build, e2e, Lighthouse). After pushing, confirm CI is green on the PR; if it isn't, fix it on the branch.
+- The PR description holds the summary, Figma links, deviations and open items. Open items also go into § 12, and the Figma side-by-side screenshots into `docs/screenshots/`.
 - Secrets only in env. Never commit `.env*` files other than `.env.example`.
 
 ## 11. Commands
@@ -241,7 +242,7 @@ Decided:
 - pnpm and CSS Modules (PR 1).
 - Deployment with Docker, behind a CDN. SMTP and scheduled jobs exist on the user's side.
 - Media storage: a local Docker volume behind the storage adapter (Claude's default, 31.10.2026). Switching to S3-compatible storage later is a config change; ask again if the user mentions object storage or a second app server.
-- Planned steps are pushed straight to `main` (§ 10).
+- Every change goes through a versioned pull request; nothing is pushed to `main` (§ 10, the user, 09.11.2026).
 - Photo tints follow Figma's measured treatment, not the two-colour ramp first proposed (`docs/cms-schema.md` § 4, PR 2).
 - Pages render on request and read the CMS through cached, tagged reads that Payload hooks invalidate (`src/lib/cms.ts`, PR 5), so a build needs no database. Whole-page CDN caching is added once the CDN is known. Links don't prefetch automatically: with on-request pages, every visible link would cost a render per visitor.
 

@@ -20,6 +20,32 @@ env:
   PAYLOAD_SECRET: ci-only-not-a-secret
 
 jobs:
+  # One PR per version (docs/git-workflow.md § 6): the PR raises package.json's version above the
+  # base branch's, to one not released yet.
+  version:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: The PR raises the version
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          base=$(git show "origin/$BASE:package.json" | node -pe 'JSON.parse(require("fs").readFileSync(0, "utf8")).version')
+          head=$(node -p 'require("./package.json").version')
+          echo "base $base, this PR $head"
+          node -e '
+            const [a, b] = process.argv.slice(1).map((v) => v.split(".").map(Number))
+            const later = a.findIndex((n, i) => n !== b[i])
+            if (later === -1 || b[later] < a[later]) process.exit(1)
+          ' "$base" "$head" || { echo "::error::Raise version in package.json above $base (SemVer: minor for features, patch for fixes)."; exit 1; }
+          if git rev-parse -q --verify "refs/tags/v$head" >/dev/null; then
+            echo "::error::v$head is already released. Raise the version again."
+            exit 1
+          fi
+
   typecheck:
     runs-on: ubuntu-latest
     steps:
