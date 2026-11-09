@@ -245,7 +245,8 @@ for (const cover of fixtures.covers) {
       name: `figma-news-${cover.legacyId}.jpg`,
       mimetype: 'image/jpeg',
     },
-    { alt: cover.alt, kind: 'photo', textInImage: cover.textInImage, altReviewed: true },
+    // The alt texts are drafts (figma-covers.json), for an editor to review.
+    { alt: cover.alt, kind: 'photo', textInImage: cover.textInImage, altReviewed: false },
   )
   figmaCovers.set(cover.legacyId, media.id)
   if (!fixtures.news.some((article) => article.legacyId === cover.legacyId))
