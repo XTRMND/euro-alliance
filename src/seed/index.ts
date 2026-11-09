@@ -17,6 +17,7 @@ import {
   partners,
 } from './data'
 import { reindexSearch } from '@/lib/search-index'
+import { noteSkipped } from './tally'
 import { legalBody, legalPages } from './legal'
 import {
   bulgarianCertificates,
@@ -54,7 +55,7 @@ export async function seed(payload: Payload) {
   if (Object.keys(missing).length > 0) {
     await payload.updateGlobal({ slug: 'site', locale: 'bg', data: missing })
     payload.logger.info(`Seeded company facts: ${Object.keys(missing).join(', ')}.`)
-  }
+  } else noteSkipped(payload, 'global:site')
 
   await seedFundingLogo(payload)
   await seedHome(payload)
@@ -69,7 +70,7 @@ export async function seed(payload: Payload) {
   if (isEmpty(routing.rules)) {
     await payload.updateGlobal({ slug: 'inquiry-routing', data: { rules: defaultRouting } })
     payload.logger.info('Seeded the inquiry routing.')
-  }
+  } else noteSkipped(payload, 'global:inquiry-routing')
 
   const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {
@@ -95,7 +96,7 @@ export async function seed(payload: Payload) {
     if (moved) {
       await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: data as never })
       payload.logger.info(`Moved ${moved} navigation links to filtered course listings.`)
-    }
+    } else noteSkipped(payload, 'global:navigation')
   }
 
   for (const office of offices) {
@@ -115,7 +116,7 @@ export async function seed(payload: Payload) {
         },
       })
       payload.logger.info(`Seeded the office «${office.name}».`)
-    }
+    } else noteSkipped(payload, 'offices')
   }
 
   // The search index is derived from what's published, so it's rebuilt rather than filled in.
@@ -125,7 +126,7 @@ export async function seed(payload: Payload) {
 /** Uploads the EU logo strip as a `logo` (stored as is) and links it from the footer notice. */
 async function seedFundingLogo(payload: Payload) {
   const site = await payload.findGlobal({ slug: 'site', locale: 'bg', depth: 0 })
-  if (site.funding?.logos) return
+  if (site.funding?.logos) return noteSkipped(payload, 'global:site')
 
   const media = await uploadOnce(payload, { ...fundingLogo, kind: 'logo' })
   await payload.updateGlobal({
@@ -180,7 +181,7 @@ async function seedHome(payload: Payload) {
     data.partners = { title: current.partners?.title || home.partners.title, logos }
   }
 
-  if (Object.keys(data).length === 0) return
+  if (Object.keys(data).length === 0) return noteSkipped(payload, 'global:home')
   await payload.updateGlobal({ slug: 'home', locale: 'bg', data })
   payload.logger.info(`Seeded the homepage: ${Object.keys(data).join(', ')}.`)
 }
@@ -199,6 +200,7 @@ async function seedPrograms(payload: Payload) {
       limit: 1,
       draft: true,
     })
+    if (found.docs[0]) noteSkipped(payload, 'textbook-systems')
     const doc =
       found.docs[0] ??
       (await payload.create({
@@ -218,6 +220,7 @@ async function seedPrograms(payload: Payload) {
       limit: 1,
       draft: true,
     })
+    if (found.docs[0]) noteSkipped(payload, 'certificates')
     const doc =
       found.docs[0] ??
       (await payload.create({
@@ -239,7 +242,10 @@ async function seedPrograms(payload: Payload) {
         ],
       },
     })
-    if (totalDocs > 0) continue
+    if (totalDocs > 0) {
+      noteSkipped(payload, 'programs')
+      continue
+    }
     await payload.create({
       collection: 'programs',
       locale: 'bg',
@@ -272,6 +278,7 @@ async function seedPrograms(payload: Payload) {
       limit: 1,
       draft: true,
     })
+    if (found.docs[0]) noteSkipped(payload, 'certificates')
     const doc =
       found.docs[0] ??
       (await payload.create({
@@ -296,7 +303,10 @@ async function seedPrograms(payload: Payload) {
       draft: true,
     })
     const existing = found.docs[0]
-    if (existing && !existing.legacyUrl) continue
+    if (existing && !existing.legacyUrl) {
+      noteSkipped(payload, 'programs')
+      continue
+    }
     const data = {
       ...program,
       sections: sections.map((section) =>
@@ -360,7 +370,7 @@ async function seedPrograms(payload: Payload) {
       })
     }
     payload.logger.info(`Seeded ${professions.length} professions.`)
-  }
+  } else noteSkipped(payload, 'professions', professions.length)
 
   // The programmes for pedagogical specialists, in order, while there are none.
   if ((await payload.count({ collection: 'teacher-programmes' })).totalDocs === 0) {
@@ -372,7 +382,7 @@ async function seedPrograms(payload: Payload) {
       })
     }
     payload.logger.info(`Seeded ${teacherProgrammes.length} programmes for teachers.`)
-  }
+  } else noteSkipped(payload, 'teacher-programmes', teacherProgrammes.length)
 
   // The farmers' funded project and its EU logo strip (uploaded as is), by title.
   const found = await payload.find({
@@ -382,6 +392,7 @@ async function seedPrograms(payload: Payload) {
     limit: 1,
     draft: true,
   })
+  if (found.docs[0]) noteSkipped(payload, 'funded-projects')
   const project =
     found.docs[0] ??
     (await payload.create({
@@ -399,7 +410,10 @@ async function seedPrograms(payload: Payload) {
       collection: 'programs',
       where: { type: { equals: program.type } },
     })
-    if (totalDocs > 0) continue
+    if (totalDocs > 0) {
+      noteSkipped(payload, 'programs')
+      continue
+    }
     await payload.create({
       collection: 'programs',
       locale: 'bg',
@@ -421,7 +435,7 @@ async function seedPrograms(payload: Payload) {
  */
 async function seedAbout(payload: Payload) {
   const current = await payload.findGlobal({ slug: 'about', locale: 'bg', depth: 0 })
-  if (!isEmpty(current.hero?.title)) return
+  if (!isEmpty(current.hero?.title)) return noteSkipped(payload, 'global:about')
 
   const documentIds: number[] = []
   for (const { scan, ...document } of aboutDocuments) {
@@ -432,6 +446,7 @@ async function seedAbout(payload: Payload) {
       limit: 1,
       draft: true,
     })
+    if (found.docs[0]) noteSkipped(payload, 'documents')
     const doc =
       found.docs[0] ??
       (await payload.create({
@@ -451,6 +466,7 @@ async function seedAbout(payload: Payload) {
       limit: 1,
       draft: true,
     })
+    if (found.docs[0]) noteSkipped(payload, 'funded-projects')
     const project =
       found.docs[0] ??
       (title === pkipProject.title
@@ -530,7 +546,7 @@ async function seedContact(payload: Payload) {
     )
     if (maps.some((location, i) => location !== current.locations?.[i])) data.locations = maps
   }
-  if (Object.keys(data).length === 0) return
+  if (Object.keys(data).length === 0) return noteSkipped(payload, 'global:contact')
   await payload.updateGlobal({ slug: 'contact', locale: 'bg', data })
   payload.logger.info(`Seeded the contact page: ${Object.keys(data).join(', ')}.`)
 }
@@ -552,7 +568,10 @@ async function uploadOnce(payload: Payload, { file, mimetype, ...fields }: SeedF
     depth: 0,
     limit: 1,
   })
-  if (existing.docs[0]) return existing.docs[0]
+  if (existing.docs[0]) {
+    noteSkipped(payload, 'media')
+    return existing.docs[0]
+  }
 
   // The build copies these files next to the standalone server (scripts/prepare-standalone.mjs),
   // so the production seed finds them too.
@@ -572,7 +591,10 @@ async function seedLegal(payload: Payload) {
       collection: 'legal-pages',
       where: { page: { equals: page.page } },
     })
-    if (totalDocs > 0) continue
+    if (totalDocs > 0) {
+      noteSkipped(payload, 'legal-pages')
+      continue
+    }
     await payload.create({
       collection: 'legal-pages',
       locale: 'bg',
@@ -589,7 +611,7 @@ async function seedLegal(payload: Payload) {
 /** The default sharing image (PR 22): the homepage's classroom photo, when none is chosen. */
 async function seedShareImage(payload: Payload) {
   const site = await payload.findGlobal({ slug: 'site', depth: 0 })
-  if (site.seoImage) return
+  if (site.seoImage) return noteSkipped(payload, 'global:site')
   const home = await payload.findGlobal({ slug: 'home', depth: 0 })
   const photo = home.hero?.photo
   if (!photo) return
