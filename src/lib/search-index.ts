@@ -191,6 +191,28 @@ export function aboutRecord(about: Record<string, unknown>): SearchRecord | null
 
 export const indexedCollections = ['courses', 'programs', 'news', 'legal-pages'] as const
 
+const blank = (value: unknown) => value === null || value === undefined || value === ''
+
+/** Whether the stored record already says this, so a rebuild writes only what changed. */
+function unchanged(record: SearchRecord, stored: Record<string, unknown>) {
+  return Object.entries(record).every(([key, value]) =>
+    blank(value) ? blank(stored[key]) : stored[key] === value,
+  )
+}
+
+/** Writes a record unless the stored one already says it; true when it wrote. */
+async function write(
+  payload: Payload,
+  record: SearchRecord,
+  existing: { id: number } | undefined,
+  req?: PayloadRequest,
+) {
+  if (existing && unchanged(record, existing)) return false
+  if (existing) await payload.update({ collection: 'search', id: existing.id, data: record, req })
+  else await payload.create({ collection: 'search', data: record, req })
+  return true
+}
+
 /** Writes or drops a record; in a hook, inside the hook's transaction (`req`). */
 async function save(
   payload: Payload,
@@ -206,12 +228,8 @@ async function save(
     req,
   })
   const existing = docs[0]
-  if (!record) {
-    if (existing) await payload.delete({ collection: 'search', id: existing.id, req })
-    return
-  }
-  if (existing) await payload.update({ collection: 'search', id: existing.id, data: record, req })
-  else await payload.create({ collection: 'search', data: record, req })
+  if (record) await write(payload, record, existing, req)
+  else if (existing) await payload.delete({ collection: 'search', id: existing.id, req })
 }
 
 /** The published version of a document, or null (a draft save leaves the published one live). */
@@ -250,7 +268,13 @@ export const indexAbout: GlobalAfterChangeHook = async ({ doc, req }) => {
 
 /** Rebuilds the whole index from what's published; runs on every start (derived data). */
 export async function reindexSearch(payload: Payload) {
-  const sources = new Set<string>()
+  const { docs: stored } = await payload.find({
+    collection: 'search',
+    depth: 0,
+    pagination: false,
+  })
+  const bySource = new Map(stored.map((doc) => [doc.source, doc]))
+  const records: SearchRecord[] = []
   for (const collection of indexedCollections) {
     const { docs } = await payload.find({
       collection,
@@ -261,17 +285,20 @@ export async function reindexSearch(payload: Payload) {
     })
     for (const doc of docs) {
       const record = searchRecord(collection, doc as unknown as Doc)
-      if (!record) continue
-      sources.add(record.source)
-      await save(payload, record.source, record)
+      if (record) records.push(record)
     }
   }
   const about = await payload.findGlobal({ slug: 'about', locale: 'bg', depth: 0 })
   const record = aboutRecord(about as unknown as Record<string, unknown>)
-  if (record) {
-    sources.add(record.source)
-    await save(payload, record.source, record)
-  }
-  await payload.delete({ collection: 'search', where: { source: { not_in: [...sources] } } })
-  payload.logger.info(`Indexed ${sources.size} pages for the search.`)
+  if (record) records.push(record)
+
+  let written = 0
+  for (const record of records)
+    if (await write(payload, record, bySource.get(record.source))) written++
+  const sources = new Set(records.map((record) => record.source))
+  const stale = stored.filter((doc) => !sources.has(doc.source)).map((doc) => doc.id)
+  if (stale.length) await payload.delete({ collection: 'search', where: { id: { in: stale } } })
+  payload.logger.info(
+    `Indexed ${sources.size} pages for the search (${written} written, ${stale.length} removed).`,
+  )
 }
