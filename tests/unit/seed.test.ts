@@ -1,6 +1,7 @@
 import type { Payload } from 'payload'
 import { describe, expect, it, vi } from 'vitest'
 import { same } from '../../scripts/seed/compare'
+import { pendingMigrations } from '../../scripts/seed/migrations'
 import { markAdminEdit } from '../../src/hooks/admin-edits'
 import { noteSkipped, recording, Tally } from '../../src/seed/tally'
 
@@ -98,5 +99,19 @@ describe('markAdminEdit', () => {
 
   it('leaves the seed’s own writes (no user) unmarked', () => {
     expect(run(null)).toEqual({ title: 'Test A' })
+  })
+})
+
+describe('pendingMigrations', () => {
+  const names = ['20261101_a', '20261109_b']
+
+  it('lists the migrations the database hasn’t applied, in order', async () => {
+    const payload = { find: vi.fn(async () => ({ docs: [{ name: '20261101_a' }] })) }
+    expect(await pendingMigrations(payload as unknown as Payload, names)).toEqual(['20261109_b'])
+  })
+
+  it('lists them all on an empty database (no migrations table)', async () => {
+    const payload = { find: vi.fn(async () => Promise.reject(new Error('no table'))) }
+    expect(await pendingMigrations(payload as unknown as Payload, names)).toEqual(names)
   })
 })

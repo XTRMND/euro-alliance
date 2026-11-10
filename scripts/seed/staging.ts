@@ -16,6 +16,7 @@ import { readFile } from 'node:fs/promises'
 import config from '@payload-config'
 import { getPayload, type Payload, type Where } from 'payload'
 import { type Destination, destinations } from '@/lib/destinations'
+import { migrations } from '@/migrations'
 import { routes } from '@/lib/routes'
 import { reindexSearch } from '@/lib/search-index'
 import { seed } from '@/seed'
@@ -29,6 +30,7 @@ import {
   seedMediaDir,
 } from './fixtures'
 import { isEmpty, same } from './compare'
+import { pendingMigrations } from './migrations'
 
 // ── Guards ──────────────────────────────────────────────────────────────────
 const args = process.argv.slice(2)
@@ -62,6 +64,14 @@ console.log(
 
 const tally = new Tally(dryRun)
 const payload = recording(await getPayload({ config }), tally)
+const pending = await pendingMigrations(
+  payload,
+  migrations.map((migration) => migration.name),
+)
+if (pending.length)
+  refuse(
+    `the database is missing ${pending.length} migration(s) of this seed's version (${pending.join(', ')}). The site applies them when it starts: deploy, or restart staging-site, then run the seed again.`,
+  )
 const report = {
   /** Records a person has edited in the admin: never overwritten, listed instead. */
   edited: [] as string[],

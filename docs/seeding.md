@@ -18,7 +18,7 @@ The repository is public, so documents with personal data stay out of `seed/`: t
 Staging is on the VPS (`deploy/README.md`): `/opt/euro-alliance-staging`, the containers `staging-site` and `staging-postgres`, the media volume `euro-alliance-staging_media`. The site's image has no CLI and the VPS never builds, so the seed has its own image, built by CI from `main`:
 
 1. Once the merge is deployed (CI green on `main`), run **Actions → Seed image → Run workflow** on `main` (or `gh workflow run seed-image.yml --ref main`). It pushes `musev/eac:seed-staging` (about 1.9 GB) to Docker Hub.
-2. On the VPS (`ssh eac`):
+2. On the VPS, as root (`ssh root@185.123.188.101`, or log in as yourself and `sudo -i`): the Docker Hub login that pulls the private `musev/eac` is root's, and the backups go to `/root/backups`. Paste the block in one go. `seed` and `STAMP` live only in that shell: after a reconnect, paste it again with `STAMP` set to the backup's stamp.
 
 ```sh
 cd /opt/euro-alliance-staging
@@ -56,6 +56,8 @@ docker exec staging-postgres psql -U euro_alliance -d euro_alliance -Atc "select
 ```sh
 seed --dry-run 2>&1 | tee /root/backups/seed-dry-run-$STAMP.log
 ```
+
+If it refuses with «the database is missing … migration(s)», staging-site hasn't started on this version yet: the site applies migrations when it starts (`src/instrumentation.ts`), and the seed never does. `docker restart staging-site`, wait until `docker ps` shows it `healthy`, and run it again.
 
 Check the first line names the database `db:5432/euro_alliance`, then read «Would write (N)» and the counts. On one seeded before, only what changed. On an empty database it's over 400 writes, and the count runs a few higher than the real run: a dry run can't see what it would have created earlier in the same run, such as a textbook system two pages share.
 
