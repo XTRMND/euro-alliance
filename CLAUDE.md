@@ -509,6 +509,12 @@ From the staging seed (09.11.2026, `docs/seeding.md`; branch `chore/seed-staging
 - Payload starts with the server (v0.2.1, 10.11.2026): before, it started on the first page that read the CMS, so v0.2.0's migration wasn't applied on staging until a visit, the staging seed failed on the missing column, and the first visitor after every start waited for the base seed and a rewrite of the whole search index. `pnpm seed:staging` now refuses while the database is missing a migration.
 - The teachers' programmes: the old site gives each its official code (38010001–38010029) and a longer title; the CMS keeps Figma's number («01») and shorter title.
 
+From the About load time (v0.2.2, 11.11.2026; branch `fix/about-load-time`):
+- Cause: next/image's encoded files lived in the container, so every deploy emptied them and the first visitor to each page waited for all its images to be encoded to AVIF on one CPU, the hero photo among them. «За нас» was the worst for its seven scans, fetched at 1920 px for a 220 px card (no `sizes` on the `<img>`); `/novini` and the homepage were as slow. Server time, the CMS queries (6 for About, cached) and the admin screens were fine. Fixed: `/app/.next/cache/images` is a volume (500 MB), and the scans carry their `sizes`.
+- Measured in a local container limited to one CPU, not on staging: staging's basic auth isn't available to Claude. Staging's before/after is for the user to run (PR description).
+- The first deploy of v0.2.2 starts with an empty volume, so its first visitors pay the encodes once more. The VPS's `docker-compose.yml` can take the repository's (it names the volume); the old one works too, with an unnamed volume.
+- Not changed: pages stay rendered per request (the CSP nonce, PR 24). The first request after a start takes about 0.6–0.9 s on one CPU (route code loading, empty CMS cache); warming the main pages after a start would take that off the first visitors. AVIF stays: 3–5× slower to encode than WebP, but its files are about 40% smaller, and with the cache kept each image and width is encoded once.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.
