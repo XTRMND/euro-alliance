@@ -36,6 +36,8 @@ services:
       NODE_OPTIONS: --max-old-space-size=512
     volumes:
       - media:/app/media
+      # next/image's encoded files, kept across deploys (Dockerfile).
+      - image-cache:/app/.next/cache/images
     depends_on:
       db:
         condition: service_healthy
@@ -56,6 +58,7 @@ services:
 volumes:
   db-data:
   media:
+  image-cache:
 
 networks:
   edge:

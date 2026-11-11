@@ -226,7 +226,7 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 | `scan` | Original only; no colour treatment. |
 | `logo` | **Served exactly as uploaded** (EU publicity rules). No recompression, tint, crop or reformat. |
 
-Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never used on the site. **Responsive widths and AVIF/WebP** come from Next's image optimizer (`next/image`) on top of the original or the tint, cached behind the CDN, instead of a dozen pre-generated files per tint. (Implemented in PR 2; the earlier proposal pre-generated widths 480–2880 in both formats.)
+Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never used on the site. **Responsive widths and AVIF/WebP** come from Next's image optimizer (`next/image`) on top of the original or the tint, encoded on the first request for each width and format and kept on disk in a volume that outlives deploys (`/app/.next/cache/images`, 500 MB, least recently used first out; v0.2.2), and behind the CDN once there is one, instead of a dozen pre-generated files per tint. (Implemented in PR 2; the earlier proposal pre-generated widths 480–2880 in both formats.)
 
 **Duotone, as measured in Figma (PR 2).** Figma uses two treatments, and the code reproduces both (`src/lib/media/tints.ts`):
 

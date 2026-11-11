@@ -26,6 +26,15 @@ never touched.
 The stacks share the external Docker network `edge` (`docker network create edge`, once). Caddy
 reaches `staging-site:3000` and `crm-proxy:80` by container name.
 
+The site keeps two volumes: `media` (uploads) and `image-cache` (`/app/.next/cache/images`,
+next/image's encoded AVIF and WebP files, at most 500 MB). Until v0.2.2 every deploy threw the
+encoded files away, and the first visitor to each page waited while all its photos, scans and
+stickers were encoded again on the VPS's one CPU, the photo at the top among them. The image
+declares the volume, so Compose keeps it across `deploy.sh` even with an older copy of
+`docker-compose.yml` on the VPS; the named one also survives `docker compose down`. Emptying it is
+safe (`docker volume rm euro-alliance-staging_image-cache` with the site stopped): the next visits
+encode the images again.
+
 ## How a deploy happens
 
 On every push to `main`, CI's `docker` job builds the image with

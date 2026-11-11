@@ -231,7 +231,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 
 The content import is the staging seed (`docs/seeding.md`). `pnpm import:covers` applies the local photo picker's choices (local only).
 
-**Production start:** the Docker image has no CLI. When the server starts, before it takes requests (`src/instrumentation.ts`), Payload applies pending migrations (`prodMigrations`), fills in what's missing in the database (the base seed) and rebuilds the search index, writing only what changed. Mount a volume at `/app/media` for uploads.
+**Production start:** the Docker image has no CLI. When the server starts, before it takes requests (`src/instrumentation.ts`), Payload applies pending migrations (`prodMigrations`), fills in what's missing in the database (the base seed) and rebuilds the search index, writing only what changed. Mount a volume at `/app/media` for uploads; `/app/.next/cache/images` (next/image's encoded files) is a volume too, so they outlive a deploy.
 
 **Adding a page:** name its route folder with the segments from `src/lib/routes.ts` (a unit test enforces this), add it to `tests/e2e/pages.ts` so the shared checks run on it, and add key pages to `paths` in `lighthouserc.cjs` (and to `lcpFlagged` only if it misses the LCP budget, named in the commit notes).
 
