@@ -84,6 +84,24 @@ for (const { name, path } of pages) {
       expect(problems).toEqual([])
     })
 
+    test('gives every responsive image its sizes', async ({ page }) => {
+      await open(page, path)
+
+      // Without `sizes`, a browser reads a width srcset as if the image filled the screen and
+      // fetches the 1920px version for a 220px scan (the About page's licences until v0.2.2).
+      const unsized = await page.evaluate(() =>
+        [...document.querySelectorAll<HTMLElement>('img[srcset], link[rel="preload"][imagesrcset]')]
+          .filter((element) => {
+            const srcset = element.getAttribute('srcset') ?? element.getAttribute('imagesrcset')
+            const sizes = element.getAttribute('sizes') ?? element.getAttribute('imagesizes')
+            return /\s\d+w(,|$)/.test(srcset ?? '') && !sizes
+          })
+          .map((element) => element.outerHTML.slice(0, 160)),
+      )
+
+      expect(unsized).toEqual([])
+    })
+
     for (const width of designWidths) {
       test(`has no axe violations at ${width}px`, async ({ page }) => {
         await open(page, path, width)
