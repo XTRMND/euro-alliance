@@ -99,9 +99,6 @@ export async function AdminNav(props: Props) {
         accountUrl={`${admin}/account`}
         logoutUrl={`${admin}/logout`}
         userName={name}
-        locales={(payload.config.localization ? payload.config.localization.locales : []).map(
-          (locale) => locale.code,
-        )}
       />
     </>
   )

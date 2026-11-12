@@ -121,9 +121,11 @@ test('the dashboard is one card: the overview, the two lists and the shortcuts',
     'href',
     '/admin/collections/legal-pages',
   )
-  // The layout rule: the card fills the height under the top bar and stays within 1096px.
+  // The card fills the height under the top bar and the width beside the menu, 32px around it
+  // (the user, 12.11.2026: the dashboard's card isn't held to 1096px).
   const card = await page.locator('[data-admin="card"]').boundingBox()
-  expect(card!.width).toBeLessThanOrEqual(1096)
+  expect(Math.round(card!.x)).toBe(280 + 32)
+  expect(Math.round(card!.x + card!.width)).toBe(1440 - 32)
   expect(Math.round(card!.y + card!.height)).toBe(960 - 32)
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(960)
   expect(await axe(page, ['[data-admin="dashboard"]'])).toEqual([])
@@ -422,22 +424,13 @@ test('a global sits where its page is on the site', async ({ page }) => {
   )
 })
 
-test('the top bar switches the content language and opens the account menu', async ({ page }) => {
+test('the top bar links to the site and opens the account menu, without a language switch', async ({
+  page,
+}) => {
   await logIn(page)
   await page.goto('/admin/globals/home')
-  const languages = page.getByRole('group', { name: 'Език на съдържанието' })
-  await expect(languages.getByRole('link', { name: 'Български' })).toHaveAttribute(
-    'aria-current',
-    'true',
-  )
-  await languages.getByRole('link', { name: 'English' }).click()
-  await expect(page).toHaveURL(/locale=en/)
-  await expect(languages.getByRole('link', { name: 'English' })).toHaveAttribute(
-    'aria-current',
-    'true',
-  )
-  await languages.getByRole('link', { name: 'Български' }).click()
-  await expect(page).toHaveURL(/locale=bg/)
+  // No БГ / EN switch: the content is edited in Bulgarian until the English site exists.
+  await expect(page.getByRole('group', { name: 'Език на съдържанието' })).toHaveCount(0)
 
   await expect(page.getByRole('link', { name: /Виж сайта/ })).toHaveAttribute('target', '_blank')
   const avatar = page.getByRole('button', { name: /^Профил:/ })
