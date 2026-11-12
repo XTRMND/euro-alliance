@@ -34,6 +34,7 @@ import * as migration_20261112_084508_groups_collection from './20261112_084508_
 import * as migration_20261112_090923_prices_collection from './20261112_090923_prices_collection';
 import * as migration_20261112_091845_categories_and_translation_languages from './20261112_091845_categories_and_translation_languages';
 import * as migration_20261112_094228_drop_search_and_missing_addresses from './20261112_094228_drop_search_and_missing_addresses';
+import * as migration_20261112_100253_navigation_link_pickers from './20261112_100253_navigation_link_pickers';
 
 export const migrations = [
   {
@@ -214,6 +215,11 @@ export const migrations = [
   {
     up: migration_20261112_094228_drop_search_and_missing_addresses.up,
     down: migration_20261112_094228_drop_search_and_missing_addresses.down,
-    name: '20261112_094228_drop_search_and_missing_addresses'
+    name: '20261112_094228_drop_search_and_missing_addresses',
+  },
+  {
+    up: migration_20261112_100253_navigation_link_pickers.up,
+    down: migration_20261112_100253_navigation_link_pickers.down,
+    name: '20261112_100253_navigation_link_pickers'
   },
 ];

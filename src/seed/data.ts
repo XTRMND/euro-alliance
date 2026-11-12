@@ -1,4 +1,4 @@
-import { anchors, routes } from '@/lib/routes'
+import { routes } from '@/lib/routes'
 
 // Verified client facts (CLAUDE.md § 3) and copy from the approved Figma file: offices from the
 // Contact page (119:1875), navigation from the Header (79:784), Mobile menu (121:1399) and Footer
@@ -57,28 +57,6 @@ export const offices = [
 // Targets as decided by the user (CLAUDE.md § 12): «Езици» opens the course listing filtered to
 // language courses; «Професионално обучение» opens its three programmes. Left out: «Ценоразпис»
 // (no official price list) and «Екип» (until the client sends team photos).
-const englishAdults = routes.languageProgram('english', 'adults')
-
-/**
- * Navigation links seeded before 02.11.2026 that now go to filtered course listings (a general
- * label never goes to one specific page): label, old address, new address. The seed moves a link
- * only while it still has its old address.
- */
-export const navigationMoves: [string, string, string][] = [
-  [
-    'Езици за ученици',
-    routes.languageProgram('english', 'students'),
-    routes.courses({ category: 'languages', audience: 'students' }),
-  ],
-  [
-    'Езици за възрастни',
-    englishAdults,
-    routes.courses({ category: 'languages', audience: 'adults' }),
-  ],
-  ['Професионално обучение', routes.professions(), routes.courses('vocational')],
-  ['Изпити и сертификати', `${englishAdults}#${anchors.certificates}`, routes.courses('exams')],
-]
-
 const vocational = {
   label: 'Професионално обучение',
   children: [
@@ -88,6 +66,7 @@ const vocational = {
   ],
 }
 
+// The addresses are turned into picked links when seeded (src/seed/index.ts, pickedNavigation).
 export const navigation = {
   header: {
     left: [
