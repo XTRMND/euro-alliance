@@ -79,19 +79,12 @@ export function contentSecurityPolicy({
 export const hsts = 'max-age=300'
 
 /** The headers every response carries (next.config.ts). */
-export function securityHeaders({
-  production,
-  framedBySelf = false,
-}: {
-  production: boolean
-  /** The live preview frame (see the policy above). */
-  framedBySelf?: boolean
-}) {
+export function securityHeaders({ production }: { production: boolean }) {
   return [
     ...(production ? [{ key: 'Strict-Transport-Security', value: hsts }] : []),
     { key: 'X-Content-Type-Options', value: 'nosniff' },
     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
-    { key: 'X-Frame-Options', value: framedBySelf ? 'SAMEORIGIN' : 'DENY' },
+    { key: 'X-Frame-Options', value: 'DENY' },
     {
       key: 'Permissions-Policy',
       value: [

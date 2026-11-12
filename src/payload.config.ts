@@ -34,7 +34,7 @@ import { Navigation } from './globals/Navigation'
 import { Site } from './globals/Site'
 import { jobs } from './jobs'
 import { emailAdapter } from './lib/email'
-import { isPreviewKind, previewPath } from './lib/preview'
+import { isPreviewKind, previewUrl } from './lib/preview'
 import { migrations } from './migrations'
 import { seed } from './seed'
 
@@ -53,7 +53,7 @@ export default buildConfig({
     // «10 ноември 2026, 16:52», as the site writes dates (decision 12: Bulgarian date formats).
     dateFormat: 'd MMMM yyyy, HH:mm',
     // Live preview (decision 11): the page's own template beside the form, rendered from what's
-    // typed (src/app/(frontend)/preview), at the two widths of the design.
+    // typed (src/lib/preview.ts), at the two widths of the design.
     livePreview: {
       collections: ['courses', 'programs', 'news'],
       globals: ['home', 'about', 'contact'],
@@ -63,9 +63,8 @@ export default buildConfig({
       ],
       url: ({ data, collectionConfig, globalConfig, locale }) => {
         const kind = collectionConfig?.slug ?? globalConfig?.slug
-        // A document that isn't saved yet has no preview.
-        if (!isPreviewKind(kind) || (collectionConfig && !data?.id)) return ''
-        return previewPath(kind, collectionConfig ? data.id : undefined, locale?.code)
+        // Empty for a document that has no page to show yet (unsaved, or without its language).
+        return isPreviewKind(kind) ? previewUrl(kind, data, locale?.code) : ''
       },
     },
     // The shell of Figma's «07 CMS admin» (docs/admin-redesign.md, PR 6): the sidebar mirrors

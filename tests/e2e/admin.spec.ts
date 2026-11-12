@@ -372,17 +372,19 @@ test('the live preview shows the page from what is typed, before it is saved', a
   expect(created.ok()).toBe(true)
   const { doc } = (await created.json()) as { doc: { id: number } }
   try {
-    // The preview is for staff: a visitor gets the 404 page, and it may only be framed by the site.
+    // The preview is the course's own address with a marker. It's for editors: a visitor gets
+    // the 404 page of an unpublished course. Only a preview may be framed, and only by the site.
+    const address = `/kursove/preview?preview=courses.${doc.id}&locale=bg`
     const visitor = await browser.newContext()
-    const refused = await visitor.request.get(`/preview/courses/${doc.id}`)
-    expect(refused.status()).toBe(404)
+    expect((await visitor.request.get(address)).status()).toBe(404)
     await visitor.close()
-    const framed = await page.request.get(`/preview/courses/${doc.id}`)
+    const framed = await page.request.get(address)
     expect(framed.status()).toBe(200)
     expect(framed.headers()['content-security-policy']).toContain("frame-ancestors 'self'")
-    expect((await page.request.get('/')).headers()['content-security-policy']).toContain(
-      "frame-ancestors 'none'",
-    )
+    expect(framed.headers()['x-frame-options']).toBe('SAMEORIGIN')
+    const home = await page.request.get('/')
+    expect(home.headers()['content-security-policy']).toContain("frame-ancestors 'none'")
+    expect(home.headers()['x-frame-options']).toBe('DENY')
 
     await page.goto(`/admin/collections/courses/${doc.id}`)
     await page.locator('.live-preview-toggler').click()

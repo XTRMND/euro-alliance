@@ -3,14 +3,15 @@
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { pushPreview } from '@/app/(frontend)/preview/actions'
+import { type PreviewKind, previewQuery } from '@/lib/preview'
+import { pushPreview } from '@/lib/preview-actions'
 
 // The preview frame's side of Payload's live preview. `useLivePreview` receives the admin form's
 // data on every change; instead of asking the API to fill it in, its request hands the data to
 // the server (a server action), and the frame then asks for the page again: the server renders the
-// page's own template from it (src/app/(frontend)/preview). Nothing is saved by any of this.
+// page's own template from it (src/lib/preview-request.ts). Nothing is saved by any of this.
 
-type Props = { kind: string; id?: string; locale: string }
+type Props = { kind: PreviewKind; id?: string; locale: 'bg' | 'en' }
 
 // One object for the hook's whole life: a new one would make it subscribe again.
 const nothing = {}
@@ -37,9 +38,10 @@ export function LivePreviewBridge({ kind, id, locale }: Props) {
     if (await pushPreview({ token, kind, id, data })) {
       version.current += 1
       // A new address, so the page is rendered again from what was just sent; no scrolling.
-      router.replace(`${pathname}?locale=${locale}&live=${token}&v=${version.current}`, {
-        scroll: false,
-      })
+      router.replace(
+        `${pathname}?${previewQuery({ kind, id, locale, live: token })}&v=${version.current}`,
+        { scroll: false },
+      )
     }
   }, [token, kind, id, locale, pathname, router])
 

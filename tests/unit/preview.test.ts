@@ -1,24 +1,61 @@
 import { describe, expect, it } from 'vitest'
-import { isPreviewKind, previewOf, previewPath, setPreview } from '@/lib/preview'
+import { isPreviewKind, previewQuery, previewTarget, previewUrl } from '@/lib/preview'
 import { storePreview, storedPreview } from '@/lib/preview-store'
-import { contentSecurityPolicy, securityHeaders } from '@/lib/security-headers'
+import { contentSecurityPolicy } from '@/lib/security-headers'
 
 describe('the preview address', () => {
-  it('names the document, and the content language when given', () => {
-    expect(previewPath('courses', 12)).toBe('/preview/courses/12')
-    expect(previewPath('home', undefined, 'en')).toBe('/preview/home?locale=en')
+  it('is the page itself, marked with the document and the content language', () => {
+    expect(previewUrl('courses', { id: 12, slug: 'test-course-a' })).toBe(
+      '/kursove/test-course-a?preview=courses.12&locale=bg',
+    )
+    expect(previewUrl('home', {}, 'en')).toBe('/?preview=home&locale=en')
+    expect(previewUrl('programs', { id: 3, type: 'vouchers' })).toBe(
+      '/vaucheri?preview=programs.3&locale=bg',
+    )
+    expect(
+      previewUrl('programs', { id: 1, type: 'language', language: 'english', audience: 'adults' }),
+    ).toBe('/ezitsi/angliyski/vazrastni?preview=programs.1&locale=bg')
+  })
+  it('shows a document without a slug yet, by its marker', () => {
+    expect(previewUrl('news', { id: 7 })).toBe('/novini/preview?preview=news.7&locale=bg')
+  })
+  it('is empty when there is no page to show yet', () => {
+    expect(previewUrl('courses', { slug: 'unsaved' })).toBe('')
+    expect(previewUrl('programs', { id: 4, type: 'language' })).toBe('')
+    expect(
+      previewUrl('programs', { id: 4, type: 'language', language: 'russian', audience: 'adults' }),
+    ).toBe('')
+  })
+  it('reads the marker back, and refuses a malformed one', () => {
+    const target = (query: string) => previewTarget(new URLSearchParams(query))
+    expect(target('preview=courses.12&locale=bg&live=abcdefgh-1')).toEqual({
+      kind: 'courses',
+      id: '12',
+      locale: 'bg',
+      live: 'abcdefgh-1',
+    })
+    expect(target(previewQuery({ kind: 'about', locale: 'en' }))).toEqual({
+      kind: 'about',
+      id: undefined,
+      locale: 'en',
+      live: undefined,
+    })
+    for (const bad of [
+      '',
+      'q=test',
+      'preview=users.1',
+      'preview=courses',
+      'preview=courses.x',
+      'preview=home.1',
+      'preview=news.1&live=short',
+      'preview=news.1.2',
+    ])
+      expect(target(bad)).toBeUndefined()
   })
   it('knows the kinds that have a preview', () => {
     expect(isPreviewKind('news')).toBe(true)
     expect(isPreviewKind('users')).toBe(false)
     expect(isPreviewKind(undefined)).toBe(false)
-  })
-})
-
-describe('the preview scope', () => {
-  it('holds nothing outside a render of the preview route', () => {
-    setPreview('home', { hero: {} })
-    expect(previewOf('home')).toBeUndefined()
   })
 })
 
@@ -45,11 +82,5 @@ describe('framing', () => {
     expect(contentSecurityPolicy({ nonce: 'n', framedBySelf: true })).toContain(
       "frame-ancestors 'self'",
     )
-    const frameOptions = (framedBySelf: boolean) =>
-      securityHeaders({ production: true, framedBySelf }).find(
-        (header) => header.key === 'X-Frame-Options',
-      )?.value
-    expect(frameOptions(false)).toBe('DENY')
-    expect(frameOptions(true)).toBe('SAMEORIGIN')
   })
 })

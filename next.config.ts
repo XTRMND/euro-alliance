@@ -33,16 +33,8 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       {
-        // Everything but the admin's live preview frame, which the admin may show in a frame.
-        source: '/((?!preview/).*)',
+        source: '/:path*',
         headers: securityHeaders({ production: process.env.NODE_ENV === 'production' }),
-      },
-      {
-        source: '/preview/:path*',
-        headers: securityHeaders({
-          production: process.env.NODE_ENV === 'production',
-          framedBySelf: true,
-        }),
       },
     ]
   },

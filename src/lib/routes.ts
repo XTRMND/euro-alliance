@@ -49,8 +49,6 @@ export const segments = {
   privacy: 'poveritelnost',
   cookies: 'biskvitki',
   search: 'tarsene',
-  /** The admin's live preview frame (staff only, never indexed; src/lib/preview.ts). */
-  preview: 'preview',
 } as const
 
 export const queryParams = {

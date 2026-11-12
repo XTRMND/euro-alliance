@@ -14,7 +14,7 @@ import {
 } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import { resolveNavigation } from '@/lib/nav-links'
-import { previewOf } from '@/lib/preview'
+import { previewed } from '@/lib/preview-request'
 import { tintNames } from '@/lib/media/tints'
 import type { Media, Program } from '@/payload-types'
 
@@ -22,7 +22,8 @@ import type { Media, Program } from '@/payload-types'
 // only published content comes back, and are cached in Next's data cache until a Payload hook
 // marks them stale (src/hooks/revalidate.ts). The readers of the pages that have a live preview
 // (course, programme, article, home, about, contact) first ask whether this render is a preview of
-// that page (src/lib/preview.ts): then the page gets the editor's unsaved document instead.
+// that page for a signed-in editor (src/lib/preview-request.ts): only then does the page get the
+// editor's unsaved document instead.
 
 const payload = () => getPayload({ config })
 
@@ -448,16 +449,17 @@ export const getNewsByIds = unstable_cache(
 
 // The pages with a live preview: the previewed document, or else the published one.
 export const getHome = async () =>
-  previewOf<Awaited<ReturnType<typeof getHomeCached>>>('home') ?? getHomeCached()
+  (await previewed<Awaited<ReturnType<typeof getHomeCached>>>('home')) ?? getHomeCached()
 export const getCourse = async (slug: string) =>
-  previewOf<Awaited<ReturnType<typeof getCourseCached>>>('courses') ?? getCourseCached(slug)
+  (await previewed<Awaited<ReturnType<typeof getCourseCached>>>('courses')) ?? getCourseCached(slug)
 export const getContact = async () =>
-  previewOf<Awaited<ReturnType<typeof getContactCached>>>('contact') ?? getContactCached()
+  (await previewed<Awaited<ReturnType<typeof getContactCached>>>('contact')) ?? getContactCached()
 export const getNewsArticle = async (slug: string) =>
-  previewOf<Awaited<ReturnType<typeof getNewsArticleCached>>>('news') ?? getNewsArticleCached(slug)
+  (await previewed<Awaited<ReturnType<typeof getNewsArticleCached>>>('news')) ??
+  getNewsArticleCached(slug)
 export const getAbout = async () =>
-  previewOf<Awaited<ReturnType<typeof getAboutCached>>>('about') ?? getAboutCached()
+  (await previewed<Awaited<ReturnType<typeof getAboutCached>>>('about')) ?? getAboutCached()
 export const getLanguageProgram = async (language: string, audience: string) =>
-  previewOf<Program>('programs') ?? getLanguageProgramCached(language, audience)
+  (await previewed<Program>('programs')) ?? getLanguageProgramCached(language, audience)
 export const getProgram = async (type: Exclude<Program['type'], 'language'>) =>
-  previewOf<Program>('programs') ?? getProgramCached(type)
+  (await previewed<Program>('programs')) ?? getProgramCached(type)

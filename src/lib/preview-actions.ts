@@ -3,10 +3,10 @@
 import config from '@payload-config'
 import { headers } from 'next/headers'
 import { getPayload } from 'payload'
-import { isPreviewKind } from '@/lib/preview'
-import { storePreview } from '@/lib/preview-store'
+import { isPreviewKind } from './preview'
+import { storePreview } from './preview-store'
 
-// The preview frame sends what's in the admin's form (unsaved) for the preview route to render.
+// The preview frame sends what's in the admin's form (unsaved) for the page to be rendered from.
 // Staff only; the data stays in memory (src/lib/preview-store.ts) and is never written anywhere.
 
 export async function pushPreview(input: {
