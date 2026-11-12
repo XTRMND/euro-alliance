@@ -45,7 +45,8 @@ Disable GraphQL if nothing uses it. Lock down the REST API to what the site need
 | `title` | text, required | |
 | `slug` | text, unique | *(proposed)* transliterated from the title (`src/lib/slug.ts`) |
 | `topic` | select, required | Language or topic. **Drives the sticker.** Values = the course stickers of set 50:274 (`courseTopics` in `src/lib/courses.ts`; the hero and contact art aren't offered). |
-| `category` | select, required | *(PR 8)* The «Категория» filter group (116:1190): languages, exams, vocational, vouchers, teachers, farmers, computer |
+| `category` | select, required | *(v0.5.0, `docs/admin-redesign.md` decision 4)* The programme branch the course sits under in the admin: languages, vocational, teachers, farmers, computer. The public listing's «Категория» filter (116:1190) keeps its seven options: a course with `voucherEligible` is listed under «Обучение с ваучери», one with `examPrep` under «Изпити и сертификати», the rest under their branch (`listingCategory`, `src/lib/courses.ts`). |
+| `examPrep` | checkbox | *(v0.5.0)* «Подготовка за изпит»: the old `exams` category. |
 | `language` | select | *(PR 8)* The «Език» filter group; the 7 languages |
 | `audience` | select | Students / adults / companies (the «Аудитория» filter group, 116:1190) |
 | `audienceNote` | text, optional | *(PR 8)* Shown after the audience on the card («Ученици 12 клас») |
@@ -103,7 +104,7 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `teacherProgrammes` | Index card 264:448 with numbered List rows 259:2318 | heading only: every published programme, a card per theme |
 | `indexCards` | Index card 264:448 | `cards` (up to 3: title, rows numbered or checked, the count on a chip or a navy bubble with its label); numbered rows run on from card to card; optional navy `checklist` { title, items } (the farmers' documents) |
 | `projects` | Project card 259:574 | `projects` → Funded projects; the heading beside the cards from 1024px |
-| `sendDocument` | Send a document 172:2255 | heading, lead, `steps`, `buttonLabel`, `dropzoneArt` (always / phone only); the languages come from the Translation global, the dropzone and the button open the wizard (PR 8) |
+| `sendDocument` | Send a document 172:2255 | heading, lead, `steps`, `buttonLabel`, `dropzoneArt` (always / phone only); the languages come from the Translations programme (`translationLanguages`), the dropzone and the button open the wizard (PR 8) |
 | `priceFactors` | 172:2288 + Page counter 173:378 | heading, lead, numbered `items` { title, text }, `counter` (the Page counter beside them) |
 | `faqColumns` | FAQ item 129:335 in two columns (172:2357) | `columns` (up to 2: anchor, heading, items { question, answer }, note) |
 | `locations` | Location card 125:302 | heading only: the Contact global's locations |
@@ -150,12 +151,10 @@ Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official prog
 - Seed the three offices from `CLAUDE.md` § 3 in PR 2.
 - **Map (proposed):** store coordinates and render a static map image plus an "open in maps" link. An embedded Google Maps iframe sets third-party cookies and would need marketing consent first.
 
-### Translation (global)
+### Translation languages
 
-`languages` (array), `topics` (array). No prices per topic (dropped).
+*(v0.5.0, `docs/admin-redesign.md` decision 7)* The translation global is gone. The Translations page (/prevodi) is a Program of type `translations` (PR 14), and the agency's languages are its `translationLanguages` (array of { `name` }, shown only for that type). They fill the «Изпратете документ» pair on the homepage, /prevodi and the contact wizard, and follow the programme's published state; with none, the pair is hidden.
 
-
-The Translations page (/prevodi) is a Program of type `translations` (PR 14): its hero and sections are blocks like the other program pages. This global keeps the languages for the «Изпратете документ» pair (the homepage and /prevodi).
 ### Funded projects
 
 Built in PR 13 (`src/collections/FundedProjects.ts`): `title`, `code` (e.g. BG16RFPR001-1.004-1004; not shown on the card), `facts` (array of { label, value }), `goals` (array of text, shown as chips), `logoStrip` (upload → media, `kind: logo`). Seeded with the farmers' project from Figma 237:4189 and its EU logo strip.
