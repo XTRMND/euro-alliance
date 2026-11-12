@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import lazy from 'next/dynamic'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
@@ -20,7 +20,7 @@ import '@/styles/globals.css'
 
 // The live preview's script, in a chunk of its own: only an editor's preview frame loads it, never
 // a visitor's page.
-const LivePreviewBridge = dynamic(() =>
+const LivePreviewBridge = lazy(() =>
   import('@/components/preview/LivePreviewBridge').then((module) => module.LivePreviewBridge),
 )
 
