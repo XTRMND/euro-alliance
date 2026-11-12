@@ -341,20 +341,29 @@ console.log(`5/7 Courses (${fixtures.courses.length})…`)
       await payload.delete({ collection: 'courses', id: doc.id })
       report.courses.push(`«${doc.title}» became a group of «${course.title}».`)
     }
-    await upsert(
+    const saved = await upsert(
       'courses',
       keep ? { id: { equals: keep.id } } : { slug: { equals: course.slug } },
-      {
-        ...course.data,
-        slug: course.slug,
-        groups: course.groups.map(({ office, ...group }) => ({
-          ...group,
-          ...(office === 'courses' && coursesOffice ? { office: coursesOffice } : {}),
-        })),
-        legacyUrl: null,
-        _status: 'published',
-      },
+      { ...course.data, slug: course.slug, legacyUrl: null, _status: 'published' },
     )
+    // Its groups are records of their own (the groups collection), matched on the old entry's
+    // address. The fixtures keep the old entry's field names.
+    for (const { office, label, startDate, endDate, legacyUrl, ...group } of course.groups) {
+      // A dry run's course that doesn't exist yet has no id to hang a group on.
+      if (!saved?.id) {
+        tally.add('groups', 'created')
+        continue
+      }
+      await upsert('groups', { legacyUrl: { equals: legacyUrl } }, {
+        ...group,
+        course: saved.id,
+        ...(label ? { name: label } : {}),
+        start: startDate,
+        ...(endDate ? { end: endDate } : {}),
+        ...(office === 'courses' && coursesOffice ? { office: coursesOffice } : {}),
+        legacyUrl,
+      })
+    }
   }
 }
 
@@ -563,7 +572,7 @@ section(
       ? []
       : course.groups
           .filter((group) => isEmpty(group.price))
-          .map((group) => `${course.title}${group.label ? `, ${group.label}` : ''}`),
+          .map((group) => `${course.title}${group.label ? `, ${String(group.label)}` : ''}`),
   ),
 )
 section('Group end dates estimated (the old site gives none)', notes.ends)

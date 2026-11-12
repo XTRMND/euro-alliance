@@ -7,7 +7,8 @@ import { CourseGrid } from '@/components/patterns/CourseGrid'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
 import { courseTopics } from '@/lib/courses'
 import { destinations } from '@/lib/destinations'
-import type { Course, Media } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
+import type { Media } from '@/payload-types'
 import fixtureColour from '../patterns/_fixtures/fixture-colour.jpg'
 import fixtureTint from '../patterns/_fixtures/fixture-home-news.jpg'
 import styles from '../patterns/page.module.css'
@@ -24,7 +25,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-const course = (id: number, fields: Partial<Course>): Course => ({
+const groupBase = { course: 1, updatedAt: '', createdAt: '' }
+
+const course = (id: number, fields: Partial<SiteCourse>): SiteCourse => ({
   id,
   title: `Тестов курс ${id}`,
   slug: `testov-kurs-${id}`,
@@ -32,6 +35,7 @@ const course = (id: number, fields: Partial<Course>): Course => ({
   topic: 'english',
   updatedAt: '',
   createdAt: '',
+  groups: [],
   ...fields,
 })
 
@@ -42,8 +46,9 @@ const courses = [
     level: 'B2',
     groups: [
       {
-        id: 'g1',
-        startDate: '2099-01-15T12:00:00.000Z',
+        ...groupBase,
+        id: 1,
+        start: '2099-01-15T12:00:00.000Z',
         price: 100,
         priceLabel: 'тестов етикет',
       },
@@ -55,14 +60,21 @@ const courses = [
     audience: 'adults',
     voucherEligible: true,
     level: 'A1–B1',
-    groups: [{ id: 'g2', startDate: '2099-02-01T12:00:00.000Z', price: 100.5 }],
+    groups: [
+      {
+        ...groupBase,
+        id: 2,
+        start: '2099-02-01T12:00:00.000Z',
+        price: 100.5,
+      },
+    ],
   }),
   course(3, {
     topic: 'exam-prep',
     audience: 'students',
     audienceNote: '12 клас',
     format: 'in-person',
-    groups: [{ id: 'g3', startDate: '2099-03-01T12:00:00.000Z' }],
+    groups: [{ ...groupBase, id: 3, start: '2099-03-01T12:00:00.000Z' }],
   }),
   course(4, { topic: 'computer', cardTag: 'Тестов етикет' }),
 ]

@@ -4,10 +4,9 @@ import { CourseDetails } from '@/components/courses/CourseDetails'
 import { CourseHero } from '@/components/courses/CourseHero'
 import { EnrolBar } from '@/components/courses/EnrolBar'
 import { Button } from '@/components/ui/Button'
-import { type CourseGroup, courseState } from '@/lib/course-state'
+import { type CourseGroup, type SiteCourse, courseState } from '@/lib/course-state'
 import { destinations } from '@/lib/destinations'
 import { routes } from '@/lib/routes'
-import type { Course } from '@/payload-types'
 import styles from '../patterns/page.module.css'
 
 // The course page's parts (PR 10) in every state of board 126:1940, with obviously fake courses
@@ -19,19 +18,22 @@ export const metadata: Metadata = { title: 'Курс', robots: { index: false, f
 
 const today = '2099-01-01T00:00:00.000Z'
 
-const group = {
-  id: 'g1',
-  startDate: '2099-03-01T12:00:00.000Z',
+const group: CourseGroup = {
+  id: 1,
+  course: 1,
+  updatedAt: '',
+  createdAt: '',
+  start: '2099-03-01T12:00:00.000Z',
   days: 'тестови дни',
   hours: '10:00–12:00',
-  format: 'online' as const,
+  format: 'online',
   price: 100,
-  currency: 'EUR' as const,
+  currency: 'EUR',
   priceLabel: 'тестов етикет',
   seats: 5,
 }
 
-const base: Course = {
+const base: SiteCourse = {
   id: 1,
   title: 'Тестов курс B2',
   slug: 'testov-kurs-b2',
@@ -52,12 +54,12 @@ const base: Course = {
   createdAt: '',
 }
 
-const withGroup = (changes: Partial<CourseGroup>): Course => ({
+const withGroup = (changes: Partial<CourseGroup>): SiteCourse => ({
   ...base,
   groups: [{ ...group, ...changes }],
 })
 
-const states: { name: string; course: Course }[] = [
+const states: { name: string; course: SiteCourse }[] = [
   { name: 'Промоция', course: withGroup({ regularPrice: 120 }) },
   { name: 'Редовна цена', course: base },
   {
@@ -66,7 +68,7 @@ const states: { name: string; course: Course }[] = [
   },
   { name: 'Малко места', course: withGroup({ seats: 2 }) },
   { name: 'Няма места', course: withGroup({ seats: 0 }) },
-  { name: 'В ход', course: withGroup({ startDate: '2098-12-01T12:00:00.000Z' }) },
+  { name: 'В ход', course: withGroup({ start: '2098-12-01T12:00:00.000Z' }) },
   { name: 'Няма насрочена дата', course: { ...base, groups: [] } },
   { name: 'Безплатно', course: { ...base, groups: [], free: true } },
   {
@@ -76,12 +78,23 @@ const states: { name: string; course: Course }[] = [
       audience: null,
       program: null,
       included: null,
-      groups: [{ id: 'g2', startDate: group.startDate }],
+      groups: [
+        {
+          ...group,
+          id: 2,
+          days: null,
+          hours: null,
+          format: null,
+          price: null,
+          priceLabel: null,
+          seats: null,
+        },
+      ],
     },
   },
 ]
 
-const action = (course: Course) => {
+const action = (course: SiteCourse) => {
   const state = courseState(course, today)
   const closed = state.enrolment === 'inquiry'
   return (

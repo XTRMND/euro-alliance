@@ -4,7 +4,8 @@ import { Sticker } from '@/components/visuals/Sticker'
 import { Wizard } from '@/components/wizard/Wizard'
 import { inboxOf } from '@/lib/analytics'
 import { telHref } from '@/lib/format'
-import type { Course, Office } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
+import type { Office } from '@/payload-types'
 import styles from './EnrolSection.module.css'
 
 // «Запишете се» (91:1462 / 117:1015): the contact wizard opened at Step 2 with the course chosen,
@@ -20,7 +21,7 @@ export async function EnrolSection({
 }: {
   /** «Попитайте за записване» for a running course or one without a date; «Запишете се» else. */
   title?: string
-  course: Course
+  course: SiteCourse
   office?: Office
   path: string
 }) {

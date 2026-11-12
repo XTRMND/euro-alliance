@@ -7,7 +7,7 @@ import { courseState } from '@/lib/course-state'
 import { courseTags } from '@/lib/courses'
 import { formatDateLong, formatPrice, startOfTodayInSofia } from '@/lib/format'
 import { routes } from '@/lib/routes'
-import type { Course } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
 import styles from './CourseCard.module.css'
 
 // Course card (62:229): sticker art on the 42% halftone (no photo; CLAUDE.md § 12), the level
@@ -19,7 +19,7 @@ import styles from './CourseCard.module.css'
 // Hover and keyboard focus deepen the shadow and lift the sticker as in State=Hover (62:202).
 
 type CourseCardProps = {
-  course: Course
+  course: SiteCourse
   headingLevel?: 'h2' | 'h3'
   className?: string
 }
@@ -74,7 +74,7 @@ export async function CourseCard({
           ) : (
             <span className={styles.date} data-status={state.status}>
               {t(state.status === 'running' ? 'course.status.runningSince' : 'course.startsOn', {
-                date: formatDateLong(group!.startDate),
+                date: formatDateLong(group!.start),
               })}
             </span>
           )}

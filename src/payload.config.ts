@@ -10,6 +10,7 @@ import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
 import { Documents } from './collections/Documents'
 import { Exams } from './collections/Exams'
+import { Groups } from './collections/Groups'
 import { FundedProjects } from './collections/FundedProjects'
 import { LegalPages } from './collections/LegalPages'
 import { SearchIndex } from './collections/SearchIndex'
@@ -57,6 +58,7 @@ export default buildConfig({
     MediaTints,
     Offices,
     Courses,
+    Groups,
     News,
     Programs,
     TextbookSystems,

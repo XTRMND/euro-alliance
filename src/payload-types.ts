@@ -72,6 +72,7 @@ export interface Config {
     'media-tints': MediaTint;
     offices: Office;
     courses: Course;
+    groups: Group;
     news: News;
     programs: Program;
     'textbook-systems': TextbookSystem;
@@ -98,6 +99,9 @@ export interface Config {
     media: {
       tints: 'media-tints';
     };
+    courses: {
+      groups: 'groups';
+    };
   };
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
@@ -105,6 +109,7 @@ export interface Config {
     'media-tints': MediaTintsSelect<false> | MediaTintsSelect<true>;
     offices: OfficesSelect<false> | OfficesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
+    groups: GroupsSelect<false> | GroupsSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     'textbook-systems': TextbookSystemsSelect<false> | TextbookSystemsSelect<true>;
@@ -428,49 +433,11 @@ export interface Course {
   /**
    * Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.
    */
-  groups?:
-    | {
-        /**
-         * По желание, например «Съботни групи».
-         */
-        label?: string | null;
-        startDate: string;
-        endDate?: string | null;
-        seats?: number | null;
-        /**
-         * Например «пн и ср или вт и чт».
-         */
-        days?: string | null;
-        /**
-         * Например 18:00–20:50.
-         */
-        hours?: string | null;
-        format?: ('in-person' | 'online') | null;
-        office?: (number | null) | Office;
-        /**
-         * Празно: цената не се показва. Само официални цени.
-         */
-        price?: number | null;
-        currency?: ('EUR' | 'BGN') | null;
-        /**
-         * При промоция: по-високата цена, показва се зачертана.
-         */
-        regularPrice?: number | null;
-        /**
-         * Например «Промоция», «Базова цена», «Стойност на ваучера».
-         */
-        priceLabel?: string | null;
-        /**
-         * Например «или 495 € на ниво при самостоятелно плащане».
-         */
-        priceNote?: string | null;
-        /**
-         * От стария сайт, за пренасочването.
-         */
-        legacyUrl?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  groups?: {
+    docs?: (number | Group)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
   /**
    * Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».
    */
@@ -494,6 +461,58 @@ export interface Course {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * Датите на курса. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups".
+ */
+export interface Group {
+  id: number;
+  adminEditedAt?: string | null;
+  title?: string | null;
+  course: number | Course;
+  /**
+   * По желание, например «Съботни групи».
+   */
+  name?: string | null;
+  start: string;
+  end?: string | null;
+  seats?: number | null;
+  /**
+   * Например «пн и ср или вт и чт».
+   */
+  days?: string | null;
+  /**
+   * Например 18:00–20:50.
+   */
+  hours?: string | null;
+  format?: ('in-person' | 'online') | null;
+  office?: (number | null) | Office;
+  /**
+   * Празно: цената не се показва. Само официални цени.
+   */
+  price?: number | null;
+  currency?: ('EUR' | 'BGN') | null;
+  /**
+   * При промоция: по-високата цена, показва се зачертана.
+   */
+  regularPrice?: number | null;
+  /**
+   * Например «Промоция», «Базова цена», «Стойност на ваучера».
+   */
+  priceLabel?: string | null;
+  /**
+   * Например «или 495 € на ниво при самостоятелно плащане».
+   */
+  priceNote?: string | null;
+  /**
+   * От стария сайт: пренасочва към страницата на курса.
+   */
+  legacyUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1837,6 +1856,10 @@ export interface PayloadLockedDocument {
         value: number | Course;
       } | null)
     | ({
+        relationTo: 'groups';
+        value: number | Group;
+      } | null)
+    | ({
         relationTo: 'news';
         value: number | News;
       } | null)
@@ -2076,25 +2099,7 @@ export interface CoursesSelect<T extends boolean = true> {
   level?: T;
   levelUnit?: T;
   duration?: T;
-  groups?:
-    | T
-    | {
-        label?: T;
-        startDate?: T;
-        endDate?: T;
-        seats?: T;
-        days?: T;
-        hours?: T;
-        format?: T;
-        office?: T;
-        price?: T;
-        currency?: T;
-        regularPrice?: T;
-        priceLabel?: T;
-        priceNote?: T;
-        legacyUrl?: T;
-        id?: T;
-      };
+  groups?: T;
   entryLevel?: T;
   levelName?: T;
   program?: T;
@@ -2106,6 +2111,31 @@ export interface CoursesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "groups_select".
+ */
+export interface GroupsSelect<T extends boolean = true> {
+  adminEditedAt?: T;
+  title?: T;
+  course?: T;
+  name?: T;
+  start?: T;
+  end?: T;
+  seats?: T;
+  days?: T;
+  hours?: T;
+  format?: T;
+  office?: T;
+  price?: T;
+  currency?: T;
+  regularPrice?: T;
+  priceLabel?: T;
+  priceNote?: T;
+  legacyUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,4 +1,5 @@
-import type { Course, Media, News, Office, Site } from '@/payload-types'
+import type { SiteCourse } from './course-state'
+import type { Media, News, Office, Site } from '@/payload-types'
 import { currentGroups } from './course-state'
 import { routes } from './routes'
 import { siteUrl } from './seo'
@@ -54,7 +55,7 @@ export function organizationLd(site: Site, offices: Office[]): Ld {
  * A course (Course), with one instance per upcoming or running group and the shown group's offer,
  * only where the CMS has them.
  */
-export function courseLd(course: Course, today: string): Ld {
+export function courseLd(course: SiteCourse, today: string): Ld {
   const groups = currentGroups(course, today).map(({ group }) => group)
   const offer = groups.find((group) => typeof group.price === 'number')
   return compact({
@@ -72,8 +73,8 @@ export function courseLd(course: Course, today: string): Ld {
           return compact({
             '@type': 'CourseInstance',
             courseMode: format === 'online' ? 'online' : format ? 'onsite' : undefined,
-            startDate: group.startDate.slice(0, 10),
-            endDate: group.endDate?.slice(0, 10),
+            startDate: group.start.slice(0, 10),
+            endDate: group.end?.slice(0, 10),
             location: office
               ? { '@type': 'Place', name: office.name, address: office.address }
               : undefined,
