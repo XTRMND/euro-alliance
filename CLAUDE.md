@@ -12,6 +12,7 @@ Read this file at the start of every session. It holds the rules that always app
 | `docs/content-import.md` | Importing the current site into Payload, the proposed URL scheme, the 301 map. |
 | `docs/measurement.md` | Analytics events and the before/after measurement plan. |
 | `docs/git-workflow.md` | Branches, commits, PRs, CI. |
+| `docs/admin-redesign.md` | The CMS admin redesign brief (11.11.2026): decisions, Figma nodes, the 13 stacked PRs. |
 | `docs/reference/globe-demo.html` | Working reference implementation of the homepage globe. |
 
 ## 1. The project
@@ -514,6 +515,10 @@ From the About load time (v0.2.2, 11.11.2026; branch `fix/about-load-time`):
 - Measured in a local container limited to one CPU, not on staging: staging's basic auth isn't available to Claude. Staging's before/after is for the user to run (PR description).
 - The first deploy of v0.2.2 starts with an empty volume, so its first visitors pay the encodes once more. The VPS's `docker-compose.yml` can take the repository's (it names the volume); the old one works too, with an unnamed volume.
 - Not changed: pages stay rendered per request (the CSP nonce, PR 24). The first request after a start takes about 0.6–0.9 s on one CPU (route code loading, empty CMS cache); warming the main pages after a start would take that off the first visitors. AVIF stays: 3–5× slower to encode than WebP, but its files are about 40% smaller, and with the cache kept each image and width is encoded once.
+
+From the admin redesign (`docs/admin-redesign.md`, from 12.11.2026):
+- Migrations are tested on a local database filled by the staging seed (`euro_alliance_staging`), not on a dump of staging: Claude can't reach the VPS. It has the same 55 courses, 7 of them with groups (10 groups). The user can run a PR's up and down on a real dump before merging.
+- Groups (v0.3.0, PR 1): records of their own (`groups`), no drafts and no versions; a group shows on the site while its course is published. The array's copies in the courses' old versions are dropped by the migration (restoring an old course version no longer brings its groups back). A group's admin title is its start date, days and name. The price fields stay on the group until PR 2. The «Групи» tab arrives with the edit screens (PR 9); until then the join field sits in the course form.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
