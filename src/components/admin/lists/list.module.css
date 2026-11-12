@@ -1,0 +1,355 @@
+/* The admin's list screens («Admin · 02 Езикови курсове · Курсове», 356:100, and the lists built
+   on its pattern). The layout rule (docs/admin-redesign.md, decision 3): the header, the filters
+   and one card at the full height; the table scrolls inside the card and its header stays put. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - var(--admin-top, 64px));
+  min-height: 480px;
+  padding: 28px var(--admin-margin) var(--admin-margin);
+}
+
+.header,
+.filters,
+.card {
+  width: 100%;
+  max-width: var(--admin-max);
+}
+
+.header {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  align-items: center;
+}
+
+.titles {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-brand-primary-strong);
+  font: var(--admin-type-title);
+}
+
+.subtitle {
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font: 400 14px / 1.2 var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search {
+  display: flex;
+  flex: none;
+  gap: 8px;
+  align-items: center;
+  width: 260px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  color: var(--color-text-muted);
+}
+
+.search:focus-within {
+  border-color: var(--color-brand-primary);
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.search input {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: var(--color-text-primary);
+  font: 400 14px / 1.2 var(--font-body);
+}
+
+.search input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+.primary,
+.secondary {
+  flex: none;
+  padding: 13px 22px;
+  border: 0;
+  border-radius: var(--radius-button);
+  font: var(--admin-type-label);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease-out,
+    color 0.15s ease-out;
+}
+
+.primary {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+}
+
+.secondary {
+  background: none;
+  box-shadow: inset 0 0 0 1.5px var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+
+@media (hover: hover) {
+  .primary:hover {
+    background: var(--color-brand-primary-strong);
+  }
+
+  .secondary:hover {
+    background: var(--color-brand-primary-subtle);
+  }
+}
+
+/* Filters: the site's Chip (135:324) and the «Групирай по» select */
+
+.filters {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.chip {
+  padding: 6px 12px 7px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  color: var(--color-brand-primary-strong);
+  font: 600 14px / 1.5 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.chip[aria-current='true'] {
+  border-color: var(--color-brand-primary-strong);
+  background: var(--color-brand-primary-strong);
+  color: var(--color-bg-page);
+}
+
+@media (hover: hover) {
+  .chip:hover {
+    border-color: var(--color-brand-primary);
+  }
+}
+
+.spacer {
+  flex: 1 1 0;
+}
+
+.selectLabel {
+  color: var(--color-text-muted);
+  font: 400 14px / 1.2 var(--font-body);
+}
+
+.select {
+  height: 38px;
+  padding: 0 34px 0 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 6l4 4 4-4' fill='none' stroke='%2314202e' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+    no-repeat right 10px center;
+  color: var(--color-text-primary);
+  font: 600 14px / 1.2 var(--font-body);
+  cursor: pointer;
+  appearance: none;
+}
+
+/* The card and its table */
+
+.card {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+}
+
+.scroll {
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.table th,
+.table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--color-border-default);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.table th:first-child,
+.table td:first-child {
+  padding-left: 20px;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 20px;
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  font: 600 13px / 1.2 var(--font-body);
+  white-space: nowrap;
+}
+
+.table td {
+  color: var(--color-text-primary);
+  font: 400 14px / 1.2 var(--font-body);
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.rowLink {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.rowLink:hover {
+  text-decoration: underline;
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.small {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.strong {
+  font-weight: 600;
+}
+
+/* A group row: «Английски · 3 курса» */
+
+.table .group td {
+  padding: 0;
+  background: var(--color-bg-warm);
+}
+
+.groupButton {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 9px 20px;
+  border: 0;
+  background: none;
+  color: var(--color-text-primary);
+  font: 600 15px / 1.2 var(--font-body);
+  text-align: left;
+  cursor: pointer;
+}
+
+.groupButton img {
+  display: block;
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-brand-primary-subtle);
+  color: var(--color-brand-primary);
+  font: 600 12px / 1.2 var(--font-body);
+  white-space: nowrap;
+}
+
+.pill[data-tone='neutral'] {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+}
+
+.pill[data-tone='sand'] {
+  background: var(--color-brand-accent-subtle);
+  color: var(--color-brand-primary-strong);
+}
+
+.pill[data-tone='solid'] {
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+}
+
+.titleCell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.empty {
+  margin: 0;
+  padding: 24px 20px;
+  color: var(--color-text-muted);
+  font: 400 14px / 1.4 var(--font-body);
+}
+
+.primary:focus-visible,
+.secondary:focus-visible,
+.chip:focus-visible,
+.select:focus-visible,
+.rowLink:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.groupButton:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: -3px;
+}

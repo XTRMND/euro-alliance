@@ -12,26 +12,13 @@ import {
 } from '@/lib/admin-dashboard'
 import { courseTags } from '@/lib/courses'
 import { formatDateLong, startOfTodayInSofia } from '@/lib/format'
+import { inquiryStatusLabels, inquiryTopicLabels } from '@/lib/inquiries'
 import styles from './dashboard.module.css'
 
 // «Admin · 01 Табло» (359:969): one card at the full height. The overview's three figures, the
 // latest inquiries beside the groups that start soon (only these two lists grow; their rows are
 // 64px), and the shortcuts. Everything is read from the CMS; an empty list says so.
 
-const statusLabels: Record<string, string> = {
-  new: 'Нова',
-  'in-progress': 'В работа',
-  contract: 'Договор',
-  closed: 'Приключено',
-}
-const topicLabels: Record<string, string> = {
-  course: 'Курс',
-  voucher: 'Обучение с ваучер',
-  translation: 'Превод',
-  levelTest: 'Тест за ниво',
-  corporate: 'Фирмено обучение',
-  other: 'Друго',
-}
 const tagLabels = {
   audience: { students: 'Ученици', adults: 'Възрастни', companies: 'Фирми' },
   format: { 'in-person': 'Присъствено', online: 'Онлайн' },
@@ -155,7 +142,10 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
                   const course = typeof inquiry.course === 'object' ? inquiry.course : null
                   return (
                     <li key={inquiry.id}>
-                      <Link href={list(`inquiries/${inquiry.id}`)} className={styles.row}>
+                      <Link
+                        href={list('inquiries', `?status=all&id=${inquiry.id}`)}
+                        className={styles.row}
+                      >
                         <span className={styles.avatar} aria-hidden="true">
                           {initialsOf(inquiry.name)}
                         </span>
@@ -164,7 +154,7 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
                           <span className={styles.sub}>
                             {inboxLabels[inboxOf(inquiry)]} ·{' '}
                             {course?.title ??
-                              (inquiry.topic ? (topicLabels[inquiry.topic] ?? inquiry.topic) : '')}
+                              (inquiry.topic ? inquiryTopicLabels[inquiry.topic] : '')}
                           </span>
                         </span>
                         <span className={styles.time}>{timeAgo(inquiry.createdAt)}</span>
@@ -172,7 +162,7 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
                           className={styles.pill}
                           data-tone={inquiry.status === 'new' ? 'solid' : 'neutral'}
                         >
-                          {statusLabels[inquiry.status] ?? inquiry.status}
+                          {inquiryStatusLabels[inquiry.status]}
                         </span>
                       </Link>
                     </li>

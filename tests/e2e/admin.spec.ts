@@ -154,6 +154,72 @@ test('a branch opens to a filtered list, with the sub-nav of its siblings', asyn
   await expect(tabs.nth(3)).toHaveAttribute('aria-current', 'page')
 })
 
+test('the course list is one card, grouped by language, under its branch', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/collections/courses?where[category][equals]=languages')
+  await expect(page.getByRole('heading', { level: 1, name: 'Курсове' })).toBeVisible()
+  await expect(page.getByText('Езикови курсове · групирани по език')).toBeVisible()
+  await expect(page.getByRole('columnheader')).toHaveText([
+    'Заглавие',
+    'Аудитория и формат',
+    'Ниво',
+    'Начало',
+    'Места',
+    'Цена',
+  ])
+  // Every language has its group, in the list's order; the seeded database has no courses.
+  const groups = page.locator('[data-admin="card"] tbody button')
+  await expect(groups).toHaveText([
+    /^Английски/,
+    /^Немски/,
+    /^Френски/,
+    /^Български/,
+    /^Испански/,
+    /^Италиански/,
+    /^Руски/,
+  ])
+  await expect(groups.first()).toContainText('няма курсове')
+  await expect(page.getByRole('link', { name: '+ Нов курс' })).toHaveAttribute(
+    'href',
+    '/admin/collections/courses/create',
+  )
+  // «Групирай по» keeps the branch's filter in the address.
+  await page.getByLabel('Групирай по').selectOption('audience')
+  await expect(page).toHaveURL(/group=audience/)
+  expect(new URL(page.url()).searchParams.get('where[category][equals]')).toBe('languages')
+  await expect(page.getByText('Езикови курсове · групирани по аудитория')).toBeVisible()
+  // The layout rule: one card to the bottom margin, no page scroll.
+  const card = await page.locator('[data-admin="card"]').boundingBox()
+  expect(Math.round(card!.y + card!.height)).toBe(960 - 32)
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(960)
+  expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
+})
+
+test('the news list and the inquiries follow the same pattern', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/collections/news')
+  await expect(page.getByRole('heading', { level: 1, name: 'Новини' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Чернови' })).toBeVisible()
+  await expect(page.getByText('Тук още няма новини.')).toBeVisible()
+  expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
+
+  await page.goto('/admin/collections/inquiries')
+  await expect(page.getByRole('heading', { level: 1, name: 'Запитвания' })).toBeVisible()
+  await expect(
+    page.getByText('Пазят се 1 година, освен ако не са довели до договор.'),
+  ).toBeVisible()
+  // The three statuses of the brief, and «Всички»; without new inquiries the list shows them all.
+  const chips = page.locator('[data-admin="list"] header').getByRole('link')
+  await expect(chips).toHaveText(['Нови (0)', 'В работа', 'Приключени', 'Всички'])
+  await expect(chips.last()).toHaveAttribute('aria-current', 'true')
+  await expect(page.getByText('Изберете запитване от списъка.')).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Маршрутизиране на запитвания' })).toHaveAttribute(
+    'href',
+    '/admin/globals/inquiry-routing',
+  )
+  expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
+})
+
 test('a global sits where its page is on the site', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })

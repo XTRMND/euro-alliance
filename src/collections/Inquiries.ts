@@ -1,21 +1,18 @@
 import type { CollectionConfig, FieldAccess } from 'payload'
 import { isAdmin, isStaff } from '@/access'
-import { inquiryOffices, inquiryTopics } from '@/lib/inquiries'
+import {
+  inquiryOffices,
+  inquiryStatuses,
+  inquiryStatusLabels,
+  inquiryTopicLabels,
+  inquiryTopics,
+} from '@/lib/inquiries'
 
 // Inquiries from the contact wizard (docs/cms-schema.md § 3). Only the wizard's server action
 // creates them; never the public REST API. Staff read them and update the status and their notes;
 // what the visitor sent can't be edited. Kept a year unless they lead to a contract (§ 6).
 
 const visitorData: FieldAccess = () => false
-
-const topicLabels = {
-  course: 'Курс',
-  voucher: 'Обучение с ваучер',
-  translation: 'Превод',
-  levelTest: 'Тест за ниво',
-  corporate: 'Фирмено обучение',
-  other: 'Друго',
-}
 
 const readOnly = { readOnly: true }
 
@@ -26,6 +23,10 @@ export const Inquiries: CollectionConfig = {
     useAsTitle: 'name',
     defaultColumns: ['createdAt', 'topic', 'name', 'routedTo', 'status'],
     description: 'Пазят се 1 година, освен ако не са довели до договор.',
+    // «Admin · 06 Запитвания» (371:1332): the list and the open inquiry in one card.
+    components: {
+      views: { list: { Component: '@/components/admin/lists/InquiriesList#InquiriesList' } },
+    },
   },
   defaultSort: '-createdAt',
   access: { read: isStaff, create: () => false, update: isStaff, delete: isAdmin },
@@ -39,18 +40,16 @@ export const Inquiries: CollectionConfig = {
           label: 'Статус',
           required: true,
           defaultValue: 'new',
-          options: [
-            { value: 'new', label: 'Ново' },
-            { value: 'in-progress', label: 'В работа' },
-            { value: 'contract', label: 'Договор' },
-            { value: 'closed', label: 'Приключено' },
-          ],
+          options: inquiryStatuses.map((value) => ({
+            value,
+            label: inquiryStatusLabels[value],
+          })),
         },
         {
           name: 'topic',
           type: 'select',
           label: 'Тема',
-          options: inquiryTopics.map((value) => ({ value, label: topicLabels[value] })),
+          options: inquiryTopics.map((value) => ({ value, label: inquiryTopicLabels[value] })),
           access: { update: visitorData },
           admin: readOnly,
         },
@@ -67,7 +66,18 @@ export const Inquiries: CollectionConfig = {
         },
       ],
     },
-    { name: 'notes', type: 'textarea', label: 'Бележки (вътрешни)' },
+    {
+      name: 'contract',
+      type: 'checkbox',
+      label: 'Довело до договор',
+      admin: { description: 'Такова запитване не се изтрива след 1 година.' },
+    },
+    {
+      name: 'notes',
+      type: 'textarea',
+      label: 'Бележки (вътрешни)',
+      admin: { description: 'Видими само за екипа в админа.' },
+    },
     {
       type: 'collapsible',
       label: 'Изпратено от посетителя',

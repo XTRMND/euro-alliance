@@ -67,6 +67,8 @@ export function TopBar({
 
   return (
     <div className={styles.top} data-admin="top">
+      {/* How tall the bar is with its sub-nav, for the screens that fill the height under it. */}
+      <style>{`:root{--admin-top:${siblings.length > 1 ? 108 : 64}px}`}</style>
       {/* Not a <header>: a list's own header is the screen's banner. */}
       <div className={styles.bar}>
         <nav className={styles.crumbs} aria-label="Път">

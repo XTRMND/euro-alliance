@@ -141,11 +141,19 @@ describe('submitting an inquiry', () => {
 
 describe('retention', () => {
   it('deletes inquiries older than a year unless they led to a contract', async () => {
-    const make = async (status: 'new' | 'contract', createdAt: string) =>
+    const make = async (state: 'new' | 'contract', createdAt: string) =>
       (
         await payload.create({
           collection: 'inquiries',
-          data: { name: 'Тест', email: 'test@example.com', privacyAck: true, status, createdAt },
+          data: {
+            name: 'Тест',
+            email: 'test@example.com',
+            privacyAck: true,
+            // «Довело до договор» is a checkbox beside the status.
+            status: state === 'contract' ? 'closed' : 'new',
+            contract: state === 'contract',
+            createdAt,
+          },
           overrideAccess: true,
         })
       ).id

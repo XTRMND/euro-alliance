@@ -1666,9 +1666,16 @@ export interface Redirect {
  */
 export interface Inquiry {
   id: number;
-  status: 'new' | 'in-progress' | 'contract' | 'closed';
+  status: 'new' | 'in-progress' | 'closed';
   topic?: ('course' | 'voucher' | 'translation' | 'levelTest' | 'corporate' | 'other') | null;
   office?: ('plovdiv' | 'sofia') | null;
+  /**
+   * Такова запитване не се изтрива след 1 година.
+   */
+  contract?: boolean | null;
+  /**
+   * Видими само за екипа в админа.
+   */
   notes?: string | null;
   name?: string | null;
   email?: string | null;
@@ -2800,6 +2807,7 @@ export interface InquiriesSelect<T extends boolean = true> {
   status?: T;
   topic?: T;
   office?: T;
+  contract?: T;
   notes?: T;
   name?: T;
   email?: T;
