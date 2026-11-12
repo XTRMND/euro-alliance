@@ -2,9 +2,11 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
-import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { uploadDirs } from '@/lib/media/storage'
-import { reindexSearch } from '@/lib/search-index'
+import { routes } from '@/lib/routes'
+import { searchRecords } from '@/lib/search-match'
+import { findSearchRecords, getSearchRecords } from '@/lib/search-records'
 import type { Media } from '@/payload-types'
 import { seed } from '@/seed'
 
@@ -170,22 +172,32 @@ describe('seed', () => {
     ).toBe(1)
   })
 
-  it('rebuilds the search index without rewriting what it already says', async () => {
-    const { docs } = await payload.find({ collection: 'search', sort: 'id', limit: 1, depth: 0 })
-    await payload.update({ collection: 'search', id: docs[0].id, data: { title: 'Stale' } })
-    const update = vi.spyOn(payload, 'update')
-    const create = vi.spyOn(payload, 'create')
+  it('searches the published content directly: pages, a typo, never a draft', async () => {
+    const records = await findSearchRecords(payload)
+    const urls = (query: string) => searchRecords(records, query).map((hit) => hit.url)
+    expect(urls('бисквитки')).toContain(routes.cookies())
+    expect(urls('англйски')).toContain(routes.languageProgram('english', 'adults'))
+    expect(urls('xyzzy')).toEqual([])
 
-    await reindexSearch(payload)
-    await reindexSearch(payload)
-
-    const writes = [...update.mock.calls, ...create.mock.calls].filter(
-      ([args]) => args.collection === 'search',
-    )
-    update.mockRestore()
-    create.mockRestore()
-    expect(writes).toHaveLength(1)
-    const fixed = await payload.findByID({ collection: 'search', id: docs[0].id, depth: 0 })
-    expect(fixed.title).not.toBe('Stale')
+    const draft = await payload.create({
+      collection: 'news',
+      locale: 'bg',
+      data: { title: 'Тест чернова xyzzy', date: '2099-01-01T12:00:00.000Z', _status: 'draft' },
+    })
+    // A change drops the kept records; the draft still isn't found.
+    const fresh = await getSearchRecords(payload)
+    expect(searchRecords(fresh, 'xyzzy')).toEqual([])
+    await payload.update({
+      collection: 'news',
+      id: draft.id,
+      locale: 'bg',
+      data: { slug: 'test-xyzzy', _status: 'published' },
+    })
+    const found = searchRecords(await getSearchRecords(payload), 'xyzzy')
+    expect(found.map((hit) => [hit.type, hit.url])).toEqual([
+      ['news', routes.newsArticle('test-xyzzy')],
+    ])
+    await payload.delete({ collection: 'news', id: draft.id })
+    expect(searchRecords(await getSearchRecords(payload), 'xyzzy')).toEqual([])
   })
 })

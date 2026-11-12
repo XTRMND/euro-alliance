@@ -16,7 +16,6 @@ import {
   offices,
   partners,
 } from './data'
-import { reindexSearch } from '@/lib/search-index'
 import { noteSkipped } from './tally'
 import { legalBody, legalPages } from './legal'
 import {
@@ -118,9 +117,6 @@ export async function seed(payload: Payload) {
       payload.logger.info(`Seeded the office «${office.name}».`)
     } else noteSkipped(payload, 'offices')
   }
-
-  // The search index is derived from what's published, so it's rebuilt rather than filled in.
-  await reindexSearch(payload)
 }
 
 /** Uploads the EU logo strip as a `logo` (stored as is) and links it from the footer notice. */

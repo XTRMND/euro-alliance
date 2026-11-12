@@ -13,8 +13,6 @@ import { Exams } from './collections/Exams'
 import { Groups } from './collections/Groups'
 import { FundedProjects } from './collections/FundedProjects'
 import { LegalPages } from './collections/LegalPages'
-import { SearchIndex } from './collections/SearchIndex'
-import { MissingAddresses } from './collections/MissingAddresses'
 import { Redirects } from './collections/Redirects'
 import { Inquiries } from './collections/Inquiries'
 import { InquiryFiles } from './collections/InquiryFiles'
@@ -49,6 +47,9 @@ export default buildConfig({
     // admin's Content-Security-Policy needs no outside images.
     avatar: 'default',
     importMap: { baseDir: dirname },
+    // Light only (docs/admin-redesign.md, decision 2): no dark mode, and no theme choice on the
+    // account page.
+    theme: 'light',
     meta: { titleSuffix: ' · Евро Алианс' },
   },
   i18n: { supportedLanguages: { bg, en }, fallbackLanguage: 'bg' },
@@ -71,9 +72,7 @@ export default buildConfig({
     Documents,
     Team,
     LegalPages,
-    SearchIndex,
     Redirects,
-    MissingAddresses,
     Inquiries,
     InquiryFiles,
   ],

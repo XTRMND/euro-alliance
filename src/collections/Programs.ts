@@ -4,7 +4,7 @@ import { anchorPattern, programBlocks } from '@/blocks'
 import { topicOptions } from '@/collections/Courses'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
-import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { searchChanged, searchRemoved } from '@/lib/search-records'
 import { destinationOptions } from '@/lib/destinations'
 import { languages } from '@/lib/routes'
 import { metaField } from '@/fields/meta'
@@ -38,8 +38,8 @@ export const Programs: CollectionConfig = {
   versions: { drafts: true },
   hooks: {
     beforeChange: [markAdminEdit],
-    afterChange: [revalidateCollection, indexAfterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete],
+    afterChange: [revalidateCollection, searchChanged],
+    afterDelete: [revalidateCollection, searchRemoved],
     beforeValidate: [
       // One page per language and audience, and one per other type.
       async ({ data, req, originalDoc }) => {

@@ -3,17 +3,17 @@ import type {
   CollectionAfterDeleteHook,
   GlobalAfterChangeHook,
   Payload,
-  PayloadRequest,
 } from 'payload'
 import bg from '@/messages/bg.json'
 import { legalDescription } from './legal'
 import { type LexicalBody, nodeText } from './news'
 import { type Audience, type Language, routes } from './routes'
 
-// The search index's records (src/collections/SearchIndex.ts): one per published course, program
-// page, news article and legal page, and one for the About page. Each has its section path («Езици ›
-// Английски»), its title, an excerpt for the result and the text it's found by. Bulgarian only
-// until the English site exists.
+// What the site search looks through (docs/admin-redesign.md, decision 8: no index collection):
+// one record per published course, program page, news article and legal page, and one for the
+// About page, built straight from the content. Each has its section path («Езици › Английски»),
+// its title, an excerpt for the result and the text it's found by. Bulgarian only until the
+// English site exists.
 
 export type SearchType = 'course' | 'page' | 'news'
 
@@ -27,6 +27,8 @@ export type SearchRecord = {
   source: string
   sourceId?: number
   publishedAt?: string | null
+  /** When the content last changed, for the sitemap. */
+  updatedAt?: string | null
 }
 
 const paths = bg.search.path
@@ -187,116 +189,65 @@ export function aboutRecord(about: Record<string, unknown>): SearchRecord | null
   }
 }
 
-export const indexedCollections = ['courses', 'programs', 'news', 'legal-pages'] as const
+export const searchedCollections = ['courses', 'programs', 'news', 'legal-pages'] as const
 
-const blank = (value: unknown) => value === null || value === undefined || value === ''
-
-/** Whether the stored record already says this, so a rebuild writes only what changed. */
-function unchanged(record: SearchRecord, stored: Record<string, unknown>) {
-  return Object.entries(record).every(([key, value]) =>
-    blank(value) ? blank(stored[key]) : stored[key] === value,
-  )
-}
-
-/** Writes a record unless the stored one already says it; true when it wrote. */
-async function write(
-  payload: Payload,
-  record: SearchRecord,
-  existing: { id: number } | undefined,
-  req?: PayloadRequest,
-) {
-  if (existing && unchanged(record, existing)) return false
-  if (existing) await payload.update({ collection: 'search', id: existing.id, data: record, req })
-  else await payload.create({ collection: 'search', data: record, req })
-  return true
-}
-
-/** Writes or drops a record; in a hook, inside the hook's transaction (`req`). */
-async function save(
-  payload: Payload,
-  source: string,
-  record: SearchRecord | null,
-  req?: PayloadRequest,
-) {
-  const { docs } = await payload.find({
-    collection: 'search',
-    where: { source: { equals: source } },
-    limit: 1,
-    depth: 0,
-    req,
-  })
-  const existing = docs[0]
-  if (record) await write(payload, record, existing, req)
-  else if (existing) await payload.delete({ collection: 'search', id: existing.id, req })
-}
-
-/** The published version of a document, or null (a draft save leaves the published one live). */
-async function published(req: PayloadRequest, collection: string, id: number | string) {
-  const doc = await req.payload
-    .findByID({
-      collection: collection as (typeof indexedCollections)[number],
-      id,
-      depth: 0,
-      locale: 'bg',
-      draft: false,
-      disableErrors: true,
-      req,
-    })
-    .catch(() => null)
-  return doc && (doc as { _status?: string })._status !== 'draft' ? (doc as unknown as Doc) : null
-}
-
-/** afterChange for an indexed collection: index the published version, or drop the record. */
-export const indexAfterChange: CollectionAfterChangeHook = async ({ collection, doc, req }) => {
-  const live =
-    doc._status === 'draft' ? await published(req, collection.slug, doc.id) : (doc as Doc)
-  const record = live && searchRecord(collection.slug, live)
-  await save(req.payload, `${collection.slug}:${doc.id}`, record, req)
-  return doc
-}
-
-export const indexAfterDelete: CollectionAfterDeleteHook = async ({ collection, id, req }) => {
-  await save(req.payload, `${collection.slug}:${id}`, null, req)
-}
-
-export const indexAbout: GlobalAfterChangeHook = async ({ doc, req }) => {
-  await save(req.payload, 'about', aboutRecord(doc), req)
-  return doc
-}
-
-/** Rebuilds the whole index from what's published; runs on every start (derived data). */
-export async function reindexSearch(payload: Payload) {
-  const { docs: stored } = await payload.find({
-    collection: 'search',
-    depth: 0,
-    pagination: false,
-  })
-  const bySource = new Map(stored.map((doc) => [doc.source, doc]))
+/**
+ * Every record the search looks through: the published courses, program pages, news and legal
+ * pages and the About page, read as a visitor (so drafts stay out).
+ */
+export async function findSearchRecords(payload: Payload): Promise<SearchRecord[]> {
   const records: SearchRecord[] = []
-  for (const collection of indexedCollections) {
+  for (const collection of searchedCollections) {
     const { docs } = await payload.find({
       collection,
       locale: 'bg',
       depth: 0,
       pagination: false,
-      where: { _status: { equals: 'published' } },
+      overrideAccess: false,
     })
     for (const doc of docs) {
       const record = searchRecord(collection, doc as unknown as Doc)
-      if (record) records.push(record)
+      if (record) records.push({ ...record, updatedAt: (doc.updatedAt as string) ?? null })
     }
   }
-  const about = await payload.findGlobal({ slug: 'about', locale: 'bg', depth: 0 })
+  const about = await payload.findGlobal({
+    slug: 'about',
+    locale: 'bg',
+    depth: 0,
+    overrideAccess: false,
+  })
   const record = aboutRecord(about as unknown as Record<string, unknown>)
-  if (record) records.push(record)
+  if (record) records.push({ ...record, updatedAt: (about.updatedAt as string) ?? null })
+  return records
+}
 
-  let written = 0
-  for (const record of records)
-    if (await write(payload, record, bySource.get(record.source))) written++
-  const sources = new Set(records.map((record) => record.source))
-  const stale = stored.filter((doc) => !sources.has(doc.source)).map((doc) => doc.id)
-  if (stale.length) await payload.delete({ collection: 'search', where: { id: { in: stale } } })
-  payload.logger.info(
-    `Indexed ${sources.size} pages for the search (${written} written, ${stale.length} removed).`,
-  )
+// The records are kept for the life of the process and dropped when any searched content changes
+// (the hooks below, on the searched collections and the About global). On `globalThis`, so the
+// admin's routes and the site's pages share the one copy whatever bundle they're in. Content
+// written from outside the process (the staging seed) shows after a restart, as with the site's
+// other cached reads.
+const store = globalThis as typeof globalThis & { __searchRecords?: Promise<SearchRecord[]> }
+
+/** The search's records, read once and kept until content changes. */
+export function getSearchRecords(payload: Payload): Promise<SearchRecord[]> {
+  store.__searchRecords ??= findSearchRecords(payload).catch((error) => {
+    store.__searchRecords = undefined
+    throw error
+  })
+  return store.__searchRecords
+}
+
+const drop = () => {
+  store.__searchRecords = undefined
+}
+
+/** afterChange and afterDelete of every searched collection, and afterChange of About. */
+export const searchChanged: CollectionAfterChangeHook = ({ doc }) => {
+  drop()
+  return doc
+}
+export const searchRemoved: CollectionAfterDeleteHook = () => drop()
+export const searchChangedGlobal: GlobalAfterChangeHook = ({ doc }) => {
+  drop()
+  return doc
 }

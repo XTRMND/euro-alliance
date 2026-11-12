@@ -44,16 +44,15 @@ describe('recording', () => {
     expect(tally.planned).toContain('create news «Test A»')
   })
 
-  it('writes in a real run, and leaves the search index out of the counts', async () => {
+  it('writes in a real run', async () => {
     const real = fakePayload()
     const tally = new Tally(false)
     const payload = recording(real as unknown as Payload, tally)
 
     await payload.create({ collection: 'news', data: { title: 'Test A' } as never })
-    await payload.create({ collection: 'search', data: {} as never })
 
-    expect(real.create).toHaveBeenCalledTimes(2)
-    expect(tally.counts.has('search')).toBe(false)
+    expect(real.create).toHaveBeenCalledTimes(1)
+    expect(tally.counts.get('news')).toMatchObject({ created: 1 })
   })
 
   it('counts what the base seed leaves alone, and does nothing without a tally', () => {

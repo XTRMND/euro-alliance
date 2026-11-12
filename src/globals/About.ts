@@ -1,7 +1,7 @@
 import type { Field, GlobalConfig } from 'payload'
 import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
-import { indexAbout } from '@/lib/search-index'
+import { searchChangedGlobal } from '@/lib/search-records'
 import { destinationOptions } from '@/lib/destinations'
 import { metaField } from '@/fields/meta'
 
@@ -50,7 +50,7 @@ export const About: GlobalConfig = {
   slug: 'about',
   label: 'За нас',
   access: { read: anyone, update: isStaff },
-  hooks: { afterChange: [revalidateGlobal, indexAbout] },
+  hooks: { afterChange: [revalidateGlobal, searchChangedGlobal] },
   fields: [
     metaField(),
     {

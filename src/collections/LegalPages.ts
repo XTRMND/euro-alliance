@@ -3,7 +3,7 @@ import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { destinationOptions } from '@/lib/destinations'
 import { revalidateCollection } from '@/hooks/revalidate'
-import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { searchChanged, searchRemoved } from '@/lib/search-records'
 import { metaField } from '@/fields/meta'
 
 // Legal pages (docs/cms-schema.md § 3): the privacy policy (218:2842) and the cookie policy
@@ -72,8 +72,8 @@ export const LegalPages: CollectionConfig = {
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true, maxPerDoc: 50 },
   hooks: {
-    afterChange: [revalidateCollection, indexAfterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete],
+    afterChange: [revalidateCollection, searchChanged],
+    afterDelete: [revalidateCollection, searchRemoved],
   },
   fields: [
     metaField(),

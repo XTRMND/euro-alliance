@@ -1,4 +1,4 @@
-import type { SearchHit } from './search'
+import type { SearchHit } from './search-match'
 
 // The search's text helpers (src/lib/search.ts): the query's words, the prefix query, the terms
 // marked in a result and its snippet. No database here, so they're unit-tested on their own.
@@ -7,11 +7,6 @@ import type { SearchHit } from './search'
 export function searchTerms(query: string): string[] {
   const words = query.toLowerCase().match(/[\p{L}\p{N}]{2,}/gu) ?? []
   return [...new Set(words)].slice(0, 8)
-}
-
-/** A prefix match on every word, for to_tsquery. Safe: the words have letters and digits only. */
-export function prefixQuery(terms: string[]): string {
-  return terms.map((term) => `${term}:*`).join(' & ')
 }
 
 export type Segment = { text: string; mark: boolean }

@@ -19,7 +19,6 @@ import { storedCategory } from '@/lib/courses'
 import { type Destination, destinations } from '@/lib/destinations'
 import { migrations } from '@/migrations'
 import { routes } from '@/lib/routes'
-import { reindexSearch } from '@/lib/search-index'
 import { seed } from '@/seed'
 import { professions as seededProfessions, richText, teacherProgrammes } from '@/seed/programs'
 import { recording, Tally } from '@/seed/tally'
@@ -568,8 +567,6 @@ console.log('7/7 Translation languages…')
       )
   }
 }
-
-await reindexSearch(payload)
 
 // ── Counts ──────────────────────────────────────────────────────────────────
 const rows = [...tally.counts].sort(([a], [b]) => a.localeCompare(b))

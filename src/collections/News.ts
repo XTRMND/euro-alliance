@@ -3,7 +3,7 @@ import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
-import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { searchChanged, searchRemoved } from '@/lib/search-records'
 import { metaField } from '@/fields/meta'
 import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
 import { routes } from '@/lib/routes'
@@ -75,8 +75,8 @@ export const News: CollectionConfig = {
   versions: { drafts: true },
   hooks: {
     beforeChange: [markAdminEdit],
-    afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
+    afterChange: [revalidateCollection, searchChanged, legacyRedirect.afterChange],
+    afterDelete: [revalidateCollection, searchRemoved, legacyRedirect.afterDelete],
   },
   fields: [
     adminEditedAtField,
