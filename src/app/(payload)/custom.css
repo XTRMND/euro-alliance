@@ -2,10 +2,8 @@
  * The admin's look (docs/admin-redesign.md, PR 6; Figma page «07 CMS admin»): the site's own
  * tokens and fonts on Payload's admin, light only, with the shell of src/components/admin/shell
  * (the navy sidebar, the top bar, the hairline sub-nav) in place of Payload's nav and header.
- * Payload's styles come first (@payloadcms/next/css); this file overrides them.
+ * Nothing here is shared with the public site's stylesheets. Payload's styles come first (@payloadcms/next/css); this file overrides them.
  */
-
-@import '../../styles/tokens.css';
 
 /* The site's fonts, self-hosted (src/styles/fonts.ts has them for the public site). */
 @font-face {
@@ -35,8 +33,25 @@
 
 :root,
 html[data-theme='light'] {
-  --font-sofia-sans: 'Sofia Sans';
-  --font-sofia-sans-extra-condensed: 'Sofia Sans Extra Condensed';
+  /* The site's tokens the admin uses, copied from src/styles/tokens.css: importing that file here
+     would make the bundler split it into a stylesheet of its own, one more request on every
+     public page. tests/unit/admin-tokens.test.ts fails if a copy differs from the original. */
+  --color-brand-primary: #0c427e;
+  --color-brand-primary-strong: #183169;
+  --color-brand-primary-subtle: #eaf0f6;
+  --color-brand-accent: #c0aa81;
+  --color-brand-accent-subtle: #ede3d0;
+  --color-bg-page: #ffffff;
+  --color-bg-subtle: #f5f6f8;
+  --color-bg-warm: #f7f3ec;
+  --color-text-primary: #14202e;
+  --color-text-muted: #5a6676;
+  --color-text-on-brand: #ffffff;
+  --color-border-default: #dce1e7;
+  --radius-button: 10px;
+  --type-h3: 700 1.8125rem / 1 var(--font-display);
+  --type-label: 600 1rem / 1.2 var(--font-body);
+
   --font-body: 'Sofia Sans', Arial, sans-serif;
   --font-display: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
 
