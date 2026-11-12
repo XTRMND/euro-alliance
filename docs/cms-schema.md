@@ -30,7 +30,6 @@ Payload runs inside the Next.js app on PostgreSQL. The client edits content in P
 | `inquiries` | none (created only by the wizard's server action, never through the public REST/GraphQL API) | read, update `status` and notes | all |
 | `inquiryFiles` | **none**; never served publicly | read (download through an authenticated route) | all |
 | `redirects` | none (used by the server) | read | all |
-| `missing-addresses` | none (written by the proxy) | read | read, delete |
 | `users` | none | read self, update self | all |
 | Globals | read | update (except `inquiryRouting`) | all |
 
@@ -201,13 +200,9 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 
 `from` (the old path, stored lowercase without a trailing slash; unique), `to` (a path or an https address; never an address that redirects again), `source` (`import` / `manual`). Every redirect is a 301, so there's no `type`. Our own collection (PR 19), not Payload's redirects plugin: the proxy (`src/proxy.ts`) reads it directly with `pg`, once a minute at most, without loading Payload. Editors read it; the admin edits it.
 
-### Missing addresses
-
-*(02.11.2026, the user's Y8)* `path` (lowercase, no trailing slash; unique), `hits`, `lastSeen`. Addresses that ended on the 404 page: the proxy counts them and writes the counts once a minute with `pg` (an upsert, at most 200 a minute), leaving out bot noise (`.php`, `wp-…`, `.env`). Nobody adds rows by hand; one worth keeping becomes a redirect, and the row can go.
-
 ## 4. Media and the image pipeline
 
-`media` is an upload collection with sharp.
+`media` is an upload collection with sharp. It has no menu item or library *(v0.6.0, decision 8: `admin.hidden`)*: a file is uploaded, and its alternative text filled in, from the photo field that uses it.
 
 | Field | Notes |
 |---|---|
@@ -276,9 +271,9 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 
 ## 8. Search
 
-- A `search` collection is the index (PR 18), kept in sync by hooks on Courses, Programs, News and Legal pages (afterChange, afterDelete; a draft save indexes the published version) and on the About global, and rebuilt from what's published on every start (`reindexSearch`, at the end of the seed). Not Payload's search plugin: it indexes collections only, and the About page is a global.
+- No index collection *(v0.6.0, `docs/admin-redesign.md` decision 8; a `search` collection until then)*: the search page reads the published content itself. `findSearchRecords` (`src/lib/search-records.ts`) builds one record per published course, program page, news article and legal page and one for the About page, as a visitor (so drafts stay out). The records are kept in the server's memory and dropped by hooks on those collections and the About global whenever one changes; the sitemap lists the same records.
 - Each record: `type` (`course` / `page` / `news`), `title`, `path` (the section, «Езици › Английски»), `excerpt`, `text` (everything the page is found by), `url`, `source` (`news:12`, unique), `sourceId`, `publishedAt`. Bulgarian only until the English site exists.
-- Query (`src/lib/search.ts`): PostgreSQL full-text search with the `simple` configuration (there's no Bulgarian dictionary: words as written, lowercased), every word matched as a prefix, plus `pg_trgm` word similarity (0.5) on the title and excerpt for typos. Ranked by both, newest first on a tie. `unaccent` isn't used: Bulgarian has no accents to fold. The migration creates `pg_trgm` (a trusted extension: the database's owner can) and a GIN index on the indexed text.
+- Matching (`src/lib/search-match.ts`), as the index's PostgreSQL query did it: words as written, lowercased (there's no Bulgarian dictionary), every word of the query as the start of a word of the page, plus trigram word similarity (above 0.5) on the title and excerpt for typos. Ranked by both, newest first on a tie, 60 results at most.
 - The tabs map to `type`: Всичко (all), Курсове (`course`), Страници (`page`), Новини (`news`), each with a count.
 
 ## 9. Revalidation and caching
