@@ -298,22 +298,26 @@ test('prices are typed in place and stored only on «Запази промени
     await expect(save).toBeDisabled()
 
     // The course has a row for the whole course and one for its group.
-    const base = page.getByLabel('Цена: Тестов курс Цени, Целия курс')
-    const ofGroup = page.getByLabel('Цена: Тестов курс Цени, Група · 03.11.2099')
+    const base = page.getByLabel('Цена: Тестов курс Цени, Целия курс', { exact: true })
+    const ofGroup = page.getByLabel('Цена: Тестов курс Цени, Група · 03.11.2099', { exact: true })
     await expect(base).toHaveValue('')
     await base.fill('abc')
-    await expect(page.getByRole('status')).toHaveText('1 незаписана промяна')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText(
+      '1 незаписана промяна',
+    )
     await save.click()
     await expect(page.getByText('Цената е число, например 495 или 460,16.')).toBeVisible()
     await page.getByRole('button', { name: 'Отмени' }).click()
     await expect(base).toHaveValue('')
-    await expect(page.getByRole('status')).toHaveText('')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText('')
 
     await base.fill('1234,5')
     await ofGroup.fill('999')
     await page.getByLabel('Редовна цена: Тестов курс Цени, Група · 03.11.2099').fill('1234,5')
     await page.getByLabel('Етикет: Тестов курс Цени, Група · 03.11.2099').fill('тестов етикет')
-    await expect(page.getByRole('status')).toHaveText('2 незаписани промени')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText(
+      '2 незаписани промени',
+    )
     await expect(page.getByText('Незаписано')).toHaveCount(2)
     // Nothing is stored before the save.
     const stored = async () =>
@@ -324,10 +328,11 @@ test('prices are typed in place and stored only on «Запази промени
       ).docs
     expect(await stored()).toHaveLength(0)
     await save.click()
-    await expect(page.getByRole('status')).toHaveText('')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText('')
     await expect(save).toBeDisabled()
+    await expect.poll(async () => (await stored()).length).toBe(2)
     const prices = await stored()
-    expect(prices.map((price) => price.price).sort()).toEqual([999, 1234.5])
+    expect(prices.map((price) => price.price).sort((a, b) => a - b)).toEqual([999, 1234.5])
     expect(prices.find((price) => price.group)?.label).toBe('тестов етикет')
 
     // «Промоции» keeps the group's row (it has a regular price), not the base price.
@@ -342,7 +347,7 @@ test('prices are typed in place and stored only on «Запази промени
     await page.getByLabel('Етикет: Тестов курс Цени, Група · 03.11.2099').fill('')
     await save.click()
     await expect(save).toBeDisabled()
-    expect(await stored()).toHaveLength(1)
+    await expect.poll(async () => (await stored()).length).toBe(1)
 
     expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
   } finally {
