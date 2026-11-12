@@ -44,6 +44,21 @@ test('a licence opens full size and closes again', async ({ page }) => {
   await expect(dialog).toBeHidden()
 })
 
+test('the scans load at their card size, not full width', async ({ page }) => {
+  await page.goto(routes.about('licences'))
+  const scans = page.locator(`#${aboutSections.licences} button img`)
+
+  await expect(scans.first()).toBeVisible()
+  for (const scan of await scans.all()) {
+    await expect(scan).toHaveJSProperty('complete', true)
+    // A 220px card on a 1× screen takes the 256px file (sizes="220px").
+    const width = await scan.evaluate((img: HTMLImageElement) =>
+      Number(new URL(img.currentSrc).searchParams.get('w')),
+    )
+    expect(width).toBeLessThanOrEqual(256)
+  }
+})
+
 test('both funded projects show with their EU logos', async ({ page }) => {
   await page.goto(routes.about('projects'))
   const projects = page.locator(`#${aboutSections.projects}`).getByRole('article')

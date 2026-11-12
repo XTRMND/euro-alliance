@@ -46,8 +46,14 @@ ENV NODE_ENV=production \
 COPY --from=builder --chown=node:node /app/.next/standalone ./
 # Uploaded media: mount a volume here. On start, Payload applies pending migrations and seeds an
 # empty database.
-RUN mkdir -p /app/media && chown node:node /app/media
-VOLUME ["/app/media"]
+# The image optimizer's cache (next/image's AVIF and WebP files) is a volume too, so a deploy
+# doesn't throw it away: without it, the first visitors after every deploy wait while each photo,
+# scan and sticker is encoded again. Compose keeps an unnamed volume across `up -d`; staging names
+# it (deploy/staging/docker-compose.yml). The rest of .next/cache (the CMS reads) starts empty
+# with each version, as it should.
+RUN mkdir -p /app/media /app/.next/cache/images \
+    && chown node:node /app/media /app/.next/cache /app/.next/cache/images
+VOLUME ["/app/media", "/app/.next/cache/images"]
 USER node
 EXPOSE 3000
 CMD ["node", "server.js"]

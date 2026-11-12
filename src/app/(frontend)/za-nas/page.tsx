@@ -83,7 +83,13 @@ export default async function AboutPage() {
       <DocumentPhoto
         key={doc.id}
         title={doc.title}
-        image={{ src: props.src, srcSet: props.srcSet, width: 220, height: 300 }}
+        image={{
+          src: props.src,
+          srcSet: props.srcSet,
+          sizes: props.sizes,
+          width: 220,
+          height: 300,
+        }}
         full={scan.url}
         alt={scan.alt}
         labels={{ open: t('document.open', { title: doc.title }), close: t('document.close') }}

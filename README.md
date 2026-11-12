@@ -71,6 +71,7 @@ docs/                 the build brief: plan, Figma map, CMS schema, motion, i18n
 - `DATABASE_URL`, `PAYLOAD_SECRET` and `NEXT_PUBLIC_SITE_URL`
 - the SMTP settings, once email is configured
 - a volume mounted at `/app/media` for uploads
+- a volume at `/app/.next/cache/images` for `next/image`'s encoded files (at most 500 MB), so a deploy doesn't make the first visitors wait while every image is encoded again. The image declares it, and Compose keeps it across `up -d`
 
 **Production:** set `ALLOW_INDEXING=true` in production only, and serve it without staging's basic auth and `X-Robots-Tag: noindex, nofollow` header (`deploy/README.md`, «Staging is never indexed»): anywhere else `robots.txt` disallows everything and every page is `noindex`. When the server starts, before it takes requests, the app applies any pending migrations and seeds an empty database (`src/instrumentation.ts`). Outside production, set `INQUIRY_EMAIL_OVERRIDE` so no email ever reaches the client's inboxes. All variables are listed in [`.env.example`](.env.example).
 

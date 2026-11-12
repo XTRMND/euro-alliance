@@ -9,8 +9,9 @@ import styles from './DocumentPhoto.module.css'
 
 type DocumentPhotoProps = {
   title: string
-  /** The scan, sized for the card and full size. */
-  image: { src: string; srcSet?: string; width?: number; height?: number }
+  /** The scan, sized for the card (next/image's props: without `sizes`, a browser reads the
+   * srcset as if the scan filled the screen and fetches the 1920px version). */
+  image: { src: string; srcSet?: string; sizes?: string; width?: number; height?: number }
   full: string
   alt: string
   labels: { open: string; close: string }

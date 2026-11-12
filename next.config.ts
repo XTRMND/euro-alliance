@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
     // 75 for everything; 90 for the About hero's team photo (TornWindow).
     qualities: [75, 90],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/api/media-tints/file/**' }],
+    // The encoded files stay in a volume across deploys (Dockerfile), so they're bounded: the
+    // least recently used go first past 500 MB. Next's default is half the free disk, and the
+    // server shares its disk with the database.
+    maximumDiskCacheSize: 500_000_000,
   },
   turbopack: { root: dirname },
   // The same security headers on every response; the per-page Content-Security-Policy comes from
