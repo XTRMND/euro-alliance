@@ -95,6 +95,36 @@ test('the sidebar mirrors the site and marks the open screen', async ({ page }) 
   await expect(page.locator('.app-header')).toBeHidden()
 })
 
+test('the dashboard is one card: the overview, the two lists and the shortcuts', async ({
+  page,
+}) => {
+  await logIn(page)
+  await expect(page.getByRole('heading', { level: 1, name: 'Табло' })).toBeVisible()
+  for (const label of ['Нови запитвания', 'Започват до 30 дни', 'Новини'])
+    await expect(page.getByRole('term').filter({ hasText: label })).toBeVisible()
+  await expect(page.getByRole('heading', { level: 2 })).toHaveText([
+    'Последни запитвания',
+    'Започват скоро',
+    'Често редактирани',
+  ])
+  // No list of collections, and nothing called «Глобални».
+  await expect(page.locator('.template-default__wrap')).not.toContainText('Глобални')
+  await expect(page.getByRole('link', { name: '+ Нов курс' })).toHaveAttribute(
+    'href',
+    '/admin/collections/courses/create',
+  )
+  await expect(page.getByRole('link', { name: /Правни страници/ }).last()).toHaveAttribute(
+    'href',
+    '/admin/collections/legal-pages',
+  )
+  // The layout rule: the card fills the height under the top bar and stays within 1096px.
+  const card = await page.locator('[class*="dashboard-module"][class*="card"]').boundingBox()
+  expect(card!.width).toBeLessThanOrEqual(1096)
+  expect(Math.round(card!.y + card!.height)).toBe(960 - 32)
+  expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(960)
+  expect(await axe(page, ['[class*="dashboard-module"][class*="screen"]'])).toEqual([])
+})
+
 test('a branch opens to a filtered list, with the sub-nav of its siblings', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })
