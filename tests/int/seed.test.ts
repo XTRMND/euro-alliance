@@ -2,8 +2,9 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { uploadDirs } from '@/lib/media/storage'
+import { reindexSearch } from '@/lib/search-index'
 import type { Media } from '@/payload-types'
 import { seed } from '@/seed'
 
@@ -167,5 +168,24 @@ describe('seed', () => {
         })
       ).totalDocs,
     ).toBe(1)
+  })
+
+  it('rebuilds the search index without rewriting what it already says', async () => {
+    const { docs } = await payload.find({ collection: 'search', sort: 'id', limit: 1, depth: 0 })
+    await payload.update({ collection: 'search', id: docs[0].id, data: { title: 'Stale' } })
+    const update = vi.spyOn(payload, 'update')
+    const create = vi.spyOn(payload, 'create')
+
+    await reindexSearch(payload)
+    await reindexSearch(payload)
+
+    const writes = [...update.mock.calls, ...create.mock.calls].filter(
+      ([args]) => args.collection === 'search',
+    )
+    update.mockRestore()
+    create.mockRestore()
+    expect(writes).toHaveLength(1)
+    const fixed = await payload.findByID({ collection: 'search', id: docs[0].id, depth: 0 })
+    expect(fixed.title).not.toBe('Stale')
   })
 })

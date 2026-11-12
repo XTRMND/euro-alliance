@@ -231,7 +231,7 @@ Use Node 24 (`nvm use` reads `.nvmrc`). pnpm switches itself to the version in `
 
 The content import is the staging seed (`docs/seeding.md`). `pnpm import:covers` applies the local photo picker's choices (local only).
 
-**Production start:** the Docker image has no CLI. On start, Payload applies pending migrations (`prodMigrations`) and seeds an empty database. Mount a volume at `/app/media` for uploads.
+**Production start:** the Docker image has no CLI. When the server starts, before it takes requests (`src/instrumentation.ts`), Payload applies pending migrations (`prodMigrations`), fills in what's missing in the database (the base seed) and rebuilds the search index, writing only what changed. Mount a volume at `/app/media` for uploads.
 
 **Adding a page:** name its route folder with the segments from `src/lib/routes.ts` (a unit test enforces this), add it to `tests/e2e/pages.ts` so the shared checks run on it, and add key pages to `paths` in `lighthouserc.cjs` (and to `lcpFlagged` only if it misses the LCP budget, named in the commit notes).
 
@@ -506,6 +506,7 @@ From the staging seed (09.11.2026, `docs/seeding.md`; branch `chore/seed-staging
 - The repository is public: the four Alliance Contest results lists linked from news 142, 143, 159 and 194 (children's full names and scores) aren't in `seed/` (the user, 09.11.2026). Their links are removed, the text stays; `scripts/seed/withheld.json`, and any later document whose link reads as results is withheld too. Whether they go back on the site is the client's call.
 - New on the old site since 02.11: «Английски език ниво А2 В1 В2 С ВАУЧЕРИ ОТ АЗ» (/Courses/65). Not in the approved list (`scripts/import/courses.json`), so not imported and its old address has no redirect. A group of «Английски език A2–B2»? [not imported until the user adds it to the list]
 - **To fix** (the user, 09.11.2026): Figma's seven news covers are 900 px wide, below the article banner's 908 px slot (`src/lib/media/slots.ts`), so no article banner shows a photo; the cards and the lead story do. Sharper originals, or a banner slot of 900?
+- Payload starts with the server (v0.2.1, 10.11.2026): before, it started on the first page that read the CMS, so v0.2.0's migration wasn't applied on staging until a visit, the staging seed failed on the missing column, and the first visitor after every start waited for the base seed and a rewrite of the whole search index. `pnpm seed:staging` now refuses while the database is missing a migration.
 - The teachers' programmes: the old site gives each its official code (38010001–38010029) and a longer title; the CMS keeps Figma's number («01») and shorter title.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
