@@ -14,7 +14,7 @@ import {
   coursesPageSize,
   emptyCourseFilters,
 } from '@/lib/course-filters'
-import type { CourseAudience, CourseCategoryValue, CourseFormat } from '@/lib/courses'
+import type { CourseAudience, ListingCategory, CourseFormat } from '@/lib/courses'
 import type { Language } from '@/lib/routes'
 import styles from './CourseListing.module.css'
 import { FilterGroups } from './FilterGroups'
@@ -28,7 +28,7 @@ type Option<V> = { value: V; label: string }
 
 export type ListingOptions = {
   audience: Option<CourseAudience>[]
-  category: Option<CourseCategoryValue>[]
+  category: Option<ListingCategory>[]
   language: Option<Language>[]
   format: Option<CourseFormat>[]
   months: Option<string>[]

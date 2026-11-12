@@ -82,7 +82,7 @@ export async function Wizard({
               )
               .filter(Boolean),
             entryLevel: course.entryLevel,
-            askLevel: course.category === 'languages' || course.category === 'exams',
+            askLevel: course.category === 'languages',
             voucher: Boolean(course.voucherEligible),
           },
         ]

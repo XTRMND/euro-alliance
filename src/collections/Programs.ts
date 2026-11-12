@@ -129,6 +129,21 @@ export const Programs: CollectionConfig = {
         },
       ],
     },
+    // The translation agency's languages (a global until v0.5.0; docs/admin-redesign.md,
+    // decision 7): they fill the language pair of «Изпратете документ» on the homepage, the
+    // Translations page and the contact wizard; with none, the pair is hidden.
+    {
+      name: 'translationLanguages',
+      type: 'array',
+      label: 'Езици',
+      labels: { singular: 'Език', plural: 'Езици' },
+      admin: {
+        condition: (data) => data?.type === 'translations',
+        description: 'Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».',
+        components: { RowLabel: '@/components/admin/RowLabel#NameRowLabel' },
+      },
+      fields: [{ name: 'name', type: 'text', label: 'Език', required: true, localized: true }],
+    },
     {
       name: 'hero',
       type: 'group',

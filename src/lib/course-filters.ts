@@ -9,10 +9,11 @@ import {
 } from './course-state'
 import {
   type CourseAudience,
-  type CourseCategoryValue,
+  type ListingCategory,
   type CourseFormat,
   courseAudiences,
-  courseCategoryValues,
+  listingCategories,
+  listingCategory,
   courseFormats,
 } from './courses'
 import {
@@ -39,7 +40,7 @@ export type CourseSort = 'soonest' | 'price'
 
 export type CourseFilters = {
   audience: CourseAudience[]
-  category: CourseCategoryValue[]
+  category: ListingCategory[]
   language: Language[]
   format: CourseFormat[]
   voucher: boolean
@@ -84,7 +85,7 @@ export function parseCourseFilters(params: SearchParams): CourseFilters {
 
   return {
     audience: pick(courseAudiences, courseAudienceSegments, all(params, queryParams.audience)),
-    category: pick(courseCategoryValues, courseCategories, all(params, queryParams.category)),
+    category: pick(listingCategories, courseCategories, all(params, queryParams.category)),
     language: pick(languages, languageSegments, all(params, queryParams.language)),
     format: pick(courseFormats, courseFormatSegments, all(params, queryParams.format)),
     voucher: all(params, queryParams.funding).includes(courseFilterValues.voucher),
@@ -174,7 +175,7 @@ export function filterCourses<C extends SiteCourse>(
     if (filters.status && state.status !== filters.status) return false
     if (filters.audience.length && !filters.audience.some((value) => value === course.audience))
       return false
-    if (filters.category.length && !filters.category.includes(course.category)) return false
+    if (filters.category.length && !filters.category.includes(listingCategory(course))) return false
     if (filters.language.length && !filters.language.some((value) => value === course.language))
       return false
     const groups = currentGroups(course, today)

@@ -10,7 +10,24 @@ export type CourseAudience = (typeof courseAudiences)[number]
 export const courseFormats = ['in-person', 'online'] as const
 export type CourseFormat = (typeof courseFormats)[number]
 
+/**
+ * A course's category as stored: the programme branch it sits under in the admin
+ * (docs/admin-redesign.md, decision 4).
+ */
 export const courseCategoryValues = [
+  'languages',
+  'vocational',
+  'teachers',
+  'farmers',
+  'computer',
+] as const
+export type CourseCategoryValue = (typeof courseCategoryValues)[number]
+
+/**
+ * The «Категория» options of the public course listing (116:1190), unchanged: besides the
+ * branches, «Изпити и сертификати» (exam preparation) and «Обучение с ваучери».
+ */
+export const listingCategories = [
   'languages',
   'exams',
   'vocational',
@@ -19,7 +36,38 @@ export const courseCategoryValues = [
   'farmers',
   'computer',
 ] as const
-export type CourseCategoryValue = (typeof courseCategoryValues)[number]
+export type ListingCategory = (typeof listingCategories)[number]
+
+/**
+ * Where a course is listed on the site: a voucher course under «Обучение с ваучери», exam
+ * preparation under «Изпити и сертификати», every other course under its branch. (Until v0.5.0
+ * these were stored categories; the two became checkboxes, and the site lists as before.)
+ */
+export function listingCategory(course: {
+  category: CourseCategoryValue
+  voucherEligible?: boolean | null
+  examPrep?: boolean | null
+}): ListingCategory {
+  if (course.voucherEligible) return 'vouchers'
+  if (course.examPrep) return 'exams'
+  return course.category
+}
+
+/**
+ * A listing category as stored (the migration's rule, and the staging seed's for its fixtures,
+ * which keep the approved list's categories): exams → languages with «Подготовка за изпит»;
+ * vouchers → languages for a language course, else computer («Дигитални умения»), with «С ваучер».
+ */
+export function storedCategory(course: { category: ListingCategory; language?: string | null }): {
+  category: CourseCategoryValue
+  examPrep?: true
+  voucherEligible?: true
+} {
+  if (course.category === 'exams') return { category: 'languages', examPrep: true }
+  if (course.category === 'vouchers')
+    return { category: course.language ? 'languages' : 'computer', voucherEligible: true }
+  return { category: course.category }
+}
 
 /** The stickers a course can show (Course sticker set 50:274, without the hero and contact art). */
 export const courseTopics = [

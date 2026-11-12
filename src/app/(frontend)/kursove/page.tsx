@@ -6,7 +6,7 @@ import { PageHero } from '@/components/patterns/PageHero'
 import { InquiryBand } from '@/components/shell/InquiryBand'
 import { getCourseMonths, getListedCourses } from '@/lib/cms'
 import { activeFilterCount, parseCourseFilters } from '@/lib/course-filters'
-import { courseAudiences, courseCategoryValues, courseFormats } from '@/lib/courses'
+import { courseAudiences, courseFormats, listingCategories } from '@/lib/courses'
 import { formatMonth } from '@/lib/format'
 import { pageMetadata } from '@/lib/seo'
 import { routes } from '@/lib/routes'
@@ -50,7 +50,7 @@ export default async function CoursesPage({ searchParams }: PageProps<'/kursove'
             value,
             label: t(`courses.audience.${value}`),
           })),
-          category: courseCategoryValues.map((value) => ({
+          category: listingCategories.map((value) => ({
             value,
             label: t(`courses.category.${value}`),
           })),
