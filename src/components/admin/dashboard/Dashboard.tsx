@@ -94,7 +94,7 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
   const coursesSoon = new Set(within30.docs.map((group) => group.course)).size
 
   return (
-    <div className={styles.screen}>
+    <div className={styles.screen} data-admin="dashboard">
       <header className={styles.header}>
         <div className={styles.titles}>
           <h1 className={styles.title}>Табло</h1>
@@ -111,7 +111,7 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
         </Link>
       </header>
 
-      <div className={styles.card}>
+      <div className={styles.card} data-admin="card">
         <dl className={styles.overview}>
           <div className={styles.figure}>
             <dt>Нови запитвания</dt>

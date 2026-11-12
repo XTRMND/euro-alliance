@@ -118,11 +118,11 @@ test('the dashboard is one card: the overview, the two lists and the shortcuts',
     '/admin/collections/legal-pages',
   )
   // The layout rule: the card fills the height under the top bar and stays within 1096px.
-  const card = await page.locator('[class*="dashboard-module"][class*="card"]').boundingBox()
+  const card = await page.locator('[data-admin="card"]').boundingBox()
   expect(card!.width).toBeLessThanOrEqual(1096)
   expect(Math.round(card!.y + card!.height)).toBe(960 - 32)
   expect(await page.evaluate(() => document.documentElement.scrollHeight)).toBe(960)
-  expect(await axe(page, ['[class*="dashboard-module"][class*="screen"]'])).toEqual([])
+  expect(await axe(page, ['[data-admin="dashboard"]'])).toEqual([])
 })
 
 test('a branch opens to a filtered list, with the sub-nav of its siblings', async ({ page }) => {
