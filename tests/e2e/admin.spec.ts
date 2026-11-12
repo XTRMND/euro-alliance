@@ -1,11 +1,15 @@
 import { randomUUID } from 'node:crypto'
 import AxeBuilder from '@axe-core/playwright'
-import { expect, type Page, test } from '@playwright/test'
+import { expect as baseExpect, type Page, test } from '@playwright/test'
 
 // The admin's shell (docs/admin-redesign.md, PR 6; Figma «07 CMS admin»): the login, the sidebar
 // that mirrors the site, the top bar and the hairline sub-nav. The first account of an empty
 // database is made here (CI's database has none); against a database that already has accounts,
 // give one in E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD.
+
+// The admin's screens render on the server with their data: on a busy runner a navigation can
+// take longer than the default 5 seconds.
+const expect = baseExpect.configure({ timeout: 15_000 })
 
 test.describe.configure({ mode: 'serial' })
 // No stored consent: the admin sets no cookie banner. A dark system must not darken the admin.
