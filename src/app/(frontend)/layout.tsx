@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import lazy from 'next/dynamic'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
@@ -17,12 +16,6 @@ import { handFontScript } from '@/styles/font-hand'
 import { fontVariables } from '@/styles/fonts'
 import '@/styles/tokens.css'
 import '@/styles/globals.css'
-
-// The live preview's script, in a chunk of its own: only an editor's preview frame loads it, never
-// a visitor's page.
-const LivePreviewBridge = lazy(() =>
-  import('@/components/preview/LivePreviewBridge').then((module) => module.LivePreviewBridge),
-)
 
 // Rendered on request: pages read the CMS through cached reads (src/lib/cms.ts) that Payload
 // hooks invalidate, so a build needs no database. CDN caching of whole pages comes with the CDN.
@@ -79,10 +72,9 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: handFontScript }} />
       </head>
       <body>
-        <HeadScripts />
-        {preview && (
-          <LivePreviewBridge kind={preview.kind} id={preview.id} locale={preview.locale} />
-        )}
+        <HeadScripts
+          preview={preview && { kind: preview.kind, id: preview.id, locale: preview.locale }}
+        />
         <SkipLink />
         <CookieConsent labels={messages.consent} />
         {measurementId && <GoogleAnalytics measurementId={measurementId} />}
