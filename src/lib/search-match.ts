@@ -137,13 +137,13 @@ export function searchRecords(
     if (!everyTerm && wordSimilarity(phrase, heading) <= similarity) return []
     return [{ record, index, score: rank(positions) + wordSimilarity(phrase, record.title) }]
   })
-  // Best first, then the newest. On a full tie the later record comes first: that is the order
+  // Best first, then the newest. On a full tie the records keep their own order: that is the order
   // the index's query gave them in, and the pages' snapshots were taken with.
   scored.sort(
     (a, b) =>
       b.score - a.score ||
       (b.record.publishedAt ?? '').localeCompare(a.record.publishedAt ?? '') ||
-      b.index - a.index,
+      a.index - b.index,
   )
   return scored.slice(0, limit).map(({ record }) => ({
     id: record.source,

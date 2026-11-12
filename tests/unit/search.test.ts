@@ -134,12 +134,12 @@ describe('searchRecords (the search without an index)', () => {
   it('puts the closest title first, and the newest first on a tie', () => {
     expect(sources('тест новина')).toEqual(['n2', 'n1'])
     expect(sources('немски')).toEqual(['b'])
-    // A full tie: the later record first, as the index's query returned them.
+    // A full tie: the records' own order, as the index's query returned them.
     const twins = [
       record('first', { title: 'Тест близнак' }),
       record('second', { title: 'Тест близнак' }),
     ]
-    expect(searchRecords(twins, 'близнак').map((hit) => hit.id)).toEqual(['second', 'first'])
+    expect(searchRecords(twins, 'близнак').map((hit) => hit.id)).toEqual(['first', 'second'])
   })
 
   it('finds nothing without a word of two letters', () => {
