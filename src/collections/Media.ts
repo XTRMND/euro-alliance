@@ -50,7 +50,11 @@ export const Media: CollectionConfig = {
       type: 'checkbox',
       label: 'Текстът е проверен',
       defaultValue: true,
-      admin: { description: 'Изключено, когато текстът е чернова от импорта.' },
+      admin: {
+        description: 'Изключено, когато текстът е чернова от импорта.',
+        // In a list: «Текстът е проверен» / «не е проверен», not «вярно» / «невярно».
+        components: { Cell: '@/components/admin/ReviewedCell#ReviewedCell' },
+      },
     },
     {
       name: 'kind',

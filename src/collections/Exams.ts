@@ -50,7 +50,13 @@ export const Exams: CollectionConfig = {
           type: 'date',
           label: 'Дата и час',
           required: true,
-          admin: { date: { pickerAppearance: 'dayAndTime', timeFormat: 'HH:mm' } },
+          admin: {
+            date: {
+              pickerAppearance: 'dayAndTime',
+              timeFormat: 'HH:mm',
+              displayFormat: 'dd.MM.yyyy, HH:mm',
+            },
+          },
         },
       ],
     },

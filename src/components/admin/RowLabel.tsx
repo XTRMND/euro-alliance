@@ -8,6 +8,41 @@ import styles from './row-label.module.css'
 // Row labels for the admin's lists (docs/admin-redesign.md, decision 12): a row is named by what
 // it holds, never «Item 01».
 
+// The fields a row is named by, in this order: the first that holds text.
+const naming = [
+  'title',
+  'heading',
+  'name',
+  'label',
+  'question',
+  'phrase',
+  'text',
+  'goal',
+  'standard',
+  'year',
+  'figure',
+  'level',
+  'value',
+  'number',
+  'email',
+  'topic',
+]
+
+/**
+ * Any list's row (src/fields/row-labels.ts): named by its first text («Групово обучение»), and
+ * until it has one by what it is and its place: «Стъпка 2», never «Item 02».
+ */
+export function AutoRowLabel({ singular = 'ред' }: { singular?: string }) {
+  const { data, rowNumber } = useRowLabel<Record<string, unknown>>()
+  const text = naming
+    .map((field) => data?.[field])
+    .find((value): value is string | number =>
+      typeof value === 'number' ? true : typeof value === 'string' && value.trim() !== '',
+    )
+  const fallback = `${singular[0].toUpperCase()}${singular.slice(1)} ${(rowNumber ?? 0) + 1}`
+  return <span>{text === undefined ? fallback : String(text)}</span>
+}
+
 /** A row named by its `name` field («Немски»); its number until it has one. */
 export function NameRowLabel() {
   const { data, rowNumber } = useRowLabel<{ name?: string | null }>()

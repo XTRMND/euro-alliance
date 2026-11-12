@@ -257,3 +257,10 @@ export function navTrail(tree: NavNode[], key: string | undefined): NavNode[] {
   }
   return []
 }
+
+/**
+ * The admin's 404: the server sees no path for it, so the screen looks like the dashboard's. The
+ * address in the browser tells them apart.
+ */
+export const lostFrom = (activeKey: string | undefined, pathname: string | null, admin: string) =>
+  activeKey === 'Табло' && !!pathname && pathname.replace(/\/$/, '') !== admin.replace(/\/$/, '')

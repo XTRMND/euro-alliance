@@ -1,3 +1,5 @@
+import { ReviewedCell as ReviewedCell_aaa72b61cbe1cc60a5936d8dc4d4f367 } from '@/components/admin/ReviewedCell'
+import { AutoRowLabel as AutoRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -38,11 +40,14 @@ import { Icon as Icon_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admi
 import { Logo as Logo_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admin/shell/Graphics'
 import { AfterLogin as AfterLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
 import { BeforeLogin as BeforeLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
+import { EditorLabels as EditorLabels_fe79d6c8fcd9e1952f17d84edacbe7d0 } from '@/components/admin/EditorLabels'
 import { Dashboard as Dashboard_7292b30784a9facdd561e1771398a1a5 } from '@/components/admin/dashboard/Dashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "@/components/admin/ReviewedCell#ReviewedCell": ReviewedCell_aaa72b61cbe1cc60a5936d8dc4d4f367,
+  "@/components/admin/RowLabel#AutoRowLabel": AutoRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -83,6 +88,7 @@ export const importMap = {
   "@/components/admin/shell/Graphics#Logo": Logo_9f93baf4aea66f2dc33e144076181dbe,
   "@/components/admin/shell/Login#AfterLogin": AfterLogin_80f0db95a82b765329f541051791ab13,
   "@/components/admin/shell/Login#BeforeLogin": BeforeLogin_80f0db95a82b765329f541051791ab13,
+  "@/components/admin/EditorLabels#EditorLabels": EditorLabels_fe79d6c8fcd9e1952f17d84edacbe7d0,
   "@/components/admin/dashboard/Dashboard#Dashboard": Dashboard_7292b30784a9facdd561e1771398a1a5,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

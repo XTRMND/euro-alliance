@@ -486,6 +486,35 @@ test('«За нас» is edited by section, and Навигация shows where i
   await expect(page.getByRole('button', { name: 'Добави връзка' }).first()).toBeVisible()
 })
 
+test('lists are named in Bulgarian, and a wrong address gets the admin’s own 404', async ({
+  page,
+}) => {
+  await logIn(page)
+  // No list says «Item 01» or «Добави Item», whatever the form.
+  for (const path of ['/admin/globals/home', '/admin/globals/site', '/admin/globals/contact']) {
+    await page.goto(path)
+    await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
+    const form = page.locator('form.collection-edit__form')
+    await expect(form).not.toContainText(/Item \d|Добави Item|Add /)
+  }
+  await page.goto('/admin/globals/home')
+  await expect(page.getByRole('button', { name: 'Добави карта' })).toBeVisible()
+  // The controls that carry a fixed English label in Payload's code are put into Bulgarian.
+  await expect(page.locator('[aria-label="Известия"]')).toHaveCount(1)
+
+  await page.goto('/admin/collections/no-such-list')
+  await expect(page.getByRole('heading', { name: 'Страницата не е намерена' })).toBeVisible()
+  await expect(page.getByText('Няма такава страница в админа.')).toBeVisible()
+  await expect(page.getByRole('link', { name: 'Към таблото' })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(
+    /Съдържание\s*\/\s*Страницата не е намерена/,
+  )
+  // Nothing in the menu is marked as open.
+  await expect(
+    page.getByRole('navigation', { name: 'Съдържание' }).locator('[aria-current="page"]'),
+  ).toHaveCount(0)
+})
+
 test('a global sits where its page is on the site', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })

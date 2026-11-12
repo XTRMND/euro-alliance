@@ -87,7 +87,7 @@ export async function AdminNav(props: Props) {
             <span className={styles.tagline}>Съдържание на сайта</span>
           </span>
         </a>
-        <NavTree tree={tree} footer={footer} activeKey={activeKey} />
+        <NavTree tree={tree} footer={footer} activeKey={activeKey} adminRoute={admin} />
       </aside>
       <TopBar
         trail={trail.map(({ label, href }) => ({ label, href }))}
@@ -95,6 +95,7 @@ export async function AdminNav(props: Props) {
         onDocument={Boolean(collectionSlug && docID)}
         siblings={siblings.map(({ key, label, href }) => ({ key, label, href }))}
         activeKey={activeKey}
+        adminRoute={admin}
         siteUrl={process.env.NEXT_PUBLIC_SITE_URL || '/'}
         accountUrl={`${admin}/account`}
         logoutUrl={`${admin}/logout`}
