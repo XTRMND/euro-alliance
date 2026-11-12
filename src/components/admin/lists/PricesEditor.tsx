@@ -236,7 +236,7 @@ export function PricesEditor({ rows, locale, courseBase }: PricesEditorProps) {
                         <tr
                           key={row.key}
                           id={row.group ? undefined : `course-${row.course}`}
-                          className={changed ? styles.changed : undefined}
+                          className={changed ? `${styles.row} ${styles.changed}` : styles.row}
                         >
                           <td>
                             <span className={list.titleCell}>
