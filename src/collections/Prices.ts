@@ -75,6 +75,9 @@ export const Prices: CollectionConfig = {
     defaultColumns: ['course', 'group', 'price', 'regularPrice', 'label', 'note'],
     description:
       'Всеки курс има основна цена; група може да има своя (например промоция). Само официални цени.',
+    components: {
+      views: { list: { Component: '@/components/admin/lists/PricesList#PricesList' } },
+    },
   },
   access: { read: pricesOfPublishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   hooks: {
