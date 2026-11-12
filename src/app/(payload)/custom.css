@@ -1,0 +1,385 @@
+/*
+ * The admin's look (docs/admin-redesign.md, PR 6; Figma page «07 CMS admin»): the site's own
+ * tokens and fonts on Payload's admin, light only, with the shell of src/components/admin/shell
+ * (the navy sidebar, the top bar, the hairline sub-nav) in place of Payload's nav and header.
+ * Payload's styles come first (@payloadcms/next/css); this file overrides them.
+ */
+
+@import '../../styles/tokens.css';
+
+/* The site's fonts, self-hosted (src/styles/fonts.ts has them for the public site). */
+@font-face {
+  font-weight: 400 700;
+  font-family: 'Sofia Sans';
+  font-style: normal;
+  font-display: swap;
+  src: url('../../styles/fonts/SofiaSans.woff2') format('woff2');
+}
+
+@font-face {
+  font-weight: 700 900;
+  font-family: 'Sofia Sans Extra Condensed';
+  font-style: normal;
+  font-display: swap;
+  src: url('../../styles/fonts/SofiaSansExtraCondensed.woff2') format('woff2');
+}
+
+/* The login's handwriting. */
+@font-face {
+  font-weight: 700;
+  font-family: Caveat;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/Caveat.woff2') format('woff2');
+}
+
+:root,
+html[data-theme='light'] {
+  --font-sofia-sans: 'Sofia Sans';
+  --font-sofia-sans-extra-condensed: 'Sofia Sans Extra Condensed';
+  --font-body: 'Sofia Sans', Arial, sans-serif;
+  --font-display: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
+
+  /* The shell */
+  --admin-nav-width: 280px;
+  --admin-margin: 32px; /* the layout rule: 32px around the screen's card */
+  --admin-max: 1096px; /* and the card's greatest width */
+  --nav-width: var(--admin-nav-width);
+  --gutter-h: var(--admin-margin);
+
+  /* Payload's greys, from the site's tokens: white, the subtle fill, the border, muted text and
+     the text colour, with steps between them. */
+  --theme-elevation-0: var(--color-bg-page);
+  --theme-elevation-50: var(--color-bg-subtle);
+  --theme-elevation-100: #edf0f3;
+  --theme-elevation-150: var(--color-border-default);
+  --theme-elevation-200: #cdd4dc;
+  --theme-elevation-250: #bcc5cf;
+  --theme-elevation-300: #a9b3bf;
+  --theme-elevation-350: #96a1af;
+  --theme-elevation-400: #838f9e;
+  --theme-elevation-450: #6f7b8b;
+  --theme-elevation-500: var(--color-text-muted);
+  --theme-elevation-550: #4e5a6a;
+  --theme-elevation-600: #424e5d;
+  --theme-elevation-650: #374251;
+  --theme-elevation-700: #2c3745;
+  --theme-elevation-750: #212c3a;
+  --theme-elevation-800: var(--color-text-primary);
+  --theme-elevation-850: #101a26;
+  --theme-elevation-900: #0c141e;
+  --theme-elevation-950: #080e16;
+  --theme-elevation-1000: #04080d;
+  --theme-bg: var(--color-bg-warm);
+  --theme-input-bg: var(--color-bg-page);
+  --theme-text: var(--color-text-primary);
+  --theme-border-color: var(--color-border-default);
+
+  /* The admin's own radii: fields and small buttons 8, cards 16. */
+  --style-radius-s: 8px;
+  --style-radius-m: 8px;
+  --style-radius-l: 16px;
+}
+
+html,
+body {
+  background: var(--color-bg-warm);
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+/* ── The shell's layout ─────────────────────────────────────────────────────
+   The sidebar is the first column at the full height; the top bar (with the sub-nav) and the
+   screen share the second. Payload's own header and nav toggle are hidden: the shell replaces
+   them, and the sidebar is always open (the admin at phone width isn't designed). */
+
+.template-default,
+.template-default.template-default--nav-open {
+  grid-template-rows: auto 1fr;
+  grid-template-columns: var(--admin-nav-width) minmax(0, 1fr);
+  background: var(--color-bg-warm);
+}
+
+.template-default > .nav {
+  position: sticky;
+  top: 0;
+  grid-row: 1 / span 2;
+  grid-column: 1;
+}
+
+.template-default > .template-default__wrap {
+  grid-row: 2;
+  grid-column: 2;
+  min-width: 0;
+  background: var(--color-bg-warm);
+}
+
+.template-default__nav-toggler-wrapper,
+.template-default__nav-overlay,
+.app-header {
+  display: none !important;
+}
+
+/* ── Type ───────────────────────────────────────────────────────────────────
+   Screen titles in the display face, navy («Английски език B2», «Цени»); everything else in
+   Sofia Sans. */
+
+h1,
+.list-header h1,
+.doc-header__title,
+.render-title,
+.dashboard__label {
+  color: var(--color-brand-primary-strong);
+  font-weight: 800;
+  font-family: var(--font-display);
+  letter-spacing: 0;
+}
+
+/* A screen's title: 28px, as in the mockups. */
+.list-header h1,
+.doc-header__title,
+.render-title {
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-body);
+}
+
+/* The screen starts 32px under the top bar. */
+.template-default__wrap > * {
+  --gutter-h: var(--admin-margin);
+}
+
+.collection-list,
+.dashboard,
+.doc-header {
+  padding-top: var(--admin-margin);
+}
+
+/* ── Buttons («Button», 18:30: 10px corners, no icons; and the admin's smaller ones) ── */
+
+.btn {
+  --btn-font-weight: 600;
+
+  border-radius: var(--radius-button);
+  font-weight: 600;
+  font-family: var(--font-body);
+}
+
+.btn--style-primary {
+  --bg-color: var(--color-brand-primary);
+  --color: var(--color-text-on-brand);
+  --hover-bg: var(--color-brand-primary-strong);
+  --hover-color: var(--color-text-on-brand);
+
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+}
+
+.btn--style-primary:hover:not(.btn--disabled),
+.btn--style-primary:focus-visible:not(.btn--disabled) {
+  background-color: var(--color-brand-primary-strong);
+}
+
+.btn--style-secondary {
+  --bg-color: var(--color-bg-page);
+  --color: var(--color-brand-primary);
+  --box-shadow: inset 0 0 0 1.5px var(--color-brand-primary);
+  --hover-bg: var(--color-brand-primary-subtle);
+  --hover-color: var(--color-brand-primary-strong);
+  --hover-box-shadow: inset 0 0 0 1.5px var(--color-brand-primary-strong);
+
+  background-color: var(--color-bg-page);
+  box-shadow: inset 0 0 0 1.5px var(--color-brand-primary);
+  color: var(--color-brand-primary);
+}
+
+.btn--style-pill {
+  --bg-color: var(--color-brand-primary-subtle);
+  --color: var(--color-brand-primary-strong);
+  --hover-bg: var(--color-brand-accent-subtle);
+  --hover-color: var(--color-brand-primary-strong);
+
+  border-radius: 999px;
+}
+
+.btn:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* ── Fields («Admin / Field», 354:82) ───────────────────────────────────── */
+
+.field-label {
+  padding-bottom: 6px;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 13px;
+  font-family: var(--font-body);
+}
+
+.field-type input[type='text'],
+.field-type input[type='email'],
+.field-type input[type='password'],
+.field-type input[type='number'],
+.field-type input[type='url'],
+.field-type textarea,
+.react-select .rs__control,
+.date-time-picker input {
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  box-shadow: none;
+  color: var(--color-text-primary);
+  font-size: 15px;
+  font-family: var(--font-body);
+}
+
+.field-type input[type='text'],
+.field-type input[type='email'],
+.field-type input[type='password'],
+.field-type input[type='number'],
+.field-type input[type='url'],
+.date-time-picker input {
+  height: 40px;
+  padding: 10px 12px;
+}
+
+.field-type input:hover,
+.field-type textarea:hover,
+.react-select .rs__control:hover {
+  border-color: var(--color-brand-primary);
+  box-shadow: none;
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.react-select .rs__control--is-focused {
+  border-color: var(--color-brand-primary);
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* Selects are as tall as the text fields. */
+.react-select .rs__control {
+  min-height: 40px;
+  padding: 0;
+}
+
+.react-select .rs__value-container {
+  padding: 2px 12px;
+}
+
+.react-select .rs__indicators {
+  padding-right: 8px;
+}
+
+.field-description {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+/* ── Pills («Admin / Pill», 354:67) ─────────────────────────────────────── */
+
+.pill {
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-brand-accent-subtle);
+  color: var(--color-brand-primary-strong);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.pill--style-success,
+.pill--style-light {
+  background: var(--color-brand-primary-subtle);
+  color: var(--color-brand-primary);
+}
+
+/* ── Login («Admin · 05 Вход», 360:1120) and the other small screens ─────────
+   The form sits in a white card. On the login, the navy panel (BeforeLogin) takes the left
+   600px and the card is centred in the rest. */
+
+.template-minimal {
+  min-height: 100vh;
+  background: var(--color-bg-warm);
+}
+
+.template-minimal__wrap {
+  position: relative;
+  width: 440px;
+  max-width: 100%;
+  padding: 40px 40px 36px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 16px;
+  background: var(--color-bg-page);
+  box-shadow: 0 12px 32px rgb(23 48 105 / 10%);
+}
+
+.template-minimal.login {
+  padding: 60px 24px 60px calc(min(600px, 41.667vw) + 24px);
+}
+
+.login .template-minimal__wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login__brand {
+  display: none;
+}
+
+.login__form,
+.login__form__inputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+}
+
+.login__form .field-type {
+  margin: 0;
+}
+
+.login__form .field-label .required {
+  display: none;
+}
+
+.login__form > a {
+  align-self: flex-end;
+  color: var(--color-brand-primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.login__form > a:hover {
+  text-decoration: underline;
+}
+
+.login__form .form-submit,
+.template-minimal .form-submit {
+  margin: 0;
+}
+
+.template-minimal .form-submit .btn {
+  width: 100%;
+  margin: 0;
+  padding: 13px 22px;
+}
+
+.template-minimal .form-submit .btn .btn__label {
+  font: var(--type-label);
+}

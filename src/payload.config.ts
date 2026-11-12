@@ -3,7 +3,6 @@ import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { bg } from '@payloadcms/translations/languages/bg'
-import { en } from '@payloadcms/translations/languages/en'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 import { Certificates } from './collections/Certificates'
@@ -50,9 +49,28 @@ export default buildConfig({
     // Light only (docs/admin-redesign.md, decision 2): no dark mode, and no theme choice on the
     // account page.
     theme: 'light',
-    meta: { titleSuffix: ' · Евро Алианс' },
+    // The shell of Figma's «07 CMS admin» (docs/admin-redesign.md, PR 6): the sidebar mirrors
+    // the site, with the top bar and the hairline sub-nav beside it; the logo mark is the icon.
+    components: {
+      Nav: '@/components/admin/shell/AdminNav#AdminNav',
+      graphics: {
+        Icon: '@/components/admin/shell/Graphics#Icon',
+        Logo: '@/components/admin/shell/Graphics#Logo',
+      },
+      beforeLogin: ['@/components/admin/shell/Login#BeforeLogin'],
+      afterLogin: ['@/components/admin/shell/Login#AfterLogin'],
+    },
+    meta: {
+      titleSuffix: ' · Евро Алианс',
+      icons: [
+        { rel: 'icon', type: 'image/svg+xml', url: '/icon.svg' },
+        { rel: 'apple-touch-icon', url: '/apple-touch-icon.png' },
+      ],
+    },
   },
-  i18n: { supportedLanguages: { bg, en }, fallbackLanguage: 'bg' },
+  // The admin is in Bulgarian whatever the browser's language (docs/admin-redesign.md); English
+  // is a content language (localization, below), not an interface one.
+  i18n: { supportedLanguages: { bg }, fallbackLanguage: 'bg' },
   collections: [
     Users,
     Media,

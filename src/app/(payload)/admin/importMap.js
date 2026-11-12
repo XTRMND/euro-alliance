@@ -25,6 +25,11 @@ import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { NameRowLabel as NameRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
 import { LabelRowLabel as LabelRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
 import { HeadingRowLabel as HeadingRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
+import { AdminNav as AdminNav_d97d3bd0bf9c11048e837cca61dff00f } from '@/components/admin/shell/AdminNav'
+import { Icon as Icon_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admin/shell/Graphics'
+import { Logo as Logo_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admin/shell/Graphics'
+import { AfterLogin as AfterLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
+import { BeforeLogin as BeforeLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -56,5 +61,10 @@ export const importMap = {
   "@/components/admin/RowLabel#NameRowLabel": NameRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
   "@/components/admin/RowLabel#LabelRowLabel": LabelRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
   "@/components/admin/RowLabel#HeadingRowLabel": HeadingRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
+  "@/components/admin/shell/AdminNav#AdminNav": AdminNav_d97d3bd0bf9c11048e837cca61dff00f,
+  "@/components/admin/shell/Graphics#Icon": Icon_9f93baf4aea66f2dc33e144076181dbe,
+  "@/components/admin/shell/Graphics#Logo": Logo_9f93baf4aea66f2dc33e144076181dbe,
+  "@/components/admin/shell/Login#AfterLogin": AfterLogin_80f0db95a82b765329f541051791ab13,
+  "@/components/admin/shell/Login#BeforeLogin": BeforeLogin_80f0db95a82b765329f541051791ab13,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
