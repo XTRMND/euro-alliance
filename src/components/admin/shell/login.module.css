@@ -73,7 +73,7 @@
 .heading {
   margin: 0;
   color: var(--color-brand-primary-strong);
-  font: var(--type-h3);
+  font: var(--admin-type-title);
 }
 
 .intro {

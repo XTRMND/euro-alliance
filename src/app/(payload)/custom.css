@@ -49,8 +49,10 @@ html[data-theme='light'] {
   --color-text-on-brand: #ffffff;
   --color-border-default: #dce1e7;
   --radius-button: 10px;
-  --type-h3: 700 1.8125rem / 1 var(--font-display);
-  --type-label: 600 1rem / 1.2 var(--font-body);
+  /* The site's Heading/H3 and Label/M in px: Payload's root font size isn't 16px, so the site's
+     rem values would come out smaller here. */
+  --admin-type-title: 700 29px / 1 var(--font-display);
+  --admin-type-label: 600 16px / 1.2 var(--font-body);
 
   --font-body: 'Sofia Sans', Arial, sans-serif;
   --font-display: 'Sofia Sans Extra Condensed', 'Arial Narrow', sans-serif;
@@ -396,5 +398,5 @@ button:focus-visible {
 }
 
 .template-minimal .form-submit .btn .btn__label {
-  font: var(--type-label);
+  font: var(--admin-type-label);
 }
