@@ -208,11 +208,14 @@ test('the news list and the inquiries follow the same pattern', async ({ page })
   await expect(
     page.getByText('Пазят се 1 година, освен ако не са довели до договор.'),
   ).toBeVisible()
-  // The three statuses of the brief, and «Всички»; without new inquiries the list shows them all.
-  const chips = page.locator('[data-admin="list"] header').getByRole('link')
-  await expect(chips).toHaveText(['Нови (0)', 'В работа', 'Приключени', 'Всички'])
-  await expect(chips.last()).toHaveAttribute('aria-current', 'true')
-  await expect(page.getByText('Изберете запитване от списъка.')).toBeVisible()
+  // The three statuses of the brief, and «Всички». (Other specs send inquiries through the
+  // wizard, so how many are new isn't fixed here.)
+  const chips = page.locator('[data-admin="list"] > header').getByRole('link')
+  await expect(chips).toHaveText([/^Нови \(\d+\)$/, 'В работа', 'Приключени', 'Всички'])
+  await chips.nth(2).click()
+  await expect(page).toHaveURL(/status=closed/)
+  await expect(chips.nth(2)).toHaveAttribute('aria-current', 'true')
+  await expect(page.getByText('Няма запитвания с този филтър.')).toBeVisible()
   await expect(page.getByRole('link', { name: 'Маршрутизиране на запитвания' })).toHaveAttribute(
     'href',
     '/admin/globals/inquiry-routing',
