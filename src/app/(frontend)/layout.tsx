@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { CookieConsent } from '@/components/shell/CookieConsent'
 import { GoogleAnalytics } from '@/components/shell/GoogleAnalytics'
@@ -6,7 +7,6 @@ import { Footer } from '@/components/shell/Footer'
 import { HeadScripts } from '@/components/shell/HeadScripts'
 import { Header } from '@/components/shell/Header'
 import { SkipLink } from '@/components/shell/SkipLink'
-import { LivePreviewBridge } from '@/components/preview/LivePreviewBridge'
 import { previewRequest } from '@/lib/preview-request'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
 import { measurementIdOf } from '@/lib/analytics'
@@ -17,6 +17,12 @@ import { handFontScript } from '@/styles/font-hand'
 import { fontVariables } from '@/styles/fonts'
 import '@/styles/tokens.css'
 import '@/styles/globals.css'
+
+// The live preview's script, in a chunk of its own: only an editor's preview frame loads it, never
+// a visitor's page.
+const LivePreviewBridge = dynamic(() =>
+  import('@/components/preview/LivePreviewBridge').then((module) => module.LivePreviewBridge),
+)
 
 // Rendered on request: pages read the CMS through cached reads (src/lib/cms.ts) that Payload
 // hooks invalidate, so a build needs no database. CDN caching of whole pages comes with the CDN.
