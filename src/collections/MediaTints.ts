@@ -6,7 +6,10 @@ import { tintNames } from '@/lib/media/tints'
 // Generated from media by hooks/tints.ts; nobody edits these by hand.
 export const MediaTints: CollectionConfig = {
   slug: 'media-tints',
-  admin: { hidden: true },
+  admin: {
+    hideAPIURL: true,
+    hidden: true,
+  },
   access: { read: anyone, create: () => false, update: () => false, delete: isAdmin },
   upload: {
     staticDir: uploadDirs.tints,

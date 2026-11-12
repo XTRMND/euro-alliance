@@ -38,11 +38,14 @@ const photo = (name: string, label: string, description: string): Field => ({
   relationTo: 'media',
   label,
   filterOptions: { kind: { equals: 'photo' } },
-  admin: { description },
+  admin: {
+    description,
+  },
 })
 
 export const Home: GlobalConfig = {
   slug: 'home',
+  admin: { hideAPIURL: true },
   label: 'Начална страница',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },

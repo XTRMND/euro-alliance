@@ -18,7 +18,10 @@ export const InquiryRouting: GlobalConfig = {
   slug: 'inquiry-routing',
   label: 'Маршрутизиране на запитвания',
   access: { read: isStaff, update: isAdmin },
-  admin: { hidden: ({ user }) => user?.role !== 'admin' },
+  admin: {
+    hideAPIURL: true,
+    hidden: ({ user }) => user?.role !== 'admin',
+  },
   fields: [
     {
       name: 'rules',

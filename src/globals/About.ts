@@ -48,6 +48,7 @@ const head = (withLead = true): Field[] => [
 
 export const About: GlobalConfig = {
   slug: 'about',
+  admin: { hideAPIURL: true },
   label: 'За нас',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal, searchChangedGlobal] },

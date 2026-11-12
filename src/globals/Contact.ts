@@ -10,6 +10,7 @@ import { metaField } from '@/fields/meta'
 
 export const Contact: GlobalConfig = {
   slug: 'contact',
+  admin: { hideAPIURL: true },
   label: 'Контакти',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },

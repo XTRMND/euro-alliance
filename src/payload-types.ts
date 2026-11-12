@@ -335,23 +335,7 @@ export interface Office {
 export interface Course {
   id: number;
   adminEditedAt?: string | null;
-  /**
-   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
-   */
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
   title: string;
-  /**
-   * Както е било на стария сайт, преди аудиторията и формата да минат в етикетите.
-   */
-  originalTitle?: string | null;
-  /**
-   * Попълва се от заглавието, ако е празно.
-   */
-  slug?: string | null;
   /**
    * Под заглавието на страницата на курса.
    */
@@ -428,22 +412,6 @@ export interface Course {
   levelUnit?: ('level' | 'grade') | null;
   duration?: string | null;
   /**
-   * Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.
-   */
-  groups?: {
-    docs?: (number | Group)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
-   * Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».
-   */
-  prices?: {
-    docs?: (number | Price)[];
-    hasNextPage?: boolean;
-    totalDocs?: number;
-  };
-  /**
    * Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».
    */
   entryLevel?: string | null;
@@ -467,9 +435,41 @@ export interface Course {
    */
   examPrep?: boolean | null;
   /**
+   * Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.
+   */
+  groups?: {
+    docs?: (number | Group)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
+   * Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».
+   */
+  prices?: {
+    docs?: (number | Price)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  /**
+   * Както е било на стария сайт, преди аудиторията и формата да минат в етикетите.
+   */
+  originalTitle?: string | null;
+  /**
    * От стария сайт, за пренасочването.
    */
   legacyUrl?: string | null;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -550,24 +550,12 @@ export interface Price {
 export interface News {
   id: number;
   adminEditedAt?: string | null;
-  /**
-   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
-   */
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
   title: string;
+  date: string;
   /**
    * За пътечката над заглавието. Празно: цялото заглавие.
    */
   shortTitle?: string | null;
-  /**
-   * Попълва се от заглавието, ако е празно.
-   */
-  slug?: string | null;
-  date: string;
   /**
    * Само истинска снимка. Без снимка картата е без изображение.
    */
@@ -600,6 +588,18 @@ export interface News {
    */
   gallery?: (number | Media)[] | null;
   related?: (number | News)[] | null;
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   /**
    * От стария сайт, за пренасочването.
    */
@@ -2082,16 +2082,7 @@ export interface OfficesSelect<T extends boolean = true> {
  */
 export interface CoursesSelect<T extends boolean = true> {
   adminEditedAt?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
   title?: T;
-  originalTitle?: T;
-  slug?: T;
   description?: T;
   category?: T;
   language?: T;
@@ -2103,8 +2094,6 @@ export interface CoursesSelect<T extends boolean = true> {
   level?: T;
   levelUnit?: T;
   duration?: T;
-  groups?: T;
-  prices?: T;
   entryLevel?: T;
   levelName?: T;
   program?: T;
@@ -2113,7 +2102,18 @@ export interface CoursesSelect<T extends boolean = true> {
   free?: T;
   voucherEligible?: T;
   examPrep?: T;
+  groups?: T;
+  prices?: T;
+  slug?: T;
+  originalTitle?: T;
   legacyUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -2160,6 +2160,16 @@ export interface PricesSelect<T extends boolean = true> {
  */
 export interface NewsSelect<T extends boolean = true> {
   adminEditedAt?: T;
+  title?: T;
+  date?: T;
+  shortTitle?: T;
+  cover?: T;
+  excerpt?: T;
+  lead?: T;
+  body?: T;
+  gallery?: T;
+  related?: T;
+  slug?: T;
   meta?:
     | T
     | {
@@ -2167,16 +2177,6 @@ export interface NewsSelect<T extends boolean = true> {
         description?: T;
         image?: T;
       };
-  title?: T;
-  shortTitle?: T;
-  slug?: T;
-  date?: T;
-  cover?: T;
-  excerpt?: T;
-  lead?: T;
-  body?: T;
-  gallery?: T;
-  related?: T;
   legacyId?: T;
   legacyUrl?: T;
   updatedAt?: T;

@@ -23,7 +23,11 @@ const validateTarget: TextFieldSingleValidation = async (value, { req }) => {
 export const Redirects: CollectionConfig = {
   slug: 'redirects',
   labels: { singular: 'Пренасочване', plural: 'Пренасочвания' },
-  admin: { useAsTitle: 'from', defaultColumns: ['from', 'to', 'source'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'from',
+    defaultColumns: ['from', 'to', 'source'],
+  },
   access: { read: isStaff, create: isAdmin, update: isAdmin, delete: isAdmin },
   hooks: {
     beforeValidate: [

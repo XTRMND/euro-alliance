@@ -6,7 +6,11 @@ import { revalidateCollection } from '@/hooks/revalidate'
 export const Offices: CollectionConfig = {
   slug: 'offices',
   labels: { singular: 'Офис', plural: 'Офиси' },
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'department', 'role'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'department', 'role'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },

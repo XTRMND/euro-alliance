@@ -49,6 +49,8 @@ export default buildConfig({
     // Light only (docs/admin-redesign.md, decision 2): no dark mode, and no theme choice on the
     // account page.
     theme: 'light',
+    // «10 ноември 2026, 16:52», as the site writes dates (decision 12: Bulgarian date formats).
+    dateFormat: 'd MMMM yyyy, HH:mm',
     // The shell of Figma's «07 CMS admin» (docs/admin-redesign.md, PR 6): the sidebar mirrors
     // the site, with the top bar and the hairline sub-nav beside it; the logo mark is the icon.
     components: {

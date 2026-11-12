@@ -5,6 +5,7 @@ import { revalidateGlobal } from '@/hooks/revalidate'
 // Company facts for the footer, legal pages and structured data (docs/cms-schema.md § 7).
 export const Site: GlobalConfig = {
   slug: 'site',
+  admin: { hideAPIURL: true },
   label: 'Данни за фирмата',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },

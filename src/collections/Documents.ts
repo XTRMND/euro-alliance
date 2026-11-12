@@ -9,7 +9,11 @@ export const Documents: CollectionConfig = {
   slug: 'documents',
   labels: { singular: 'Документ', plural: 'Документи и лицензи' },
   orderable: true,
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'type'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'type'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },

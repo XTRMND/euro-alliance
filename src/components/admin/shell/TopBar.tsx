@@ -48,6 +48,8 @@ export function TopBar({
 }: TopBarProps) {
   const { stepNav } = useStepNav()
   const locale = useLocale()
+  // Right after signing in the content language isn't set yet: Bulgarian, the default.
+  const code = locale?.code ?? 'bg'
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -55,7 +57,8 @@ export function TopBar({
   // on a document's screen the document's own title last (Payload's step nav knows it).
   const last = stepNav.at(-1)?.label
   const title = onDocument && typeof last === 'string' ? last : undefined
-  const path: Crumb[] = trail.length === 1 ? [{ label: 'Съдържание' }, ...trail] : trail
+  // «Съдържание / Цени» for a first-level screen; «Новини / Ден на …» for its documents.
+  const path: Crumb[] = trail.length === 1 && !title ? [{ label: 'Съдържание' }, ...trail] : trail
   const crumbs = title ? [...path, { label: title }] : path
   const current = crumbs.at(-1)
 
@@ -67,8 +70,11 @@ export function TopBar({
 
   return (
     <div className={styles.top} data-admin="top">
-      {/* How tall the bar is with its sub-nav, for the screens that fill the height under it. */}
-      <style>{`:root{--admin-top:${siblings.length > 1 ? 108 : 64}px}`}</style>
+      {/* How tall the bar is with its sub-nav (for the screens that fill the height under it), and
+          the content language's badge beside localized fields («БГ»). */}
+      <style>{`:root{--admin-top:${siblings.length > 1 ? 108 : 64}px;--admin-locale:"${
+        localeLabels[code] ?? code.toUpperCase()
+      }"}`}</style>
       {/* Not a <header>: a list's own header is the screen's banner. */}
       <div className={styles.bar}>
         <nav className={styles.crumbs} aria-label="Път">
@@ -91,15 +97,15 @@ export function TopBar({
 
         {locales.length > 1 && (
           <div className={styles.locales} role="group" aria-label="Език на съдържанието">
-            {locales.map((code) => (
+            {locales.map((option) => (
               <Link
-                key={code}
-                href={localeHref(code)}
+                key={option}
+                href={localeHref(option)}
                 className={styles.locale}
-                aria-current={locale.code === code ? 'true' : undefined}
+                aria-current={code === option ? 'true' : undefined}
               >
-                <span aria-hidden="true">{localeLabels[code] ?? code.toUpperCase()}</span>
-                <span className={styles.srOnly}>{localeNames[code] ?? code}</span>
+                <span aria-hidden="true">{localeLabels[option] ?? option.toUpperCase()}</span>
+                <span className={styles.srOnly}>{localeNames[option] ?? option}</span>
               </Link>
             ))}
           </div>

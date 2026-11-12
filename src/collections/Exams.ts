@@ -8,7 +8,11 @@ import { revalidateCollection } from '@/hooks/revalidate'
 export const Exams: CollectionConfig = {
   slug: 'exams',
   labels: { singular: 'Изпит', plural: 'Изпити (ЦПО)' },
-  admin: { useAsTitle: 'subject', defaultColumns: ['subject', 'kind', 'date', 'place'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'subject',
+    defaultColumns: ['subject', 'kind', 'date', 'place'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },

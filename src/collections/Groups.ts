@@ -54,6 +54,7 @@ export const Groups: CollectionConfig = {
   slug: 'groups',
   labels: { singular: 'Група', plural: 'Групи' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['title', 'course', 'start', 'end', 'seats'],
     description:

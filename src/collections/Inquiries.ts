@@ -20,6 +20,7 @@ export const Inquiries: CollectionConfig = {
   slug: 'inquiries',
   labels: { singular: 'Запитване', plural: 'Запитвания' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'name',
     defaultColumns: ['createdAt', 'topic', 'name', 'routedTo', 'status'],
     description: 'Пазят се 1 година, освен ако не са довели до договор.',

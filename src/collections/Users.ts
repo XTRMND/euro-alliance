@@ -4,7 +4,11 @@ import { isAdmin, isAdminField, isAdminOrSelf, isStaff } from '@/access'
 export const Users: CollectionConfig = {
   slug: 'users',
   labels: { singular: 'Потребител', plural: 'Потребители' },
-  admin: { useAsTitle: 'email', defaultColumns: ['email', 'name', 'role'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'email',
+    defaultColumns: ['email', 'name', 'role'],
+  },
   auth: {
     // The auth cookie lives as long as the token: 8 hours, well under the 12-month cookie cap.
     tokenExpiration: 60 * 60 * 8,
