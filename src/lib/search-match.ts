@@ -29,57 +29,113 @@ function trigrams(word: string): string[] {
   return out
 }
 
+/** The text's trigrams in order, word by word. */
+const trigramsOf = (text: string) => wordsOf(text).flatMap(trigrams)
+
 /**
- * How close `query` is to the closest run of consecutive words in `text`, 0 to 1: the trigrams
- * they share over all the trigrams of both (pg_trgm's strict word similarity).
+ * How close `query` is to the closest stretch of `text`, 0 to 1, as pg_trgm's word_similarity
+ * counts it: over every run of the text's trigrams that starts and ends on one of the query's,
+ * the query's trigrams found in the run, over all the distinct trigrams of both.
  */
 export function wordSimilarity(query: string, text: string): number {
-  const wanted = new Set(wordsOf(query).flatMap(trigrams))
+  const wanted = new Set(trigramsOf(query))
   if (wanted.size === 0) return 0
-  const words = wordsOf(text).map((word) => new Set(trigrams(word)))
-  const span = wordsOf(query).length + 1
+  const sequence = trigramsOf(text)
   let best = 0
-  for (let start = 0; start < words.length; start++) {
+  for (let start = 0; start < sequence.length; start++) {
+    if (!wanted.has(sequence[start])) continue
     const run = new Set<string>()
-    for (let end = start; end < Math.min(words.length, start + span); end++) {
-      for (const trigram of words[end]) run.add(trigram)
-      let shared = 0
-      for (const trigram of wanted) if (run.has(trigram)) shared++
-      best = Math.max(best, shared / (wanted.size + run.size - shared))
+    let shared = 0
+    for (let end = start; end < sequence.length; end++) {
+      const trigram = sequence[end]
+      const known = wanted.has(trigram)
+      if (!run.has(trigram)) {
+        run.add(trigram)
+        if (known) shared++
+      }
+      if (known) best = Math.max(best, shared / (wanted.size + run.size - shared))
+      // Nothing further along can beat the best: too many trigrams that aren't the query's.
+      else if (wanted.size / (wanted.size + run.size - shared) <= best) break
     }
   }
   return best
 }
 
+// ts_rank's constants: the default weight of a word, and how much two words count by how far
+// apart they stand.
+const weight = 0.1
+const zeta2 = 1.64493406685
+const closeness = (distance: number) =>
+  distance > 100 ? 1e-30 : 1 / (1.005 + 0.05 * Math.exp(distance / 1.5 - 2))
+
+/**
+ * How well the page's words answer the terms, as PostgreSQL's ts_rank orders them: for one term,
+ * how often the words that start with it appear; for several, how close together they stand.
+ * `positions` has, per term, the places (1-based) of the words that start with it, by word.
+ */
+function rank(positions: Map<string, number[]>[]): number {
+  if (positions.length < 2) {
+    let sum = 0
+    for (const places of positions[0].values()) {
+      let harmonic = 0
+      for (let n = 1; n <= Math.min(places.length, 256); n++) harmonic += 1 / (n * n)
+      sum += (weight * harmonic) / zeta2
+    }
+    return sum
+  }
+  // Each word of a term against the last word (in dictionary order) of every earlier term: that
+  // is how ts_rank pairs them.
+  const words = positions.map((byWord) => [...byWord].sort(([a], [b]) => (a < b ? -1 : 1)))
+  let miss = 1
+  let paired = false
+  for (let i = 1; i < words.length; i++)
+    for (const [, places] of words[i])
+      for (let k = 0; k < i; k++) {
+        const earlier = words[k].at(-1)?.[1] ?? []
+        for (const a of places.slice(0, 256))
+          for (const b of earlier.slice(0, 256)) {
+            const distance = Math.abs(a - b)
+            if (!distance) continue
+            miss *= 1 - Math.sqrt(weight * weight * closeness(distance))
+            paired = true
+          }
+      }
+  return paired ? 1 - miss : 1e-20
+}
+
 // A record's words, split once and kept while the record is.
-const split = new WeakMap<SearchRecord, { all: string[]; heading: string }>()
+const split = new WeakMap<SearchRecord, { places: Map<string, number[]>; heading: string }>()
 function parts(record: SearchRecord) {
   let entry = split.get(record)
   if (!entry) {
-    entry = {
-      all: wordsOf([record.title, record.path, record.excerpt, record.text].join(' ')),
-      heading: `${record.title} ${record.excerpt}`,
-    }
+    const places = new Map<string, number[]>()
+    wordsOf([record.title, record.path, record.excerpt, record.text].join(' ')).forEach(
+      (word, index) => places.set(word, [...(places.get(word) ?? []), index + 1]),
+    )
+    entry = { places, heading: `${record.title} ${record.excerpt}` }
     split.set(record, entry)
   }
   return entry
 }
 
 /** The records that match the query, best first, 60 at most. */
-export function searchRecords(records: readonly SearchRecord[], query: string): SearchHit[] {
+export function searchRecords(
+  records: readonly SearchRecord[],
+  query: string,
+  limit = 60,
+): SearchHit[] {
   const terms = searchTerms(query)
   if (terms.length === 0) return []
   const phrase = terms.join(' ')
   const scored = records.flatMap((record) => {
-    const { all, heading } = parts(record)
-    // How many of the page's words start with each term.
-    const counts = terms.map((term) => all.filter((word) => word.startsWith(term)).length)
-    const everyTerm = counts.every((count) => count > 0)
+    const { places, heading } = parts(record)
+    // Per term, the page's words that start with it and where they stand.
+    const positions = terms.map(
+      (term) => new Map([...places].filter(([word]) => word.startsWith(term))),
+    )
+    const everyTerm = positions.every((byWord) => byWord.size > 0)
     if (!everyTerm && wordSimilarity(phrase, heading) <= similarity) return []
-    const frequency = everyTerm
-      ? counts.reduce((sum, count) => sum + count / (count + 1), 0) / (10 * terms.length)
-      : 0
-    return [{ record, score: frequency + wordSimilarity(phrase, record.title) }]
+    return [{ record, score: rank(positions) + wordSimilarity(phrase, record.title) }]
   })
   scored.sort(
     (a, b) =>
@@ -87,7 +143,7 @@ export function searchRecords(records: readonly SearchRecord[], query: string): 
       (b.record.publishedAt ?? '').localeCompare(a.record.publishedAt ?? '') ||
       a.record.source.localeCompare(b.record.source),
   )
-  return scored.slice(0, 60).map(({ record }) => ({
+  return scored.slice(0, limit).map(({ record }) => ({
     id: record.source,
     type: record.type,
     title: record.title,

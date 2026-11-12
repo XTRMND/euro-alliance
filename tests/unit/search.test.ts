@@ -119,13 +119,16 @@ describe('searchRecords (the search without an index)', () => {
   it('matches every word as the start of a word, in any field', () => {
     expect(sources('англ')).toEqual(['a', 'b'])
     expect(sources('английски възрастни')).toEqual(['a'])
-    expect(sources('глийски')).toEqual([])
+    // The end of a word isn't its start (and too little of it to pass as a typo).
+    expect(sources('зик')).toEqual([])
     expect(sources('превод')).toEqual(['c'])
   })
 
-  it('forgives a typo in the title or excerpt, not in the text', () => {
+  it('forgives a typo in the title or excerpt, as pg_trgm’s word_similarity did', () => {
     expect(wordSimilarity('англйски', 'Английски език за възрастни')).toBeGreaterThan(0.5)
     expect(sources('англйски')).toEqual(['a'])
+    // Loose on purpose, like the old query: most of «глийски» is in «английски».
+    expect(sources('глийски')).toEqual(['a'])
   })
 
   it('puts the closest title first, and the newest first on a tie', () => {
