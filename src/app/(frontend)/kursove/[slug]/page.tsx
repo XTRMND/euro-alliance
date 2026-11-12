@@ -16,7 +16,9 @@ import { CourseGroups } from '@/components/courses/CourseGroups'
 import { courseState, currentGroups } from '@/lib/course-state'
 import { courseTags } from '@/lib/courses'
 import { formatDateLong, formatPrice, startOfTodayInSofia } from '@/lib/format'
+import { resolvePrice } from '@/lib/price'
 import { anchors, routes } from '@/lib/routes'
+import type { Price } from '@/payload-types'
 import styles from './page.module.css'
 import { pageMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
@@ -55,6 +57,11 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
   const closed = state.enrolment === 'inquiry'
   const voucher = state.pricing === 'voucher'
   const groups = currentGroups(course, today)
+  // «495 € промоция», in the list of groups.
+  const priceLine = (price?: Price) =>
+    price
+      ? [formatPrice(price.price, price.currency), price.label].filter(Boolean).join(' ')
+      : undefined
   const formatLabel = (value?: string | null) =>
     value ? t(value === 'online' ? 'courses.format.online' : 'courses.format.inPerson') : undefined
 
@@ -155,11 +162,7 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
                 [group.days, group.hours].filter(Boolean).join(' '),
                 formatLabel(group.format),
                 typeof group.office === 'object' ? group.office?.name : undefined,
-                typeof group.price === 'number'
-                  ? [formatPrice(group.price, group.currency ?? 'EUR'), group.priceLabel]
-                      .filter(Boolean)
-                      .join(' ')
-                  : undefined,
+                priceLine(resolvePrice(course.prices, group)),
               ].filter((detail): detail is string => Boolean(detail)),
             }))}
           />
@@ -186,18 +189,18 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
         price={
           state.pricing === 'free'
             ? t('course.free')
-            : state.status === 'none'
-              ? t('course.askPrice')
-              : state.pricing === 'none' || !state.group
-                ? undefined
-                : formatPrice(state.group.price!, state.group.currency ?? 'EUR')
+            : state.price
+              ? formatPrice(state.price.price, state.price.currency)
+              : state.status === 'none'
+                ? t('course.askPrice')
+                : undefined
         }
         note={
           state.status === 'upcoming' && state.seats === 0
             ? t('course.closedNote')
             : state.status === 'running'
               ? t('course.status.running')
-              : state.group?.priceLabel
+              : state.price?.label
         }
         action={enrol()}
       />

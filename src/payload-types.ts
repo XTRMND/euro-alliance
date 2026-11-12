@@ -73,6 +73,7 @@ export interface Config {
     offices: Office;
     courses: Course;
     groups: Group;
+    prices: Price;
     news: News;
     programs: Program;
     'textbook-systems': TextbookSystem;
@@ -101,6 +102,7 @@ export interface Config {
     };
     courses: {
       groups: 'groups';
+      prices: 'prices';
     };
   };
   collectionsSelect: {
@@ -110,6 +112,7 @@ export interface Config {
     offices: OfficesSelect<false> | OfficesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     groups: GroupsSelect<false> | GroupsSelect<true>;
+    prices: PricesSelect<false> | PricesSelect<true>;
     news: NewsSelect<false> | NewsSelect<true>;
     programs: ProgramsSelect<false> | ProgramsSelect<true>;
     'textbook-systems': TextbookSystemsSelect<false> | TextbookSystemsSelect<true>;
@@ -439,6 +442,14 @@ export interface Course {
     totalDocs?: number;
   };
   /**
+   * Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».
+   */
+  prices?: {
+    docs?: (number | Price)[];
+    hasNextPage?: boolean;
+    totalDocs?: number;
+  };
+  /**
    * Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».
    */
   entryLevel?: string | null;
@@ -491,10 +502,31 @@ export interface Group {
   format?: ('in-person' | 'online') | null;
   office?: (number | null) | Office;
   /**
-   * Празно: цената не се показва. Само официални цени.
+   * От стария сайт: пренасочва към страницата на курса.
    */
-  price?: number | null;
-  currency?: ('EUR' | 'BGN') | null;
+  legacyUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Всеки курс има основна цена; група може да има своя (например промоция). Само официални цени.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices".
+ */
+export interface Price {
+  id: number;
+  adminEditedAt?: string | null;
+  course: number | Course;
+  /**
+   * Празно: основната цена на курса. С група: цената на тази група.
+   */
+  group?: (number | null) | Group;
+  /**
+   * Само официални цени.
+   */
+  price: number;
+  currency: 'EUR' | 'BGN';
   /**
    * При промоция: по-високата цена, показва се зачертана.
    */
@@ -502,15 +534,11 @@ export interface Group {
   /**
    * Например «Промоция», «Базова цена», «Стойност на ваучера».
    */
-  priceLabel?: string | null;
+  label?: string | null;
   /**
    * Например «или 495 € на ниво при самостоятелно плащане».
    */
-  priceNote?: string | null;
-  /**
-   * От стария сайт: пренасочва към страницата на курса.
-   */
-  legacyUrl?: string | null;
+  note?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1860,6 +1888,10 @@ export interface PayloadLockedDocument {
         value: number | Group;
       } | null)
     | ({
+        relationTo: 'prices';
+        value: number | Price;
+      } | null)
+    | ({
         relationTo: 'news';
         value: number | News;
       } | null)
@@ -2100,6 +2132,7 @@ export interface CoursesSelect<T extends boolean = true> {
   levelUnit?: T;
   duration?: T;
   groups?: T;
+  prices?: T;
   entryLevel?: T;
   levelName?: T;
   program?: T;
@@ -2128,12 +2161,23 @@ export interface GroupsSelect<T extends boolean = true> {
   hours?: T;
   format?: T;
   office?: T;
+  legacyUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prices_select".
+ */
+export interface PricesSelect<T extends boolean = true> {
+  adminEditedAt?: T;
+  course?: T;
+  group?: T;
   price?: T;
   currency?: T;
   regularPrice?: T;
-  priceLabel?: T;
-  priceNote?: T;
-  legacyUrl?: T;
+  label?: T;
+  note?: T;
   updatedAt?: T;
   createdAt?: T;
 }

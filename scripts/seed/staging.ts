@@ -354,14 +354,29 @@ console.log(`5/7 Courses (${fixtures.courses.length})…`)
         tally.add('groups', 'created')
         continue
       }
-      await upsert('groups', { legacyUrl: { equals: legacyUrl } }, {
-        ...group,
+      const { price, currency, priceLabel, ...fields } = group
+      const record = await upsert('groups', { legacyUrl: { equals: legacyUrl } }, {
+        ...fields,
         course: saved.id,
         ...(label ? { name: label } : {}),
         start: startDate,
         ...(endDate ? { end: endDate } : {}),
         ...(office === 'courses' && coursesOffice ? { office: coursesOffice } : {}),
         legacyUrl,
+      })
+      // The old entry's price is the group's own price (the prices collection).
+      if (typeof price !== 'number') continue
+      // A dry run's group that doesn't exist yet has no id to hang a price on.
+      if (!record?.id) {
+        tally.add('prices', 'created')
+        continue
+      }
+      await upsert('prices', { group: { equals: record.id } }, {
+        course: saved.id,
+        group: record.id,
+        price,
+        currency: currency ?? 'EUR',
+        ...(priceLabel ? { label: priceLabel } : {}),
       })
     }
   }

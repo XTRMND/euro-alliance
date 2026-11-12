@@ -1,5 +1,5 @@
 import type { Payload } from 'payload'
-import type { Course } from '@/payload-types'
+import type { Course, Price } from '@/payload-types'
 import { type CourseFilters, courseMonths, filterCourses } from './course-filters'
 import { type CourseGroup, type SiteCourse, withStates } from './course-state'
 
@@ -7,31 +7,30 @@ import { type CourseGroup, type SiteCourse, withStates } from './course-state'
 // The site calls them through the cached wrappers in src/lib/cms.ts. Every list starts from all
 // published courses (a few dozen): their states come from their groups, so the filters and the
 // order run in code (src/lib/course-filters.ts, src/lib/course-state.ts). A course's groups are
-// records of the groups collection, read in one query and attached as a list (SiteCourse).
+// records of the groups collection and its prices of the prices collection, each read in one query
+// and attached as a list (SiteCourse).
 
-/** The courses with their groups (published courses' only, as an anonymous visitor). */
+/** The courses with their groups and prices (published courses' only, as an anonymous visitor). */
 export async function withGroups(
   payload: Payload,
   courses: Course[],
   depth = 0,
 ): Promise<SiteCourse[]> {
   const ids = courses.map((course) => course.id)
-  const { docs } = ids.length
-    ? await payload.find({
-        collection: 'groups',
-        locale: 'bg',
-        depth,
-        where: { course: { in: ids } },
-        sort: 'start',
-        pagination: false,
-        overrideAccess: false,
-      })
-    : { docs: [] as CourseGroup[] }
-  const courseOf = (group: CourseGroup) =>
-    typeof group.course === 'object' ? group.course.id : group.course
+  const of = { course: { in: ids } }
+  const shared = { locale: 'bg', pagination: false, overrideAccess: false } as const
+  const [groups, prices] = ids.length
+    ? await Promise.all([
+        payload.find({ collection: 'groups', depth, where: of, sort: 'start', ...shared }),
+        payload.find({ collection: 'prices', depth: 0, where: of, sort: 'id', ...shared }),
+      ])
+    : [{ docs: [] as CourseGroup[] }, { docs: [] as Price[] }]
+  const courseOf = (doc: CourseGroup | Price) =>
+    typeof doc.course === 'object' ? doc.course.id : doc.course
   return courses.map((course) => ({
     ...course,
-    groups: docs.filter((group) => courseOf(group) === course.id),
+    groups: groups.docs.filter((group) => courseOf(group) === course.id),
+    prices: prices.docs.filter((price) => courseOf(price) === course.id),
   }))
 }
 

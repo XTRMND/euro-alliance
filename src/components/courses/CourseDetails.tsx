@@ -40,7 +40,8 @@ export async function CourseDetails({
 }: CourseDetailsProps) {
   const t = await getTranslations('course')
   const group = state.group
-  const currency = group?.currency ?? 'EUR'
+  const price = state.price
+  const currency = price?.currency ?? 'EUR'
   const closed = state.enrolment === 'inquiry'
   const office = typeof group?.office === 'object' ? (group.office as Office | null) : null
 
@@ -99,7 +100,7 @@ export async function CourseDetails({
     .map((group) => ({ ...group, fields: group.fields.filter((field) => field.value) }))
     .filter((group) => group.fields.length > 0)
 
-  const label = group?.priceLabel || (state.pricing === 'voucher' ? t('voucherValue') : undefined)
+  const label = price?.label || (state.pricing === 'voucher' ? t('voucherValue') : undefined)
   const note = state.status === 'upcoming' && state.seats === 0 ? t('closedNote') : label
 
   return (
@@ -122,13 +123,13 @@ export async function CourseDetails({
             <>
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>
-                <span className={styles.amount}>{formatPrice(group!.price!, currency)}</span>
+                <span className={styles.amount}>{formatPrice(price!.price, currency)}</span>
                 {note && <span className={styles.note}>{note}</span>}
               </p>
               {!closed && state.pricing === 'promotion' && (
                 <p className={styles.extra}>
                   {t.rich('regularPrice', {
-                    price: formatPrice(group!.regularPrice!, currency),
+                    price: formatPrice(price!.regularPrice!, currency),
                     old: (chunks) => <s>{chunks}</s>,
                   })}
                 </p>
@@ -136,10 +137,10 @@ export async function CourseDetails({
               {!closed && state.pricing === 'voucher' && (
                 <p className={styles.extra}>{t('voucherNote')}</p>
               )}
-              {group?.priceNote && <p className={styles.extra}>{group.priceNote}</p>}
+              {price?.note && <p className={styles.extra}>{price.note}</p>}
             </>
           )}
-          {state.status === 'none' && state.pricing !== 'free' && (
+          {state.status === 'none' && state.pricing === 'none' && (
             <>
               <p className={ticket.label}>{t('field.price')}</p>
               <p className={styles.price}>

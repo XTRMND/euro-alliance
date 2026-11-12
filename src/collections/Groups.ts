@@ -1,4 +1,10 @@
-import type { Access, CollectionBeforeChangeHook, CollectionConfig, Where } from 'payload'
+import type {
+  Access,
+  CollectionBeforeChangeHook,
+  CollectionBeforeDeleteHook,
+  CollectionConfig,
+  Where,
+} from 'payload'
 import { isStaff } from '@/access'
 import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 import { legacyGroupRedirect } from '@/hooks/legacy-redirect'
@@ -8,7 +14,8 @@ import { formatDateLong } from '@/lib/format'
 
 // docs/admin-redesign.md, decision 5: a course's dates are its groups, each its own record (they
 // were an array on the course until v0.3.0). A group has a start and an optional end, a schedule,
-// a format, an office and seats; the state of a course comes from its groups
+// a format, an office and seats (its price is a record of the prices collection); the state of a
+// course comes from its groups
 // (src/lib/course-state.ts). The course edit screen lists them in its «Групи» tab (a join field).
 
 const formatLabels = { 'in-person': 'Присъствено', online: 'Онлайн' }
@@ -38,6 +45,11 @@ const setTitle: CollectionBeforeChangeHook = ({ data, originalDoc }) => ({
   title: groupTitle({ ...originalDoc, ...data }),
 })
 
+/** A group's own price goes with it. */
+const deletePrice: CollectionBeforeDeleteHook = async ({ id, req }) => {
+  await req.payload.delete({ collection: 'prices', where: { group: { equals: id } }, req })
+}
+
 export const Groups: CollectionConfig = {
   slug: 'groups',
   labels: { singular: 'Група', plural: 'Групи' },
@@ -51,6 +63,7 @@ export const Groups: CollectionConfig = {
   access: { read: groupsOfPublishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   hooks: {
     beforeChange: [markAdminEdit, setTitle],
+    beforeDelete: [deletePrice],
     afterChange: [revalidateCollection, revalidateCourses, legacyGroupRedirect.afterChange],
     afterDelete: [revalidateCollection, revalidateCourses, legacyGroupRedirect.afterDelete],
   },
@@ -114,55 +127,6 @@ export const Groups: CollectionConfig = {
           options: courseFormats.map((value) => ({ value, label: formatLabels[value] })),
         },
         { name: 'office', type: 'relationship', relationTo: 'offices', label: 'Офис' },
-      ],
-    },
-    // The group's price until the prices collection takes it over (docs/admin-redesign.md, PR 2).
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'price',
-          type: 'number',
-          label: 'Цена',
-          min: 0,
-          admin: { description: 'Празно: цената не се показва. Само официални цени.' },
-        },
-        {
-          name: 'currency',
-          type: 'select',
-          label: 'Валута',
-          defaultValue: 'EUR',
-          options: [
-            { value: 'EUR', label: '€' },
-            { value: 'BGN', label: 'лв.' },
-          ],
-        },
-        {
-          name: 'regularPrice',
-          type: 'number',
-          label: 'Редовна цена',
-          min: 0,
-          admin: { description: 'При промоция: по-високата цена, показва се зачертана.' },
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'priceLabel',
-          type: 'text',
-          label: 'Етикет на цената',
-          localized: true,
-          admin: { description: 'Например «Промоция», «Базова цена», «Стойност на ваучера».' },
-        },
-        {
-          name: 'priceNote',
-          type: 'text',
-          label: 'Бележка към цената',
-          localized: true,
-          admin: { description: 'Например «или 495 € на ниво при самостоятелно плащане».' },
-        },
       ],
     },
     {

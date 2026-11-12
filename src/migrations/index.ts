@@ -31,6 +31,7 @@ import * as migration_20261103_090104_home_about from './20261103_090104_home_ab
 import * as migration_20261103_091658_home_about_tint from './20261103_091658_home_about_tint';
 import * as migration_20261109_132504_admin_edited_at from './20261109_132504_admin_edited_at';
 import * as migration_20261112_084508_groups_collection from './20261112_084508_groups_collection';
+import * as migration_20261112_090923_prices_collection from './20261112_090923_prices_collection';
 
 export const migrations = [
   {
@@ -196,6 +197,11 @@ export const migrations = [
   {
     up: migration_20261112_084508_groups_collection.up,
     down: migration_20261112_084508_groups_collection.down,
-    name: '20261112_084508_groups_collection'
+    name: '20261112_084508_groups_collection',
+  },
+  {
+    up: migration_20261112_090923_prices_collection.up,
+    down: migration_20261112_090923_prices_collection.down,
+    name: '20261112_090923_prices_collection'
   },
 ];

@@ -3,6 +3,7 @@ import { getPayload, type Payload } from 'payload'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { emptyCourseFilters, type CourseFilters } from '@/lib/course-filters'
 import { findCourse, findCourseMonths, findCourses, findRelatedCourses } from '@/lib/course-query'
+import { resolvePrice } from '@/lib/price'
 import type { Course } from '@/payload-types'
 
 // The course listing's queries against a real database, with obviously fake courses (year
@@ -12,7 +13,8 @@ let payload: Payload
 const created: number[] = []
 const today = '2099-01-10T22:00:00.000Z'
 
-// A course, with one group when a start is given (a group's price and format ride along).
+// A course, with one group when a start is given (its format rides along; a price becomes the
+// group's own price record).
 const make = async (
   title: string,
   data: Partial<Course> = {},
@@ -25,12 +27,19 @@ const make = async (
     data: { title, category: 'languages', topic: 'english', _status: status, ...data },
   })
   created.push(course.id)
-  if (group)
-    await payload.create({
+  if (group) {
+    const { price, ...fields } = group
+    const made = await payload.create({
       collection: 'groups',
       locale: 'bg',
-      data: { course: course.id, ...group },
+      data: { course: course.id, ...fields },
     })
+    if (typeof price === 'number')
+      await payload.create({
+        collection: 'prices',
+        data: { course: course.id, group: made.id, price, currency: 'EUR' },
+      })
+  }
   return course
 }
 
@@ -149,6 +158,30 @@ describe('course page', () => {
       where: { course: { equals: gone.id } },
     })
     expect(left.totalDocs).toBe(0)
+  })
+
+  it('shows a group’s own price, else the course’s base price; one of each at most', async () => {
+    const course = await make('Тест цени', {}, { start: '2099-05-01T12:00:00.000Z', price: 200 })
+    const second = await payload.create({
+      collection: 'groups',
+      locale: 'bg',
+      data: { course: course.id, start: '2099-06-01T12:00:00.000Z' },
+    })
+    const base = { course: course.id, price: 250, currency: 'EUR' as const }
+    await payload.create({ collection: 'prices', data: base })
+    const found = (await findCourse(payload, 'test-tseni'))!
+    const shown = found.groups.map((group) => resolvePrice(found.prices, group)?.price)
+    expect(shown).toEqual([200, 250])
+    await expect(payload.create({ collection: 'prices', data: base })).rejects.toThrow()
+    const own = { ...base, group: second.id }
+    await expect(payload.create({ collection: 'prices', data: own })).resolves.toBeTruthy()
+    await expect(payload.create({ collection: 'prices', data: own })).rejects.toThrow()
+    // A group's price goes with the group; the course's prices go with the course.
+    await payload.delete({ collection: 'groups', id: second.id })
+    const ofCourse = { course: { equals: course.id } }
+    expect((await payload.find({ collection: 'prices', where: ofCourse })).totalDocs).toBe(2)
+    await payload.delete({ collection: 'courses', id: course.id })
+    expect((await payload.find({ collection: 'prices', where: ofCourse })).totalDocs).toBe(0)
   })
 
   it('suggests courses of the same category in the list order, the same language first', async () => {

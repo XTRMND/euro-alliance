@@ -22,6 +22,7 @@ import { Media } from './collections/Media'
 import { MediaTints } from './collections/MediaTints'
 import { News } from './collections/News'
 import { Offices } from './collections/Offices'
+import { Prices } from './collections/Prices'
 import { Professions } from './collections/Professions'
 import { Programs } from './collections/Programs'
 import { Team } from './collections/Team'
@@ -59,6 +60,7 @@ export default buildConfig({
     Offices,
     Courses,
     Groups,
+    Prices,
     News,
     Programs,
     TextbookSystems,
