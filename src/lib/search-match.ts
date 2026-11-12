@@ -127,7 +127,7 @@ export function searchRecords(
   const terms = searchTerms(query)
   if (terms.length === 0) return []
   const phrase = terms.join(' ')
-  const scored = records.flatMap((record) => {
+  const scored = records.flatMap((record, index) => {
     const { places, heading } = parts(record)
     // Per term, the page's words that start with it and where they stand.
     const positions = terms.map(
@@ -135,13 +135,15 @@ export function searchRecords(
     )
     const everyTerm = positions.every((byWord) => byWord.size > 0)
     if (!everyTerm && wordSimilarity(phrase, heading) <= similarity) return []
-    return [{ record, score: rank(positions) + wordSimilarity(phrase, record.title) }]
+    return [{ record, index, score: rank(positions) + wordSimilarity(phrase, record.title) }]
   })
+  // Best first, then the newest. On a full tie the later record comes first: that is the order
+  // the index's query gave them in, and the pages' snapshots were taken with.
   scored.sort(
     (a, b) =>
       b.score - a.score ||
       (b.record.publishedAt ?? '').localeCompare(a.record.publishedAt ?? '') ||
-      a.record.source.localeCompare(b.record.source),
+      b.index - a.index,
   )
   return scored.slice(0, limit).map(({ record }) => ({
     id: record.source,
