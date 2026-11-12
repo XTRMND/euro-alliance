@@ -120,7 +120,7 @@ describe('searchRecords (the search without an index)', () => {
     expect(sources('англ')).toEqual(['a', 'b'])
     expect(sources('английски възрастни')).toEqual(['a'])
     // The end of a word isn't its start (and too little of it to pass as a typo).
-    expect(sources('зик')).toEqual([])
+    expect(sources('ъзрас')).toEqual([])
     expect(sources('превод')).toEqual(['c'])
   })
 
