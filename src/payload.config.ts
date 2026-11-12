@@ -90,7 +90,12 @@ export default buildConfig({
   },
   // The admin is in Bulgarian whatever the browser's language (docs/admin-redesign.md); English
   // is a content language (localization, below), not an interface one.
-  i18n: { supportedLanguages: { bg }, fallbackLanguage: 'bg' },
+  i18n: {
+    supportedLanguages: { bg },
+    fallbackLanguage: 'bg',
+    // The only blocks in the forms are a programme's sections («Добави секция», Figma 373:1726).
+    translations: { bg: { fields: { searchForBlock: 'Търси секция…' } } },
+  },
   collections: [
     Users,
     Media,

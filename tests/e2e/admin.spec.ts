@@ -410,6 +410,82 @@ test('the live preview shows the page from what is typed, before it is saved', a
   }
 })
 
+test('a programme’s sections are named rows, added from a grouped drawer', async ({ page }) => {
+  await logIn(page)
+  const programmes = (await (
+    await page.request.get('/api/programs?where[type][equals]=language&limit=1&depth=0&draft=true')
+  ).json()) as { docs: { id: number }[] }
+  test.skip(programmes.docs.length === 0, 'No language programme in this database.')
+  await page.goto(`/admin/collections/programs/${programmes.docs[0].id}`)
+  const tabs = page.locator('.tabs-field__tabs').first().getByRole('button')
+  await expect(tabs.filter({ visible: true })).toHaveText([
+    'Начало на страницата',
+    'Курсове',
+    'Тетрадката',
+    'Секции',
+    'SEO и адрес',
+  ])
+  await tabs.filter({ hasText: 'Секции' }).click()
+  await expect(page.getByText('Секциите се показват на страницата в този ред.')).toBeVisible()
+  // A row says what it is and what it holds, never «Item 01» or the block's code name.
+  const rows = page.locator('.blocks-field__row')
+  await expect(rows.first()).toBeVisible()
+  await expect(page.locator('.blocks-field')).not.toContainText(/Item \d|features|faqColumns/)
+
+  await page.getByRole('button', { name: 'Добави секция' }).click()
+  const drawer = page.locator('.drawer--is-open')
+  await expect(drawer.getByRole('heading', { name: 'Добави секция' })).toBeVisible()
+  await expect(drawer.getByPlaceholder('Търси секция…')).toBeVisible()
+  await expect(drawer.locator('.blocks-drawer__block-group-label')).toHaveText([
+    'Съдържание',
+    'Курсове и програми',
+    'Контакт и проекти',
+  ])
+  await expect(drawer.getByRole('button', { name: 'Въпроси в две колони' })).toBeVisible()
+  await expect(drawer.getByRole('button', { name: 'От какво зависи цената' })).toBeVisible()
+})
+
+test('«За нас» is edited by section, and Навигация shows where its links go', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/globals/about')
+  const rail = page.locator('.section-rail > .tabs-field__tabs-wrap').getByRole('button')
+  await expect(rail).toHaveText([
+    'Начало',
+    'История',
+    'В цифри',
+    'Кого обучаваме',
+    'Екип',
+    'Стандарти',
+    'Лицензи',
+    'Документи',
+    'Проекти',
+    'Онлайн обучение',
+    'SEO',
+  ])
+  // The rail stands beside the form, not above it.
+  const [railBox, formBox] = await Promise.all([
+    page.locator('.section-rail > .tabs-field__tabs-wrap').boundingBox(),
+    page.locator('.section-rail > .tabs-field__content-wrap').boundingBox(),
+  ])
+  expect(railBox!.x + railBox!.width).toBeLessThanOrEqual(formBox!.x)
+  await rail.filter({ hasText: 'История' }).click()
+  await expect(page.getByText('Години', { exact: true }).first()).toBeVisible()
+
+  await page.goto('/admin/globals/navigation')
+  await expect(page.locator('.tabs-field__tabs').first().getByRole('button')).toHaveText([
+    'Горна лента',
+    'Мобилно меню',
+    'Долна част',
+  ])
+  // The preview lays the header out from the form: a link's text shows in it.
+  const preview = page.getByRole('img', { name: 'Преглед на горната лента на сайта' })
+  await expect(preview).toBeVisible()
+  const first = page.locator('.array-field__row').first()
+  await expect(first).toContainText(/Страница · |Програма|Курс|Само подменю|Адрес/)
+  await expect(page.locator('.global-edit--navigation')).not.toContainText(/Item \d/)
+  await expect(page.getByRole('button', { name: 'Добави връзка' }).first()).toBeVisible()
+})
+
 test('a global sits where its page is on the site', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })
