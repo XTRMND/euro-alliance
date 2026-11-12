@@ -182,7 +182,8 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 | `files` | relationship → inquiryFiles (has many) | Translation documents |
 | `privacyAck` | checkbox, required | Links to the privacy page |
 | `sourcePage` | text | Path the visitor came from (no query strings with personal data) |
-| `status` | select | `new` / `in-progress` / `contract` / `closed` |
+| `status` | select | *(v0.10.0, `docs/admin-redesign.md` decision 9)* `new` / `in-progress` / `closed`: «Нова / В работа / Приключено» |
+| `contract` | checkbox | *(v0.10.0)* «Довело до договор» (a status until then): such an inquiry isn't deleted after a year |
 | `notes` | textarea | Internal |
 | `createdAt` | auto | |
 
@@ -254,7 +255,7 @@ Every kind also gets a 480 px WebP `thumbnail` for the admin list; it is never u
 
 ## 6. Retention (privacy policy)
 
-- Inquiries that don't lead to a contract are kept **1 year**. A daily Payload job deletes inquiries older than 365 days whose `status` is not `contract`, together with their files.
+- Inquiries that don't lead to a contract are kept **1 year**. A daily Payload job deletes inquiries older than 365 days without the `contract` checkbox, together with their files.
 - The cookie choice is kept 6 months (`docs/motion.md` § 7). No cookie lives longer than 12 months.
 - Log the number of deleted records per run (no personal data in logs).
 
