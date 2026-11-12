@@ -4,7 +4,7 @@ import { Sticker } from '@/components/visuals/Sticker'
 import { getListedCourses, getTranslationLanguages } from '@/lib/cms'
 import { emptyCourseFilters } from '@/lib/course-filters'
 import { currentGroups } from '@/lib/course-state'
-import { courseTags } from '@/lib/courses'
+import { courseTags, listingCategory } from '@/lib/courses'
 import { startOfTodayInSofia } from '@/lib/format'
 import type { InquiryTopic } from '@/lib/inquiries'
 import { languages, routes } from '@/lib/routes'
@@ -82,7 +82,8 @@ export async function Wizard({
               )
               .filter(Boolean),
             entryLevel: course.entryLevel,
-            askLevel: course.category === 'languages',
+            // Language courses and exam preparation, as listed on the site (not voucher courses).
+            askLevel: ['languages', 'exams'].includes(listingCategory(course)),
             voucher: Boolean(course.voucherEligible),
           },
         ]
