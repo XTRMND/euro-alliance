@@ -59,6 +59,7 @@ function withPolicy(request: NextRequest) {
     nonce,
     dev: process.env.NODE_ENV === 'development',
     analytics: Boolean(measurementIdOf(process.env.GA4_MEASUREMENT_ID)),
+    framedBySelf: request.nextUrl.pathname.startsWith('/preview/'),
   })
   const headers = new Headers(request.headers)
   headers.set(nonceHeader, nonce)

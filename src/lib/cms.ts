@@ -14,12 +14,15 @@ import {
 } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import { resolveNavigation } from '@/lib/nav-links'
+import { previewOf } from '@/lib/preview'
 import { tintNames } from '@/lib/media/tints'
 import type { Media, Program } from '@/payload-types'
 
 // Payload reads for the public site. They run as an anonymous visitor (overrideAccess: false), so
 // only published content comes back, and are cached in Next's data cache until a Payload hook
-// marks them stale (src/hooks/revalidate.ts).
+// marks them stale (src/hooks/revalidate.ts). The readers of the pages that have a live preview
+// (course, programme, article, home, about, contact) first ask whether this render is a preview of
+// that page (src/lib/preview.ts): then the page gets the editor's unsaved document instead.
 
 const payload = () => getPayload({ config })
 
@@ -77,7 +80,7 @@ export const getOffices = unstable_cache(
  * Fills in the tints of photos reached through a relationship: Payload populates the `tints`
  * join only on media queried directly, so related media get theirs with one more query.
  */
-async function attachTints(values: unknown[]) {
+export async function attachTints(values: unknown[]) {
   const media = values.filter((value): value is Media => typeof value === 'object' && !!value)
   if (media.length === 0) return
   const { docs } = await (
@@ -96,7 +99,7 @@ async function attachTints(values: unknown[]) {
 }
 
 /** The homepage global with its photos (and their tints) and the partner logos. */
-export const getHome = unstable_cache(
+const getHomeCached = unstable_cache(
   async () => {
     const home = await (
       await payload()
@@ -170,7 +173,7 @@ export async function getCourseMonths() {
 }
 
 /** A published course by slug, or null. */
-export const getCourse = unstable_cache(
+const getCourseCached = unstable_cache(
   async (slug: string) => findCourse(await payload(), slug),
   ['course'],
   { tags: [tags.collection('courses'), tags.collection('offices')] },
@@ -184,7 +187,7 @@ export async function getRelatedCourses(
 }
 
 /** The contact page global with its location maps. */
-export const getContact = unstable_cache(
+const getContactCached = unstable_cache(
   async () =>
     (await payload()).findGlobal({
       slug: 'contact',
@@ -197,7 +200,7 @@ export const getContact = unstable_cache(
 )
 
 /** The published language program for a language and audience, with its related cards. */
-export const getLanguageProgram = unstable_cache(
+const getLanguageProgramCached = unstable_cache(
   async (language: string, audience: string) =>
     (
       await (
@@ -228,7 +231,7 @@ export const getLanguageProgram = unstable_cache(
 )
 
 /** The published program of a type that has one page (vouchers, professions, teachers …). */
-export const getProgram = unstable_cache(
+const getProgramCached = unstable_cache(
   async (type: Exclude<Program['type'], 'language'>) =>
     (
       await (
@@ -341,7 +344,7 @@ export const getNewsList = unstable_cache(
 )
 
 /** A published news article by slug, with its cover's tint, or null. */
-export const getNewsArticle = unstable_cache(
+const getNewsArticleCached = unstable_cache(
   async (slug: string) => {
     const { docs } = await (
       await payload()
@@ -362,7 +365,7 @@ export const getNewsArticle = unstable_cache(
 )
 
 /** The About page with its documents, projects and photos (the photos with their tints). */
-export const getAbout = unstable_cache(
+const getAboutCached = unstable_cache(
   async () => {
     const about = await (
       await payload()
@@ -442,3 +445,19 @@ export const getNewsByIds = unstable_cache(
   ['news-by-ids'],
   { tags: [tags.collection('news'), tags.collection('media')] },
 )
+
+// The pages with a live preview: the previewed document, or else the published one.
+export const getHome = async () =>
+  previewOf<Awaited<ReturnType<typeof getHomeCached>>>('home') ?? getHomeCached()
+export const getCourse = async (slug: string) =>
+  previewOf<Awaited<ReturnType<typeof getCourseCached>>>('courses') ?? getCourseCached(slug)
+export const getContact = async () =>
+  previewOf<Awaited<ReturnType<typeof getContactCached>>>('contact') ?? getContactCached()
+export const getNewsArticle = async (slug: string) =>
+  previewOf<Awaited<ReturnType<typeof getNewsArticleCached>>>('news') ?? getNewsArticleCached(slug)
+export const getAbout = async () =>
+  previewOf<Awaited<ReturnType<typeof getAboutCached>>>('about') ?? getAboutCached()
+export const getLanguageProgram = async (language: string, audience: string) =>
+  previewOf<Program>('programs') ?? getLanguageProgramCached(language, audience)
+export const getProgram = async (type: Exclude<Program['type'], 'language'>) =>
+  previewOf<Program>('programs') ?? getProgramCached(type)
