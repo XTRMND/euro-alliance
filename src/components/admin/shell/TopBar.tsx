@@ -66,7 +66,7 @@ export function TopBar({
   }
 
   return (
-    <div className={styles.top}>
+    <div className={styles.top} data-admin="top">
       {/* Not a <header>: a list's own header is the screen's banner. */}
       <div className={styles.bar}>
         <nav className={styles.crumbs} aria-label="Път">

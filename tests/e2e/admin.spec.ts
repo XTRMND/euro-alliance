@@ -171,7 +171,5 @@ test('the shell has no axe violations, with a branch open', async ({ page }) => 
   await logIn(page)
   await page.goto('/admin/collections/courses?where[category][equals]=languages')
   await expect(page.getByRole('navigation', { name: 'Раздел' })).toBeVisible()
-  expect(
-    await axe(page, ['aside[aria-label="Меню"]', '[class*="shell-module"][class*="top"]']),
-  ).toEqual([])
+  expect(await axe(page, ['aside[aria-label="Меню"]', '[data-admin="top"]'])).toEqual([])
 })
