@@ -6,6 +6,7 @@ import { Footer } from '@/components/shell/Footer'
 import { HeadScripts } from '@/components/shell/HeadScripts'
 import { Header } from '@/components/shell/Header'
 import { SkipLink } from '@/components/shell/SkipLink'
+import { previewRequest } from '@/lib/preview-request'
 import { getNavigation, getOffices, getSite } from '@/lib/cms'
 import { measurementIdOf } from '@/lib/analytics'
 import { requestNonce } from '@/lib/nonce'
@@ -57,6 +58,8 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
     requestNonce(),
   ])
   const office = offices.find((o) => o.role === 'courses')
+  // The admin's live preview frame (an editor, `?preview=` in the address): its link to the form.
+  const preview = await previewRequest()
 
   return (
     // The consent script marks <html> with data-consent before React hydrates (one attribute, so
@@ -69,7 +72,9 @@ export default async function FrontendLayout({ children }: LayoutProps<'/'>) {
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: handFontScript }} />
       </head>
       <body>
-        <HeadScripts />
+        <HeadScripts
+          preview={preview && { kind: preview.kind, id: preview.id, locale: preview.locale }}
+        />
         <SkipLink />
         <CookieConsent labels={messages.consent} />
         {measurementId && <GoogleAnalytics measurementId={measurementId} />}

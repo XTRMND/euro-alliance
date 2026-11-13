@@ -1,7 +1,9 @@
 'use client'
 
+import lazy from 'next/dynamic'
 import { useEffect } from 'react'
 import { consentHeadScript, consentScriptFlag } from '@/lib/consent'
+import type { PreviewKind } from '@/lib/preview'
 import { handFontScript, handFontScriptFlag } from '@/styles/font-hand'
 
 // The layout's inline scripts, run again on a page where they didn't run: Next 16 answers a
@@ -16,7 +18,17 @@ const scripts = [
   { flag: handFontScriptFlag, code: handFontScript },
 ]
 
-export function HeadScripts() {
+// The admin's live preview frame also gets its link to the form from here (docs/admin-redesign.md,
+// decision 11). It's fetched only when an editor's preview is rendered: this component is on every
+// page already, so a visitor's page loads nothing more for it.
+const LivePreviewBridge = lazy(
+  () => import('@/components/preview/LivePreviewBridge').then((module) => module.LivePreviewBridge),
+  { ssr: false },
+)
+
+type HeadScriptsProps = { preview?: { kind: PreviewKind; id?: string; locale: 'bg' | 'en' } }
+
+export function HeadScripts({ preview }: HeadScriptsProps) {
   useEffect(() => {
     const page = window as unknown as Record<string, unknown>
     const nonce = document.querySelector<HTMLScriptElement>('script[nonce]')?.nonce
@@ -28,5 +40,5 @@ export function HeadScripts() {
       document.head.append(script)
     }
   }, [])
-  return null
+  return preview ? <LivePreviewBridge {...preview} /> : null
 }

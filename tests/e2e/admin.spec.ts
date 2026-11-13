@@ -355,6 +355,59 @@ test('prices are typed in place and stored only on «Запази промени
   }
 })
 
+test('the live preview shows the page from what is typed, before it is saved', async ({
+  page,
+  browser,
+}) => {
+  await logIn(page)
+  // An obviously fake draft course, removed again at the end.
+  const created = await page.request.post('/api/courses?locale=bg', {
+    data: {
+      title: 'Тестов курс Преглед',
+      category: 'languages',
+      topic: 'english',
+      _status: 'draft',
+    },
+  })
+  expect(created.ok()).toBe(true)
+  const { doc } = (await created.json()) as { doc: { id: number } }
+  try {
+    // The preview is the course's own address with a marker. It's for editors: a visitor gets
+    // the 404 page of an unpublished course. Only a preview may be framed, and only by the site.
+    const address = `/kursove/preview?preview=courses.${doc.id}&locale=bg`
+    const visitor = await browser.newContext()
+    expect((await visitor.request.get(address)).status()).toBe(404)
+    await visitor.close()
+    const framed = await page.request.get(address)
+    expect(framed.status()).toBe(200)
+    expect(framed.headers()['content-security-policy']).toContain("frame-ancestors 'self'")
+    expect(framed.headers()['x-frame-options']).toBe('SAMEORIGIN')
+    const home = await page.request.get('/')
+    expect(home.headers()['content-security-policy']).toContain("frame-ancestors 'none'")
+    expect(home.headers()['x-frame-options']).toBe('DENY')
+
+    await page.goto(`/admin/collections/courses/${doc.id}`)
+    await page.locator('.live-preview-toggler').click()
+    const preview = page.frameLocator('.live-preview-window iframe')
+    // The draft's own page, in the site's template.
+    await expect(preview.getByRole('heading', { level: 1 })).toHaveText('Тестов курс Преглед')
+    await expect(preview.getByRole('contentinfo')).toBeVisible()
+    await expect(preview.locator('section[aria-labelledby="consent-title"]')).toBeHidden()
+
+    await page.locator('#field-title').fill('Тестов курс, още незаписан')
+    await expect(preview.getByRole('heading', { level: 1 })).toHaveText(
+      'Тестов курс, още незаписан',
+    )
+    // Nothing was saved by previewing.
+    const stored = (await (
+      await page.request.get(`/api/courses/${doc.id}?draft=true&locale=bg`)
+    ).json()) as { title: string }
+    expect(stored.title).toBe('Тестов курс Преглед')
+  } finally {
+    await page.request.delete(`/api/courses/${doc.id}`)
+  }
+})
+
 test('a global sits where its page is on the site', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })

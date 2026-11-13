@@ -18,10 +18,12 @@ export async function withGroups(
   payload: Payload,
   courses: Course[],
   depth = 0,
+  /** The live preview reads as staff: a draft course's groups and prices too. */
+  overrideAccess = false,
 ): Promise<SiteCourse[]> {
   const ids = courses.map((course) => course.id)
   const of = { course: { in: ids } }
-  const shared = { locale: 'bg', pagination: false, overrideAccess: false } as const
+  const shared = { locale: 'bg', pagination: false, overrideAccess } as const
   const [groups, prices] = ids.length
     ? await Promise.all([
         payload.find({ collection: 'groups', depth, where: of, sort: 'start', ...shared }),

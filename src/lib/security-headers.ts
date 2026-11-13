@@ -33,6 +33,8 @@ type PolicyOptions = {
   dev?: boolean
   /** A GA4 measurement ID is set. */
   analytics?: boolean
+  /** The admin's live preview frame: the admin (the same origin) may show it in a frame. */
+  framedBySelf?: boolean
 }
 
 function serialize(directives: Record<string, string[]>): string {
@@ -42,7 +44,12 @@ function serialize(directives: Record<string, string[]>): string {
 }
 
 /** The site's policy (and the admin's, which runs on the same framework). */
-export function contentSecurityPolicy({ nonce, dev = false, analytics = false }: PolicyOptions) {
+export function contentSecurityPolicy({
+  nonce,
+  dev = false,
+  analytics = false,
+  framedBySelf = false,
+}: PolicyOptions) {
   const ga = analytics ? analyticsHosts : { script: [], img: [], connect: [] }
   return serialize({
     'default-src': ["'self'"],
@@ -60,7 +67,9 @@ export function contentSecurityPolicy({ nonce, dev = false, analytics = false }:
     'object-src': ["'none'"],
     'base-uri': ["'self'"],
     'form-action': ["'self'"],
-    'frame-ancestors': ["'none'"],
+    // The admin shows the live preview in a frame: the admin itself may show frames of this
+    // origin (frame-src falls back to default-src 'self'), and only the preview may be framed.
+    'frame-ancestors': [framedBySelf ? "'self'" : "'none'"],
   })
 }
 

@@ -572,3 +572,41 @@ button:focus-visible {
   outline: 3px solid var(--color-brand-primary);
   outline-offset: 2px;
 }
+
+/* Live preview (docs/admin-redesign.md, decision 11; Figma 367:1006): the panel beside the form.
+   Payload's toolbar keeps its controls (the width, the zoom, a new window); it gets the panel's
+   title and the page's white bar. */
+
+.live-preview-window {
+  border-left: 1px solid var(--color-border-default);
+  background: var(--color-bg-subtle);
+}
+
+.live-preview-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font: 600 13px / 1.2 var(--font-body);
+}
+
+.live-preview-toolbar::before {
+  flex: 1 1 0;
+  padding-left: 18px;
+  /* The dot of «на живо» (green in Figma, which has no token for it: navy here) */
+  background: radial-gradient(circle at 4px 50%, var(--color-brand-primary) 0 4px, transparent 4.5px)
+    no-repeat;
+  content: 'Преглед на черновата';
+  white-space: nowrap;
+}
+
+.live-preview-toolbar .toolbar-input {
+  border: 1px solid var(--color-border-default);
+  border-radius: 6px;
+  background: var(--color-bg-page);
+  font: 400 13px / 1.2 var(--font-body);
+}

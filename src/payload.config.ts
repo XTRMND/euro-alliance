@@ -34,6 +34,7 @@ import { Navigation } from './globals/Navigation'
 import { Site } from './globals/Site'
 import { jobs } from './jobs'
 import { emailAdapter } from './lib/email'
+import { isPreviewKind, previewUrl } from './lib/preview'
 import { migrations } from './migrations'
 import { seed } from './seed'
 
@@ -51,6 +52,21 @@ export default buildConfig({
     theme: 'light',
     // «10 ноември 2026, 16:52», as the site writes dates (decision 12: Bulgarian date formats).
     dateFormat: 'd MMMM yyyy, HH:mm',
+    // Live preview (decision 11): the page's own template beside the form, rendered from what's
+    // typed (src/lib/preview.ts), at the two widths of the design.
+    livePreview: {
+      collections: ['courses', 'programs', 'news'],
+      globals: ['home', 'about', 'contact'],
+      breakpoints: [
+        { name: 'mobile', label: 'Телефон · 390', width: 390, height: 844 },
+        { name: 'desktop', label: 'Компютър · 1440', width: 1440, height: 900 },
+      ],
+      url: ({ data, collectionConfig, globalConfig, locale }) => {
+        const kind = collectionConfig?.slug ?? globalConfig?.slug
+        // Empty for a document that has no page to show yet (unsaved, or without its language).
+        return isPreviewKind(kind) ? previewUrl(kind, data, locale?.code) : ''
+      },
+    },
     // The shell of Figma's «07 CMS admin» (docs/admin-redesign.md, PR 6): the sidebar mirrors
     // the site, with the top bar and the hairline sub-nav beside it; the logo mark is the icon.
     components: {

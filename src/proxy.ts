@@ -2,6 +2,7 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { Pool } from 'pg'
 import { measurementIdOf } from '@/lib/analytics'
 import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
+import { previewHeader, previewTarget } from '@/lib/preview'
 import { contentSecurityPolicy, createNonce, nonceHeader } from '@/lib/security-headers'
 
 // Old addresses (docs/content-import.md § 5): a single 301 to the new page (302 for the English
@@ -55,16 +56,27 @@ async function redirectFor(
 /** The page, with a Content-Security-Policy whose nonce Next puts on its scripts. */
 function withPolicy(request: NextRequest) {
   const nonce = createNonce()
+  // The admin's live preview frame: a page of the site with `?preview=` (src/lib/preview.ts). It
+  // may be shown in a frame by this origin (the admin); everything else by no one.
+  const preview =
+    !request.nextUrl.pathname.startsWith('/admin') &&
+    previewTarget(request.nextUrl.searchParams) !== undefined
   const policy = contentSecurityPolicy({
     nonce,
     dev: process.env.NODE_ENV === 'development',
     analytics: Boolean(measurementIdOf(process.env.GA4_MEASUREMENT_ID)),
+    framedBySelf: preview,
   })
   const headers = new Headers(request.headers)
   headers.set(nonceHeader, nonce)
+  // The marker goes on as a header for the readers (src/lib/preview-request.ts), which honour it
+  // for a signed-in editor only; a header of that name sent from outside is dropped.
+  headers.delete(previewHeader)
+  if (preview) headers.set(previewHeader, request.nextUrl.searchParams.toString())
   headers.set('Content-Security-Policy', policy)
   const response = NextResponse.next({ request: { headers } })
   response.headers.set('Content-Security-Policy', policy)
+  if (preview) response.headers.set('X-Frame-Options', 'SAMEORIGIN')
   return response
 }
 
