@@ -271,6 +271,90 @@ test('a course is edited in tabs, and its groups are rows with real names', asyn
   }
 })
 
+test('prices are typed in place and stored only on «Запази промените»', async ({ page }) => {
+  await logIn(page)
+  // An obviously fake course with a group in 2099, removed again at the end.
+  const created = await page.request.post('/api/courses?locale=bg', {
+    data: { title: 'Тестов курс Цени', category: 'languages', topic: 'english', _status: 'draft' },
+  })
+  expect(created.ok()).toBe(true)
+  const { doc } = (await created.json()) as { doc: { id: number } }
+  try {
+    const group = await page.request.post('/api/groups?locale=bg', {
+      data: { course: doc.id, start: '2099-11-03T00:00:00.000Z' },
+    })
+    expect(group.ok()).toBe(true)
+
+    await page
+      .getByRole('navigation', { name: 'Съдържание' })
+      .getByRole('link', { name: 'Цени' })
+      .click()
+    await expect(page.getByRole('heading', { level: 1, name: 'Цени' })).toBeVisible()
+    // One card at the full height: the page itself doesn't scroll.
+    expect(
+      await page.evaluate(() => document.documentElement.scrollHeight <= window.innerHeight),
+    ).toBe(true)
+    const save = page.getByRole('button', { name: 'Запази промените' })
+    await expect(save).toBeDisabled()
+
+    // The course has a row for the whole course and one for its group.
+    const base = page.getByLabel('Цена: Тестов курс Цени, Целия курс', { exact: true })
+    const ofGroup = page.getByLabel('Цена: Тестов курс Цени, Група · 03.11.2099', { exact: true })
+    await expect(base).toHaveValue('')
+    await base.fill('abc')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText(
+      '1 незаписана промяна',
+    )
+    await save.click()
+    await expect(page.getByText('Цената е число, например 495 или 460,16.')).toBeVisible()
+    await page.getByRole('button', { name: 'Отмени' }).click()
+    await expect(base).toHaveValue('')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText('')
+
+    await base.fill('1234,5')
+    await ofGroup.fill('999')
+    await page.getByLabel('Редовна цена: Тестов курс Цени, Група · 03.11.2099').fill('1234,5')
+    await page.getByLabel('Етикет: Тестов курс Цени, Група · 03.11.2099').fill('тестов етикет')
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText(
+      '2 незаписани промени',
+    )
+    await expect(page.getByText('Незаписано')).toHaveCount(2)
+    // Nothing is stored before the save.
+    const stored = async () =>
+      (
+        (await (
+          await page.request.get(`/api/prices?where[course][equals]=${doc.id}&depth=0&locale=bg`)
+        ).json()) as { docs: { price: number; group?: number; label?: string }[] }
+      ).docs
+    expect(await stored()).toHaveLength(0)
+    await save.click()
+    await expect(page.locator('[data-admin="list"]').getByRole('status')).toHaveText('')
+    await expect(save).toBeDisabled()
+    await expect.poll(async () => (await stored()).length).toBe(2)
+    const prices = await stored()
+    expect(prices.map((price) => price.price).sort((a, b) => a - b)).toEqual([999, 1234.5])
+    expect(prices.find((price) => price.group)?.label).toBe('тестов етикет')
+
+    // «Промоции» keeps the group's row (it has a regular price), not the base price.
+    await page.getByRole('button', { name: 'Промоции' }).click()
+    await expect(ofGroup).toHaveValue('999')
+    await expect(base).toHaveCount(0)
+    await page.getByRole('button', { name: 'Всички', exact: true }).click()
+
+    // An emptied row deletes its price.
+    await ofGroup.fill('')
+    await page.getByLabel('Редовна цена: Тестов курс Цени, Група · 03.11.2099').fill('')
+    await page.getByLabel('Етикет: Тестов курс Цени, Група · 03.11.2099').fill('')
+    await save.click()
+    await expect(save).toBeDisabled()
+    await expect.poll(async () => (await stored()).length).toBe(1)
+
+    expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
+  } finally {
+    await page.request.delete(`/api/courses/${doc.id}`)
+  }
+})
+
 test('a global sits where its page is on the site', async ({ page }) => {
   await logIn(page)
   const content = page.getByRole('navigation', { name: 'Съдържание' })

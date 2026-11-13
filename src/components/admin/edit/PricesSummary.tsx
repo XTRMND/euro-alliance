@@ -64,7 +64,7 @@ export function PricesSummary() {
           </tbody>
         </table>
       )}
-      <Link href="/admin/collections/prices" className={styles.toPrices}>
+      <Link href={`/admin/collections/prices#course-${id}`} className={styles.toPrices}>
         Промени в «Цени» ›
       </Link>
     </div>

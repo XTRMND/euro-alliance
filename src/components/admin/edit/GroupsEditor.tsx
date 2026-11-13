@@ -326,7 +326,9 @@ export function GroupsEditor() {
                         </strong>
                       )}
                     </p>
-                    <Link href="/admin/collections/prices">Промени в «Цени»</Link>
+                    <Link href={`/admin/collections/prices#course-${courseId}`}>
+                      Промени в «Цени»
+                    </Link>
                   </div>
                 )}
 
