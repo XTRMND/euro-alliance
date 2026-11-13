@@ -35,7 +35,6 @@ import { Home } from './globals/Home'
 import { InquiryRouting } from './globals/InquiryRouting'
 import { Navigation } from './globals/Navigation'
 import { Site } from './globals/Site'
-import { Translation } from './globals/Translation'
 import { jobs } from './jobs'
 import { emailAdapter } from './lib/email'
 import { migrations } from './migrations'
@@ -78,7 +77,7 @@ export default buildConfig({
     Inquiries,
     InquiryFiles,
   ],
-  globals: [Site, Navigation, Home, Translation, InquiryRouting, Contact, About],
+  globals: [Site, Navigation, Home, InquiryRouting, Contact, About],
   jobs,
   localization: {
     locales: [

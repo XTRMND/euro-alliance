@@ -2,6 +2,9 @@ import type { Payload } from 'payload'
 import type { Course, Price } from '@/payload-types'
 import { type CourseFilters, courseMonths, filterCourses } from './course-filters'
 import { type CourseGroup, type SiteCourse, withStates } from './course-state'
+import { listingCategory } from './courses'
+
+type RelatedTo = Pick<SiteCourse, 'id' | 'category' | 'language' | 'voucherEligible' | 'examPrep'>
 
 // The course reads, on a Payload instance so integration tests run them against a real database.
 // The site calls them through the cached wrappers in src/lib/cms.ts. Every list starts from all
@@ -80,16 +83,17 @@ export async function findCourse(payload: Payload, slug: string): Promise<SiteCo
 }
 
 /**
- * «Подобни курсове»: courses of the same category in the list order, the same language first,
+ * «Подобни курсове»: courses of the same listing category in the list order, the same language first,
  * without the course itself; up to six.
  */
 export function relatedCourses(
   courses: SiteCourse[],
-  course: { id: number; category: string; language?: string | null },
+  course: RelatedTo,
   today: string,
 ): SiteCourse[] {
+  const category = listingCategory(course)
   const listed = withStates(
-    courses.filter((doc) => doc.id !== course.id && doc.category === course.category),
+    courses.filter((doc) => doc.id !== course.id && listingCategory(doc) === category),
     today,
   ).map((item) => item.course)
   const same = listed.filter((doc) => course.language && doc.language === course.language)
@@ -97,10 +101,6 @@ export function relatedCourses(
   return [...same, ...other].slice(0, 6)
 }
 
-export async function findRelatedCourses(
-  payload: Payload,
-  course: { id: number; category: string; language?: string | null },
-  today: string,
-) {
+export async function findRelatedCourses(payload: Payload, course: RelatedTo, today: string) {
   return relatedCourses(await findAllCourses(payload), course, today)
 }

@@ -78,7 +78,8 @@ function bodyText(doc: Record<string, unknown>): string {
     'highlight',
     'kicker',
   ])
-  return join(collectText({ ...omit(doc, ['title', 'slug']), hero }))
+  // The translation agency's languages are options of the page's language pair, not its text.
+  return join(collectText({ ...omit(doc, ['title', 'slug', 'translationLanguages']), hero }))
 }
 
 const omit = (object: Record<string, unknown>, keys: string[]) =>

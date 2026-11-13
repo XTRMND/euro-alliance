@@ -3,6 +3,7 @@ import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import { tags } from '@/hooks/revalidate'
 import type { CourseFilters } from '@/lib/course-filters'
+import type { SiteCourse } from '@/lib/course-state'
 import { courseMonths } from '@/lib/course-filters'
 import {
   findAllCourses,
@@ -93,16 +94,27 @@ export const getHome = unstable_cache(
   { tags: [tags.global('home'), tags.collection('media')] },
 )
 
-/** The languages of the translation agency, in the client's order. */
+/**
+ * The languages of the translation agency, in the client's order: the list of the published
+ * «Преводи и легализация» programme (docs/admin-redesign.md, decision 7).
+ */
 export const getTranslationLanguages = unstable_cache(
   async () => {
-    const translation = await (
+    const { docs } = await (
       await payload()
-    ).findGlobal({ slug: 'translation', locale: 'bg', depth: 0, overrideAccess: false })
-    return (translation.languages ?? []).map((language) => language.name)
+    ).find({
+      collection: 'programs',
+      locale: 'bg',
+      depth: 0,
+      where: { type: { equals: 'translations' } },
+      select: { translationLanguages: true },
+      limit: 1,
+      overrideAccess: false,
+    })
+    return (docs[0]?.translationLanguages ?? []).map((language) => language.name)
   },
   ['translation-languages'],
-  { tags: [tags.global('translation')] },
+  { tags: [tags.collection('programs')] },
 )
 
 /** Every published course; the lists filter and order them in code (src/lib/course-query.ts). */
@@ -151,16 +163,10 @@ export const getCourse = unstable_cache(
 )
 
 /** «Подобни курсове» for a course page. */
-export async function getRelatedCourses(course: {
-  id: number
-  category: string
-  language?: string | null
-}) {
-  return relatedCourses(
-    await getAllCourses(),
-    { id: course.id, category: course.category, language: course.language },
-    startOfTodayInSofia(),
-  )
+export async function getRelatedCourses(
+  course: Pick<SiteCourse, 'id' | 'category' | 'language' | 'voucherEligible' | 'examPrep'>,
+) {
+  return relatedCourses(await getAllCourses(), course, startOfTodayInSofia())
 }
 
 /** The contact page global with its location maps. */

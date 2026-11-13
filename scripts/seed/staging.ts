@@ -15,6 +15,7 @@
 import { readFile } from 'node:fs/promises'
 import config from '@payload-config'
 import { getPayload, type Payload, type Where } from 'payload'
+import { storedCategory } from '@/lib/courses'
 import { type Destination, destinations } from '@/lib/destinations'
 import { migrations } from '@/migrations'
 import { routes } from '@/lib/routes'
@@ -344,7 +345,15 @@ console.log(`5/7 Courses (${fixtures.courses.length})…`)
     const saved = await upsert(
       'courses',
       keep ? { id: { equals: keep.id } } : { slug: { equals: course.slug } },
-      { ...course.data, slug: course.slug, legacyUrl: null, _status: 'published' },
+      {
+        ...course.data,
+        // The fixtures keep the approved list's categories; stored, «exams» and «vouchers» are
+        // checkboxes on a programme branch (docs/admin-redesign.md, decision 4).
+        ...storedCategory(course.data as Parameters<typeof storedCategory>[0]),
+        slug: course.slug,
+        legacyUrl: null,
+        _status: 'published',
+      },
     )
     // Its groups are records of their own (the groups collection), matched on the old entry's
     // address. The fixtures keep the old entry's field names.
@@ -530,17 +539,29 @@ for (const page of fixtures.languagePages) {
 // Only into an empty list, so the client's own edits stay.
 console.log('7/7 Translation languages…')
 {
-  const translation = await payload.findGlobal({ slug: 'translation', depth: 0 })
+  // The list of the «Преводи и легализация» programme (the base seed makes the page); filled in
+  // only while it's empty.
+  const { docs } = await payload.find({
+    collection: 'programs',
+    where: { type: { equals: 'translations' } },
+    locale: 'bg',
+    depth: 0,
+    draft: true,
+    limit: 1,
+  })
+  const page = docs[0]
   const names = fixtures.translation.languages
-  const have = (translation.languages ?? []).map((language) => language.name)
-  if (!have.length && names.length)
-    await payload.updateGlobal({
-      slug: 'translation',
+  const have = (page?.translationLanguages ?? []).map((language) => language.name)
+  if (!page) report.translation.push('No «Преводи и легализация» programme to hold the languages.')
+  else if (!have.length && names.length)
+    await payload.update({
+      collection: 'programs',
+      id: page.id,
       locale: 'bg',
-      data: { languages: names.map((name) => ({ name })) } as never,
+      data: { translationLanguages: names.map((name) => ({ name })) } as never,
     })
   else {
-    tally.add('global:translation', 'skipped')
+    tally.add('programs', 'skipped')
     if (have.join() !== names.join())
       report.translation.push(
         `The CMS lists ${have.join(', ')}; the old site ${names.join(', ')}. The CMS's list stays.`,

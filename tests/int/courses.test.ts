@@ -184,9 +184,12 @@ describe('course page', () => {
     expect((await payload.find({ collection: 'prices', where: ofCourse })).totalDocs).toBe(0)
   })
 
-  it('suggests courses of the same category in the list order, the same language first', async () => {
-    const course = (await findCourse(payload, 'test-b'))!
+  it('suggests courses of the same listing category in the list order', async () => {
+    const course = (await findCourse(payload, 'test-a'))!
     const related = await findRelatedCourses(payload, course, today)
-    expect(related.map((c) => c.title)).toEqual(['Тест A', 'Тест D', 'Тест минал', 'Тест E'])
+    expect(related.map((c) => c.title)).toEqual(['Тест D', 'Тест минал', 'Тест E'])
+    // A voucher course is listed under «Обучение с ваучери», whatever its programme.
+    const voucher = (await findCourse(payload, 'test-b'))!
+    expect(await findRelatedCourses(payload, voucher, today)).toEqual([])
   })
 })

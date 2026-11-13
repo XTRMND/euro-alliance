@@ -143,7 +143,6 @@ export interface Config {
     site: Site;
     navigation: Navigation;
     home: Home;
-    translation: Translation;
     'inquiry-routing': InquiryRouting;
     contact: Contact;
     about: About;
@@ -153,7 +152,6 @@ export interface Config {
     site: SiteSelect<false> | SiteSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     home: HomeSelect<false> | HomeSelect<true>;
-    translation: TranslationSelect<false> | TranslationSelect<true>;
     'inquiry-routing': InquiryRoutingSelect<false> | InquiryRoutingSelect<true>;
     contact: ContactSelect<false> | ContactSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
@@ -362,7 +360,7 @@ export interface Course {
    * Под заглавието на страницата на курса.
    */
   description?: string | null;
-  category: 'languages' | 'exams' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer';
+  category: 'languages' | 'vocational' | 'teachers' | 'farmers' | 'computer';
   language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
   /**
    * Един стикер, едно значение: не ползвайте един стикер за различни неща.
@@ -464,7 +462,14 @@ export interface Course {
    * Вместо цена показва «Безплатно», с бутон «Запитване» (например обученията по Стратегическия план).
    */
   free?: boolean | null;
+  /**
+   * На сайта курсът е и в «Обучение с ваучери».
+   */
   voucherEligible?: boolean | null;
+  /**
+   * На сайта курсът е в «Изпити и сертификати».
+   */
+  examPrep?: boolean | null;
   /**
    * От стария сайт, за пренасочването.
    */
@@ -635,6 +640,15 @@ export interface Program {
   type: 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer' | 'translations';
   language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
   audience?: ('adults' | 'students') | null;
+  /**
+   * Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».
+   */
+  translationLanguages?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
   hero: {
     kicker?: string | null;
     heading: string;
@@ -2140,6 +2154,7 @@ export interface CoursesSelect<T extends boolean = true> {
   included?: T;
   free?: T;
   voucherEligible?: T;
+  examPrep?: T;
   legacyUrl?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2229,6 +2244,12 @@ export interface ProgramsSelect<T extends boolean = true> {
   type?: T;
   language?: T;
   audience?: T;
+  translationLanguages?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
   hero?:
     | T
     | {
@@ -3409,24 +3430,6 @@ export interface Home {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "translation".
- */
-export interface Translation {
-  id: number;
-  /**
-   * Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».
-   */
-  languages?:
-    | {
-        name: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "inquiry-routing".
  */
 export interface InquiryRouting {
@@ -3965,21 +3968,6 @@ export interface HomeSelect<T extends boolean = true> {
               logo?: T;
               id?: T;
             };
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "translation_select".
- */
-export interface TranslationSelect<T extends boolean = true> {
-  languages?:
-    | T
-    | {
-        name?: T;
-        id?: T;
       };
   updatedAt?: T;
   createdAt?: T;

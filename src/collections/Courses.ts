@@ -18,13 +18,12 @@ import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 const audienceLabels = { students: 'Ученици', adults: 'Възрастни', companies: 'Фирми' }
 const formatLabels = { 'in-person': 'Присъствено', online: 'Онлайн' }
+// The programme branches of the admin's menu (docs/admin-redesign.md, decision 4).
 const categoryLabels = {
-  languages: 'Езици',
-  exams: 'Изпити и сертификати',
-  vocational: 'Професионално обучение',
-  vouchers: 'Обучение с ваучери',
+  languages: 'Езикови курсове',
+  vocational: 'Професии (ЦПО)',
   teachers: 'Педагогически специалисти',
-  farmers: 'Обучение за земеделци',
+  farmers: 'Земеделски стопани',
   computer: 'Компютърни курсове',
 }
 const languageLabels = {
@@ -151,7 +150,7 @@ export const Courses: CollectionConfig = {
         {
           name: 'category',
           type: 'select',
-          label: 'Категория',
+          label: 'Програма',
           required: true,
           options: courseCategoryValues.map((value) => ({ value, label: categoryLabels[value] })),
         },
@@ -305,6 +304,13 @@ export const Courses: CollectionConfig = {
       name: 'voucherEligible',
       type: 'checkbox',
       label: 'С ваучер от Агенцията по заетостта',
+      admin: { description: 'На сайта курсът е и в «Обучение с ваучери».' },
+    },
+    {
+      name: 'examPrep',
+      type: 'checkbox',
+      label: 'Подготовка за изпит',
+      admin: { description: 'На сайта курсът е в «Изпити и сертификати».' },
     },
     {
       name: 'legacyUrl',
