@@ -57,6 +57,8 @@ export default buildConfig({
         Icon: '@/components/admin/shell/Graphics#Icon',
         Logo: '@/components/admin/shell/Graphics#Logo',
       },
+      // «Admin · 01 Табло» (359:969) in place of Payload's lists of collections and globals.
+      views: { dashboard: { Component: '@/components/admin/dashboard/Dashboard#Dashboard' } },
       beforeLogin: ['@/components/admin/shell/Login#BeforeLogin'],
       afterLogin: ['@/components/admin/shell/Login#AfterLogin'],
     },

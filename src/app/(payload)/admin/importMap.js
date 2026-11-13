@@ -30,6 +30,7 @@ import { Icon as Icon_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admi
 import { Logo as Logo_9f93baf4aea66f2dc33e144076181dbe } from '@/components/admin/shell/Graphics'
 import { AfterLogin as AfterLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
 import { BeforeLogin as BeforeLogin_80f0db95a82b765329f541051791ab13 } from '@/components/admin/shell/Login'
+import { Dashboard as Dashboard_7292b30784a9facdd561e1771398a1a5 } from '@/components/admin/dashboard/Dashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -66,5 +67,6 @@ export const importMap = {
   "@/components/admin/shell/Graphics#Logo": Logo_9f93baf4aea66f2dc33e144076181dbe,
   "@/components/admin/shell/Login#AfterLogin": AfterLogin_80f0db95a82b765329f541051791ab13,
   "@/components/admin/shell/Login#BeforeLogin": BeforeLogin_80f0db95a82b765329f541051791ab13,
+  "@/components/admin/dashboard/Dashboard#Dashboard": Dashboard_7292b30784a9facdd561e1771398a1a5,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }
