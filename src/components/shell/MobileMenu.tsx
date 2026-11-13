@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { inboxOf, track } from '@/lib/analytics'
 import { telHref } from '@/lib/format'
 import { routes } from '@/lib/routes'
-import type { Navigation } from '@/payload-types'
+import type { SiteMenuItem } from '@/lib/nav-links'
 import { LogoLink } from './LogoLink'
 import styles from './MobileMenu.module.css'
 import { NavDisclosure } from './NavDisclosure'
@@ -17,7 +17,7 @@ import { NavLink } from './NavLink'
 // translation runtime ships to the browser.
 
 type MobileMenuProps = {
-  links: NonNullable<Navigation['menu']>
+  links: SiteMenuItem[]
   labels: { open: string; close: string; nav: string; logo: string; cta: string }
   phone?: string
   email?: string
@@ -85,7 +85,7 @@ export function MobileMenu({ links, labels, phone, email, className }: MobileMen
           <ul>
             {links.map((link) => (
               <li key={link.id}>
-                {link.children?.length ? (
+                {link.children.length ? (
                   <NavDisclosure label={link.label} links={link.children} variant="inline" />
                 ) : (
                   link.href && (

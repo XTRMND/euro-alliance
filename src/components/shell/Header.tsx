@@ -1,7 +1,8 @@
 import { getTranslations } from 'next-intl/server'
 import { Button } from '@/components/ui/Button'
 import { routes } from '@/lib/routes'
-import type { Navigation, Office } from '@/payload-types'
+import type { SiteMenuItem, SiteNavigation } from '@/lib/nav-links'
+import type { Office } from '@/payload-types'
 import styles from './Header.module.css'
 import { LogoLink } from './LogoLink'
 import { MobileMenu } from './MobileMenu'
@@ -12,13 +13,13 @@ import { NavLink } from './NavLink'
 // bottom edge and a soft navy shadow. «EN» stays hidden until English exists.
 
 type HeaderProps = {
-  navigation: Navigation
+  navigation: SiteNavigation
   office?: Office
 }
 
 export async function Header({ navigation, office }: HeaderProps) {
   const t = await getTranslations('header')
-  const { left = [], right = [] } = navigation.header ?? {}
+  const { left, right } = navigation.header
 
   return (
     <header className={styles.header}>
@@ -33,7 +34,7 @@ export async function Header({ navigation, office }: HeaderProps) {
 
         <MobileMenu
           className={styles.menu}
-          links={navigation.menu ?? []}
+          links={navigation.menu}
           labels={{
             open: t('menuOpen'),
             close: t('menuClose'),
@@ -60,11 +61,11 @@ export async function Header({ navigation, office }: HeaderProps) {
   )
 }
 
-type HeaderLink = NonNullable<NonNullable<Navigation['header']>['left']>[number]
+type HeaderLink = SiteMenuItem
 
 /** A link, or a disclosure when it has sub-links. */
 function HeaderItem({ link }: { link: HeaderLink }) {
-  if (link.children?.length) {
+  if (link.children.length) {
     return (
       <li>
         <NavDisclosure label={link.label} links={link.children} variant="dropdown" />

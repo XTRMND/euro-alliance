@@ -2960,13 +2960,105 @@ export interface Navigation {
       | {
           label: string;
           /**
-           * Празно, ако връзката отваря подвръзки.
+           * Не се ползва, ако връзката отваря подвръзки.
            */
-          href?: string | null;
+          type?: ('page' | 'program' | 'course' | 'custom') | null;
+          page?:
+            | (
+                | 'home'
+                | 'courses'
+                | 'languageCourses'
+                | 'languagesStudents'
+                | 'languagesAdults'
+                | 'certificates'
+                | 'professions'
+                | 'vouchers'
+                | 'voucherInquiry'
+                | 'teachers'
+                | 'farmers'
+                | 'computerCourses'
+                | 'translations'
+                | 'sendDocument'
+                | 'levelTest'
+                | 'otherInquiry'
+                | 'news'
+                | 'about'
+                | 'aboutHistory'
+                | 'contact'
+                | 'privacy'
+                | 'cookies'
+                | 'vocationalCourses'
+                | 'about-team'
+                | 'about-standards'
+                | 'about-licences'
+                | 'about-documents'
+                | 'about-projects'
+                | 'about-elearning'
+                | 'contactPlovdiv'
+                | 'contactSofia'
+                | 'search'
+              )
+            | null;
+          program?: (number | null) | Program;
+          /**
+           * По избор: котвата на секция от програмата, например pismeni-prevodi.
+           */
+          anchor?: string | null;
+          course?: (number | null) | Course;
+          /**
+           * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+           */
+          url?: string | null;
           children?:
             | {
                 label: string;
-                href: string;
+                type?: ('page' | 'program' | 'course' | 'custom') | null;
+                page?:
+                  | (
+                      | 'home'
+                      | 'courses'
+                      | 'languageCourses'
+                      | 'languagesStudents'
+                      | 'languagesAdults'
+                      | 'certificates'
+                      | 'professions'
+                      | 'vouchers'
+                      | 'voucherInquiry'
+                      | 'teachers'
+                      | 'farmers'
+                      | 'computerCourses'
+                      | 'translations'
+                      | 'sendDocument'
+                      | 'levelTest'
+                      | 'otherInquiry'
+                      | 'news'
+                      | 'about'
+                      | 'aboutHistory'
+                      | 'contact'
+                      | 'privacy'
+                      | 'cookies'
+                      | 'vocationalCourses'
+                      | 'about-team'
+                      | 'about-standards'
+                      | 'about-licences'
+                      | 'about-documents'
+                      | 'about-projects'
+                      | 'about-elearning'
+                      | 'contactPlovdiv'
+                      | 'contactSofia'
+                      | 'search'
+                    )
+                  | null;
+                program?: (number | null) | Program;
+                /**
+                 * По избор: котвата на секция от програмата, например pismeni-prevodi.
+                 */
+                anchor?: string | null;
+                course?: (number | null) | Course;
+                /**
+                 * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+                 */
+                url?: string | null;
                 id?: string | null;
               }[]
             | null;
@@ -2977,13 +3069,105 @@ export interface Navigation {
       | {
           label: string;
           /**
-           * Празно, ако връзката отваря подвръзки.
+           * Не се ползва, ако връзката отваря подвръзки.
            */
-          href?: string | null;
+          type?: ('page' | 'program' | 'course' | 'custom') | null;
+          page?:
+            | (
+                | 'home'
+                | 'courses'
+                | 'languageCourses'
+                | 'languagesStudents'
+                | 'languagesAdults'
+                | 'certificates'
+                | 'professions'
+                | 'vouchers'
+                | 'voucherInquiry'
+                | 'teachers'
+                | 'farmers'
+                | 'computerCourses'
+                | 'translations'
+                | 'sendDocument'
+                | 'levelTest'
+                | 'otherInquiry'
+                | 'news'
+                | 'about'
+                | 'aboutHistory'
+                | 'contact'
+                | 'privacy'
+                | 'cookies'
+                | 'vocationalCourses'
+                | 'about-team'
+                | 'about-standards'
+                | 'about-licences'
+                | 'about-documents'
+                | 'about-projects'
+                | 'about-elearning'
+                | 'contactPlovdiv'
+                | 'contactSofia'
+                | 'search'
+              )
+            | null;
+          program?: (number | null) | Program;
+          /**
+           * По избор: котвата на секция от програмата, например pismeni-prevodi.
+           */
+          anchor?: string | null;
+          course?: (number | null) | Course;
+          /**
+           * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+           */
+          url?: string | null;
           children?:
             | {
                 label: string;
-                href: string;
+                type?: ('page' | 'program' | 'course' | 'custom') | null;
+                page?:
+                  | (
+                      | 'home'
+                      | 'courses'
+                      | 'languageCourses'
+                      | 'languagesStudents'
+                      | 'languagesAdults'
+                      | 'certificates'
+                      | 'professions'
+                      | 'vouchers'
+                      | 'voucherInquiry'
+                      | 'teachers'
+                      | 'farmers'
+                      | 'computerCourses'
+                      | 'translations'
+                      | 'sendDocument'
+                      | 'levelTest'
+                      | 'otherInquiry'
+                      | 'news'
+                      | 'about'
+                      | 'aboutHistory'
+                      | 'contact'
+                      | 'privacy'
+                      | 'cookies'
+                      | 'vocationalCourses'
+                      | 'about-team'
+                      | 'about-standards'
+                      | 'about-licences'
+                      | 'about-documents'
+                      | 'about-projects'
+                      | 'about-elearning'
+                      | 'contactPlovdiv'
+                      | 'contactSofia'
+                      | 'search'
+                    )
+                  | null;
+                program?: (number | null) | Program;
+                /**
+                 * По избор: котвата на секция от програмата, например pismeni-prevodi.
+                 */
+                anchor?: string | null;
+                course?: (number | null) | Course;
+                /**
+                 * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+                 */
+                url?: string | null;
                 id?: string | null;
               }[]
             | null;
@@ -2995,13 +3179,105 @@ export interface Navigation {
     | {
         label: string;
         /**
-         * Празно, ако връзката отваря подвръзки.
+         * Не се ползва, ако връзката отваря подвръзки.
          */
-        href?: string | null;
+        type?: ('page' | 'program' | 'course' | 'custom') | null;
+        page?:
+          | (
+              | 'home'
+              | 'courses'
+              | 'languageCourses'
+              | 'languagesStudents'
+              | 'languagesAdults'
+              | 'certificates'
+              | 'professions'
+              | 'vouchers'
+              | 'voucherInquiry'
+              | 'teachers'
+              | 'farmers'
+              | 'computerCourses'
+              | 'translations'
+              | 'sendDocument'
+              | 'levelTest'
+              | 'otherInquiry'
+              | 'news'
+              | 'about'
+              | 'aboutHistory'
+              | 'contact'
+              | 'privacy'
+              | 'cookies'
+              | 'vocationalCourses'
+              | 'about-team'
+              | 'about-standards'
+              | 'about-licences'
+              | 'about-documents'
+              | 'about-projects'
+              | 'about-elearning'
+              | 'contactPlovdiv'
+              | 'contactSofia'
+              | 'search'
+            )
+          | null;
+        program?: (number | null) | Program;
+        /**
+         * По избор: котвата на секция от програмата, например pismeni-prevodi.
+         */
+        anchor?: string | null;
+        course?: (number | null) | Course;
+        /**
+         * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+         */
+        url?: string | null;
         children?:
           | {
               label: string;
-              href: string;
+              type?: ('page' | 'program' | 'course' | 'custom') | null;
+              page?:
+                | (
+                    | 'home'
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'voucherInquiry'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'otherInquiry'
+                    | 'news'
+                    | 'about'
+                    | 'aboutHistory'
+                    | 'contact'
+                    | 'privacy'
+                    | 'cookies'
+                    | 'vocationalCourses'
+                    | 'about-team'
+                    | 'about-standards'
+                    | 'about-licences'
+                    | 'about-documents'
+                    | 'about-projects'
+                    | 'about-elearning'
+                    | 'contactPlovdiv'
+                    | 'contactSofia'
+                    | 'search'
+                  )
+                | null;
+              program?: (number | null) | Program;
+              /**
+               * По избор: котвата на секция от програмата, например pismeni-prevodi.
+               */
+              anchor?: string | null;
+              course?: (number | null) | Course;
+              /**
+               * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+               */
+              url?: string | null;
               id?: string | null;
             }[]
           | null;
@@ -3014,7 +3290,53 @@ export interface Navigation {
         links?:
           | {
               label: string;
-              href: string;
+              type?: ('page' | 'program' | 'course' | 'custom') | null;
+              page?:
+                | (
+                    | 'home'
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'voucherInquiry'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'otherInquiry'
+                    | 'news'
+                    | 'about'
+                    | 'aboutHistory'
+                    | 'contact'
+                    | 'privacy'
+                    | 'cookies'
+                    | 'vocationalCourses'
+                    | 'about-team'
+                    | 'about-standards'
+                    | 'about-licences'
+                    | 'about-documents'
+                    | 'about-projects'
+                    | 'about-elearning'
+                    | 'contactPlovdiv'
+                    | 'contactSofia'
+                    | 'search'
+                  )
+                | null;
+              program?: (number | null) | Program;
+              /**
+               * По избор: котвата на секция от програмата, например pismeni-prevodi.
+               */
+              anchor?: string | null;
+              course?: (number | null) | Course;
+              /**
+               * За външен сайт, телефон или имейл. Започва с /, #, https://, tel: или mailto:.
+               */
+              url?: string | null;
               /**
                * На компютър връзката се показва като икона.
                */
@@ -3728,12 +4050,22 @@ export interface NavigationSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
-              href?: T;
+              type?: T;
+              page?: T;
+              program?: T;
+              anchor?: T;
+              course?: T;
+              url?: T;
               children?:
                 | T
                 | {
                     label?: T;
-                    href?: T;
+                    type?: T;
+                    page?: T;
+                    program?: T;
+                    anchor?: T;
+                    course?: T;
+                    url?: T;
                     id?: T;
                   };
               id?: T;
@@ -3742,12 +4074,22 @@ export interface NavigationSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
-              href?: T;
+              type?: T;
+              page?: T;
+              program?: T;
+              anchor?: T;
+              course?: T;
+              url?: T;
               children?:
                 | T
                 | {
                     label?: T;
-                    href?: T;
+                    type?: T;
+                    page?: T;
+                    program?: T;
+                    anchor?: T;
+                    course?: T;
+                    url?: T;
                     id?: T;
                   };
               id?: T;
@@ -3757,12 +4099,22 @@ export interface NavigationSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
-        href?: T;
+        type?: T;
+        page?: T;
+        program?: T;
+        anchor?: T;
+        course?: T;
+        url?: T;
         children?:
           | T
           | {
               label?: T;
-              href?: T;
+              type?: T;
+              page?: T;
+              program?: T;
+              anchor?: T;
+              course?: T;
+              url?: T;
               id?: T;
             };
         id?: T;
@@ -3775,7 +4127,12 @@ export interface NavigationSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
-              href?: T;
+              type?: T;
+              page?: T;
+              program?: T;
+              anchor?: T;
+              course?: T;
+              url?: T;
               icon?: T;
               id?: T;
             };

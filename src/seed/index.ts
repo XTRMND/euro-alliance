@@ -12,10 +12,10 @@ import {
   homePhoto,
   homePhotoSecondary,
   navigation,
-  navigationMoves,
   offices,
   partners,
 } from './data'
+import { linkFromHref } from '@/lib/nav-links'
 import { noteSkipped } from './tally'
 import { legalBody, legalPages } from './legal'
 import {
@@ -73,30 +73,13 @@ export async function seed(payload: Payload) {
 
   const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
   if (isEmpty(nav.header) && isEmpty(nav.menu) && isEmpty(nav.footer)) {
-    await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: navigation })
+    await payload.updateGlobal({
+      slug: 'navigation',
+      locale: 'bg',
+      data: (await pickedNavigation(payload)) as never,
+    })
     payload.logger.info('Seeded the navigation.')
-  } else {
-    // Links seeded earlier that now go to filtered course listings; one the client changed stays.
-    let moved = 0
-    const move = (value: unknown): unknown => {
-      if (Array.isArray(value)) return value.map(move)
-      if (!value || typeof value !== 'object') return value
-      const item = Object.fromEntries(
-        Object.entries(value).map(([key, field]) => [key, move(field)]),
-      ) as { label?: string; href?: string }
-      const to = navigationMoves.find(([label, from]) => item.label === label && item.href === from)
-      if (to) {
-        moved++
-        item.href = to[2]
-      }
-      return item
-    }
-    const data = { header: move(nav.header), menu: move(nav.menu), footer: move(nav.footer) }
-    if (moved) {
-      await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: data as never })
-      payload.logger.info(`Moved ${moved} navigation links to filtered course listings.`)
-    } else noteSkipped(payload, 'global:navigation')
-  }
+  } else noteSkipped(payload, 'global:navigation')
 
   for (const office of offices) {
     const { totalDocs } = await payload.count({
@@ -117,6 +100,28 @@ export async function seed(payload: Payload) {
       payload.logger.info(`Seeded the office «${office.name}».`)
     } else noteSkipped(payload, 'offices')
   }
+}
+
+/**
+ * The seeded navigation with its links picked (src/lib/nav-links.ts): a programme page that
+ * exists as its programme, the rest as a fixed page of the site, an outside address as it is.
+ */
+async function pickedNavigation(payload: Payload) {
+  const find = { depth: 0, pagination: false, draft: true, locale: 'bg' } as const
+  const [programs, courses] = await Promise.all([
+    payload.find({ collection: 'programs', select: { type: true, language: true, audience: true }, ...find }),
+    payload.find({ collection: 'courses', select: { slug: true }, ...find }),
+  ])
+  const known = { programs: programs.docs, courses: courses.docs }
+  const pick = (value: unknown): unknown => {
+    if (Array.isArray(value)) return value.map(pick)
+    if (!value || typeof value !== 'object') return value
+    const { href, ...item } = Object.fromEntries(
+      Object.entries(value).map(([key, field]) => [key, pick(field)]),
+    ) as { href?: string }
+    return href ? { ...item, ...linkFromHref(href, known) } : item
+  }
+  return pick(navigation)
 }
 
 /** Uploads the EU logo strip as a `logo` (stored as is) and links it from the footer notice. */

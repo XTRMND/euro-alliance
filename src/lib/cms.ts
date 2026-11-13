@@ -13,6 +13,7 @@ import {
   withGroups,
 } from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
+import { resolveNavigation } from '@/lib/nav-links'
 import { tintNames } from '@/lib/media/tints'
 import type { Media, Program } from '@/payload-types'
 
@@ -22,16 +23,29 @@ import type { Media, Program } from '@/payload-types'
 
 const payload = () => getPayload({ config })
 
+/**
+ * The header, menu and footer links with their addresses (src/lib/nav-links.ts). A link to a
+ * programme or a course follows that page: it's read with the page's address fields, as a
+ * visitor, so a link to an unpublished page is left out.
+ */
 export const getNavigation = unstable_cache(
   async () =>
-    (await payload()).findGlobal({
-      slug: 'navigation',
-      locale: 'bg',
-      depth: 0,
-      overrideAccess: false,
-    }),
+    resolveNavigation(
+      await (
+        await payload()
+      ).findGlobal({
+        slug: 'navigation',
+        locale: 'bg',
+        depth: 1,
+        populate: {
+          programs: { type: true, language: true, audience: true },
+          courses: { slug: true },
+        },
+        overrideAccess: false,
+      }),
+    ),
   ['navigation'],
-  { tags: [tags.global('navigation')] },
+  { tags: [tags.global('navigation'), tags.collection('programs'), tags.collection('courses')] },
 )
 
 export const getSite = unstable_cache(

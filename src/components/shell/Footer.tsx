@@ -2,7 +2,8 @@ import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
 import { currentYear, formatDateNumeric } from '@/lib/format'
 import { routes } from '@/lib/routes'
-import type { Media, Navigation, Site } from '@/payload-types'
+import type { SiteNavigation } from '@/lib/nav-links'
+import type { Media, Site } from '@/payload-types'
 import { CookieSettingsButton } from './CookieSettingsButton'
 import styles from './Footer.module.css'
 import { LogoLink } from './LogoLink'
@@ -13,7 +14,7 @@ import { NavLink } from './NavLink'
 // statement shows.
 
 type FooterProps = {
-  navigation: Navigation
+  navigation: SiteNavigation
   site: Site
 }
 
@@ -39,11 +40,11 @@ export async function Footer({ navigation, site }: FooterProps) {
           </div>
 
           <nav aria-label={t('navLabel')} className={styles.nav}>
-            {navigation.footer?.map((column) => (
+            {navigation.footer.map((column) => (
               <div key={column.id} className={styles.column}>
                 <h2 className={styles.heading}>{column.heading}</h2>
                 <ul className={styles.links}>
-                  {column.links?.map((link) => (
+                  {column.links.map((link) => (
                     <li key={link.id}>
                       <NavLink href={link.href} placement="footer" className={styles.link}>
                         {link.icon === 'facebook' ? (

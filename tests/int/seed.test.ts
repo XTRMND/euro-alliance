@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { getPayload, type Payload } from 'payload'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { uploadDirs } from '@/lib/media/storage'
+import { resolveNavigation } from '@/lib/nav-links'
 import { routes } from '@/lib/routes'
 import { searchRecords } from '@/lib/search-match'
 import { findSearchRecords, getSearchRecords } from '@/lib/search-records'
@@ -50,42 +51,76 @@ describe('seed', () => {
     expect(logos.tints?.docs ?? []).toEqual([])
   })
 
-  it('moves the old language links to filtered listings, and keeps a link the client changed', async () => {
+  it('seeds the navigation with picked links: programmes, fixed pages, one typed address', async () => {
     const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
-    const footer = (nav.footer ?? []).map((column) => ({
-      ...column,
-      links: (column.links ?? []).map((link) =>
-        link.label === 'Езици за възрастни'
-          ? { ...link, href: '/ezitsi/angliyski/vazrastni' }
-          : link.label === 'Езици за ученици'
-            ? { ...link, href: '/ezitsi/nemski/uchenitsi' }
-            : link,
-      ),
-    }))
-    await payload.updateGlobal({ slug: 'navigation', locale: 'bg', data: { footer } })
-    await seed(payload)
+    const group = nav.header?.left?.find((link) => link.label === 'Професионално обучение')
+    // A group of three programmes, with no target of its own.
+    expect(group?.children?.map((link) => link.type)).toEqual(['program', 'program', 'program'])
+    const footer = (nav.footer ?? []).flatMap((column) => column.links ?? [])
+    const stored = (label: string) => footer.find((link) => link.label === label)
+    expect(stored('Езици за възрастни')).toMatchObject({ type: 'page', page: 'languagesAdults' })
+    expect(stored('Писмени преводи')).toMatchObject({ type: 'program', anchor: 'pismeni-prevodi' })
+    expect(stored('Facebook')).toMatchObject({ type: 'custom', icon: 'facebook' })
+    expect(footer.filter((link) => link.type === 'custom')).toHaveLength(1)
 
-    const links = (await payload.findGlobal({ slug: 'navigation', locale: 'bg' })).footer?.flatMap(
-      (column) => column.links ?? [],
+    // As the site reads it: every link has its address, as before the links were picked.
+    const site = resolveNavigation(
+      await payload.findGlobal({
+        slug: 'navigation',
+        locale: 'bg',
+        depth: 1,
+        overrideAccess: false,
+      }),
     )
-    expect(links?.find((link) => link.label === 'Езици за възрастни')?.href).toBe(
+    expect(site.header.left.map((item) => item.href ?? item.children.map((c) => c.href))).toEqual([
+      '/kursove',
+      [
+        '/profesionalno-obuchenie/profesii',
+        '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
+        '/profesionalno-obuchenie/zemedeltsi',
+      ],
+      '/prevodi',
+    ])
+    expect(site.footer.flatMap((column) => column.links.map((link) => link.href))).toEqual([
+      '/kursove',
+      '/kursove?kategoria=ezitsi&auditoria=uchenitsi',
       '/kursove?kategoria=ezitsi&auditoria=vazrastni',
-    )
-    expect(links?.find((link) => link.label === 'Езици за ученици')?.href).toBe(
-      '/ezitsi/nemski/uchenitsi',
-    )
+      '/kursove?kategoria=profesionalno-obuchenie',
+      '/vaucheri',
+      '/prevodi#pismeni-prevodi',
+      '/prevodi#ustni-prevodi',
+      '/kontakti?tema=prevodi',
+      '/za-nas#istoria',
+      '/za-nas#proekti',
+      '/za-nas#dokumenti',
+      '/poveritelnost',
+      '/kontakti',
+      'https://www.facebook.com/EvroAlians',
+      '/kontakti#plovdiv',
+      '/kontakti#sofia',
+    ])
   })
 
-  it('seeds «Професионално обучение» as a group of three programmes', async () => {
-    const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg' })
-    const group = nav.header?.left?.find((link) => link.label === 'Професионално обучение')
-
-    expect(group?.href ?? null).toBeNull()
-    expect(group?.children?.map((link) => link.href)).toEqual([
-      '/profesionalno-obuchenie/profesii',
-      '/profesionalno-obuchenie/pedagogicheski-spetsialisti',
-      '/profesionalno-obuchenie/zemedeltsi',
-    ])
+  it('leaves out a link to a programme that isn’t published', async () => {
+    const { docs } = await payload.find({
+      collection: 'programs',
+      where: { type: { equals: 'vouchers' } },
+      depth: 0,
+    })
+    const read = async () =>
+      resolveNavigation(
+        await payload.findGlobal({
+          slug: 'navigation',
+          locale: 'bg',
+          depth: 1,
+          overrideAccess: false,
+        }),
+      ).footer.flatMap((column) => column.links.map((link) => link.label))
+    expect(await read()).toContain('Ваучери')
+    await payload.update({ collection: 'programs', id: docs[0].id, data: { _status: 'draft' } })
+    expect(await read()).not.toContain('Ваучери')
+    await payload.update({ collection: 'programs', id: docs[0].id, data: { _status: 'published' } })
+    expect(await read()).toContain('Ваучери')
   })
 
   it('seeds the homepage from Figma, with the classroom photo, Photo B and the tints', async () => {
