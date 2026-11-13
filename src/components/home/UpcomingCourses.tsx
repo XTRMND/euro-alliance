@@ -5,7 +5,7 @@ import { matchesUpcomingFilter, upcomingFilters } from '@/lib/courses'
 import { startOfTodayInSofia } from '@/lib/format'
 import { RevealOnScroll } from '@/components/visuals/RevealOnScroll'
 import { routes } from '@/lib/routes'
-import type { Course } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
 import landing from '@/styles/landing.module.css'
 import { SectionHead } from './SectionHead'
 import { UpcomingTabs } from './UpcomingTabs'
@@ -23,14 +23,20 @@ export const upcomingPerTab = 4
  * The page asks first, so a hidden section leaves no deferred wrapper (its stand-in height
  * collapsing as it nears the screen shifted the inquiry band: CLS).
  */
-export function upcomingCourses(courses: Course[], today: string): Course[] {
+export function upcomingCourses(courses: SiteCourse[], today: string): SiteCourse[] {
   const dated = withStates(courses, today)
     .filter(({ state }) => state.status !== 'none')
     .map(({ course }) => course)
   return dated.length < 2 ? [] : dated
 }
 
-export async function UpcomingCourses({ title, courses }: { title: string; courses: Course[] }) {
+export async function UpcomingCourses({
+  title,
+  courses,
+}: {
+  title: string
+  courses: SiteCourse[]
+}) {
   const dated = upcomingCourses(courses, startOfTodayInSofia())
   if (dated.length === 0) return null
   const t = await getTranslations('home')

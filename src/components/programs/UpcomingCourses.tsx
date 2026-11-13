@@ -6,7 +6,8 @@ import { getListedCourses } from '@/lib/cms'
 import { courseFiltersQuery } from '@/lib/course-filters'
 import { programCourseFilters, upcomingId } from '@/lib/programs'
 import { routes } from '@/lib/routes'
-import type { Course, Program } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
+import type { Program } from '@/payload-types'
 import styles from './UpcomingCourses.module.css'
 
 // «Курсове по …» on a program page (130:1993, 236:3479): every published course of the program
@@ -14,7 +15,7 @@ import styles from './UpcomingCourses.module.css'
 // (src/lib/course-state.ts; «Предстоящи курсове по …» until 02.11.2026), and a link to them in the
 // listing. Without a heading or without courses the section isn't shown.
 
-export type Upcoming = { courses: Course[]; listing: string; shown: boolean }
+export type Upcoming = { courses: SiteCourse[]; listing: string; shown: boolean }
 
 export async function loadUpcoming(program: Program): Promise<Upcoming> {
   const filters = programCourseFilters(program)

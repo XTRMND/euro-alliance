@@ -30,6 +30,7 @@ import * as migration_20261102_151729_course_stickers from './20261102_151729_co
 import * as migration_20261103_090104_home_about from './20261103_090104_home_about';
 import * as migration_20261103_091658_home_about_tint from './20261103_091658_home_about_tint';
 import * as migration_20261109_132504_admin_edited_at from './20261109_132504_admin_edited_at';
+import * as migration_20261112_084508_groups_collection from './20261112_084508_groups_collection';
 
 export const migrations = [
   {
@@ -190,6 +191,11 @@ export const migrations = [
   {
     up: migration_20261109_132504_admin_edited_at.up,
     down: migration_20261109_132504_admin_edited_at.down,
-    name: '20261109_132504_admin_edited_at'
+    name: '20261109_132504_admin_edited_at',
+  },
+  {
+    up: migration_20261112_084508_groups_collection.up,
+    down: migration_20261112_084508_groups_collection.down,
+    name: '20261112_084508_groups_collection'
   },
 ];

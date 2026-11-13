@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionBeforeDeleteHook, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
@@ -6,13 +6,14 @@ import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
 import { courseAudiences, courseCategoryValues, courseFormats, courseTopics } from '@/lib/courses'
 import { languages, routes } from '@/lib/routes'
 import { metaField } from '@/fields/meta'
-import { legacyRedirectHooks } from '@/hooks/legacy-redirect'
+import { groupLegacyUrls, legacyRedirectHooks } from '@/hooks/legacy-redirect'
 import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 // docs/cms-schema.md § 3. A course is what the centre teaches; its dates belong to its groups
-// (the user's model of 02.11.2026): zero or more, each with a start and an optional end, schedule,
-// format, office, price and seats. The state of a course comes from its groups
-// (src/lib/course-state.ts). Never invent a course: an empty optional field hides its element.
+// (the user's model of 02.11.2026): zero or more records of the groups collection
+// (src/collections/Groups.ts), each with a start and an optional end, schedule, format, office,
+// price and seats. The state of a course comes from its groups (src/lib/course-state.ts). Never
+// invent a course: an empty optional field hides its element.
 
 const audienceLabels = { students: 'Ученици', adults: 'Възрастни', companies: 'Фирми' }
 const formatLabels = { 'in-person': 'Присъствено', online: 'Онлайн' }
@@ -89,15 +90,18 @@ const legacyRedirect = legacyRedirectHooks<{
   slug?: string | null
   _status?: string | null
   legacyUrl?: string | null
-  groups?: { legacyUrl?: string | null }[] | null
 }>(
   'courses',
   (doc) => (doc.slug ? routes.course(doc.slug) : null),
-  (doc) => (doc.groups ?? []).map((group) => group.legacyUrl),
+  (doc, req) => groupLegacyUrls(doc.id, req),
 )
 
+/** A course's groups go with it (their old addresses' redirects too, through their hooks). */
+const deleteGroups: CollectionBeforeDeleteHook = async ({ id, req }) => {
+  await req.payload.delete({ collection: 'groups', where: { course: { equals: id } }, req })
+}
+
 const formatOptions = courseFormats.map((value) => ({ value, label: formatLabels[value] }))
-const dayOnly = { date: { pickerAppearance: 'dayOnly' as const, displayFormat: 'dd.MM.yyyy' } }
 
 export const Courses: CollectionConfig = {
   slug: 'courses',
@@ -111,6 +115,7 @@ export const Courses: CollectionConfig = {
   versions: { drafts: true },
   hooks: {
     beforeChange: [markAdminEdit],
+    beforeDelete: [deleteGroups],
     afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
     afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
   },
@@ -231,110 +236,17 @@ export const Courses: CollectionConfig = {
     { name: 'duration', type: 'textarea', label: 'Хорариум', localized: true },
     {
       name: 'groups',
-      type: 'array',
+      type: 'join',
+      collection: 'groups',
+      on: 'course',
       label: 'Групи',
-      labels: { singular: 'Група', plural: 'Групи' },
+      defaultSort: 'start',
+      defaultLimit: 50,
       admin: {
-        initCollapsed: true,
+        defaultColumns: ['title', 'start', 'end', 'seats', 'office'],
         description:
           'Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.',
       },
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          label: 'Име на групата',
-          localized: true,
-          admin: { description: 'По желание, например «Съботни групи».' },
-        },
-        {
-          type: 'row',
-          fields: [
-            { name: 'startDate', type: 'date', label: 'Начало', required: true, admin: dayOnly },
-            { name: 'endDate', type: 'date', label: 'Край', admin: dayOnly },
-            { name: 'seats', type: 'number', label: 'Свободни места', min: 0 },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'days',
-              type: 'text',
-              label: 'Учебни дни',
-              localized: true,
-              admin: { description: 'Например «пн и ср или вт и чт».' },
-            },
-            {
-              name: 'hours',
-              type: 'text',
-              label: 'Учебни часове',
-              admin: { description: 'Например 18:00–20:50.' },
-            },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            { name: 'format', type: 'select', label: 'Формат', options: formatOptions },
-            { name: 'office', type: 'relationship', relationTo: 'offices', label: 'Офис' },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'price',
-              type: 'number',
-              label: 'Цена',
-              min: 0,
-              admin: { description: 'Празно: цената не се показва. Само официални цени.' },
-            },
-            {
-              name: 'currency',
-              type: 'select',
-              label: 'Валута',
-              defaultValue: 'EUR',
-              options: [
-                { value: 'EUR', label: '€' },
-                { value: 'BGN', label: 'лв.' },
-              ],
-            },
-            {
-              name: 'regularPrice',
-              type: 'number',
-              label: 'Редовна цена',
-              min: 0,
-              admin: { description: 'При промоция: по-високата цена, показва се зачертана.' },
-            },
-          ],
-        },
-        {
-          type: 'row',
-          fields: [
-            {
-              name: 'priceLabel',
-              type: 'text',
-              label: 'Етикет на цената',
-              localized: true,
-              admin: { description: 'Например «Промоция», «Базова цена», «Стойност на ваучера».' },
-            },
-            {
-              name: 'priceNote',
-              type: 'text',
-              label: 'Бележка към цената',
-              localized: true,
-              admin: { description: 'Например «или 495 € на ниво при самостоятелно плащане».' },
-            },
-          ],
-        },
-        {
-          name: 'legacyUrl',
-          type: 'text',
-          label: 'Стар адрес',
-          admin: { readOnly: true, description: 'От стария сайт, за пренасочването.' },
-        },
-      ],
     },
     {
       type: 'collapsible',

@@ -4,7 +4,8 @@ import { Ticket, ticket } from '@/components/patterns/Ticket'
 import { Button } from '@/components/ui/Button'
 import type { CourseState } from '@/lib/course-state'
 import { formatDateLong, formatPrice } from '@/lib/format'
-import type { Course, Office } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
+import type { Office } from '@/payload-types'
 import styles from './CourseDetails.module.css'
 
 // Details ticket (91:1412 / 117:956): three groups of facts (Кога, Къде и за кого, Какво
@@ -14,7 +15,7 @@ import styles from './CourseDetails.module.css'
 // field is left out, and a group with no fields isn't shown (State: Липсващи полета).
 
 type CourseDetailsProps = {
-  course: Course
+  course: SiteCourse
   state: CourseState
   /** The audience as on the card, e.g. «Ученици 12 клас». */
   participants?: string
@@ -51,11 +52,11 @@ export async function CourseDetails({
           label: t('field.start'),
           value: group
             ? state.status === 'running'
-              ? t('status.runningSince', { date: formatDateLong(group.startDate) })
-              : formatDateLong(group.startDate)
+              ? t('status.runningSince', { date: formatDateLong(group.start) })
+              : formatDateLong(group.start)
             : t('status.none'),
         },
-        { label: t('field.end'), value: group?.endDate && formatDateLong(group.endDate) },
+        { label: t('field.end'), value: group?.end && formatDateLong(group.end) },
         { label: t('field.days'), value: group?.days },
         { label: t('field.hours'), value: group?.hours },
         { label: t('field.duration'), value: course.duration },

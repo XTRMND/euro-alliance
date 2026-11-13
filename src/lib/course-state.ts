@@ -1,4 +1,4 @@
-import type { Course } from '@/payload-types'
+import type { Course, Group } from '@/payload-types'
 
 // The state of a course, from its groups (the user's model of 02.11.2026; the board of states is
 // 126:1940). A course is what the centre teaches; its dates belong to its groups:
@@ -16,7 +16,13 @@ import type { Course } from '@/payload-types'
 
 export const fewSeatsBelow = 3
 
-export type CourseGroup = NonNullable<Course['groups']>[number]
+export type CourseGroup = Group
+
+/**
+ * A course as the site reads it (src/lib/course-query.ts): its groups, records of the groups
+ * collection, as a list. In the admin they're a join field.
+ */
+export type SiteCourse = Omit<Course, 'groups'> & { groups: CourseGroup[] }
 
 export type GroupStatus = 'upcoming' | 'running' | 'ended'
 
@@ -24,15 +30,12 @@ export type CourseStatus = 'upcoming' | 'running' | 'none'
 
 export const courseStatuses = ['upcoming', 'running', 'none'] as const
 
-type StatefulCourse = Pick<Course, 'groups' | 'voucherEligible' | 'free'>
+type StatefulCourse = Pick<SiteCourse, 'groups' | 'voucherEligible' | 'free'>
 
 /** `today` is midnight in Bulgaria as an ISO string (startOfTodayInSofia). */
-export function groupStatus(
-  group: Pick<CourseGroup, 'startDate' | 'endDate'>,
-  today: string,
-): GroupStatus {
-  if (group.startDate >= today) return 'upcoming'
-  if (group.endDate && group.endDate < today) return 'ended'
+export function groupStatus(group: Pick<CourseGroup, 'start' | 'end'>, today: string): GroupStatus {
+  if (group.start >= today) return 'upcoming'
+  if (group.end && group.end < today) return 'ended'
   return 'running'
 }
 
@@ -47,10 +50,10 @@ export function currentGroups(
   }))
   const upcoming = groups
     .filter((item) => item.status === 'upcoming')
-    .sort((a, b) => a.group.startDate.localeCompare(b.group.startDate))
+    .sort((a, b) => a.group.start.localeCompare(b.group.start))
   const running = groups
     .filter((item) => item.status === 'running')
-    .sort((a, b) => b.group.startDate.localeCompare(a.group.startDate))
+    .sort((a, b) => b.group.start.localeCompare(a.group.start))
   return [...upcoming, ...running] as { group: CourseGroup; status: 'upcoming' | 'running' }[]
 }
 
@@ -103,10 +106,8 @@ export function compareCourses(
 ): number {
   const rank = statusRank[a.state.status] - statusRank[b.state.status]
   if (rank) return rank
-  if (a.state.status === 'upcoming')
-    return a.state.group!.startDate.localeCompare(b.state.group!.startDate)
-  if (a.state.status === 'running')
-    return b.state.group!.startDate.localeCompare(a.state.group!.startDate)
+  if (a.state.status === 'upcoming') return a.state.group!.start.localeCompare(b.state.group!.start)
+  if (a.state.status === 'running') return b.state.group!.start.localeCompare(a.state.group!.start)
   return a.course.title.localeCompare(b.course.title, 'bg')
 }
 

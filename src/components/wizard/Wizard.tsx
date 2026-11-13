@@ -8,7 +8,7 @@ import { courseTags } from '@/lib/courses'
 import { startOfTodayInSofia } from '@/lib/format'
 import type { InquiryTopic } from '@/lib/inquiries'
 import { languages, routes } from '@/lib/routes'
-import type { Course } from '@/payload-types'
+import type { SiteCourse } from '@/lib/course-state'
 import { ContactWizard, type WizardCourse } from './ContactWizard'
 
 // The contact wizard with its data: the listed courses, the translation languages and the
@@ -27,7 +27,7 @@ const stickerOf: Record<InquiryTopic | 'done', Parameters<typeof Sticker>[0]['to
 type WizardProps = {
   initialTopic?: InquiryTopic
   /** A course to preselect, even if it isn't listed any more (its own page). */
-  initialCourse?: Course
+  initialCourse?: SiteCourse
   initialPair?: { from?: string; to?: string }
   sourcePage: string
   headingLevel?: 'h2' | 'h3'
@@ -76,7 +76,7 @@ export async function Wizard({
             // «Удобен график»: the course's upcoming and running groups.
             schedules: currentGroups(course, startOfTodayInSofia())
               .map(({ group }) =>
-                [group.label, [group.days, group.hours].filter(Boolean).join(' ')]
+                [group.name, [group.days, group.hours].filter(Boolean).join(' ')]
                   .filter(Boolean)
                   .join(': '),
               )

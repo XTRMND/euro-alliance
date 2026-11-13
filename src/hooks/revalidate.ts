@@ -30,3 +30,8 @@ export const revalidateCollection: CollectionAfterChangeHook & CollectionAfterDe
 }) => {
   revalidate(tags.collection(collection.slug))
 }
+
+/** A course's groups (and, from PR 2, prices) are part of every course read: mark those stale. */
+export const revalidateCourses: CollectionAfterChangeHook & CollectionAfterDeleteHook = () => {
+  revalidate(tags.collection('courses'))
+}

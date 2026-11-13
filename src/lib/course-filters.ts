@@ -1,7 +1,7 @@
-import type { Course } from '@/payload-types'
 import {
   type CourseStatus,
   type CourseState,
+  type SiteCourse,
   compareCourses,
   courseStatuses,
   currentGroups,
@@ -142,11 +142,14 @@ export function monthOf(date: string): string {
 }
 
 /** The months in which upcoming groups start: the «Начало» options. */
-export function courseMonths(courses: Pick<Course, 'groups' | 'voucherEligible'>[], today: string) {
+export function courseMonths(
+  courses: Pick<SiteCourse, 'groups' | 'voucherEligible'>[],
+  today: string,
+) {
   const months = courses.flatMap((course) =>
     currentGroups(course, today)
       .filter((item) => item.status === 'upcoming')
-      .map((item) => monthOf(item.group.startDate)),
+      .map((item) => monthOf(item.group.start)),
   )
   return [...new Set(months)].sort()
 }
@@ -162,7 +165,7 @@ const priceOf = ({ state }: Stated<unknown>) =>
  * they add up (OR); groups narrow each other (AND). A course matches a format through its own
  * format or one of its groups', and a month through an upcoming group starting in it.
  */
-export function filterCourses<C extends Course>(
+export function filterCourses<C extends SiteCourse>(
   courses: C[],
   filters: CourseFilters,
   today: string,
@@ -182,7 +185,7 @@ export function filterCourses<C extends Course>(
     if (filters.voucher && !course.voucherEligible) return false
     if (filters.start) {
       const starts = groups.filter((item) => item.status === 'upcoming')
-      if (!starts.some(({ group }) => monthOf(group.startDate) === filters.start)) return false
+      if (!starts.some(({ group }) => monthOf(group.start) === filters.start)) return false
     }
     return true
   })

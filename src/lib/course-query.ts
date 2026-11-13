@@ -1,27 +1,55 @@
 import type { Payload } from 'payload'
 import type { Course } from '@/payload-types'
 import { type CourseFilters, courseMonths, filterCourses } from './course-filters'
-import { withStates } from './course-state'
+import { type CourseGroup, type SiteCourse, withStates } from './course-state'
 
 // The course reads, on a Payload instance so integration tests run them against a real database.
 // The site calls them through the cached wrappers in src/lib/cms.ts. Every list starts from all
 // published courses (a few dozen): their states come from their groups, so the filters and the
-// order run in code (src/lib/course-filters.ts, src/lib/course-state.ts).
+// order run in code (src/lib/course-filters.ts, src/lib/course-state.ts). A course's groups are
+// records of the groups collection, read in one query and attached as a list (SiteCourse).
+
+/** The courses with their groups (published courses' only, as an anonymous visitor). */
+export async function withGroups(
+  payload: Payload,
+  courses: Course[],
+  depth = 0,
+): Promise<SiteCourse[]> {
+  const ids = courses.map((course) => course.id)
+  const { docs } = ids.length
+    ? await payload.find({
+        collection: 'groups',
+        locale: 'bg',
+        depth,
+        where: { course: { in: ids } },
+        sort: 'start',
+        pagination: false,
+        overrideAccess: false,
+      })
+    : { docs: [] as CourseGroup[] }
+  const courseOf = (group: CourseGroup) =>
+    typeof group.course === 'object' ? group.course.id : group.course
+  return courses.map((course) => ({
+    ...course,
+    groups: docs.filter((group) => courseOf(group) === course.id),
+  }))
+}
 
 /** Every published course, as an anonymous visitor. */
-export async function findAllCourses(payload: Payload): Promise<Course[]> {
+export async function findAllCourses(payload: Payload): Promise<SiteCourse[]> {
   const { docs } = await payload.find({
     collection: 'courses',
     locale: 'bg',
     depth: 0,
+    joins: false,
     pagination: false,
     overrideAccess: false,
   })
-  return docs
+  return withGroups(payload, docs)
 }
 
 /** One page of the listing (or several, after «Покажи още»). */
-export function listCourses(courses: Course[], filters: CourseFilters, today: string) {
+export function listCourses(courses: SiteCourse[], filters: CourseFilters, today: string) {
   const listed = filterCourses(courses, filters, today)
   return {
     docs: listed.slice(0, filters.shown).map(({ course }) => course),
@@ -39,16 +67,17 @@ export async function findCourseMonths(payload: Payload, today: string): Promise
 }
 
 /** A published course by its slug, with its groups' offices, as an anonymous visitor. */
-export async function findCourse(payload: Payload, slug: string) {
+export async function findCourse(payload: Payload, slug: string): Promise<SiteCourse | null> {
   const { docs } = await payload.find({
     collection: 'courses',
     locale: 'bg',
     depth: 1,
+    joins: false,
     where: { slug: { equals: slug } },
     limit: 1,
     overrideAccess: false,
   })
-  return docs[0] ?? null
+  return docs[0] ? ((await withGroups(payload, docs, 1))[0] ?? null) : null
 }
 
 /**
@@ -56,10 +85,10 @@ export async function findCourse(payload: Payload, slug: string) {
  * without the course itself; up to six.
  */
 export function relatedCourses(
-  courses: Course[],
+  courses: SiteCourse[],
   course: { id: number; category: string; language?: string | null },
   today: string,
-): Course[] {
+): SiteCourse[] {
   const listed = withStates(
     courses.filter((doc) => doc.id !== course.id && doc.category === course.category),
     today,

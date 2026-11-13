@@ -4,7 +4,13 @@ import { getPayload } from 'payload'
 import { tags } from '@/hooks/revalidate'
 import type { CourseFilters } from '@/lib/course-filters'
 import { courseMonths } from '@/lib/course-filters'
-import { findAllCourses, findCourse, listCourses, relatedCourses } from '@/lib/course-query'
+import {
+  findAllCourses,
+  findCourse,
+  listCourses,
+  relatedCourses,
+  withGroups,
+} from '@/lib/course-query'
 import { startOfTodayInSofia } from '@/lib/format'
 import { tintNames } from '@/lib/media/tints'
 import type { Media, Program } from '@/payload-types'
@@ -378,17 +384,18 @@ export const getLegalPage = unstable_cache(
 export const getCoursesByIds = unstable_cache(
   async (ids: number[]) => {
     if (ids.length === 0) return []
-    const { docs } = await (
-      await payload()
-    ).find({
+    const cms = await payload()
+    const { docs } = await cms.find({
       collection: 'courses',
       locale: 'bg',
       depth: 1,
+      joins: false,
       where: { id: { in: ids } },
       pagination: false,
       overrideAccess: false,
     })
-    return ids.flatMap((id) => docs.filter((course) => course.id === id))
+    const courses = await withGroups(cms, docs)
+    return ids.flatMap((id) => courses.filter((course) => course.id === id))
   },
   ['courses-by-ids'],
   { tags: [tags.collection('courses')] },

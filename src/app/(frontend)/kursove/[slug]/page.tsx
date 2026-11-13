@@ -145,12 +145,12 @@ export default async function CoursePage({ params }: PageProps<'/kursove/[slug]'
           <CourseGroups
             title={t('course.groups')}
             groups={groups.map(({ group, status }) => ({
-              id: group.id ?? group.startDate,
-              label: group.label,
+              id: String(group.id),
+              label: group.name,
               start:
                 status === 'running'
-                  ? t('course.status.runningSince', { date: formatDateLong(group.startDate) })
-                  : t('course.startsOn', { date: formatDateLong(group.startDate) }),
+                  ? t('course.status.runningSince', { date: formatDateLong(group.start) })
+                  : t('course.startsOn', { date: formatDateLong(group.start) }),
               details: [
                 [group.days, group.hours].filter(Boolean).join(' '),
                 formatLabel(group.format),

@@ -39,7 +39,13 @@ export type DocumentFixture = { filename: string; mimetype: string; alt: string;
 /** A cover from the approved Figma file for a real article (scripts/import/figma-covers.json). */
 export type CoverFixture = { legacyId: number; file: string; alt: string; textInImage: boolean }
 
+/** A group as the old entry gives it; the seed maps it to the groups collection's fields. */
 export type GroupFixture = Record<string, unknown> & {
+  label?: string
+  startDate: string
+  endDate?: string
+  /** The old dated entry: the group's natural key. */
+  legacyUrl: string
   /** The office by its role (ids differ between databases). */
   office?: 'courses'
 }
