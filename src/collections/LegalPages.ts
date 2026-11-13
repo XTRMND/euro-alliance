@@ -1,4 +1,5 @@
 import { BlocksFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { namedBlock } from '@/fields/row-labels'
 import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { destinationOptions } from '@/lib/destinations'
@@ -165,7 +166,7 @@ export const LegalPages: CollectionConfig = {
               ...defaultFeatures.filter(
                 (feature) => !['heading', 'upload', 'relationship'].includes(feature.key),
               ),
-              BlocksFeature({ blocks: [LegalTable, LegalLink] }),
+              BlocksFeature({ blocks: [LegalTable, LegalLink].map(namedBlock) }),
             ],
           }),
         },

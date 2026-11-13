@@ -1,7 +1,9 @@
 'use client'
 
 import { Link, useLocale, useStepNav } from '@payloadcms/ui'
+import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { lostFrom } from '@/lib/admin-nav'
 import styles from './shell.module.css'
 
 // «Admin / Top bar» (354:83) and the hairline sub-nav under it («Admin / Sub-nav tab», 354:58):
@@ -19,6 +21,7 @@ type TopBarProps = {
   accountUrl: string
   logoutUrl: string
   userName: string
+  adminRoute: string
 }
 
 const localeLabels: Record<string, string> = { bg: 'БГ', en: 'EN' }
@@ -42,6 +45,7 @@ export function TopBar({
   accountUrl,
   logoutUrl,
   userName,
+  adminRoute,
 }: TopBarProps) {
   const { stepNav } = useStepNav()
   const locale = useLocale()
@@ -54,7 +58,13 @@ export function TopBar({
   const title = onDocument && typeof last === 'string' ? last : undefined
   // «Съдържание / Цени» for a first-level screen; «Новини / Ден на …» for its documents.
   const path: Crumb[] = trail.length === 1 && !title ? [{ label: 'Съдържание' }, ...trail] : trail
-  const crumbs = title ? [...path, { label: title }] : path
+  // On the admin's 404 the path says so, not «Табло».
+  const lost = lostFrom(activeKey, usePathname(), adminRoute)
+  const crumbs = lost
+    ? [{ label: 'Съдържание' }, { label: 'Страницата не е намерена' }]
+    : title
+      ? [...path, { label: title }]
+      : path
   const current = crumbs.at(-1)
 
   return (

@@ -1,5 +1,5 @@
 /* «Admin · 01 Табло» (359:969). The layout rule (docs/admin-redesign.md, decision 3): one card at
-   the full height, 32px around it, 1096px at most; equal columns; fixed rows; only the two lists
+   the full height, 32px around it, the width beside the menu; equal columns; fixed rows; only the two lists
    grow, and scroll inside the card. */
 
 .srOnly {

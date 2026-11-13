@@ -3,6 +3,9 @@ import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
 
 // Company facts for the footer, legal pages and structured data (docs/cms-schema.md § 7).
+// «08.02.1999», as the site writes dates.
+const dayOnly = { date: { pickerAppearance: 'dayOnly' as const, displayFormat: 'dd.MM.yyyy' } }
+
 export const Site: GlobalConfig = {
   slug: 'site',
   admin: { hideAPIURL: true },
@@ -17,7 +20,7 @@ export const Site: GlobalConfig = {
     {
       type: 'row',
       fields: [
-        { name: 'foundedOn', type: 'date', label: 'Основана на' },
+        { name: 'foundedOn', type: 'date', label: 'Основана на', admin: dayOnly },
         { name: 'foundedIn', type: 'text', label: 'Основана в', localized: true },
       ],
     },
@@ -28,7 +31,7 @@ export const Site: GlobalConfig = {
       fields: [
         { name: 'issuer', type: 'text', label: 'Издаден от', localized: true },
         { name: 'number', type: 'text', label: 'Номер' },
-        { name: 'issuedOn', type: 'date', label: 'Дата' },
+        { name: 'issuedOn', type: 'date', label: 'Дата', admin: dayOnly },
       ],
     },
     {

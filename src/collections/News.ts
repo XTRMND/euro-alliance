@@ -1,4 +1,5 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
+import { namedBlock } from '@/fields/row-labels'
 import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { inForm } from '@/fields/in-form'
@@ -155,7 +156,7 @@ export const News: CollectionConfig = {
                 features: ({ defaultFeatures }) => [
                   ...defaultFeatures.filter((feature) => feature.key !== 'heading'),
                   HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
-                  BlocksFeature({ blocks: [NewsFigures, NewsLinkCard] }),
+                  BlocksFeature({ blocks: [NewsFigures, NewsLinkCard].map(namedBlock) }),
                 ],
               }),
             },

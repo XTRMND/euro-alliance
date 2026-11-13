@@ -60,7 +60,9 @@ html[data-theme='light'] {
   /* The shell */
   --admin-nav-width: 280px;
   --admin-margin: 32px; /* the layout rule: 32px around the screen's card */
-  --admin-max: 1096px; /* and the card's greatest width */
+  /* A screen's card spans the width beside the menu, the margin around it (the user, 13.11.2026;
+     it was held to 1096px before). */
+  --admin-max: none;
   --nav-width: var(--admin-nav-width);
   --gutter-h: var(--admin-margin);
 
@@ -686,7 +688,8 @@ button:focus-visible {
 
 .section-rail > .tabs-field__tabs-wrap {
   position: sticky;
-  top: 16px;
+  /* Under the top bar (and its sub-nav), with air above: it stays in sight while the form scrolls. */
+  top: calc(var(--admin-top, 64px) + 16px);
   overflow: hidden;
   border: 1px solid var(--color-border-default);
   border-radius: 12px;
@@ -812,4 +815,33 @@ button:focus-visible {
   color: var(--color-brand-primary);
   font-weight: 600;
   font-size: 13px;
+}
+
+/* The form's tabs wrap onto a second line where they don't fit (a narrow form beside the live
+   preview), in place of a scrollbar that cut the first tab off. */
+
+.tabs-field__tabs-wrap {
+  overflow-x: visible;
+}
+
+.tabs-field__tabs {
+  flex-wrap: wrap;
+  row-gap: 0;
+}
+
+/* «Добави секция» and «Добави …»: the focus ring hugs the button, not the row it sits in. */
+
+.blocks-field__drawer-toggler,
+.array-field__add-row {
+  display: inline-flex;
+  width: fit-content;
+  height: auto;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.blocks-field__drawer-toggler:focus-visible,
+.array-field__add-row:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 3px;
 }

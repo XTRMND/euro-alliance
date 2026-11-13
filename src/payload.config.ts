@@ -34,6 +34,7 @@ import { Navigation } from './globals/Navigation'
 import { Site } from './globals/Site'
 import { jobs } from './jobs'
 import { emailAdapter } from './lib/email'
+import { namedLists } from './fields/row-labels'
 import { isPreviewKind, previewUrl } from './lib/preview'
 import { migrations } from './migrations'
 import { seed } from './seed'
@@ -77,6 +78,8 @@ export default buildConfig({
       },
       // «Admin · 01 Табло» (359:969) in place of Payload's lists of collections and globals.
       views: { dashboard: { Component: '@/components/admin/dashboard/Dashboard#Dashboard' } },
+      // The text editor's few fixed English labels, in Bulgarian (decision 12).
+      providers: ['@/components/admin/EditorLabels#EditorLabels'],
       beforeLogin: ['@/components/admin/shell/Login#BeforeLogin'],
       afterLogin: ['@/components/admin/shell/Login#AfterLogin'],
     },
@@ -94,8 +97,25 @@ export default buildConfig({
     supportedLanguages: { bg },
     fallbackLanguage: 'bg',
     // The only blocks in the forms are a programme's sections («Добави секция», Figma 373:1726).
-    translations: { bg: { fields: { searchForBlock: 'Търси секция…' } } },
+    translations: {
+      bg: {
+        fields: { searchForBlock: 'Търси секция…' },
+        // The admin's 404 (decision 12), in the site's own words.
+        general: {
+          nothingFound: 'Страницата не е намерена',
+          sorryNotFound:
+            'Няма такава страница в админа. Може адресът да е сгрешен или съдържанието да е изтрито.',
+          backToDashboard: 'Към таблото',
+          // Leaving a form with changes: in the polite form, as the rest of the admin.
+          leaveWithoutSaving: 'Напускане без запазване',
+          changesNotSaved: 'Промените не са запазени. Ако напуснете сега, ще ги загубите.',
+          stayOnThisPage: 'Останете на страницата',
+          leaveAnyway: 'Напуснете без запазване',
+        },
+      },
+    },
   },
+  // Every list in the forms gets its Bulgarian words and a row label (src/fields/row-labels.ts).
   collections: [
     Users,
     Media,
@@ -118,8 +138,8 @@ export default buildConfig({
     Redirects,
     Inquiries,
     InquiryFiles,
-  ],
-  globals: [Site, Navigation, Home, InquiryRouting, Contact, About],
+  ].map(namedLists),
+  globals: [Site, Navigation, Home, InquiryRouting, Contact, About].map(namedLists),
   jobs,
   localization: {
     locales: [

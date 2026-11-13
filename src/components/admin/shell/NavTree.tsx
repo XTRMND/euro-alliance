@@ -1,8 +1,9 @@
 'use client'
 
 import { Link } from '@payloadcms/ui'
+import { usePathname } from 'next/navigation'
 import { useState, useSyncExternalStore } from 'react'
-import type { NavNode } from '@/lib/admin-nav'
+import { type NavNode, lostFrom } from '@/lib/admin-nav'
 import styles from './shell.module.css'
 
 // The sidebar's tree («Admin / Nav item», 354:53): three levels, a branch opens and closes, and
@@ -16,9 +17,12 @@ const ancestors = (key?: string) =>
         .map((_, index, parts) => parts.slice(0, index + 1).join('/'))
     : []
 
-type NavTreeProps = { tree: NavNode[]; footer: NavNode[]; activeKey?: string }
+type NavTreeProps = { tree: NavNode[]; footer: NavNode[]; activeKey?: string; adminRoute: string }
 
-export function NavTree({ tree, footer, activeKey }: NavTreeProps) {
+export function NavTree({ tree, footer, activeKey: openKey, adminRoute }: NavTreeProps) {
+  // The admin's 404 is served as the dashboard's address would be: nothing in the menu is open.
+  const pathname = usePathname()
+  const activeKey = lostFrom(openKey, pathname, adminRoute) ? undefined : openKey
   // A branch is open when it's above the open screen, unless it was opened or closed by hand.
   const [toggled, setToggled] = useState<Record<string, boolean>>({})
   const above = new Set(ancestors(activeKey))
