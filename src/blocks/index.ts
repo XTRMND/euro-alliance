@@ -1,6 +1,12 @@
 import type { Block, Field } from 'payload'
 import { systemCardFields } from '@/fields/system-card'
 import { destinationOptions } from '@/lib/destinations'
+import {
+  type SectionSlug,
+  sectionGroups,
+  sectionKinds,
+  sectionThumbnail,
+} from '@/lib/admin-sections'
 
 // Program page sections (docs/cms-schema.md § 3, Programs): each block is one component of
 // page 03. Every block has its section heading; empty optional fields hide their element. A
@@ -482,24 +488,45 @@ export const RichTextBlock: Block = {
   fields: [...heading, { name: 'body', type: 'richText', label: 'Текст', localized: true }],
 }
 
+// A programme's sections, as «Добави секция» lists them (Figma 373:1726): each kind with its
+// Bulgarian name, its group and its type icon, and a row that says what the section holds
+// (src/lib/admin-sections.ts). The block's own name field isn't shown: the row names itself.
+const asSection = (block: Block): Block => {
+  const kind = sectionKinds[block.slug as SectionSlug]
+  return {
+    ...block,
+    labels: { singular: kind.name, plural: kind.name },
+    admin: {
+      ...block.admin,
+      group: sectionGroups[kind.group],
+      disableBlockName: true,
+      images: { thumbnail: { url: sectionThumbnail(kind.icon), alt: kind.hint } },
+      components: { Label: '@/components/admin/edit/SectionRowLabel#SectionRowLabel' },
+    },
+  }
+}
+
 export const programBlocks = [
+  // Съдържание
   FeaturesBlock,
-  LevelsBlock,
   StepsBlock,
+  FiguresBlock,
+  FaqBlock,
+  FaqColumnsBlock,
+  IndexCardsBlock,
+  LevelsBlock,
+  CalloutBlock,
+  RichTextBlock,
+  // Курсове и програми
   TextbookSystemsBlock,
   SystemCardsBlock,
   CertificatesBlock,
+  TeacherProgrammesBlock,
   ProfessionsBlock,
   ExamsBlock,
-  TeacherProgrammesBlock,
-  IndexCardsBlock,
-  ProjectsBlock,
-  SendDocumentBlock,
   PriceFactorsBlock,
-  FaqColumnsBlock,
+  // Контакт и проекти
   LocationsBlock,
-  FaqBlock,
-  FiguresBlock,
-  CalloutBlock,
-  RichTextBlock,
-]
+  SendDocumentBlock,
+  ProjectsBlock,
+].map(asSection)

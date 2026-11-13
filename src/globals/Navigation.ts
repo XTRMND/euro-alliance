@@ -2,6 +2,7 @@ import type { Field, GlobalConfig } from 'payload'
 import { anyone, isStaff } from '@/access'
 import { revalidateGlobal } from '@/hooks/revalidate'
 import { type LinkType, sitePageOptions } from '@/lib/nav-links'
+import messages from '@/messages/bg.json'
 
 // Header, mobile menu and footer links (docs/cms-schema.md § 7). Labels are content, so they live
 // here, not in messages/*.json. A header or menu link with sub-links is a disclosure button that
@@ -109,13 +110,17 @@ const target = (optional = false): Field[] => [
   },
 ]
 
-const rowLabel = { components: { RowLabel: '@/components/admin/RowLabel#LabelRowLabel' } }
+// Rows start closed: each says where it goes (LabelRowLabel).
+const rowLabel = {
+  initCollapsed: true,
+  components: { RowLabel: '@/components/admin/RowLabel#LabelRowLabel' },
+}
 
 const links = (name: string, title: string, extra: Field[] = []): Field => ({
   name,
   type: 'array',
   label: title,
-  labels: { singular: 'Връзка', plural: 'Връзки' },
+  labels: { singular: 'връзка', plural: 'Връзки' },
   admin: rowLabel,
   fields: [label, { type: 'row', fields: target() }, ...extra],
 })
@@ -125,45 +130,101 @@ const linksWithGroups = (name: string, title: string): Field => ({
   name,
   type: 'array',
   label: title,
-  labels: { singular: 'Връзка', plural: 'Връзки' },
+  labels: { singular: 'връзка', plural: 'Връзки' },
   admin: rowLabel,
-  fields: [label, { type: 'row', fields: target(true) }, links('children', 'Подвръзки')],
+  fields: [
+    label,
+    { type: 'row', fields: target(true) },
+    {
+      ...links('children', 'Подвръзки'),
+      labels: { singular: 'подвръзка', plural: 'Подвръзки' },
+    } as Field,
+  ],
 })
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
-  admin: { hideAPIURL: true },
+  admin: {
+    hideAPIURL: true,
+    description: 'Менюто на сайта. Връзките се избират от страниците — без ръчно писане на адреси.',
+  },
   label: 'Навигация',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },
   fields: [
+    // «Admin · 12 Навигация» (377:2711): one tab per place the links show. The tabs only lay the
+    // form out.
     {
-      name: 'header',
-      type: 'group',
-      label: 'Горна лента (компютър)',
-      fields: [
-        linksWithGroups('left', 'Вляво от логото'),
-        linksWithGroups('right', 'Вдясно от логото'),
-      ],
-    },
-    linksWithGroups('menu', 'Мобилно меню'),
-    {
-      name: 'footer',
-      type: 'array',
-      label: 'Колони в долния колонтитул',
-      labels: { singular: 'Колона', plural: 'Колони' },
-      admin: { components: { RowLabel: '@/components/admin/RowLabel#HeadingRowLabel' } },
-      fields: [
-        { name: 'heading', type: 'text', label: 'Заглавие', required: true, localized: true },
-        links('links', 'Връзки', [
-          {
-            name: 'icon',
-            type: 'select',
-            label: 'Икона',
-            options: [{ label: 'Facebook', value: 'facebook' }],
-            admin: { description: 'На компютър връзката се показва като икона.' },
-          },
-        ]),
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Горна лента',
+          fields: [
+            {
+              name: 'headerPreview',
+              type: 'ui',
+              admin: {
+                components: {
+                  Field: {
+                    path: '@/components/admin/edit/NavPreview#NavPreview',
+                    clientProps: { cta: messages.header.cta },
+                  },
+                },
+              },
+            },
+            {
+              name: 'header',
+              type: 'group',
+              label: false,
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    linksWithGroups('left', 'Вляво от логото'),
+                    linksWithGroups('right', 'Вдясно от логото'),
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Мобилно меню',
+          fields: [linksWithGroups('menu', 'Мобилно меню')],
+        },
+        {
+          label: 'Долна част',
+          fields: [
+            {
+              name: 'footer',
+              type: 'array',
+              label: 'Колони в долния колонтитул',
+              labels: { singular: 'колона', plural: 'Колони' },
+              admin: {
+                initCollapsed: true,
+                components: { RowLabel: '@/components/admin/RowLabel#HeadingRowLabel' },
+              },
+              fields: [
+                {
+                  name: 'heading',
+                  type: 'text',
+                  label: 'Заглавие',
+                  required: true,
+                  localized: true,
+                },
+                links('links', 'Връзки', [
+                  {
+                    name: 'icon',
+                    type: 'select',
+                    label: 'Икона',
+                    options: [{ label: 'Facebook', value: 'facebook' }],
+                    admin: { description: 'На компютър връзката се показва като икона.' },
+                  },
+                ]),
+              ],
+            },
+          ],
+        },
       ],
     },
   ],

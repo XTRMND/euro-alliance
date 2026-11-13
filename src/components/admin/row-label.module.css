@@ -1,0 +1,47 @@
+/* A navigation link's row («Admin · 12 Навигация», 377:2711). */
+
+.link {
+  display: flex;
+  flex: 1 1 0;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+
+.text {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  color: var(--color-text-primary);
+  font: 600 14px / 1.2 var(--font-body);
+}
+
+.target {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font: 400 12px / 1.2 var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.target svg {
+  flex: none;
+}
+
+.pill {
+  flex: none;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  font: 600 12px / 1.2 var(--font-body);
+  white-space: nowrap;
+}

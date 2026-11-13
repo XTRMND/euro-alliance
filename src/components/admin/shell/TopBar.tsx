@@ -1,12 +1,12 @@
 'use client'
 
 import { Link, useLocale, useStepNav } from '@payloadcms/ui'
-import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import styles from './shell.module.css'
 
 // «Admin / Top bar» (354:83) and the hairline sub-nav under it («Admin / Sub-nav tab», 354:58):
-// where you are in the menu, the content language (БГ / EN), a link to the site and the account.
+// where you are in the menu, a link to the site and the account. No БГ / EN switch (the user,
+// 12.11.2026): the content is edited in Bulgarian until the English site is built.
 
 type Crumb = { label: string; href?: string }
 
@@ -19,11 +19,9 @@ type TopBarProps = {
   accountUrl: string
   logoutUrl: string
   userName: string
-  locales: string[]
 }
 
 const localeLabels: Record<string, string> = { bg: 'БГ', en: 'EN' }
-const localeNames: Record<string, string> = { bg: 'Български', en: 'English' }
 
 /** «ЕА» from «Евро Алианс», «SH» from «shots@…». */
 const initials = (name: string) => {
@@ -44,14 +42,11 @@ export function TopBar({
   accountUrl,
   logoutUrl,
   userName,
-  locales,
 }: TopBarProps) {
   const { stepNav } = useStepNav()
   const locale = useLocale()
   // Right after signing in the content language isn't set yet: Bulgarian, the default.
   const code = locale?.code ?? 'bg'
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
 
   // The breadcrumb: the menu's path to this screen («Съдържание» before a first-level item), and
   // on a document's screen the document's own title last (Payload's step nav knows it).
@@ -61,12 +56,6 @@ export function TopBar({
   const path: Crumb[] = trail.length === 1 && !title ? [{ label: 'Съдържание' }, ...trail] : trail
   const crumbs = title ? [...path, { label: title }] : path
   const current = crumbs.at(-1)
-
-  const localeHref = (code: string) => {
-    const query = new URLSearchParams(searchParams.toString())
-    query.set('locale', code)
-    return `${pathname}?${query.toString()}`
-  }
 
   return (
     <div className={styles.top} data-admin="top">
@@ -94,22 +83,6 @@ export function TopBar({
             </span>
           )}
         </nav>
-
-        {locales.length > 1 && (
-          <div className={styles.locales} role="group" aria-label="Език на съдържанието">
-            {locales.map((option) => (
-              <Link
-                key={option}
-                href={localeHref(option)}
-                className={styles.locale}
-                aria-current={code === option ? 'true' : undefined}
-              >
-                <span aria-hidden="true">{localeLabels[option] ?? option.toUpperCase()}</span>
-                <span className={styles.srOnly}>{localeNames[option] ?? option}</span>
-              </Link>
-            ))}
-          </div>
-        )}
 
         <a href={siteUrl} target="_blank" rel="noopener" className={styles.site}>
           Виж сайта

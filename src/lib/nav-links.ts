@@ -191,3 +191,50 @@ export function resolveNavigation(navigation: {
     })),
   }
 }
+
+type DescribedLink = {
+  type?: LinkType | null
+  page?: string | null
+  program?: number | { id: number; title?: string | null } | null
+  course?: number | { id: number; title?: string | null } | null
+  url?: string | null
+  children?: unknown[] | null
+}
+
+/**
+ * Where a link goes, in the admin's words (Figma «Admin · 12 Навигация», 377:2711): «Страница ·
+ * Всички курсове», «Програма · Преводи и легализация», «Само подменю». `titles` names the
+ * programmes and courses the form holds only by id.
+ */
+export function describeLink(
+  link: DescribedLink,
+  titles: { programs?: Record<number, string>; courses?: Record<number, string> } = {},
+): string {
+  if (link.children?.length) return 'Само подменю'
+  const named = (
+    value: DescribedLink['program'],
+    known: Record<number, string> | undefined,
+    kind: string,
+  ) => {
+    if (!value) return kind
+    const title = typeof value === 'object' ? value.title : known?.[value]
+    return title ? `${kind} · ${title}` : kind
+  }
+  switch (link.type) {
+    case 'page': {
+      const page = link.page ? (sitePages as Record<string, { label: string }>)[link.page] : null
+      return page ? `Страница · ${page.label}` : 'Страница'
+    }
+    case 'program':
+      return named(link.program, titles.programs, 'Програма')
+    case 'course':
+      return named(link.course, titles.courses, 'Курс')
+    case 'custom':
+      return link.url ? `Адрес · ${link.url}` : 'Адрес'
+    default:
+      return 'Без връзка'
+  }
+}
+
+/** «1 подвръзка», «3 подвръзки». */
+export const childLinksLabel = (n: number) => `${n} ${n === 1 ? 'подвръзка' : 'подвръзки'}`

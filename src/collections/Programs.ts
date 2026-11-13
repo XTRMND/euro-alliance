@@ -7,6 +7,7 @@ import { revalidateCollection } from '@/hooks/revalidate'
 import { searchChanged, searchRemoved } from '@/lib/search-records'
 import { destinationOptions } from '@/lib/destinations'
 import { languages } from '@/lib/routes'
+import { inForm } from '@/fields/in-form'
 import { metaField } from '@/fields/meta'
 import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
@@ -80,236 +81,311 @@ export const Programs: CollectionConfig = {
   },
   fields: [
     adminEditedAtField,
-    metaField(),
+    // The edit screen's tabs («Admin · 08 Програма», 373:1726). They only lay the form out: the
+    // data keeps its shape.
     {
-      name: 'legacyUrl',
-      type: 'text',
-      label: 'Стар адрес',
-      admin: {
-        position: 'sidebar',
-        readOnly: true,
-        description: 'Страница, внесена от стария сайт (PR 21).',
-      },
-    },
-    { name: 'title', type: 'text', label: 'Заглавие (в админа)', required: true, localized: true },
-    slugField(),
-    {
-      type: 'row',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'type',
-          type: 'select',
-          label: 'Вид',
-          required: true,
-          options: [
-            { value: 'language', label: 'Език' },
-            { value: 'vocational', label: 'ЦПО професии' },
-            { value: 'vouchers', label: 'Ваучери' },
-            { value: 'teachers', label: 'Педагогически специалисти' },
-            { value: 'farmers', label: 'Земеделци' },
-            { value: 'computer', label: 'Компютърни курсове' },
-            { value: 'translations', label: 'Преводи' },
-          ],
-        },
-        {
-          name: 'language',
-          type: 'select',
-          label: 'Език',
-          options: languages.map((value) => ({ value, label: languageLabels[value] })),
-          admin: { condition: isLanguage },
-        },
-        {
-          name: 'audience',
-          type: 'select',
-          label: 'Аудитория',
-          options: [
-            { value: 'adults', label: 'Възрастни' },
-            { value: 'students', label: 'Ученици' },
-          ],
-          admin: { condition: isLanguage },
-        },
-      ],
-    },
-    // The translation agency's languages (a global until v0.5.0; docs/admin-redesign.md,
-    // decision 7): they fill the language pair of «Изпратете документ» on the homepage, the
-    // Translations page and the contact wizard; with none, the pair is hidden.
-    {
-      name: 'translationLanguages',
-      type: 'array',
-      label: 'Езици',
-      labels: { singular: 'Език', plural: 'Езици' },
-      admin: {
-        condition: (data) => data?.type === 'translations',
-        description: 'Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».',
-        components: { RowLabel: '@/components/admin/RowLabel#NameRowLabel' },
-      },
-      fields: [{ name: 'name', type: 'text', label: 'Език', required: true, localized: true }],
-    },
-    {
-      name: 'hero',
-      type: 'group',
-      label: 'Начало на страницата',
-      fields: [
-        { name: 'kicker', type: 'text', label: 'Надзаглавие', localized: true },
-        { name: 'heading', type: 'text', label: 'Заглавие', required: true, localized: true },
-        {
-          name: 'highlight',
-          type: 'text',
-          label: 'Подчертана фраза',
-          localized: true,
-          admin: { description: 'Част от заглавието, с пясъчен маркер.' },
-        },
-        {
-          name: 'highlightBreak',
-          type: 'checkbox',
-          label: 'Подчертаната фраза на нов ред',
-          defaultValue: true,
-          admin: { condition: (data) => !isLanguage(data) },
-        },
-        { name: 'lead', type: 'textarea', label: 'Текст', localized: true },
-        {
-          name: 'ctas',
-          type: 'array',
-          label: 'Бутони',
-          maxRows: 2,
-          admin: {
-            description:
-              'Към страница или към секция на тази страница (котвата ѝ). На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.',
-          },
+          label: 'Начало на страницата',
           fields: [
             {
-              type: 'row',
-              fields: [
-                { name: 'label', type: 'text', label: 'Текст', required: true, localized: true },
-                {
-                  name: 'destination',
-                  type: 'select',
-                  label: 'Води към',
-                  options: destinationOptions,
-                },
-                {
-                  name: 'anchor',
-                  type: 'text',
-                  label: 'Или към секция (котва)',
-                  validate: (
-                    value: string | null | undefined,
-                    { siblingData }: { siblingData: { destination?: string | null } },
-                  ) =>
-                    value
-                      ? anchorPattern.test(value) || 'Само малки латински букви, цифри и тирета.'
-                      : Boolean(siblingData.destination) || 'Изберете страница или котва.',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          name: 'sticker',
-          type: 'select',
-          label: 'Стикер',
-          options: topicOptions,
-          admin: { condition: (data) => !isLanguage(data) },
-        },
-        {
-          name: 'countBubble',
-          type: 'group',
-          label: 'Балонче с число',
-          fields: [
-            {
-              type: 'row',
-              fields: [
-                { name: 'value', type: 'text', label: 'Число' },
-                { name: 'label', type: 'text', label: 'Надпис', localized: true },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'upcoming',
-      type: 'group',
-      label: 'Курсове',
-      admin: {
-        description:
-          'Всички курсове на програмата със състоянието им: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.',
-      },
-      fields: [
-        {
-          type: 'row',
-          fields: [
-            { name: 'heading', type: 'text', label: 'Заглавие', localized: true },
-            {
-              name: 'linkLabel',
+              name: 'title',
               type: 'text',
-              label: 'Текст на връзката към всички',
+              label: 'Заглавие (в админа)',
+              required: true,
               localized: true,
             },
             {
-              // A general label goes to a general view (the user's rule, 02.11.2026).
-              name: 'linkScope',
-              type: 'select',
-              label: 'Връзката води към',
-              defaultValue: 'program',
-              options: [
-                { value: 'program', label: 'Курсовете на тази програма' },
-                { value: 'languages', label: 'Всички езикови курсове' },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-    {
-      name: 'notebook',
-      type: 'group',
-      label: 'Тетрадката (езикови програми)',
-      admin: { condition: isLanguage },
-      fields: [
-        { name: 'title', type: 'text', label: 'Заглавие (на ръка)', localized: true },
-        {
-          name: 'highlight',
-          type: 'number',
-          label: 'Подчертана фраза (номер)',
-          min: 1,
-          max: 4,
-          admin: { description: 'Коя фраза е с маркер; празно: без маркер.' },
-        },
-        {
-          name: 'phrases',
-          type: 'array',
-          label: 'Фрази',
-          maxRows: 4,
-          fields: [
-            {
               type: 'row',
               fields: [
-                { name: 'phrase', type: 'text', label: 'Фраза', required: true },
-                { name: 'translation', type: 'text', label: 'Превод', localized: true },
+                {
+                  name: 'type',
+                  type: 'select',
+                  label: 'Вид',
+                  required: true,
+                  options: [
+                    { value: 'language', label: 'Език' },
+                    { value: 'vocational', label: 'ЦПО професии' },
+                    { value: 'vouchers', label: 'Ваучери' },
+                    { value: 'teachers', label: 'Педагогически специалисти' },
+                    { value: 'farmers', label: 'Земеделци' },
+                    { value: 'computer', label: 'Компютърни курсове' },
+                    { value: 'translations', label: 'Преводи' },
+                  ],
+                },
+                {
+                  name: 'language',
+                  type: 'select',
+                  label: 'Език',
+                  options: languages.map((value) => ({ value, label: languageLabels[value] })),
+                  admin: { condition: isLanguage },
+                },
+                {
+                  name: 'audience',
+                  type: 'select',
+                  label: 'Аудитория',
+                  options: [
+                    { value: 'adults', label: 'Възрастни' },
+                    { value: 'students', label: 'Ученици' },
+                  ],
+                  admin: { condition: isLanguage },
+                },
+              ],
+            },
+            {
+              name: 'hero',
+              type: 'group',
+              // The tab says what it is.
+              label: false,
+              fields: [
+                { name: 'kicker', type: 'text', label: 'Надзаглавие', localized: true },
+                {
+                  name: 'heading',
+                  type: 'text',
+                  label: 'Заглавие',
+                  required: true,
+                  localized: true,
+                },
+                {
+                  name: 'highlight',
+                  type: 'text',
+                  label: 'Подчертана фраза',
+                  localized: true,
+                  admin: { description: 'Част от заглавието, с пясъчен маркер.' },
+                },
+                {
+                  name: 'highlightBreak',
+                  type: 'checkbox',
+                  label: 'Подчертаната фраза на нов ред',
+                  defaultValue: true,
+                  admin: { condition: (data) => !isLanguage(data) },
+                },
+                { name: 'lead', type: 'textarea', label: 'Текст', localized: true },
+                {
+                  name: 'ctas',
+                  type: 'array',
+                  label: 'Бутони',
+                  maxRows: 2,
+                  admin: {
+                    description:
+                      'Към страница или към секция на тази страница (котвата ѝ). На езиковите програми «Курсове: езици» води към предстоящите курсове на страницата, ако има такива.',
+                  },
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        {
+                          name: 'label',
+                          type: 'text',
+                          label: 'Текст',
+                          required: true,
+                          localized: true,
+                        },
+                        {
+                          name: 'destination',
+                          type: 'select',
+                          label: 'Води към',
+                          options: destinationOptions,
+                        },
+                        {
+                          name: 'anchor',
+                          type: 'text',
+                          label: 'Или към секция (котва)',
+                          validate: (
+                            value: string | null | undefined,
+                            { siblingData }: { siblingData: { destination?: string | null } },
+                          ) =>
+                            value
+                              ? anchorPattern.test(value) ||
+                                'Само малки латински букви, цифри и тирета.'
+                              : Boolean(siblingData.destination) || 'Изберете страница или котва.',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'sticker',
+                  type: 'select',
+                  label: 'Стикер',
+                  options: topicOptions,
+                  admin: { condition: (data) => !isLanguage(data) },
+                },
+                {
+                  name: 'countBubble',
+                  type: 'group',
+                  label: 'Балонче с число',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'value', type: 'text', label: 'Число' },
+                        { name: 'label', type: 'text', label: 'Надпис', localized: true },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
           ],
         },
         {
-          name: 'note',
-          type: 'group',
-          label: 'Бележка',
+          label: 'Курсове',
           fields: [
-            { name: 'title', type: 'text', label: 'Заглавие', localized: true },
             {
-              name: 'steps',
-              type: 'array',
-              label: 'Стъпки',
-              maxRows: 4,
+              name: 'upcoming',
+              type: 'group',
+              label: false,
+              admin: {
+                description:
+                  'Всички курсове на програмата със състоянието им: на езиковите програми по езика и аудиторията, на ваучерите тези с ваучер, на другите от категорията. Без заглавие или без курсове секцията не се показва.',
+              },
               fields: [
-                { name: 'text', type: 'text', label: 'Текст', required: true, localized: true },
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'heading', type: 'text', label: 'Заглавие', localized: true },
+                    {
+                      name: 'linkLabel',
+                      type: 'text',
+                      label: 'Текст на връзката към всички',
+                      localized: true,
+                    },
+                    {
+                      // A general label goes to a general view (the user's rule, 02.11.2026).
+                      name: 'linkScope',
+                      type: 'select',
+                      label: 'Връзката води към',
+                      defaultValue: 'program',
+                      options: [
+                        { value: 'program', label: 'Курсовете на тази програма' },
+                        { value: 'languages', label: 'Всички езикови курсове' },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
-            { name: 'done', type: 'number', label: 'Отметнати', min: 0, max: 4 },
+          ],
+        },
+        {
+          label: 'Тетрадката',
+          admin: { condition: isLanguage },
+          fields: [
+            {
+              name: 'notebook',
+              type: 'group',
+              label: false,
+              fields: [
+                { name: 'title', type: 'text', label: 'Заглавие (на ръка)', localized: true },
+                {
+                  name: 'highlight',
+                  type: 'number',
+                  label: 'Подчертана фраза (номер)',
+                  min: 1,
+                  max: 4,
+                  admin: { description: 'Коя фраза е с маркер; празно: без маркер.' },
+                },
+                {
+                  name: 'phrases',
+                  type: 'array',
+                  label: 'Фрази',
+                  maxRows: 4,
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'phrase', type: 'text', label: 'Фраза', required: true },
+                        { name: 'translation', type: 'text', label: 'Превод', localized: true },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  name: 'note',
+                  type: 'group',
+                  label: 'Бележка',
+                  fields: [
+                    { name: 'title', type: 'text', label: 'Заглавие', localized: true },
+                    {
+                      name: 'steps',
+                      type: 'array',
+                      label: 'Стъпки',
+                      maxRows: 4,
+                      fields: [
+                        {
+                          name: 'text',
+                          type: 'text',
+                          label: 'Текст',
+                          required: true,
+                          localized: true,
+                        },
+                      ],
+                    },
+                    { name: 'done', type: 'number', label: 'Отметнати', min: 0, max: 4 },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'Секции',
+          description:
+            'Секциите се показват на страницата в този ред. Хванете ⠿, за да ги подредите.',
+          fields: [
+            {
+              name: 'sections',
+              type: 'blocks',
+              label: false,
+              labels: { singular: 'секция', plural: 'Секции' },
+              // Rows start closed: each says what it holds (SectionRowLabel).
+              admin: { initCollapsed: true },
+              blocks: programBlocks,
+            },
+          ],
+        },
+        {
+          label: 'Езици',
+          admin: { condition: (data) => data?.type === 'translations' },
+          fields: [
+            // The translation agency's languages (a global until v0.5.0; docs/admin-redesign.md,
+            // decision 7): they fill the language pair of «Изпратете документ» on the homepage, the
+            // Translations page and the contact wizard; with none, the pair is hidden.
+            {
+              name: 'translationLanguages',
+              type: 'array',
+              label: 'Езици',
+              labels: { singular: 'Език', plural: 'Езици' },
+              admin: {
+                description:
+                  'Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».',
+                components: { RowLabel: '@/components/admin/RowLabel#NameRowLabel' },
+              },
+              fields: [
+                { name: 'name', type: 'text', label: 'Език', required: true, localized: true },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'SEO и адрес',
+          fields: [
+            inForm(slugField()),
+            inForm({
+              name: 'legacyUrl',
+              type: 'text',
+              label: 'Стар адрес',
+              admin: {
+                readOnly: true,
+                description: 'Страница, внесена от стария сайт (PR 21).',
+              },
+            }),
+            inForm(metaField()),
           ],
         },
       ],
     },
-    { name: 'sections', type: 'blocks', label: 'Секции', blocks: programBlocks },
   ],
 }

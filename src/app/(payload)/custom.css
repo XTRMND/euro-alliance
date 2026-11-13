@@ -610,3 +610,206 @@ button:focus-visible {
   background: var(--color-bg-page);
   font: 400 13px / 1.2 var(--font-body);
 }
+
+/* «Добави секция» (Figma 373:1726): the kinds of section in groups, as small cards with the kind's
+   icon beside its name, three in a row, in a panel at the right. */
+
+.drawer:has(.blocks-drawer__blocks-wrapper) .drawer__content {
+  width: min(560px, 100%) !important;
+  margin-left: auto;
+  background: var(--color-bg-page);
+}
+
+.blocks-drawer__blocks-wrapper {
+  padding-top: 16px;
+}
+
+.blocks-drawer__block-groups {
+  gap: 20px;
+}
+
+.blocks-drawer__block-group-label {
+  padding-bottom: 8px;
+  color: var(--color-text-primary);
+  font: 600 13px / 1.2 var(--font-body);
+}
+
+.blocks-drawer__blocks {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.blocks-drawer__block .thumbnail-card {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  box-shadow: none;
+  text-align: left;
+}
+
+.blocks-drawer__block .thumbnail-card:hover,
+.blocks-drawer__block .thumbnail-card:focus-visible {
+  border-color: var(--color-brand-primary);
+  box-shadow: 0 0 0 1px var(--color-brand-primary);
+}
+
+.blocks-drawer__block .thumbnail-card__thumbnail {
+  flex: none;
+  width: 40px;
+}
+
+.blocks-drawer__block .blocks-drawer__default-image {
+  aspect-ratio: 40 / 32;
+}
+
+.blocks-drawer__block .thumbnail-card__label {
+  padding: 0;
+  color: var(--color-text-primary);
+  font: 600 13px / 1.25 var(--font-body);
+  text-align: left;
+  white-space: normal;
+}
+
+/* «За нас» by section («Admin · 10 За нас», 375:2345): the form's tabs as a rail beside it. One
+   card lists the sections, the other holds the section's fields. */
+
+.section-rail {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding-inline: var(--admin-margin);
+}
+
+.section-rail > .tabs-field__tabs-wrap {
+  position: sticky;
+  top: 16px;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+}
+
+.section-rail > .tabs-field__tabs-wrap > .tabs-field__tabs {
+  flex-direction: column;
+  gap: 0;
+  align-items: stretch;
+  padding: 0;
+  overflow: visible;
+  border-bottom: 0;
+}
+
+.section-rail > .tabs-field__tabs-wrap .tabs-field__tab-button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 0;
+  padding: 8px 12px 8px 9px;
+  border-bottom: 0;
+  border-left: 3px solid transparent;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  font-size: 13px;
+  text-align: left;
+  white-space: normal;
+}
+
+/* The dot before a section's name */
+.section-rail > .tabs-field__tabs-wrap .tabs-field__tab-button::before {
+  display: block;
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-border-default);
+  content: '';
+}
+
+.section-rail > .tabs-field__tabs-wrap .tabs-field__tab-button:hover {
+  background: var(--color-bg-subtle);
+}
+
+.section-rail > .tabs-field__tabs-wrap .tabs-field__tab-button--active {
+  border-left-color: var(--color-brand-primary);
+  background: var(--color-brand-primary-subtle);
+  font-weight: 600;
+}
+
+.section-rail > .tabs-field__content-wrap {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+}
+
+/* The section's name heads its card. */
+.section-rail > .tabs-field__content-wrap .tabs-field__description {
+  margin-bottom: 12px;
+  color: var(--color-brand-primary-strong);
+  font: 600 15px / 1.2 var(--font-body);
+}
+
+/* Навигация («Admin · 12 Навигация», 377:2711): the two sides of the logo as the two columns of
+   one card, each a list of links; a link's row is flat, with its sub-links indented under it. */
+
+.global-edit--navigation .row__fields {
+  gap: 0;
+  width: 100%;
+  margin: 0;
+  align-items: stretch;
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+}
+
+.global-edit--navigation .row__fields > .array-field {
+  flex: 1 1 0;
+  width: auto !important;
+  min-width: 0;
+  padding: 0 0 12px;
+}
+
+.global-edit--navigation .row__fields > .array-field + .array-field {
+  border-left: 1px solid var(--color-border-default);
+}
+
+.global-edit--navigation .row__fields > .array-field > .array-field__header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-default);
+  color: var(--color-brand-primary-strong);
+}
+
+.global-edit--navigation .array-field__draggable-rows {
+  gap: 0;
+}
+
+.global-edit--navigation .array-field__row {
+  border: 0;
+  border-bottom: 1px solid var(--color-border-default);
+  border-radius: 0;
+  background: none;
+}
+
+.global-edit--navigation .array-field__row .collapsible__toggle-wrap,
+.global-edit--navigation .array-field__row > .collapsible__content {
+  background: none;
+}
+
+/* Sub-links: indented, with a rule at their left. */
+.global-edit--navigation .array-field .array-field {
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 2px solid var(--color-border-default);
+}
+
+.global-edit--navigation .array-field__add-row {
+  margin: 12px 16px 0;
+  color: var(--color-brand-primary);
+  font-weight: 600;
+  font-size: 13px;
+}

@@ -1,0 +1,104 @@
+/* A section's row label («Admin · 08 Програма», 373:1949). */
+
+.row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+}
+
+/* The type icon (373:1957): 40 × 32 on paper; three cards, three lines, or one block. */
+.icon {
+  position: relative;
+  display: block;
+  flex: none;
+  width: 40px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--color-bg-warm);
+}
+
+.icon i {
+  position: absolute;
+  border-radius: 1.5px;
+  background: var(--color-brand-primary);
+}
+
+.icon[data-icon='cards'] i,
+.icon[data-icon='figures'] i {
+  top: 9px;
+  width: 8px;
+  height: 14px;
+}
+
+.icon[data-icon='figures'] i {
+  background: var(--color-brand-accent);
+}
+
+.icon[data-icon='cards'] i:nth-child(1),
+.icon[data-icon='figures'] i:nth-child(1) {
+  left: 6px;
+}
+
+.icon[data-icon='cards'] i:nth-child(2),
+.icon[data-icon='figures'] i:nth-child(2) {
+  left: 16px;
+}
+
+.icon[data-icon='cards'] i:nth-child(3),
+.icon[data-icon='figures'] i:nth-child(3) {
+  left: 26px;
+}
+
+.icon[data-icon='rows'] i {
+  left: 7px;
+  width: 26px;
+  height: 3px;
+  background: var(--color-text-muted);
+}
+
+.icon[data-icon='rows'] i:nth-child(1) {
+  top: 8px;
+  background: var(--color-brand-primary);
+}
+
+.icon[data-icon='rows'] i:nth-child(2) {
+  top: 14.5px;
+}
+
+.icon[data-icon='rows'] i:nth-child(3) {
+  top: 21px;
+}
+
+.icon[data-icon='single'] i {
+  display: none;
+}
+
+.icon[data-icon='single'] i:first-child {
+  top: 11px;
+  left: 15px;
+  display: block;
+  width: 10px;
+  height: 10px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  color: var(--color-text-primary);
+  font: 600 15px / 1.2 var(--font-body);
+  white-space: nowrap;
+}
+
+.summary {
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font: 400 13px / 1.2 var(--font-body);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -616,35 +616,10 @@ export interface News {
 export interface Program {
   id: number;
   adminEditedAt?: string | null;
-  /**
-   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
-   */
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
-  /**
-   * Страница, внесена от стария сайт (PR 21).
-   */
-  legacyUrl?: string | null;
   title: string;
-  /**
-   * Попълва се от заглавието, ако е празно.
-   */
-  slug?: string | null;
   type: 'language' | 'vocational' | 'vouchers' | 'teachers' | 'farmers' | 'computer' | 'translations';
   language?: ('english' | 'german' | 'french' | 'spanish' | 'italian' | 'bulgarian' | 'russian') | null;
   audience?: ('adults' | 'students') | null;
-  /**
-   * Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».
-   */
-  translationLanguages?:
-    | {
-        name: string;
-        id?: string | null;
-      }[]
-    | null;
   hero: {
     kicker?: string | null;
     heading: string;
@@ -843,29 +818,6 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
-            items?:
-              | {
-                  level: string;
-                  title?: string | null;
-                  text?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'levels';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
             callout?: {
               heading?: string | null;
               /**
@@ -912,6 +864,245 @@ export interface Program {
             id?: string | null;
             blockName?: string | null;
             blockType: 'steps';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            /**
+             * Само официални числа.
+             */
+            items?:
+              | {
+                  figure: string;
+                  label: string;
+                  id?: string | null;
+                }[]
+              | null;
+            note?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'figures';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  question: string;
+                  answer: {
+                    root: {
+                      type: string;
+                      children: {
+                        type: any;
+                        version: number;
+                        [k: string]: unknown;
+                      }[];
+                      direction: ('ltr' | 'rtl') | null;
+                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                      indent: number;
+                      version: number;
+                    };
+                    [k: string]: unknown;
+                  };
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq';
+          }
+        | {
+            columns?:
+              | {
+                  /**
+                   * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+                   */
+                  anchor?: string | null;
+                  heading: string;
+                  items?:
+                    | {
+                        question: string;
+                        answer: {
+                          root: {
+                            type: string;
+                            children: {
+                              type: any;
+                              version: number;
+                              [k: string]: unknown;
+                            }[];
+                            direction: ('ltr' | 'rtl') | null;
+                            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                            indent: number;
+                            version: number;
+                          };
+                          [k: string]: unknown;
+                        };
+                        id?: string | null;
+                      }[]
+                    | null;
+                  note?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faqColumns';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            /**
+             * Номерираните редове се номерират подред през всички карти.
+             */
+            cards?:
+              | {
+                  title: string;
+                  marker?: ('number' | 'check') | null;
+                  count?: ('chip' | 'bubble' | 'none') | null;
+                  /**
+                   * Например «предмета» или «условия».
+                   */
+                  countLabel?: string | null;
+                  rows?:
+                    | {
+                        text: string;
+                        id?: string | null;
+                      }[]
+                    | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Например документите, които се носят преди старта.
+             */
+            checklist?: {
+              title?: string | null;
+              items?:
+                | {
+                    text: string;
+                    id?: string | null;
+                  }[]
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'indexCards';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            items?:
+              | {
+                  level: string;
+                  title?: string | null;
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'levels';
+          }
+        | {
+            layout?: ('row' | 'stack') | null;
+            heading: string;
+            /**
+             * Телефоните и имейлите в текста стават връзки.
+             */
+            text?: string | null;
+            cta?: {
+              label?: string | null;
+              destination?:
+                | (
+                    | 'courses'
+                    | 'languageCourses'
+                    | 'languagesStudents'
+                    | 'languagesAdults'
+                    | 'certificates'
+                    | 'professions'
+                    | 'vouchers'
+                    | 'voucherInquiry'
+                    | 'teachers'
+                    | 'farmers'
+                    | 'computerCourses'
+                    | 'translations'
+                    | 'sendDocument'
+                    | 'levelTest'
+                    | 'otherInquiry'
+                    | 'news'
+                    | 'about'
+                    | 'aboutHistory'
+                    | 'contact'
+                    | 'privacy'
+                    | 'cookies'
+                  )
+                | null;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'callout';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
           }
         | {
             /**
@@ -1066,6 +1257,21 @@ export interface Program {
             lead?: string | null;
             id?: string | null;
             blockName?: string | null;
+            blockType: 'teacherProgrammes';
+          }
+        | {
+            /**
+             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
+             */
+            anchor?: string | null;
+            heading?: string | null;
+            /**
+             * Част от заглавието.
+             */
+            highlight?: string | null;
+            lead?: string | null;
+            id?: string | null;
+            blockName?: string | null;
             blockType: 'professions';
           }
         | {
@@ -1094,57 +1300,17 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'teacherProgrammes';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
-            /**
-             * Номерираните редове се номерират подред през всички карти.
-             */
-            cards?:
+            items?:
               | {
                   title: string;
-                  marker?: ('number' | 'check') | null;
-                  count?: ('chip' | 'bubble' | 'none') | null;
-                  /**
-                   * Например «предмета» или «условия».
-                   */
-                  countLabel?: string | null;
-                  rows?:
-                    | {
-                        text: string;
-                        id?: string | null;
-                      }[]
-                    | null;
+                  text?: string | null;
                   id?: string | null;
                 }[]
               | null;
-            /**
-             * Например документите, които се носят преди старта.
-             */
-            checklist?: {
-              title?: string | null;
-              items?:
-                | {
-                    text: string;
-                    id?: string | null;
-                  }[]
-                | null;
-            };
+            counter?: boolean | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'indexCards';
+            blockType: 'priceFactors';
           }
         | {
             /**
@@ -1157,13 +1323,9 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
-            /**
-             * Заглавието вляво, картите на проектите вдясно.
-             */
-            projects?: (number | FundedProject)[] | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'projects';
+            blockType: 'locations';
           }
         | {
             /**
@@ -1195,203 +1357,41 @@ export interface Program {
              */
             highlight?: string | null;
             lead?: string | null;
-            items?:
-              | {
-                  title: string;
-                  text?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            counter?: boolean | null;
+            /**
+             * Заглавието вляво, картите на проектите вдясно.
+             */
+            projects?: (number | FundedProject)[] | null;
             id?: string | null;
             blockName?: string | null;
-            blockType: 'priceFactors';
-          }
-        | {
-            columns?:
-              | {
-                  /**
-                   * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-                   */
-                  anchor?: string | null;
-                  heading: string;
-                  items?:
-                    | {
-                        question: string;
-                        answer: {
-                          root: {
-                            type: string;
-                            children: {
-                              type: any;
-                              version: number;
-                              [k: string]: unknown;
-                            }[];
-                            direction: ('ltr' | 'rtl') | null;
-                            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                            indent: number;
-                            version: number;
-                          };
-                          [k: string]: unknown;
-                        };
-                        id?: string | null;
-                      }[]
-                    | null;
-                  note?: string | null;
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'faqColumns';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'locations';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
-            items?:
-              | {
-                  question: string;
-                  answer: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: any;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  };
-                  id?: string | null;
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'faq';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
-            /**
-             * Само официални числа.
-             */
-            items?:
-              | {
-                  figure: string;
-                  label: string;
-                  id?: string | null;
-                }[]
-              | null;
-            note?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'figures';
-          }
-        | {
-            layout?: ('row' | 'stack') | null;
-            heading: string;
-            /**
-             * Телефоните и имейлите в текста стават връзки.
-             */
-            text?: string | null;
-            cta?: {
-              label?: string | null;
-              destination?:
-                | (
-                    | 'courses'
-                    | 'languageCourses'
-                    | 'languagesStudents'
-                    | 'languagesAdults'
-                    | 'certificates'
-                    | 'professions'
-                    | 'vouchers'
-                    | 'voucherInquiry'
-                    | 'teachers'
-                    | 'farmers'
-                    | 'computerCourses'
-                    | 'translations'
-                    | 'sendDocument'
-                    | 'levelTest'
-                    | 'otherInquiry'
-                    | 'news'
-                    | 'about'
-                    | 'aboutHistory'
-                    | 'contact'
-                    | 'privacy'
-                    | 'cookies'
-                  )
-                | null;
-            };
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'callout';
-          }
-        | {
-            /**
-             * По избор: адрес на секцията за бутоните в началото, например kak-da-kandidatstvate.
-             */
-            anchor?: string | null;
-            heading?: string | null;
-            /**
-             * Част от заглавието.
-             */
-            highlight?: string | null;
-            lead?: string | null;
-            body?: {
-              root: {
-                type: string;
-                children: {
-                  type: any;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
-              [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'richText';
+            blockType: 'projects';
           }
       )[]
     | null;
+  /**
+   * Езиците, от и на които превеждате. Първият е избран в «от», вторият в «на».
+   */
+  translationLanguages?:
+    | {
+        name: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Попълва се от заглавието, ако е празно.
+   */
+  slug?: string | null;
+  /**
+   * Страница, внесена от стария сайт (PR 21).
+   */
+  legacyUrl?: string | null;
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2189,25 +2189,10 @@ export interface NewsSelect<T extends boolean = true> {
  */
 export interface ProgramsSelect<T extends boolean = true> {
   adminEditedAt?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
-  legacyUrl?: T;
   title?: T;
-  slug?: T;
   type?: T;
   language?: T;
   audience?: T;
-  translationLanguages?:
-    | T
-    | {
-        name?: T;
-        id?: T;
-      };
   hero?:
     | T
     | {
@@ -2296,24 +2281,6 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        levels?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              highlight?: T;
-              lead?: T;
-              items?:
-                | T
-                | {
-                    level?: T;
-                    title?: T;
-                    text?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         steps?:
           | T
           | {
@@ -2341,6 +2308,142 @@ export interface ProgramsSelect<T extends boolean = true> {
                     id?: T;
                   };
               note?: T;
+              id?: T;
+              blockName?: T;
+            };
+        figures?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    figure?: T;
+                    label?: T;
+                    id?: T;
+                  };
+              note?: T;
+              id?: T;
+              blockName?: T;
+            };
+        faq?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        faqColumns?:
+          | T
+          | {
+              columns?:
+                | T
+                | {
+                    anchor?: T;
+                    heading?: T;
+                    items?:
+                      | T
+                      | {
+                          question?: T;
+                          answer?: T;
+                          id?: T;
+                        };
+                    note?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        indexCards?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              cards?:
+                | T
+                | {
+                    title?: T;
+                    marker?: T;
+                    count?: T;
+                    countLabel?: T;
+                    rows?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                    id?: T;
+                  };
+              checklist?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        levels?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              items?:
+                | T
+                | {
+                    level?: T;
+                    title?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        callout?:
+          | T
+          | {
+              layout?: T;
+              heading?: T;
+              text?: T;
+              cta?:
+                | T
+                | {
+                    label?: T;
+                    destination?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              body?: T;
               id?: T;
               blockName?: T;
             };
@@ -2412,6 +2515,16 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        teacherProgrammes?:
+          | T
+          | {
+              anchor?: T;
+              heading?: T;
+              highlight?: T;
+              lead?: T;
+              id?: T;
+              blockName?: T;
+            };
         professions?:
           | T
           | {
@@ -2429,80 +2542,6 @@ export interface ProgramsSelect<T extends boolean = true> {
               heading?: T;
               highlight?: T;
               lead?: T;
-              id?: T;
-              blockName?: T;
-            };
-        teacherProgrammes?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              highlight?: T;
-              lead?: T;
-              id?: T;
-              blockName?: T;
-            };
-        indexCards?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              highlight?: T;
-              lead?: T;
-              cards?:
-                | T
-                | {
-                    title?: T;
-                    marker?: T;
-                    count?: T;
-                    countLabel?: T;
-                    rows?:
-                      | T
-                      | {
-                          text?: T;
-                          id?: T;
-                        };
-                    id?: T;
-                  };
-              checklist?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          text?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        projects?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              highlight?: T;
-              lead?: T;
-              projects?: T;
-              id?: T;
-              blockName?: T;
-            };
-        sendDocument?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              lead?: T;
-              steps?:
-                | T
-                | {
-                    text?: T;
-                    id?: T;
-                  };
-              buttonLabel?: T;
-              dropzoneArt?: T;
               id?: T;
               blockName?: T;
             };
@@ -2524,27 +2563,6 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        faqColumns?:
-          | T
-          | {
-              columns?:
-                | T
-                | {
-                    anchor?: T;
-                    heading?: T;
-                    items?:
-                      | T
-                      | {
-                          question?: T;
-                          answer?: T;
-                          id?: T;
-                        };
-                    note?: T;
-                    id?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
         locations?:
           | T
           | {
@@ -2555,67 +2573,49 @@ export interface ProgramsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        faq?:
+        sendDocument?:
           | T
           | {
               anchor?: T;
               heading?: T;
-              highlight?: T;
               lead?: T;
-              items?:
+              steps?:
                 | T
                 | {
-                    question?: T;
-                    answer?: T;
+                    text?: T;
                     id?: T;
                   };
+              buttonLabel?: T;
+              dropzoneArt?: T;
               id?: T;
               blockName?: T;
             };
-        figures?:
+        projects?:
           | T
           | {
               anchor?: T;
               heading?: T;
               highlight?: T;
               lead?: T;
-              items?:
-                | T
-                | {
-                    figure?: T;
-                    label?: T;
-                    id?: T;
-                  };
-              note?: T;
+              projects?: T;
               id?: T;
               blockName?: T;
             };
-        callout?:
-          | T
-          | {
-              layout?: T;
-              heading?: T;
-              text?: T;
-              cta?:
-                | T
-                | {
-                    label?: T;
-                    destination?: T;
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        richText?:
-          | T
-          | {
-              anchor?: T;
-              heading?: T;
-              highlight?: T;
-              lead?: T;
-              body?: T;
-              id?: T;
-              blockName?: T;
-            };
+      };
+  translationLanguages?:
+    | T
+    | {
+        name?: T;
+        id?: T;
+      };
+  slug?: T;
+  legacyUrl?: T;
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -2958,6 +2958,8 @@ export interface Site {
   createdAt?: string | null;
 }
 /**
+ * Менюто на сайта. Връзките се избират от страниците — без ръчно писане на адреси.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
@@ -3750,14 +3752,6 @@ export interface Contact {
  */
 export interface About {
   id: number;
-  /**
-   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
-   */
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
   hero?: {
     kicker?: string | null;
     title?: string | null;
@@ -3982,6 +3976,14 @@ export interface About {
           id?: string | null;
         }[]
       | null;
+  };
+  /**
+   * По избор. Празно: заглавието, въвеждащият текст и снимката на страницата.
+   */
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -4318,13 +4320,6 @@ export interface ContactSelect<T extends boolean = true> {
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
   hero?:
     | T
     | {
@@ -4499,6 +4494,13 @@ export interface AboutSelect<T extends boolean = true> {
               name?: T;
               id?: T;
             };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
