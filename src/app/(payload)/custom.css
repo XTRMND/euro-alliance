@@ -688,7 +688,8 @@ button:focus-visible {
 
 .section-rail > .tabs-field__tabs-wrap {
   position: sticky;
-  top: 16px;
+  /* Under the top bar (and its sub-nav), with air above: it stays in sight while the form scrolls. */
+  top: calc(var(--admin-top, 64px) + 16px);
   overflow: hidden;
   border: 1px solid var(--color-border-default);
   border-radius: 12px;
