@@ -69,7 +69,12 @@ const legacyRedirect = legacyRedirectHooks<{
 export const News: CollectionConfig = {
   slug: 'news',
   labels: { singular: 'Новина', plural: 'Новини' },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'date', '_status'] },
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'date', '_status'],
+    // The list on the pattern of the course list (docs/admin-redesign.md, PR 8).
+    components: { views: { list: { Component: '@/components/admin/lists/NewsList#NewsList' } } },
+  },
   defaultSort: '-date',
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },

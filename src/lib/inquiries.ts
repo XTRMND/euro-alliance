@@ -129,3 +129,26 @@ export function rateLimiter(limit = 5, windowMs = 10 * 60 * 1000) {
     return true
   }
 }
+
+/**
+ * An inquiry's status (docs/admin-redesign.md, decision 9): «Нова / В работа / Приключено».
+ * Whether it led to a contract is a checkbox of its own (`contract`), which keeps it past the
+ * year's retention; until v0.10.0 «Договор» was a fourth status.
+ */
+export const inquiryStatuses = ['new', 'in-progress', 'closed'] as const
+export type InquiryStatus = (typeof inquiryStatuses)[number]
+
+export const inquiryStatusLabels: Record<InquiryStatus, string> = {
+  new: 'Нова',
+  'in-progress': 'В работа',
+  closed: 'Приключено',
+}
+
+export const inquiryTopicLabels: Record<InquiryTopic, string> = {
+  course: 'Курс',
+  voucher: 'Обучение с ваучер',
+  translation: 'Превод',
+  levelTest: 'Тест за ниво',
+  corporate: 'Фирмено обучение',
+  other: 'Друго',
+}

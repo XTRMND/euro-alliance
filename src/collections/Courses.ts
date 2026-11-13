@@ -110,6 +110,10 @@ export const Courses: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'audience', '_status'],
+    // «Admin · 02 Езикови курсове · Курсове» (356:100) in place of Payload's list.
+    components: {
+      views: { list: { Component: '@/components/admin/lists/CoursesList#CoursesList' } },
+    },
   },
   defaultSort: 'title',
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },

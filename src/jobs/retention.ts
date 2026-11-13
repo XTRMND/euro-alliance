@@ -18,7 +18,8 @@ export const deleteExpiredInquiries: TaskConfig<{ input: object; output: { delet
       where: {
         and: [
           { createdAt: { less_than: retentionCutoff() } },
-          { status: { not_equals: 'contract' } },
+          // «Довело до договор» keeps an inquiry (a status of its own until v0.10.0).
+          { contract: { not_equals: true } },
         ],
       },
       depth: 0,
