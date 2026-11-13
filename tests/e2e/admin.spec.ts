@@ -148,7 +148,7 @@ test('a branch opens to a filtered list, with the sub-nav of its siblings', asyn
     'page',
   )
   const tabs = page.getByRole('navigation', { name: 'Раздел' }).getByRole('link')
-  await expect(tabs).toHaveText(['Програми', 'Курсове', 'Учебни системи', 'Сертификати'])
+  await expect(tabs).toHaveText(['Програми', 'Курсове', 'Учебни системи', 'Изпити и сертификати'])
   await expect(tabs.nth(1)).toHaveAttribute('aria-current', 'page')
   await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(
     /Обучения\s*\/\s*Езикови курсове\s*\/\s*Курсове/,
@@ -526,6 +526,42 @@ test('lists are named in Bulgarian, and a wrong address gets the admin’s own 4
   await expect(
     page.getByRole('navigation', { name: 'Съдържание' }).locator('[aria-current="page"]'),
   ).toHaveCount(0)
+})
+
+test('exams and certificates have a kind and a «Кога», and empty cells are dashes', async ({
+  page,
+}) => {
+  await logIn(page)
+  const content = page.getByRole('navigation', { name: 'Съдържание' })
+  await content.getByRole('button', { name: 'Обучения' }).click()
+  await content.getByRole('button', { name: 'Езикови курсове' }).click()
+  await content.getByRole('link', { name: 'Изпити и сертификати' }).click()
+  await expect(page.getByRole('heading', { level: 1, name: 'Изпити и сертификати' })).toBeVisible()
+  const table = page.locator('.collection-list table')
+  await expect(table.locator('thead')).toContainText('Вид')
+  await expect(table.locator('thead')).toContainText('Кога')
+  // The two state exams say when they're taken, and have no issuer: a dash, not «<Няма …>».
+  const matura = table.locator('tbody tr', { hasText: 'ДЗИ' })
+  await expect(matura).toContainText('Държавен изпит')
+  await expect(matura).toContainText('12. клас')
+  await expect(matura.locator('.cell-issuer')).toHaveText('—')
+  await expect(table.locator('tbody tr', { hasText: 'FCE' })).toContainText(
+    'Международен сертификат',
+  )
+  await expect(table).not.toContainText('<Няма')
+
+  // The ЦПО's exams are «Изпитни сесии».
+  await page.goto('/admin/collections/exams')
+  await expect(page.getByRole('heading', { level: 1, name: 'Изпитни сесии' })).toBeVisible()
+  await expect(content.getByRole('link', { name: 'Изпитни сесии' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  )
+
+  // On the site the card reads as before: «12. клас» on its first line.
+  await page.goto('/ezitsi/balgarski/uchenitsi')
+  const card = page.getByRole('article').filter({ hasText: 'Държавен зрелостен изпит по БЕЛ' })
+  await expect(card.locator('p').first()).toHaveText('12. клас')
 })
 
 test('a global sits where its page is on the site', async ({ page }) => {

@@ -89,7 +89,7 @@ export const sectionKinds = {
   },
   certificates: {
     name: 'Сертификати',
-    hint: 'От «Сертификати»',
+    hint: 'От «Изпити и сертификати»',
     group: 'programmes',
     icon: 'cards',
   },
@@ -100,7 +100,7 @@ export const sectionKinds = {
     icon: 'rows',
   },
   professions: { name: 'Професии', hint: 'От «Професии»', group: 'programmes', icon: 'rows' },
-  exams: { name: 'Изпити', hint: 'От «Изпити»', group: 'programmes', icon: 'rows' },
+  exams: { name: 'Изпити', hint: 'От «Изпитни сесии»', group: 'programmes', icon: 'rows' },
   priceFactors: {
     name: 'От какво зависи цената',
     hint: 'Фактори за цената',

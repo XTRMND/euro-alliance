@@ -7,7 +7,7 @@ import { revalidateCollection } from '@/hooks/revalidate'
 // exam; without any it shows the table's empty state.
 export const Exams: CollectionConfig = {
   slug: 'exams',
-  labels: { singular: 'Изпит', plural: 'Изпити (ЦПО)' },
+  labels: { singular: 'Изпитна сесия', plural: 'Изпитни сесии' },
   admin: {
     hideAPIURL: true,
     useAsTitle: 'subject',

@@ -54,7 +54,11 @@ export function adminNav({ adminRoute: admin, programIds, newInquiries }: NavCon
             },
             { key: 'Курсове', label: 'Курсове', href: courses('languages') },
             { key: 'Учебни системи', label: 'Учебни системи', href: list('textbook-systems') },
-            { key: 'Сертификати', label: 'Сертификати', href: list('certificates') },
+            {
+              key: 'Изпити и сертификати',
+              label: 'Изпити и сертификати',
+              href: list('certificates'),
+            },
           ],
         },
         {
@@ -63,7 +67,7 @@ export function adminNav({ adminRoute: admin, programIds, newInquiries }: NavCon
           children: [
             { key: 'Страница', label: 'Страница', href: page('vocational') },
             { key: 'Професии', label: 'Професии', href: list('professions') },
-            { key: 'Изпити', label: 'Изпити', href: list('exams') },
+            { key: 'Изпитни сесии', label: 'Изпитни сесии', href: list('exams') },
             { key: 'Курсове', label: 'Курсове', href: courses('vocational') },
           ],
         },
@@ -204,9 +208,9 @@ const collectionKeys: Record<string, string> = {
   prices: 'Цени',
   news: 'Новини',
   'textbook-systems': 'Обучения/Езикови курсове/Учебни системи',
-  certificates: 'Обучения/Езикови курсове/Сертификати',
+  certificates: 'Обучения/Езикови курсове/Изпити и сертификати',
   professions: 'Обучения/Професии (ЦПО)/Професии',
-  exams: 'Обучения/Професии (ЦПО)/Изпити',
+  exams: 'Обучения/Професии (ЦПО)/Изпитни сесии',
   'teacher-programmes': 'Обучения/Педагогически специалисти/Програми',
   team: 'За нас/Екип',
   documents: 'За нас/Документи и лицензи',
