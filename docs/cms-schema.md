@@ -114,7 +114,7 @@ System card 135:389: `name`, `kicker` (the publisher chip, e.g. LONGMAN), `count
 
 ### Certificates
 
-Certificate card 145:364: `name`, `issuer` (the line above the name, e.g. CAMBRIDGE ESOL), `code` (on the seal: FCE, CAE …), `prep` (the textbook it prepares with). Seeded from Figma: FCE, CAE, CPE, IELTS.
+«Изпити и сертификати» in the admin (v0.16.0; the slug is still `certificates`). Certificate card 145:364: `name`, `kind` (required: international certificate / state exam), `issuer` (the line above the name, e.g. CAMBRIDGE ESOL), `when` (localized; when a state exam is taken, e.g. «12. клас»: the card's first line when `issuer` is empty), `code` (on the seal: FCE, CAE …), `prep` (the textbook it prepares with). Seeded from Figma: FCE, CAE, CPE, IELTS; and the two state exams, НВО and ДЗИ.
 
 ### Professions
 

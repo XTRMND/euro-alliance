@@ -227,7 +227,7 @@ async function seedPrograms(payload: Payload) {
       (await payload.create({
         collection: 'certificates',
         locale: 'bg',
-        data: { ...certificate, _status: 'published' },
+        data: { kind: 'international', ...certificate, _status: 'published' },
       }))
     certificateIds.push(doc.id)
   }

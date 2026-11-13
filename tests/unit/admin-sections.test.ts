@@ -43,7 +43,7 @@ describe('a programme’s sections', () => {
 
   it('falls back to the section’s heading, then to what the kind is', () => {
     expect(sectionSummary('certificates', { heading: ' Test heading ' })).toBe('Test heading')
-    expect(sectionSummary('certificates', {})).toBe('От «Сертификати»')
+    expect(sectionSummary('certificates', {})).toBe('От «Изпити и сертификати»')
     expect(sectionSummary('features', { items: [] })).toBe('Карти с кратък текст')
     expect(sectionSummary('unknown', {})).toBe('')
   })

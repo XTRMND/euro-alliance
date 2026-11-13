@@ -1442,6 +1442,11 @@ export interface Certificate {
   id: number;
   adminEditedAt?: string | null;
   name: string;
+  kind: 'international' | 'state';
+  /**
+   * Кога се държи изпитът, например «12. клас». На картата стои на първия ред, ако «Издава» е празно.
+   */
+  when?: string | null;
   issuer?: string | null;
   /**
    * Например FCE.
@@ -2655,6 +2660,8 @@ export interface TextbookSystemsSelect<T extends boolean = true> {
 export interface CertificatesSelect<T extends boolean = true> {
   adminEditedAt?: T;
   name?: T;
+  kind?: T;
+  when?: T;
   issuer?: T;
   code?: T;
   prep?: T;

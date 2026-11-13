@@ -38,7 +38,7 @@ describe('the menu mirrors the site', () => {
       'Програми',
       'Курсове',
       'Учебни системи',
-      'Сертификати',
+      'Изпити и сертификати',
     ])
     expect(labels(find('Сайт')?.children)).toEqual([
       'Навигация',
@@ -77,7 +77,9 @@ describe('the item of the open screen', () => {
     expect(activeNavKey({ path: '/globals/navigation' })).toBe('Сайт/Навигация')
     expect(activeNavKey({ path: '/globals/contact' })).toBe('Контакти/Страница')
     expect(activeNavKey({ path: '/collections/news/12' })).toBe('Новини')
-    expect(activeNavKey({ path: '/collections/exams' })).toBe('Обучения/Професии (ЦПО)/Изпити')
+    expect(activeNavKey({ path: '/collections/exams' })).toBe(
+      'Обучения/Професии (ЦПО)/Изпитни сесии',
+    )
     expect(activeNavKey({ path: '/collections/users' })).toBe('Потребители')
     expect(activeNavKey({ path: '/account' })).toBeUndefined()
   })

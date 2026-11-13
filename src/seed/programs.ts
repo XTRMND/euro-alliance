@@ -922,13 +922,15 @@ export const farmersLogoStrip = {
 export const bulgarianCertificates = [
   {
     name: 'Национално външно оценяване по БЕЛ',
-    issuer: 'Края на 7. клас',
+    kind: 'state',
+    when: 'Края на 7. клас',
     code: 'НВО',
     prep: 'Подготовка за 6. и 7. клас',
   },
   {
     name: 'Държавен зрелостен изпит по БЕЛ (матура)',
-    issuer: '12. клас',
+    kind: 'state',
+    when: '12. клас',
     code: 'ДЗИ',
     prep: 'Подготовка за 11. и 12. клас',
   },

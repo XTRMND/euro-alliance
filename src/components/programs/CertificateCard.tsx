@@ -2,7 +2,7 @@ import type { Certificate } from '@/payload-types'
 import styles from './CertificateCard.module.css'
 
 // Certificate card (145:364): an exam card drawn like a certificate, a navy frame with a sand inner
-// rule, the issuer, the exam, a short sand rule and the book we prepare with on a signature line,
+// rule, the issuer (or when the exam is taken), the exam, a short sand rule and the book we prepare with on a signature line,
 // and a rosette seal with the exam's code. Hover deepens the shadow and turns the seal.
 
 export function CertificateCard({
@@ -12,10 +12,12 @@ export function CertificateCard({
   certificate: Certificate
   tilt?: number
 }) {
+  // Who issues it («Cambridge ESOL»), or for a state exam when it's taken («12. клас»).
+  const firstLine = certificate.issuer || certificate.when
   return (
     <article className={styles.card} style={{ '--tilt': `${tilt}deg` } as React.CSSProperties}>
       <div className={styles.frame}>
-        {certificate.issuer && <p className={styles.issuer}>{certificate.issuer}</p>}
+        {firstLine && <p className={styles.issuer}>{firstLine}</p>}
         <h3 className={styles.title}>{certificate.name}</h3>
         <span className={styles.rule} aria-hidden="true" />
         {certificate.prep && <p className={styles.prep}>{certificate.prep}</p>}

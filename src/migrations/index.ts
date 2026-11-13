@@ -36,6 +36,7 @@ import * as migration_20261112_091845_categories_and_translation_languages from 
 import * as migration_20261112_094228_drop_search_and_missing_addresses from './20261112_094228_drop_search_and_missing_addresses';
 import * as migration_20261112_100253_navigation_link_pickers from './20261112_100253_navigation_link_pickers';
 import * as migration_20261112_105731_inquiry_statuses from './20261112_105731_inquiry_statuses';
+import * as migration_20261113_081123_certificate_kinds from './20261113_081123_certificate_kinds';
 
 export const migrations = [
   {
@@ -226,6 +227,11 @@ export const migrations = [
   {
     up: migration_20261112_105731_inquiry_statuses.up,
     down: migration_20261112_105731_inquiry_statuses.down,
-    name: '20261112_105731_inquiry_statuses'
+    name: '20261112_105731_inquiry_statuses',
+  },
+  {
+    up: migration_20261113_081123_certificate_kinds.up,
+    down: migration_20261113_081123_certificate_kinds.down,
+    name: '20261113_081123_certificate_kinds'
   },
 ];
