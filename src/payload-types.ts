@@ -85,9 +85,7 @@ export interface Config {
     documents: Document;
     team: Team;
     'legal-pages': LegalPage;
-    search: Search;
     redirects: Redirect;
-    'missing-addresses': MissingAddress;
     inquiries: Inquiry;
     'inquiry-files': InquiryFile;
     'payload-kv': PayloadKv;
@@ -124,9 +122,7 @@ export interface Config {
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
-    search: SearchSelect<false> | SearchSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
-    'missing-addresses': MissingAddressesSelect<false> | MissingAddressesSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
     'inquiry-files': InquiryFilesSelect<false> | InquiryFilesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -1645,29 +1641,6 @@ export interface LegalPage {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Попълва се автоматично от публикуваното съдържание.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search".
- */
-export interface Search {
-  id: number;
-  type: 'course' | 'page' | 'news';
-  title: string;
-  path?: string | null;
-  excerpt?: string | null;
-  text?: string | null;
-  url: string;
-  /**
-   * Колекция и номер, например news:12.
-   */
-  source: string;
-  sourceId?: number | null;
-  publishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
@@ -1682,20 +1655,6 @@ export interface Redirect {
    */
   to: string;
   source?: ('import' | 'manual') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Адреси, които са стигнали до страницата «Тази страница я няма». Важните пренасочете в «Пренасочвания» и изтрийте реда.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "missing-addresses".
- */
-export interface MissingAddress {
-  id: number;
-  path: string;
-  hits: number;
-  lastSeen?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1950,16 +1909,8 @@ export interface PayloadLockedDocument {
         value: number | LegalPage;
       } | null)
     | ({
-        relationTo: 'search';
-        value: number | Search;
-      } | null)
-    | ({
         relationTo: 'redirects';
         value: number | Redirect;
-      } | null)
-    | ({
-        relationTo: 'missing-addresses';
-        value: number | MissingAddress;
       } | null)
     | ({
         relationTo: 'inquiries';
@@ -2832,40 +2783,12 @@ export interface LegalPagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "search_select".
- */
-export interface SearchSelect<T extends boolean = true> {
-  type?: T;
-  title?: T;
-  path?: T;
-  excerpt?: T;
-  text?: T;
-  url?: T;
-  source?: T;
-  sourceId?: T;
-  publishedAt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
   from?: T;
   to?: T;
   source?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "missing-addresses_select".
- */
-export interface MissingAddressesSelect<T extends boolean = true> {
-  path?: T;
-  hits?: T;
-  lastSeen?: T;
   updatedAt?: T;
   createdAt?: T;
 }

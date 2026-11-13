@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { cleanSearchTerm } from '@/lib/analytics'
 import { routes, searchTabFromParam } from '@/lib/routes'
-import { markTerms, prefixQuery, searchTerms, snippetOf } from '@/lib/search-text'
-import { collectText, searchRecord } from '@/lib/search-index'
+import { searchRecords, wordSimilarity } from '@/lib/search-match'
+import { markTerms, searchTerms, snippetOf } from '@/lib/search-text'
+import { collectText, searchRecord, type SearchRecord } from '@/lib/search-records'
 
 describe('searchTerms', () => {
   it('keeps words of two letters or more, lowercased, once each', () => {
@@ -11,7 +12,6 @@ describe('searchTerms', () => {
 
   it('drops everything but letters and digits', () => {
     expect(searchTerms("'); drop table search; --")).toEqual(['drop', 'table', 'search'])
-    expect(prefixQuery(searchTerms('B2 ниво'))).toBe('b2:* & ниво:*')
   })
 })
 
@@ -93,5 +93,56 @@ describe('the search index', () => {
 
   it('skips a course without an address', () => {
     expect(searchRecord('courses', { id: 1, title: 'Test course A' })).toBeNull()
+  })
+})
+
+describe('searchRecords (the search without an index)', () => {
+  const record = (source: string, fields: Partial<SearchRecord>): SearchRecord => ({
+    type: 'page',
+    title: 'Test',
+    path: '',
+    excerpt: '',
+    text: '',
+    url: `/${source}`,
+    source,
+    ...fields,
+  })
+  const records = [
+    record('a', { title: 'Английски език за възрастни', excerpt: 'Курсове по общ английски.' }),
+    record('b', { title: 'Немски език', text: 'Споменава английски веднъж.' }),
+    record('c', { title: 'Преводи и легализация', text: 'Писмени и устни преводи.' }),
+    record('n1', { type: 'news', title: 'Тест новина', publishedAt: '2026-01-01', sourceId: 1 }),
+    record('n2', { type: 'news', title: 'Тест новина', publishedAt: '2026-06-01', sourceId: 2 }),
+  ]
+  const sources = (query: string) => searchRecords(records, query).map((hit) => hit.id)
+
+  it('matches every word as the start of a word, in any field', () => {
+    expect(sources('англ')).toEqual(['a', 'b'])
+    expect(sources('английски възрастни')).toEqual(['a'])
+    // The end of a word isn't its start (and too little of it to pass as a typo).
+    expect(sources('ъзрас')).toEqual([])
+    expect(sources('превод')).toEqual(['c'])
+  })
+
+  it('forgives a typo in the title or excerpt, as pg_trgm’s word_similarity did', () => {
+    expect(wordSimilarity('англйски', 'Английски език за възрастни')).toBeGreaterThan(0.5)
+    expect(sources('англйски')).toEqual(['a'])
+    // Loose on purpose, like the old query: most of «глийски» is in «английски».
+    expect(sources('глийски')).toEqual(['a'])
+  })
+
+  it('puts the closest title first, and the newest first on a tie', () => {
+    expect(sources('тест новина')).toEqual(['n2', 'n1'])
+    expect(sources('немски')).toEqual(['b'])
+    // A full tie: the records' own order, as the index's query returned them.
+    const twins = [
+      record('first', { title: 'Тест близнак' }),
+      record('second', { title: 'Тест близнак' }),
+    ]
+    expect(searchRecords(twins, 'близнак').map((hit) => hit.id)).toEqual(['first', 'second'])
+  })
+
+  it('finds nothing without a word of two letters', () => {
+    expect(sources('a')).toEqual([])
   })
 })

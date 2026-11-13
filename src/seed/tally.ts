@@ -37,9 +37,6 @@ export function noteSkipped(payload: Payload, name: string, n = 1) {
   tallies.get(payload)?.add(name, 'skipped', n)
 }
 
-// The derived search index is rebuilt from what's published; its writes aren't content.
-const uncounted = new Set(['search'])
-
 type Args = {
   collection?: string
   slug?: string
@@ -67,11 +64,9 @@ export function recording(payload: Payload, tally: Tally): Payload {
       const value = Reflect.get(target, property, receiver)
       if (typeof value !== 'function') return value
       const write = (kind: keyof Counts, name: string, args: Args, fake: () => unknown) => {
-        if (!uncounted.has(name)) {
-          tally.add(name, kind)
-          const detail = tally.detail ? ` (${tally.detail})` : ''
-          tally.planned.push(`${kind.replace(/d$/, '')} ${name}${label(args)}${detail}`)
-        }
+        tally.add(name, kind)
+        const detail = tally.detail ? ` (${tally.detail})` : ''
+        tally.planned.push(`${kind.replace(/d$/, '')} ${name}${label(args)}${detail}`)
         tally.detail = undefined
         return tally.dryRun ? Promise.resolve(fake()) : value.call(target, args)
       }

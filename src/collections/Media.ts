@@ -9,7 +9,13 @@ import { uploadDirs } from '@/lib/media/storage'
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { singular: 'Файл', plural: 'Медия' },
-  admin: { useAsTitle: 'alt', defaultColumns: ['filename', 'alt', 'kind', 'altReviewed'] },
+  // No «Медия» menu item or library (docs/admin-redesign.md, decision 8): a file is uploaded, and
+  // its alternative text filled in, from the photo field that uses it.
+  admin: {
+    hidden: true,
+    useAsTitle: 'alt',
+    defaultColumns: ['filename', 'alt', 'kind', 'altReviewed'],
+  },
   access: { read: anyone, create: isStaff, update: isStaff, delete: isAdmin },
   upload: {
     staticDir: uploadDirs.media,

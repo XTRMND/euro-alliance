@@ -2,7 +2,7 @@ import type { CollectionBeforeDeleteHook, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
-import { indexAfterChange, indexAfterDelete } from '@/lib/search-index'
+import { searchChanged, searchRemoved } from '@/lib/search-records'
 import { courseAudiences, courseCategoryValues, courseFormats, courseTopics } from '@/lib/courses'
 import { languages, routes } from '@/lib/routes'
 import { metaField } from '@/fields/meta'
@@ -117,8 +117,8 @@ export const Courses: CollectionConfig = {
   hooks: {
     beforeChange: [markAdminEdit],
     beforeDelete: [deleteGroups],
-    afterChange: [revalidateCollection, indexAfterChange, legacyRedirect.afterChange],
-    afterDelete: [revalidateCollection, indexAfterDelete, legacyRedirect.afterDelete],
+    afterChange: [revalidateCollection, searchChanged, legacyRedirect.afterChange],
+    afterDelete: [revalidateCollection, searchRemoved, legacyRedirect.afterDelete],
   },
   fields: [
     adminEditedAtField,

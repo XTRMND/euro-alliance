@@ -33,6 +33,7 @@ import * as migration_20261109_132504_admin_edited_at from './20261109_132504_ad
 import * as migration_20261112_084508_groups_collection from './20261112_084508_groups_collection';
 import * as migration_20261112_090923_prices_collection from './20261112_090923_prices_collection';
 import * as migration_20261112_091845_categories_and_translation_languages from './20261112_091845_categories_and_translation_languages';
+import * as migration_20261112_094228_drop_search_and_missing_addresses from './20261112_094228_drop_search_and_missing_addresses';
 
 export const migrations = [
   {
@@ -208,6 +209,11 @@ export const migrations = [
   {
     up: migration_20261112_091845_categories_and_translation_languages.up,
     down: migration_20261112_091845_categories_and_translation_languages.down,
-    name: '20261112_091845_categories_and_translation_languages'
+    name: '20261112_091845_categories_and_translation_languages',
+  },
+  {
+    up: migration_20261112_094228_drop_search_and_missing_addresses.up,
+    down: migration_20261112_094228_drop_search_and_missing_addresses.down,
+    name: '20261112_094228_drop_search_and_missing_addresses'
   },
 ];
