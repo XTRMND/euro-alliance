@@ -106,6 +106,11 @@ export default buildConfig({
           sorryNotFound:
             'Няма такава страница в админа. Може адресът да е сгрешен или съдържанието да е изтрито.',
           backToDashboard: 'Към таблото',
+          // Leaving a form with changes: in the polite form, as the rest of the admin.
+          leaveWithoutSaving: 'Напускане без запазване',
+          changesNotSaved: 'Промените не са запазени. Ако напуснете сега, ще ги загубите.',
+          stayOnThisPage: 'Останете на страницата',
+          leaveAnyway: 'Напуснете без запазване',
         },
       },
     },

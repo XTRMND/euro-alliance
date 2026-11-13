@@ -41,6 +41,12 @@ export function EditorLabels({ children }: { children?: ReactNode }) {
               node.title = own
             }
             translate(node)
+            // «Добави секция»: the search field is ready to type in as the panel opens.
+            node
+              .querySelector<HTMLInputElement>(
+                '.blocks-drawer .block-search__input, .block-search__input',
+              )
+              ?.focus()
           }
     })
     observer.observe(document.body, { childList: true, subtree: true })

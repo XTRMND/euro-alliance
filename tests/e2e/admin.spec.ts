@@ -435,7 +435,8 @@ test('a programme’s sections are named rows, added from a grouped drawer', asy
   await page.getByRole('button', { name: 'Добави секция' }).click()
   const drawer = page.locator('.drawer--is-open')
   await expect(drawer.getByRole('heading', { name: 'Добави секция' })).toBeVisible()
-  await expect(drawer.getByPlaceholder('Търси секция…')).toBeVisible()
+  // The search is ready to type in as the panel opens.
+  await expect(drawer.getByPlaceholder('Търси секция…')).toBeFocused()
   await expect(drawer.locator('.blocks-drawer__block-group-label')).toHaveText([
     'Съдържание',
     'Курсове и програми',
@@ -490,6 +491,18 @@ test('lists are named in Bulgarian, and a wrong address gets the admin’s own 4
   page,
 }) => {
   await logIn(page)
+  // Every screen's card spans the width beside the menu, 32px around it (the user, 13.11.2026).
+  for (const path of [
+    '/admin/collections/courses',
+    '/admin/collections/news',
+    '/admin/collections/prices',
+    '/admin/collections/inquiries',
+  ]) {
+    await page.goto(path)
+    const card = await page.locator('[data-admin="card"]').first().boundingBox()
+    expect(Math.round(card!.x)).toBe(280 + 32)
+    expect(Math.round(card!.x + card!.width)).toBe(1440 - 32)
+  }
   // No list says «Item 01» or «Добави Item», whatever the form.
   for (const path of ['/admin/globals/home', '/admin/globals/site', '/admin/globals/contact']) {
     await page.goto(path)
