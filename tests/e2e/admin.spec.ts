@@ -1,0 +1,175 @@
+import { randomUUID } from 'node:crypto'
+import AxeBuilder from '@axe-core/playwright'
+import { expect, type Page, test } from '@playwright/test'
+
+// The admin's shell (docs/admin-redesign.md, PR 6; Figma «07 CMS admin»): the login, the sidebar
+// that mirrors the site, the top bar and the hairline sub-nav. The first account of an empty
+// database is made here (CI's database has none); against a database that already has accounts,
+// give one in E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD.
+
+test.describe.configure({ mode: 'serial' })
+// No stored consent: the admin sets no cookie banner. A dark system must not darken the admin.
+test.use({
+  viewport: { width: 1440, height: 960 },
+  storageState: { cookies: [], origins: [] },
+  colorScheme: 'dark',
+})
+
+const account = {
+  email: process.env.E2E_ADMIN_EMAIL ?? 'e2e-admin@example.test',
+  password: process.env.E2E_ADMIN_PASSWORD ?? randomUUID(),
+}
+let ready = false
+
+test.beforeAll(async ({ request }) => {
+  if (process.env.E2E_ADMIN_EMAIL) {
+    ready = true
+    return
+  }
+  const response = await request.post('/api/users/first-register', {
+    data: { ...account, name: 'Тест Админ' },
+  })
+  ready = response.ok()
+})
+
+async function logIn(page: Page) {
+  test.skip(
+    !ready,
+    'The database already has accounts: set E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD.',
+  )
+  await page.goto('/admin/login')
+  await page.getByLabel('Имейл').fill(account.email)
+  await page.getByLabel('Парола').fill(account.password)
+  await page.getByRole('button', { name: 'Вход' }).click()
+  await expect(page.getByRole('complementary', { name: 'Меню' })).toBeVisible()
+}
+
+const axe = async (page: Page, include?: string[], withoutRules: string[] = []) => {
+  let builder = new AxeBuilder({ page }).disableRules(withoutRules)
+  for (const selector of include ?? []) builder = builder.include(selector)
+  const { violations } = await builder.analyze()
+  return violations.map((v) => `${v.id} (${v.nodes.length}): ${v.help}`)
+}
+
+test('the login has the brand panel and the card, light whatever the system says', async ({
+  page,
+}) => {
+  await page.goto('/admin/login')
+  await expect(page.getByRole('heading', { level: 1, name: 'Вход' })).toBeVisible()
+  await expect(page.getByText('Управление на съдържанието')).toBeVisible()
+  await expect(page.getByText('ЕВРО-АЛИАНС ООД · от 1999 г.')).toBeVisible()
+  await expect(page.getByText('Забравена парола?')).toBeVisible()
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light')
+  // The card sits on paper, to the right of the navy panel.
+  const background = await page.evaluate(() => getComputedStyle(document.body).backgroundColor)
+  expect(background).toBe('rgb(247, 243, 236)')
+  // Payload's small-screen template has no <main>: its two landmark rules aside, nothing.
+  expect(await axe(page, undefined, ['landmark-one-main', 'region'])).toEqual([])
+})
+
+test('the sidebar mirrors the site and marks the open screen', async ({ page }) => {
+  await logIn(page)
+  const menu = page.getByRole('complementary', { name: 'Меню' })
+  const content = menu.getByRole('navigation', { name: 'Съдържание' })
+  await expect(content.locator('> ul > li')).toHaveText([
+    /^Табло$/,
+    /^Запитвания/,
+    /^Начална страница$/,
+    /^Обучения$/,
+    /^Цени$/,
+    /^Преводи$/,
+    /^Новини$/,
+    /^За нас$/,
+    /^Контакти$/,
+    /^Сайт$/,
+  ])
+  await expect(menu).not.toContainText('Глобални')
+  await expect(menu).not.toContainText('Медия')
+  await expect(menu.getByRole('navigation', { name: 'Профил' }).getByRole('link')).toHaveText([
+    'Потребители',
+    'Изход',
+  ])
+  await expect(content.getByRole('link', { name: 'Табло' })).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(/Съдържание\s*\/\s*Табло/)
+  // Payload's own header and nav toggle are gone.
+  await expect(page.locator('.app-header')).toBeHidden()
+})
+
+test('a branch opens to a filtered list, with the sub-nav of its siblings', async ({ page }) => {
+  await logIn(page)
+  const content = page.getByRole('navigation', { name: 'Съдържание' })
+  const branch = content.getByRole('button', { name: 'Обучения' })
+  await expect(branch).toHaveAttribute('aria-expanded', 'false')
+  await branch.click()
+  await expect(branch).toHaveAttribute('aria-expanded', 'true')
+  await content.getByRole('button', { name: 'Езикови курсове' }).click()
+  await content.getByRole('link', { name: 'Курсове', exact: true }).first().click()
+
+  await expect(page).toHaveURL(/\/admin\/collections\/courses\?where/)
+  expect(new URL(page.url()).searchParams.get('where[category][equals]')).toBe('languages')
+  await expect(content.getByRole('link', { name: 'Курсове', exact: true }).first()).toHaveAttribute(
+    'aria-current',
+    'page',
+  )
+  const tabs = page.getByRole('navigation', { name: 'Раздел' }).getByRole('link')
+  await expect(tabs).toHaveText(['Програми', 'Курсове', 'Учебни системи', 'Сертификати'])
+  await expect(tabs.nth(1)).toHaveAttribute('aria-current', 'page')
+  await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(
+    /Обучения\s*\/\s*Езикови курсове\s*\/\s*Курсове/,
+  )
+
+  // A sibling in the sub-nav opens its own list and takes the mark.
+  await tabs.nth(3).click()
+  await expect(page).toHaveURL(/\/admin\/collections\/certificates/)
+  await expect(tabs.nth(3)).toHaveAttribute('aria-current', 'page')
+})
+
+test('a global sits where its page is on the site', async ({ page }) => {
+  await logIn(page)
+  const content = page.getByRole('navigation', { name: 'Съдържание' })
+  await content.getByRole('button', { name: 'Сайт' }).click()
+  await content.getByRole('link', { name: 'Навигация' }).click()
+  await expect(page).toHaveURL(/\/admin\/globals\/navigation/)
+  await expect(page.getByRole('heading', { level: 1, name: 'Навигация' })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(/Сайт\s*\/\s*Навигация/)
+  await expect(content.getByRole('link', { name: 'Навигация' })).toHaveAttribute(
+    'aria-current',
+    'page',
+  )
+})
+
+test('the top bar switches the content language and opens the account menu', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/globals/home')
+  const languages = page.getByRole('group', { name: 'Език на съдържанието' })
+  await expect(languages.getByRole('link', { name: 'Български' })).toHaveAttribute(
+    'aria-current',
+    'true',
+  )
+  await languages.getByRole('link', { name: 'English' }).click()
+  await expect(page).toHaveURL(/locale=en/)
+  await expect(languages.getByRole('link', { name: 'English' })).toHaveAttribute(
+    'aria-current',
+    'true',
+  )
+  await languages.getByRole('link', { name: 'Български' }).click()
+  await expect(page).toHaveURL(/locale=bg/)
+
+  await expect(page.getByRole('link', { name: /Виж сайта/ })).toHaveAttribute('target', '_blank')
+  const avatar = page.getByRole('button', { name: /^Профил:/ })
+  await avatar.click()
+  await expect(avatar).toHaveAttribute('aria-expanded', 'true')
+  await expect(page.getByRole('link', { name: 'Профил', exact: true })).toHaveAttribute(
+    'href',
+    '/admin/account',
+  )
+  await page.keyboard.press('Escape')
+  await expect(avatar).toHaveAttribute('aria-expanded', 'false')
+})
+
+test('the shell has no axe violations, with a branch open', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/collections/courses?where[category][equals]=languages')
+  await expect(page.getByRole('navigation', { name: 'Раздел' })).toBeVisible()
+  expect(await axe(page, ['aside[aria-label="Меню"]', '[data-admin="top"]'])).toEqual([])
+})

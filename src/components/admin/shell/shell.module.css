@@ -1,0 +1,341 @@
+/* The admin's shell: «Admin / Sidebar v2» (366:1133), «Admin / Nav item» (354:53), «Admin / Top
+   bar» (354:83), «Admin / Sub-nav tab» (354:58). Colours and type are the site's tokens
+   (src/styles/tokens.css), loaded for the admin by src/app/(payload)/custom.css. */
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Sidebar */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  width: var(--admin-nav-width);
+  height: 100vh;
+  overflow: hidden;
+  border: 0;
+  background: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+  opacity: 1;
+}
+
+.brand {
+  display: flex;
+  flex: none;
+  gap: 12px;
+  align-items: center;
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid var(--color-text-on-brand);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand img {
+  display: block;
+  flex: none;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+
+.name {
+  font: 800 26px / 1.2 var(--font-display);
+}
+
+.tagline {
+  color: var(--color-brand-accent);
+  font: 500 12px / 1.2 var(--font-body);
+}
+
+.tree {
+  flex: 1 1 0;
+  min-height: 0;
+  padding: 10px 12px;
+  overflow-y: auto;
+  scrollbar-color: rgb(255 255 255 / 30%) transparent;
+  scrollbar-width: thin;
+}
+
+.footer {
+  flex: none;
+  padding: 10px 12px;
+  border-top: 1px solid var(--color-text-on-brand);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list .list {
+  margin-top: 1px;
+}
+
+.item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px 8px 14px;
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  background: none;
+  color: var(--color-text-on-brand);
+  font: 600 15px / 1.2 var(--font-body);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The 3px bar of the marked item is inside the item's box, so the text doesn't move. */
+.item[data-level='1'] {
+  padding-left: 11px;
+}
+
+.item[data-level='2'] {
+  padding: 6px 12px 6px 23px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.item[data-level='3'] {
+  padding: 6px 12px 6px 39px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.item[aria-current='page'] {
+  border-left-color: var(--color-brand-accent);
+  background: rgb(255 255 255 / 10%);
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .item:hover {
+    background: rgb(255 255 255 / 10%);
+  }
+}
+
+.item:focus-visible {
+  outline: 3px solid var(--color-brand-accent);
+  outline-offset: -3px;
+}
+
+.label {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.chevron {
+  flex: none;
+}
+
+.badge {
+  flex: none;
+  padding: 1px 7px;
+  border-radius: 10px;
+  background: var(--color-brand-accent);
+  color: var(--color-brand-primary-strong);
+  font: 600 12px / 1.2 var(--font-body);
+}
+
+/* Top bar */
+
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-width: 0;
+}
+
+.bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  height: 64px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-bg-page);
+}
+
+.crumbs {
+  display: flex;
+  flex: 1 1 0;
+  gap: 8px;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font: 500 14px / 1.2 var(--font-body);
+  white-space: nowrap;
+}
+
+.crumb {
+  display: inline-flex;
+  flex: none;
+  gap: 8px;
+}
+
+.crumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.crumb a:hover {
+  color: var(--color-brand-primary);
+  text-decoration: underline;
+}
+
+.current {
+  overflow: hidden;
+  color: var(--color-text-primary);
+  font-weight: 600;
+  text-overflow: ellipsis;
+}
+
+.locales {
+  display: flex;
+  flex: none;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 8px;
+  background: var(--color-bg-subtle);
+}
+
+.locale {
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font: 500 13px / 1.2 var(--font-body);
+  text-decoration: none;
+}
+
+.locale[aria-current='true'] {
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.site {
+  display: inline-flex;
+  flex: none;
+  gap: 6px;
+  align-items: center;
+  color: var(--color-brand-primary);
+  font: 600 14px / 1.2 var(--font-body);
+  text-decoration: none;
+}
+
+.site:hover {
+  text-decoration: underline;
+}
+
+.account {
+  position: relative;
+  flex: none;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-brand-primary);
+  color: var(--color-text-on-brand);
+  font: 600 12px / 1 var(--font-body);
+  cursor: pointer;
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 8px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 12px;
+  background: var(--color-bg-page);
+  box-shadow: 0 12px 32px rgb(23 48 105 / 10%);
+}
+
+.menuName {
+  margin: 0;
+  padding: 6px 10px 8px;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font: 400 13px / 1.3 var(--font-body);
+  text-overflow: ellipsis;
+}
+
+.menuItem {
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--color-text-primary);
+  font: 600 14px / 1.2 var(--font-body);
+  text-decoration: none;
+}
+
+.menuItem:hover {
+  background: var(--color-bg-subtle);
+}
+
+.locale:focus-visible,
+.site:focus-visible,
+.avatar:focus-visible,
+.menuItem:focus-visible,
+.tab:focus-visible,
+.crumb a:focus-visible {
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* Hairline sub-nav */
+
+.subnav {
+  display: flex;
+  gap: 28px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--color-border-default);
+  background: var(--color-bg-page);
+}
+
+.tab {
+  margin-bottom: -1px;
+  padding: 12px 2px;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-muted);
+  font: 500 14px / 1.2 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tab[aria-current='page'] {
+  border-bottom-color: var(--color-brand-primary);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+@media (hover: hover) {
+  .tab:hover {
+    color: var(--color-text-primary);
+  }
+}
