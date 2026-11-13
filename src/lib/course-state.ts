@@ -1,4 +1,5 @@
-import type { Course, Group } from '@/payload-types'
+import type { Course, Group, Price } from '@/payload-types'
+import { resolvePrice } from './price'
 
 // The state of a course, from its groups (the user's model of 02.11.2026; the board of states is
 // 126:1940). A course is what the centre teaches; its dates belong to its groups:
@@ -11,7 +12,8 @@ import type { Course, Group } from '@/payload-types'
 // The group a card or a page shows is the soonest upcoming one, else the latest to have started.
 // Enrolment is open only for an upcoming group with free seats (or no seat count); otherwise the
 // button asks about joining. Few seats: 1 or 2 free, highlighted. Price: a voucher course shows
-// the voucher's value; a regular price above the price makes a promotion (struck through). A free
+// the voucher's value; a regular price above the price makes a promotion (struck through). The
+// price is the group's own, or else the course's base price (src/lib/price.ts). A free
 // course (the farmers' courses) shows «Безплатно» instead of a price, and always an inquiry.
 
 export const fewSeatsBelow = 3
@@ -22,7 +24,11 @@ export type CourseGroup = Group
  * A course as the site reads it (src/lib/course-query.ts): its groups, records of the groups
  * collection, as a list. In the admin they're a join field.
  */
-export type SiteCourse = Omit<Course, 'groups'> & { groups: CourseGroup[] }
+export type SiteCourse = Omit<Course, 'groups' | 'prices'> & {
+  groups: CourseGroup[]
+  /** The course's base price and its groups' own prices (src/lib/price.ts). */
+  prices: Price[]
+}
 
 export type GroupStatus = 'upcoming' | 'running' | 'ended'
 
@@ -30,7 +36,9 @@ export type CourseStatus = 'upcoming' | 'running' | 'none'
 
 export const courseStatuses = ['upcoming', 'running', 'none'] as const
 
-type StatefulCourse = Pick<SiteCourse, 'groups' | 'voucherEligible' | 'free'>
+type StatefulCourse = Pick<SiteCourse, 'groups' | 'voucherEligible' | 'free'> & {
+  prices?: Price[] | null
+}
 
 /** `today` is midnight in Bulgaria as an ISO string (startOfTodayInSofia). */
 export function groupStatus(group: Pick<CourseGroup, 'start' | 'end'>, today: string): GroupStatus {
@@ -61,6 +69,8 @@ export type CourseState = {
   status: CourseStatus
   /** The group the card, the ticket and the enrol bar show. */
   group?: CourseGroup
+  /** The price they show: the group's own, or else the course's base price. */
+  price?: Price
   /** Open: an upcoming group with seats, «Запиши се». Otherwise an inquiry about joining. */
   enrolment: 'open' | 'inquiry'
   pricing: 'free' | 'voucher' | 'promotion' | 'regular' | 'none'
@@ -74,19 +84,20 @@ export function courseState(course: StatefulCourse, today: string): CourseState 
   const group = first?.group
   const status: CourseStatus = first?.status ?? 'none'
   const seats = typeof group?.seats === 'number' ? group.seats : undefined
-  const hasPrice = typeof group?.price === 'number'
+  const price = resolvePrice(course.prices, group)
 
   return {
     status,
     group,
+    price,
     enrolment: !course.free && status === 'upcoming' && seats !== 0 ? 'open' : 'inquiry',
     pricing: course.free
       ? 'free'
-      : !hasPrice
+      : !price
         ? 'none'
         : course.voucherEligible
           ? 'voucher'
-          : typeof group?.regularPrice === 'number' && group.regularPrice > group.price!
+          : typeof price.regularPrice === 'number' && price.regularPrice > price.price
             ? 'promotion'
             : 'regular',
     seats,

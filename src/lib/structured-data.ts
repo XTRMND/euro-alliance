@@ -1,6 +1,7 @@
 import type { SiteCourse } from './course-state'
 import type { Media, News, Office, Site } from '@/payload-types'
 import { currentGroups } from './course-state'
+import { resolvePrice } from './price'
 import { routes } from './routes'
 import { siteUrl } from './seo'
 
@@ -57,7 +58,10 @@ export function organizationLd(site: Site, offices: Office[]): Ld {
  */
 export function courseLd(course: SiteCourse, today: string): Ld {
   const groups = currentGroups(course, today).map(({ group }) => group)
-  const offer = groups.find((group) => typeof group.price === 'number')
+  // The first current group with a price (its own, or the course's base price), else the base.
+  const offer =
+    groups.map((group) => resolvePrice(course.prices, group)).find(Boolean) ??
+    resolvePrice(course.prices)
   return compact({
     '@context': 'https://schema.org',
     '@type': 'Course',
@@ -88,7 +92,7 @@ export function courseLd(course: SiteCourse, today: string): Ld {
             '@type': 'Offer',
             category: 'Paid',
             price: offer.price,
-            priceCurrency: offer.currency ?? 'EUR',
+            priceCurrency: offer.currency,
           }
         : undefined,
   })

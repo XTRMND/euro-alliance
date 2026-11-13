@@ -6,6 +6,8 @@ import {
   groupStatus,
   withStates,
 } from '@/lib/course-state'
+import { resolvePrice } from '@/lib/price'
+import type { Price } from '@/payload-types'
 
 const today = '2026-10-31T22:00:00.000Z' // 1 November 2026 in Sofia
 
@@ -18,8 +20,17 @@ type Group = {
   regularPrice?: number
 }
 const course = (groups: Group[], fields: { voucherEligible?: boolean; free?: boolean } = {}) => ({
-  // Only the fields the states read; the ids are names, to tell the groups apart.
+  // Only the fields the states read; the ids are names, to tell the groups apart. A group's
+  // price here is its own price record.
   groups: groups as unknown as CourseGroup[],
+  prices: groups
+    .filter((group) => group.price !== undefined)
+    .map((group) => ({
+      group: group.id,
+      price: group.price,
+      currency: 'EUR',
+      regularPrice: group.regularPrice,
+    })) as unknown as Price[],
   ...fields,
 })
 const upcoming = { id: 'u', start: '2026-11-03T12:00:00.000Z' }
@@ -112,5 +123,31 @@ describe('course states (the groups model of 02.11.2026)', () => {
       'А',
       'В',
     ])
+  })
+})
+
+describe('the price resolver (docs/admin-redesign.md, decision 6)', () => {
+  const price = (id: number, group: number | null, amount: number) =>
+    ({ id, course: 1, group, price: amount, currency: 'EUR' }) as unknown as Price
+  const base = price(1, null, 500)
+  const own = price(2, 7, 450)
+
+  it('shows the group’s own price, or else the course’s base price', () => {
+    expect(resolvePrice([base, own], { id: 7 })).toBe(own)
+    expect(resolvePrice([base, own], { id: 8 })).toBe(base)
+    expect(resolvePrice([own], { id: 8 })).toBeUndefined()
+  })
+
+  it('shows the base price for a course without a group, and nothing without prices', () => {
+    expect(resolvePrice([base, own])).toBe(base)
+    expect(resolvePrice([own])).toBeUndefined()
+    expect(resolvePrice(undefined, { id: 7 })).toBeUndefined()
+  })
+
+  it('prices a course from its base price when the shown group has none of its own', () => {
+    const upcomingGroup = { id: 9, start: '2026-11-03T12:00:00.000Z' } as unknown as CourseGroup
+    const state = courseState({ groups: [upcomingGroup], prices: [base] }, today)
+    expect([state.pricing, state.price]).toEqual(['regular', base])
+    expect(courseState({ groups: [], prices: [base] }, today).price).toBe(base)
   })
 })

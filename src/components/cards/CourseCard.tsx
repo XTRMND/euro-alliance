@@ -83,13 +83,13 @@ export async function CourseCard({
           {state.pricing === 'free' && (
             <p className={[styles.price, styles.ask].join(' ')}>{t('course.free')}</p>
           )}
-          {group && state.pricing !== 'none' && state.pricing !== 'free' && (
+          {state.price && state.pricing !== 'free' && (
             <p className={styles.price}>
-              {formatPrice(group.price!, group.currency ?? 'EUR')}
-              {group.priceLabel && <span className={styles.note}>{group.priceLabel}</span>}
+              {formatPrice(state.price.price, state.price.currency)}
+              {state.price.label && <span className={styles.note}>{state.price.label}</span>}
             </p>
           )}
-          {state.status === 'none' && state.pricing !== 'free' && (
+          {state.status === 'none' && state.pricing === 'none' && (
             <p className={[styles.price, styles.ask].join(' ')}>
               {t('course.askPrice')}
               <span className={styles.note}>{t('course.askPriceNote')}</span>

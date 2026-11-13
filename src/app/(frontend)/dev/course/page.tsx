@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { type CourseGroup, type SiteCourse, courseState } from '@/lib/course-state'
 import { destinations } from '@/lib/destinations'
 import { routes } from '@/lib/routes'
+import type { Price } from '@/payload-types'
 import styles from '../patterns/page.module.css'
 
 // The course page's parts (PR 10) in every state of board 126:1940, with obviously fake courses
@@ -27,10 +28,18 @@ const group: CourseGroup = {
   days: 'тестови дни',
   hours: '10:00–12:00',
   format: 'online',
+  seats: 5,
+}
+
+const price: Price = {
+  id: 1,
+  course: 1,
+  group: 1,
   price: 100,
   currency: 'EUR',
-  priceLabel: 'тестов етикет',
-  seats: 5,
+  label: 'тестов етикет',
+  updatedAt: '',
+  createdAt: '',
 }
 
 const base: SiteCourse = {
@@ -50,6 +59,7 @@ const base: SiteCourse = {
   document: 'Тестов документ',
   included: 'Тестово включено',
   groups: [group],
+  prices: [price],
   updatedAt: '',
   createdAt: '',
 }
@@ -59,12 +69,17 @@ const withGroup = (changes: Partial<CourseGroup>): SiteCourse => ({
   groups: [{ ...group, ...changes }],
 })
 
+const withPrice = (changes: Partial<Price>): SiteCourse => ({
+  ...base,
+  prices: [{ ...price, ...changes }],
+})
+
 const states: { name: string; course: SiteCourse }[] = [
-  { name: 'Промоция', course: withGroup({ regularPrice: 120 }) },
+  { name: 'Промоция', course: withPrice({ regularPrice: 120 }) },
   { name: 'Редовна цена', course: base },
   {
     name: 'С ваучер',
-    course: { ...withGroup({ priceLabel: null }), voucherEligible: true },
+    course: { ...withPrice({ label: null }), voucherEligible: true },
   },
   { name: 'Малко места', course: withGroup({ seats: 2 }) },
   { name: 'Няма места', course: withGroup({ seats: 0 }) },
@@ -78,6 +93,7 @@ const states: { name: string; course: SiteCourse }[] = [
       audience: null,
       program: null,
       included: null,
+      prices: [],
       groups: [
         {
           ...group,
@@ -85,8 +101,6 @@ const states: { name: string; course: SiteCourse }[] = [
           days: null,
           hours: null,
           format: null,
-          price: null,
-          priceLabel: null,
           seats: null,
         },
       ],

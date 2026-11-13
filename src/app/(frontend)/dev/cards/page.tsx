@@ -26,6 +26,7 @@ export const metadata: Metadata = {
 }
 
 const groupBase = { course: 1, updatedAt: '', createdAt: '' }
+const priceBase = { course: 1, currency: 'EUR' as const, updatedAt: '', createdAt: '' }
 
 const course = (id: number, fields: Partial<SiteCourse>): SiteCourse => ({
   id,
@@ -36,6 +37,7 @@ const course = (id: number, fields: Partial<SiteCourse>): SiteCourse => ({
   updatedAt: '',
   createdAt: '',
   groups: [],
+  prices: [],
   ...fields,
 })
 
@@ -49,10 +51,9 @@ const courses = [
         ...groupBase,
         id: 1,
         start: '2099-01-15T12:00:00.000Z',
-        price: 100,
-        priceLabel: 'тестов етикет',
       },
     ],
+    prices: [{ ...priceBase, id: 1, group: 1, price: 100, label: 'тестов етикет' }],
   }),
   course(2, {
     title: 'Тестов курс с дълго заглавие, което не се побира на два реда в картата',
@@ -65,9 +66,9 @@ const courses = [
         ...groupBase,
         id: 2,
         start: '2099-02-01T12:00:00.000Z',
-        price: 100.5,
       },
     ],
+    prices: [{ ...priceBase, id: 2, group: 2, price: 100.5 }],
   }),
   course(3, {
     topic: 'exam-prep',

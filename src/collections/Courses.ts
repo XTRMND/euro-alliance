@@ -11,9 +11,10 @@ import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 
 // docs/cms-schema.md § 3. A course is what the centre teaches; its dates belong to its groups
 // (the user's model of 02.11.2026): zero or more records of the groups collection
-// (src/collections/Groups.ts), each with a start and an optional end, schedule, format, office,
-// price and seats. The state of a course comes from its groups (src/lib/course-state.ts). Never
-// invent a course: an empty optional field hides its element.
+// (src/collections/Groups.ts), each with a start and an optional end, schedule, format, office
+// and seats; its prices are records of the prices collection (src/collections/Prices.ts). The
+// state of a course comes from its groups (src/lib/course-state.ts). Never invent a course: an
+// empty optional field hides its element.
 
 const audienceLabels = { students: 'Ученици', adults: 'Възрастни', companies: 'Фирми' }
 const formatLabels = { 'in-person': 'Присъствено', online: 'Онлайн' }
@@ -96,8 +97,9 @@ const legacyRedirect = legacyRedirectHooks<{
   (doc, req) => groupLegacyUrls(doc.id, req),
 )
 
-/** A course's groups go with it (their old addresses' redirects too, through their hooks). */
+/** A course's prices and groups go with it (the groups' redirects too, through their hooks). */
 const deleteGroups: CollectionBeforeDeleteHook = async ({ id, req }) => {
+  await req.payload.delete({ collection: 'prices', where: { course: { equals: id } }, req })
   await req.payload.delete({ collection: 'groups', where: { course: { equals: id } }, req })
 }
 
@@ -246,6 +248,18 @@ export const Courses: CollectionConfig = {
         defaultColumns: ['title', 'start', 'end', 'seats', 'office'],
         description:
           'Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.',
+      },
+    },
+    {
+      name: 'prices',
+      type: 'join',
+      collection: 'prices',
+      on: 'course',
+      label: 'Цени',
+      admin: {
+        defaultColumns: ['price', 'group', 'regularPrice', 'label', 'note'],
+        description:
+          'Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».',
       },
     },
     {
