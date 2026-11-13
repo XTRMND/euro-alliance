@@ -68,7 +68,11 @@ const LegalLink: Block = {
 export const LegalPages: CollectionConfig = {
   slug: 'legal-pages',
   labels: { singular: 'Правна страница', plural: 'Правни страници' },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'page', 'updatedOn'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'page', 'updatedOn'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true, maxPerDoc: 50 },
   hooks: {

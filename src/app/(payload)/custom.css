@@ -400,3 +400,175 @@ button:focus-visible {
 .template-minimal .form-submit .btn .btn__label {
   font: var(--admin-type-label);
 }
+
+/* ── Edit screens («Admin · 03 Курс», 367:858; «Admin · 07 Новина») ─────────────
+   The title with «Версии» beside it; under it the status as pills and the last change, with
+   «Запази чернова» and «Публикувай» on the right; the form's tabs as hairline tabs. */
+
+.doc-header__header {
+  align-items: center;
+}
+
+.doc-header__title {
+  font: var(--admin-type-title);
+}
+
+/* «Редактирай» says nothing on its own screen; «Версии» is a link beside the title. */
+.doc-tabs .doc-tab--active {
+  display: none;
+}
+
+.doc-tabs .doc-tab {
+  padding: 4px 2px;
+  background: none;
+  color: var(--color-brand-primary);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.doc-tabs a.doc-tab:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+.doc-controls {
+  background: var(--color-bg-warm);
+}
+
+.doc-controls__meta {
+  gap: 8px;
+  align-items: center;
+}
+
+.doc-controls .status__label {
+  display: none;
+}
+
+.doc-controls .status__value {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-brand-primary-subtle);
+  color: var(--color-brand-primary);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.doc-controls__label,
+.doc-controls__value {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  font-size: 13px;
+}
+
+/* «Създаден» adds little beside the last change. */
+.doc-controls__meta > .doc-controls__value-wrap:last-child:not(:nth-child(2)) {
+  display: none;
+}
+
+.doc-controls__controls .btn {
+  margin: 0;
+}
+
+.doc-controls__controls .btn .btn__label {
+  font: var(--admin-type-label);
+}
+
+.doc-controls__controls .form-submit > .btn,
+.doc-controls__controls .form-submit > div > .btn {
+  padding: 11px 20px;
+}
+
+/* The form's tabs (Съдържание · Групи · Цени · SEO и адрес) */
+
+.tabs-field__tabs {
+  gap: 24px;
+  padding-inline: var(--admin-margin);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.tabs-field__tabs::before,
+.tabs-field__tabs::after {
+  display: none;
+}
+
+.tabs-field__tab-button {
+  margin: 0 0 -1px;
+  padding: 12px 2px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  font-size: 14px;
+  font-family: var(--font-body);
+  opacity: 1;
+}
+
+.tabs-field__tab-button::after {
+  display: none;
+}
+
+.tabs-field__tab-button:hover {
+  color: var(--color-text-primary);
+}
+
+.tabs-field__tab-button--active {
+  border-bottom-color: var(--color-brand-primary);
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.tabs-field__description {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+/* «Admin / Field»'s locale badge: «БГ» (or «EN») after a localized field's label, in place of
+   Payload's «— Български». The shell sets --admin-locale to the content language. */
+
+.field-label .localized {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0;
+  line-height: 1.2;
+  vertical-align: 1px;
+}
+
+.field-label .localized::after {
+  font-size: 10px;
+  content: var(--admin-locale, 'БГ');
+}
+
+/* The form starts 16px under the controls, as the mockup's column does. */
+.document-fields__edit {
+  padding-top: 16px;
+}
+
+.document-fields__fields > .tabs-field {
+  margin-top: 0;
+}
+
+/* The text editor: the site's body face in a white box, as the other fields. */
+.rich-text-lexical {
+  --font-serif: var(--font-body);
+}
+
+.rich-text-lexical .editor-container {
+  padding: 4px 12px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  font-family: var(--font-body);
+}
+
+.rich-text-lexical .editor-container:focus-within {
+  border-color: var(--color-brand-primary);
+  outline: 3px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}

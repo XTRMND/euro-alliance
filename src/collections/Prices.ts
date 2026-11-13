@@ -70,6 +70,7 @@ export const Prices: CollectionConfig = {
   slug: 'prices',
   labels: { singular: 'Цена', plural: 'Цени' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'price',
     defaultColumns: ['course', 'group', 'price', 'regularPrice', 'label', 'note'],
     description:

@@ -9,7 +9,11 @@ import { revalidateCollection } from '@/hooks/revalidate'
 export const FundedProjects: CollectionConfig = {
   slug: 'funded-projects',
   labels: { singular: 'Проект', plural: 'Проекти с финансиране' },
-  admin: { useAsTitle: 'title', defaultColumns: ['title', 'code'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'code'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },

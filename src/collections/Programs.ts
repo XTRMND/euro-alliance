@@ -31,6 +31,7 @@ export const Programs: CollectionConfig = {
   slug: 'programs',
   labels: { singular: 'Програма', plural: 'Програми' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['title', 'type', 'language', 'audience', '_status'],
   },

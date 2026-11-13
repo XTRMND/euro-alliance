@@ -12,6 +12,7 @@ export const Media: CollectionConfig = {
   // No «Медия» menu item or library (docs/admin-redesign.md, decision 8): a file is uploaded, and
   // its alternative text filled in, from the photo field that uses it.
   admin: {
+    hideAPIURL: true,
     hidden: true,
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'kind', 'altReviewed'],

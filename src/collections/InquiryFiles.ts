@@ -9,7 +9,10 @@ import { uploadLimits } from '@/lib/inquiries'
 export const InquiryFiles: CollectionConfig = {
   slug: 'inquiry-files',
   labels: { singular: 'Файл към запитване', plural: 'Файлове към запитвания' },
-  admin: { hidden: true },
+  admin: {
+    hideAPIURL: true,
+    hidden: true,
+  },
   access: { read: isStaff, create: () => false, update: () => false, delete: isAdmin },
   upload: {
     staticDir: uploadDirs.inquiries,

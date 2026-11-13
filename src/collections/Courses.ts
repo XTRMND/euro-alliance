@@ -1,5 +1,6 @@
 import type { CollectionBeforeDeleteHook, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
+import { inForm } from '@/fields/in-form'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { searchChanged, searchRemoved } from '@/lib/search-records'
@@ -108,6 +109,7 @@ export const Courses: CollectionConfig = {
   slug: 'courses',
   labels: { singular: 'Курс', plural: 'Курсове' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'audience', '_status'],
     // «Admin · 02 Езикови курсове · Курсове» (356:100) in place of Payload's list.
@@ -126,201 +128,263 @@ export const Courses: CollectionConfig = {
   },
   fields: [
     adminEditedAtField,
-    metaField(),
-    { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+    // The edit screen's tabs («Admin · 03 Курс», 367:880). They only lay the form out: the
+    // fields are stored as before.
     {
-      name: 'originalTitle',
-      type: 'text',
-      label: 'Заглавие на стария сайт',
-      localized: true,
-      admin: {
-        position: 'sidebar',
-        readOnly: true,
-        description:
-          'Както е било на стария сайт, преди аудиторията и формата да минат в етикетите.',
-      },
-    },
-    slugField(),
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Кратко описание',
-      localized: true,
-      admin: { description: 'Под заглавието на страницата на курса.' },
-    },
-    {
-      type: 'row',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'category',
-          type: 'select',
-          label: 'Програма',
-          required: true,
-          options: courseCategoryValues.map((value) => ({ value, label: categoryLabels[value] })),
-        },
-        {
-          name: 'language',
-          type: 'select',
-          label: 'Език',
-          options: languages.map((value) => ({ value, label: languageLabels[value] })),
-        },
-      ],
-    },
-    {
-      name: 'topic',
-      type: 'select',
-      label: 'Стикер',
-      required: true,
-      options: topicOptions,
-      admin: {
-        description: 'Един стикер, едно значение: не ползвайте един стикер за различни неща.',
-      },
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'audience',
-          type: 'select',
-          label: 'Аудитория',
-          options: courseAudiences.map((value) => ({ value, label: audienceLabels[value] })),
-        },
-        {
-          name: 'audienceNote',
-          type: 'text',
-          label: 'Уточнение към аудиторията',
-          localized: true,
-          admin: { description: 'Например «12 клас». Показва се след аудиторията.' },
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'format',
-          type: 'select',
-          label: 'Формат',
-          options: formatOptions,
-          admin: { description: 'Обичайният формат; всяка група може да има свой.' },
-        },
-        {
-          name: 'cardTag',
-          type: 'text',
-          label: 'Втори етикет на картата',
-          localized: true,
-          admin: {
-            description:
-              'Например «Вечерна група». Ако е празно: «С ваучер» за курс с ваучер, иначе формата.',
-          },
-        },
-      ],
-    },
-    {
-      type: 'row',
-      fields: [
-        {
-          name: 'level',
-          type: 'text',
-          label: 'Ниво',
-          admin: { description: 'Например B2, A1–B1 или 11–12. Празно: без балонче за ниво.' },
-        },
-        {
-          name: 'levelUnit',
-          type: 'select',
-          label: 'Под числото в балончето',
-          defaultValue: 'level',
-          options: [
-            { value: 'level', label: 'Ниво' },
-            { value: 'grade', label: 'Клас' },
-          ],
-          admin: { description: 'Клас за подготовка за изпит по класове, например 11–12 за ДЗИ.' },
-        },
-      ],
-    },
-    { name: 'duration', type: 'textarea', label: 'Хорариум', localized: true },
-    {
-      name: 'groups',
-      type: 'join',
-      collection: 'groups',
-      on: 'course',
-      label: 'Групи',
-      defaultSort: 'start',
-      defaultLimit: 50,
-      admin: {
-        defaultColumns: ['title', 'start', 'end', 'seats', 'office'],
-        description:
-          'Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.',
-      },
-    },
-    {
-      name: 'prices',
-      type: 'join',
-      collection: 'prices',
-      on: 'course',
-      label: 'Цени',
-      admin: {
-        defaultColumns: ['price', 'group', 'regularPrice', 'label', 'note'],
-        description:
-          'Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».',
-      },
-    },
-    {
-      type: 'collapsible',
-      label: 'Какво получавате',
-      fields: [
-        {
-          name: 'entryLevel',
-          type: 'text',
-          label: 'Входно ниво',
-          admin: {
-            description:
-              'Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».',
-          },
-        },
-        {
-          name: 'levelName',
-          type: 'text',
-          label: 'Ниво (пълно име)',
-          localized: true,
-          admin: { description: 'Например «B2 Upper-Intermediate». Празно: показва се нивото.' },
-        },
-        {
-          type: 'row',
+          label: 'Съдържание',
           fields: [
-            { name: 'program', type: 'text', label: 'Програма', localized: true },
-            { name: 'document', type: 'text', label: 'Документ', localized: true },
+            { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+            {
+              name: 'description',
+              type: 'textarea',
+              label: 'Кратко описание',
+              localized: true,
+              admin: { description: 'Под заглавието на страницата на курса.' },
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'category',
+                  type: 'select',
+                  label: 'Програма',
+                  required: true,
+                  options: courseCategoryValues.map((value) => ({
+                    value,
+                    label: categoryLabels[value],
+                  })),
+                },
+                {
+                  name: 'language',
+                  type: 'select',
+                  label: 'Език',
+                  options: languages.map((value) => ({ value, label: languageLabels[value] })),
+                },
+              ],
+            },
+            {
+              name: 'topic',
+              type: 'select',
+              label: 'Стикер',
+              required: true,
+              options: topicOptions,
+              admin: {
+                description:
+                  'Един стикер, едно значение: не ползвайте един стикер за различни неща.',
+              },
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'audience',
+                  type: 'select',
+                  label: 'Аудитория',
+                  options: courseAudiences.map((value) => ({
+                    value,
+                    label: audienceLabels[value],
+                  })),
+                },
+                {
+                  name: 'audienceNote',
+                  type: 'text',
+                  label: 'Уточнение към аудиторията',
+                  localized: true,
+                  admin: { description: 'Например «12 клас». Показва се след аудиторията.' },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'format',
+                  type: 'select',
+                  label: 'Формат',
+                  options: formatOptions,
+                  admin: { description: 'Обичайният формат; всяка група може да има свой.' },
+                },
+                {
+                  name: 'cardTag',
+                  type: 'text',
+                  label: 'Втори етикет на картата',
+                  localized: true,
+                  admin: {
+                    description:
+                      'Например «Вечерна група». Ако е празно: «С ваучер» за курс с ваучер, иначе формата.',
+                  },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'level',
+                  type: 'text',
+                  label: 'Ниво',
+                  admin: {
+                    description: 'Например B2, A1–B1 или 11–12. Празно: без балонче за ниво.',
+                  },
+                },
+                {
+                  name: 'levelUnit',
+                  type: 'select',
+                  label: 'Под числото в балончето',
+                  defaultValue: 'level',
+                  options: [
+                    { value: 'level', label: 'Ниво' },
+                    { value: 'grade', label: 'Клас' },
+                  ],
+                  admin: {
+                    description: 'Клас за подготовка за изпит по класове, например 11–12 за ДЗИ.',
+                  },
+                },
+              ],
+            },
+            { name: 'duration', type: 'textarea', label: 'Хорариум', localized: true },
+            {
+              type: 'collapsible',
+              label: 'Какво получавате',
+              fields: [
+                {
+                  name: 'entryLevel',
+                  type: 'text',
+                  label: 'Входно ниво',
+                  admin: {
+                    description:
+                      'Нивото, нужно за курса, например B1: при записване «Да, B1 или по-високо». Празно: «Да».',
+                  },
+                },
+                {
+                  name: 'levelName',
+                  type: 'text',
+                  label: 'Ниво (пълно име)',
+                  localized: true,
+                  admin: {
+                    description: 'Например «B2 Upper-Intermediate». Празно: показва се нивото.',
+                  },
+                },
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'program', type: 'text', label: 'Програма', localized: true },
+                    { name: 'document', type: 'text', label: 'Документ', localized: true },
+                  ],
+                },
+                { name: 'included', type: 'text', label: 'Включено', localized: true },
+              ],
+            },
+            {
+              name: 'free',
+              type: 'checkbox',
+              label: 'Безплатно',
+              admin: {
+                description:
+                  'Вместо цена показва «Безплатно», с бутон «Запитване» (например обученията по Стратегическия план).',
+              },
+            },
+            {
+              name: 'voucherEligible',
+              type: 'checkbox',
+              label: 'С ваучер от Агенцията по заетостта',
+              admin: { description: 'На сайта курсът е и в «Обучение с ваучери».' },
+            },
+            {
+              name: 'examPrep',
+              type: 'checkbox',
+              label: 'Подготовка за изпит',
+              admin: { description: 'На сайта курсът е в «Изпити и сертификати».' },
+            },
           ],
         },
-        { name: 'included', type: 'text', label: 'Включено', localized: true },
+        {
+          label: 'Групи',
+          description:
+            'Всяка група има свои дати, дни, часове и място. Цените се въвеждат отделно — в «Цени».',
+          fields: [
+            // The groups' editor (367:890): each group a row named by its start date and days.
+            {
+              name: 'groupsEditor',
+              type: 'ui',
+              admin: {
+                components: { Field: '@/components/admin/edit/GroupsEditor#GroupsEditor' },
+              },
+            },
+            {
+              name: 'groups',
+              type: 'join',
+              collection: 'groups',
+              on: 'course',
+              label: 'Групи',
+              defaultSort: 'start',
+              defaultLimit: 50,
+              admin: {
+                // Listed and edited by the groups' editor above.
+                hidden: true,
+                defaultColumns: ['title', 'start', 'end', 'seats', 'office'],
+                description:
+                  'Датите са на групите. Без група курсът е «Няма насрочена дата». Започнала група без край е «В ход», докато не ѝ се зададе край.',
+              },
+            },
+          ],
+        },
+        {
+          label: 'Цени',
+          description:
+            'Цените живеят отделно от курсовете: основна цена на курса и, по избор, цена на група.',
+          fields: [
+            {
+              name: 'pricesSummary',
+              type: 'ui',
+              admin: {
+                components: { Field: '@/components/admin/edit/PricesSummary#PricesSummary' },
+              },
+            },
+            {
+              name: 'prices',
+              type: 'join',
+              collection: 'prices',
+              on: 'course',
+              label: 'Цени',
+              admin: {
+                // Shown by the summary above; edited in «Цени».
+                hidden: true,
+                defaultColumns: ['price', 'group', 'regularPrice', 'label', 'note'],
+                description:
+                  'Основната цена на курса и цените на групите му. Без цена курсът показва «Попитайте».',
+              },
+            },
+          ],
+        },
+        {
+          label: 'SEO и адрес',
+          fields: [
+            inForm(slugField()),
+            {
+              name: 'originalTitle',
+              type: 'text',
+              label: 'Заглавие на стария сайт',
+              localized: true,
+              admin: {
+                readOnly: true,
+                description:
+                  'Както е било на стария сайт, преди аудиторията и формата да минат в етикетите.',
+              },
+            },
+            {
+              name: 'legacyUrl',
+              type: 'text',
+              label: 'Стар адрес',
+              admin: { description: 'От стария сайт, за пренасочването.' },
+            },
+            inForm(metaField()),
+          ],
+        },
       ],
-    },
-    {
-      name: 'free',
-      type: 'checkbox',
-      label: 'Безплатно',
-      admin: {
-        description:
-          'Вместо цена показва «Безплатно», с бутон «Запитване» (например обученията по Стратегическия план).',
-      },
-    },
-    {
-      name: 'voucherEligible',
-      type: 'checkbox',
-      label: 'С ваучер от Агенцията по заетостта',
-      admin: { description: 'На сайта курсът е и в «Обучение с ваучери».' },
-    },
-    {
-      name: 'examPrep',
-      type: 'checkbox',
-      label: 'Подготовка за изпит',
-      admin: { description: 'На сайта курсът е в «Изпити и сертификати».' },
-    },
-    {
-      name: 'legacyUrl',
-      type: 'text',
-      label: 'Стар адрес',
-      admin: { position: 'sidebar', description: 'От стария сайт, за пренасочването.' },
     },
   ],
 }

@@ -1,11 +1,15 @@
 import { randomUUID } from 'node:crypto'
 import AxeBuilder from '@axe-core/playwright'
-import { expect, type Page, test } from '@playwright/test'
+import { expect as baseExpect, type Page, test } from '@playwright/test'
 
 // The admin's shell (docs/admin-redesign.md, PR 6; Figma «07 CMS admin»): the login, the sidebar
 // that mirrors the site, the top bar and the hairline sub-nav. The first account of an empty
 // database is made here (CI's database has none); against a database that already has accounts,
 // give one in E2E_ADMIN_EMAIL and E2E_ADMIN_PASSWORD.
+
+// The admin's screens render on the server with their data: on a busy runner a navigation can
+// take longer than the default 5 seconds.
+const expect = baseExpect.configure({ timeout: 15_000 })
 
 test.describe.configure({ mode: 'serial' })
 // No stored consent: the admin sets no cookie banner. A dark system must not darken the admin.
@@ -221,6 +225,50 @@ test('the news list and the inquiries follow the same pattern', async ({ page })
     '/admin/globals/inquiry-routing',
   )
   expect(await axe(page, ['[data-admin="list"]'])).toEqual([])
+})
+
+test('a course is edited in tabs, and its groups are rows with real names', async ({ page }) => {
+  await logIn(page)
+  // An obviously fake course (the year 2099), removed again at the end.
+  const created = await page.request.post('/api/courses?locale=bg', {
+    data: { title: 'Тестов курс E2E', category: 'languages', topic: 'english', _status: 'draft' },
+  })
+  expect(created.ok()).toBe(true)
+  const { doc } = (await created.json()) as { doc: { id: number } }
+  try {
+    await page.goto(`/admin/collections/courses/${doc.id}`)
+    await expect(page.getByRole('heading', { level: 1, name: 'Тестов курс E2E' })).toBeVisible()
+    await expect(page.getByRole('navigation', { name: 'Път' })).toHaveText(
+      /Обучения\s*\/\s*Езикови курсове\s*\/\s*Курсове\s*\/\s*Тестов курс E2E/,
+    )
+    const tabs = page.locator('.tabs-field__tabs').getByRole('button')
+    await expect(tabs).toHaveText(['Съдържание', 'Групи', 'Цени', 'SEO и адрес'])
+    // No «API» tab; «Версии» sits beside the title.
+    await expect(page.locator('.doc-tabs')).not.toContainText('API')
+    // A localized field carries the content language's badge instead of «— Български».
+    const badge = page.locator('.field-label .localized').first()
+    expect(await badge.evaluate((el) => getComputedStyle(el, '::after').content)).toBe('"БГ"')
+
+    await tabs.nth(1).click()
+    await expect(page.getByText('Курсът няма групи')).toBeVisible()
+    await page.getByRole('button', { name: 'Добави група' }).click()
+    await page.getByLabel('Начало').fill('2099-11-03')
+    await page.getByLabel(/^Учебни дни/).fill('тестови дни')
+    await page.getByLabel('Свободни места').fill('5')
+    await page.getByRole('button', { name: 'Запази групата' }).click()
+    // The row is named by its start date and days, never «Item 01».
+    const row = page.getByRole('button', { name: /3 ноември 2099 · тестови дни/ })
+    await expect(row).toBeVisible()
+    await expect(row).toContainText('5 свободни места')
+    await expect(row).not.toContainText('Незаписано')
+    await expect(page.locator('body')).not.toContainText('Item 01')
+
+    await tabs.nth(2).click()
+    await expect(page.getByText('Курсът няма цена: на сайта е «Попитайте».')).toBeVisible()
+    await expect(page.getByRole('link', { name: /Промени в «Цени»/ })).toBeVisible()
+  } finally {
+    await page.request.delete(`/api/courses/${doc.id}`)
+  }
 })
 
 test('a global sits where its page is on the site', async ({ page }) => {

@@ -8,7 +8,11 @@ import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 export const Certificates: CollectionConfig = {
   slug: 'certificates',
   labels: { singular: 'Сертификат', plural: 'Сертификати' },
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'code', 'issuer'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'code', 'issuer'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {

@@ -10,6 +10,7 @@ export const Professions: CollectionConfig = {
   labels: { singular: 'Професия', plural: 'Професии (ЦПО)' },
   orderable: true,
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'name',
     defaultColumns: ['name', 'code', 'directionCode', 'degrees'],
     description:

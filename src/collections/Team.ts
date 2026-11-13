@@ -9,7 +9,11 @@ export const Team: CollectionConfig = {
   slug: 'team',
   labels: { singular: 'Член на екипа', plural: 'Екип' },
   orderable: true,
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'role'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'role'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: { afterChange: [revalidateCollection], afterDelete: [revalidateCollection] },

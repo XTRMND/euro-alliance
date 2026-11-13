@@ -12,6 +12,7 @@ export const TeacherProgrammes: CollectionConfig = {
   labels: { singular: 'Програма за учители', plural: 'Програми за учители' },
   orderable: true,
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['number', 'title', 'theme'],
     description:

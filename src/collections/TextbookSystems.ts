@@ -10,7 +10,11 @@ import { adminEditedAtField, markAdminEdit } from '@/hooks/admin-edits'
 export const TextbookSystems: CollectionConfig = {
   slug: 'textbook-systems',
   labels: { singular: 'Учебна система', plural: 'Учебни системи' },
-  admin: { useAsTitle: 'name', defaultColumns: ['name', 'kicker'] },
+  admin: {
+    hideAPIURL: true,
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'kicker'],
+  },
   access: { read: publishedOrStaff, create: isStaff, update: isStaff, delete: isStaff },
   versions: { drafts: true },
   hooks: {

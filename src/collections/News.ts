@@ -1,6 +1,7 @@
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { Block, CollectionConfig } from 'payload'
 import { isStaff, publishedOrStaff } from '@/access'
+import { inForm } from '@/fields/in-form'
 import { slugField } from '@/fields/slug'
 import { revalidateCollection } from '@/hooks/revalidate'
 import { searchChanged, searchRemoved } from '@/lib/search-records'
@@ -70,6 +71,7 @@ export const News: CollectionConfig = {
   slug: 'news',
   labels: { singular: 'Новина', plural: 'Новини' },
   admin: {
+    hideAPIURL: true,
     useAsTitle: 'title',
     defaultColumns: ['title', 'date', '_status'],
     // The list on the pattern of the course list (docs/admin-redesign.md, PR 8).
@@ -85,84 +87,122 @@ export const News: CollectionConfig = {
   },
   fields: [
     adminEditedAtField,
-    metaField(),
-    { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+    // The edit screen's tabs («Admin · 07 Новина», 372:1586). They only lay the form out.
     {
-      name: 'shortTitle',
-      type: 'text',
-      label: 'Кратко заглавие',
-      localized: true,
-      admin: { description: 'За пътечката над заглавието. Празно: цялото заглавие.' },
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Съдържание',
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
+                {
+                  name: 'date',
+                  type: 'date',
+                  label: 'Дата',
+                  required: true,
+                  admin: {
+                    position: 'sidebar',
+                    date: { pickerAppearance: 'dayOnly', displayFormat: 'dd.MM.yyyy' },
+                  },
+                },
+              ],
+            },
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'shortTitle',
+                  type: 'text',
+                  label: 'Кратко заглавие',
+                  localized: true,
+                  admin: { description: 'За пътечката над заглавието. Празно: цялото заглавие.' },
+                },
+                {
+                  name: 'cover',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Снимка',
+                  filterOptions: { kind: { equals: 'photo' } },
+                  admin: {
+                    description: 'Само истинска снимка. Без снимка картата е без изображение.',
+                  },
+                },
+              ],
+            },
+            {
+              name: 'excerpt',
+              type: 'textarea',
+              label: 'Кратко описание',
+              localized: true,
+              admin: { description: 'За картите и за описанието в търсачките.' },
+            },
+            {
+              name: 'lead',
+              type: 'textarea',
+              label: 'Въвеждащ абзац',
+              localized: true,
+              admin: { description: 'По избор: първият абзац на новината, с по-едър шрифт.' },
+            },
+            {
+              name: 'body',
+              type: 'richText',
+              label: 'Текст',
+              localized: true,
+              editor: lexicalEditor({
+                features: ({ defaultFeatures }) => [
+                  ...defaultFeatures.filter((feature) => feature.key !== 'heading'),
+                  HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
+                  BlocksFeature({ blocks: [NewsFigures, NewsLinkCard] }),
+                ],
+              }),
+            },
+          ],
+        },
+        {
+          label: 'Снимки',
+          fields: [
+            {
+              name: 'gallery',
+              type: 'upload',
+              relationTo: 'media',
+              hasMany: true,
+              label: 'Галерия',
+              filterOptions: { kind: { equals: 'photo' } },
+              admin: { description: 'Още не се показва: галерията няма дизайн.' },
+            },
+          ],
+        },
+        {
+          label: 'Свързани',
+          fields: [
+            {
+              name: 'related',
+              type: 'relationship',
+              relationTo: 'news',
+              hasMany: true,
+              maxRows: 3,
+              label: 'Свързани новини',
+            },
+          ],
+        },
+        {
+          label: 'SEO и адрес',
+          fields: [
+            inForm(slugField()),
+            inForm(metaField()),
+            {
+              name: 'legacyId',
+              type: 'text',
+              label: 'Стар номер',
+              admin: { description: 'От стария сайт, за пренасочването.' },
+            },
+            { name: 'legacyUrl', type: 'text', label: 'Стар адрес' },
+          ],
+        },
+      ],
     },
-    slugField(),
-    {
-      name: 'date',
-      type: 'date',
-      label: 'Дата',
-      required: true,
-      admin: {
-        position: 'sidebar',
-        date: { pickerAppearance: 'dayOnly', displayFormat: 'dd.MM.yyyy' },
-      },
-    },
-    {
-      name: 'cover',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Снимка',
-      filterOptions: { kind: { equals: 'photo' } },
-      admin: { description: 'Само истинска снимка. Без снимка картата е без изображение.' },
-    },
-    {
-      name: 'excerpt',
-      type: 'textarea',
-      label: 'Кратко описание',
-      localized: true,
-      admin: { description: 'За картите и за описанието в търсачките.' },
-    },
-    {
-      name: 'lead',
-      type: 'textarea',
-      label: 'Въвеждащ абзац',
-      localized: true,
-      admin: { description: 'По избор: първият абзац на новината, с по-едър шрифт.' },
-    },
-    {
-      name: 'body',
-      type: 'richText',
-      label: 'Текст',
-      localized: true,
-      editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures.filter((feature) => feature.key !== 'heading'),
-          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3'] }),
-          BlocksFeature({ blocks: [NewsFigures, NewsLinkCard] }),
-        ],
-      }),
-    },
-    {
-      name: 'gallery',
-      type: 'upload',
-      relationTo: 'media',
-      hasMany: true,
-      label: 'Галерия',
-      filterOptions: { kind: { equals: 'photo' } },
-      admin: { description: 'Още не се показва: галерията няма дизайн.' },
-    },
-    {
-      name: 'related',
-      type: 'relationship',
-      relationTo: 'news',
-      hasMany: true,
-      maxRows: 3,
-      label: 'Свързани новини',
-    },
-    {
-      name: 'legacyId',
-      type: 'text',
-      label: 'Стар номер',
-      admin: { position: 'sidebar', description: 'От стария сайт, за пренасочването.' },
-    },
-    { name: 'legacyUrl', type: 'text', label: 'Стар адрес', admin: { position: 'sidebar' } },
   ],
 }

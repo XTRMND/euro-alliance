@@ -132,6 +132,7 @@ const linksWithGroups = (name: string, title: string): Field => ({
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
+  admin: { hideAPIURL: true },
   label: 'Навигация',
   access: { read: anyone, update: isStaff },
   hooks: { afterChange: [revalidateGlobal] },
