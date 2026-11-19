@@ -72,6 +72,46 @@ describe('submitting an inquiry', () => {
     ])
   })
 
+  it('stores the day a translation is needed by, and only a real day from today on', async () => {
+    const translation = { ...visitor, topic: 'translation', office: 'plovdiv' }
+    const now = Date.parse('2026-11-19T08:00:00.000Z')
+    const wizard = { startedAt: now - 60_000 }
+
+    const stored = await submitInquiry(
+      payload,
+      { ...translation, ...wizard, neededBy: '2026-11-21' },
+      [],
+      now,
+    )
+    const inquiry = await payload.findByID({
+      collection: 'inquiries',
+      id: (stored as { id: number }).id,
+      overrideAccess: true,
+    })
+    expect(inquiry.neededBy).toBe('2026-11-21T12:00:00.000Z')
+
+    for (const neededBy of ['2026-11-18', '2026-02-30', 'soon']) {
+      expect(
+        await submitInquiry(payload, { ...translation, ...wizard, neededBy }, [], now),
+      ).toEqual({ ok: false, errors: { neededBy: 'date' } })
+    }
+
+    // Optional, and only a translation has one.
+    expect((await submitInquiry(payload, { ...translation, ...wizard }, [], now)).ok).toBe(true)
+    const course = await submitInquiry(
+      payload,
+      { ...visitor, ...wizard, topic: 'course', neededBy: '2026-11-21' },
+      [],
+      now,
+    )
+    const other = await payload.findByID({
+      collection: 'inquiries',
+      id: (course as { id: number }).id,
+      overrideAccess: true,
+    })
+    expect(other.neededBy ?? null).toBeNull()
+  })
+
   it('names the missing and invalid fields', async () => {
     const result = await submitInquiry(
       payload,

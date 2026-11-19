@@ -271,6 +271,8 @@
       "from": "From",
       "to": "To",
       "swap": "Swap the languages",
+      "neededBy": "When do you need it by? (optional)",
+      "neededByHint": "Leave it empty if there’s no deadline.",
       "office": "Office",
       "offices": {
         "plovdiv": "Plovdiv",
@@ -336,6 +338,7 @@
       "phone": "Enter a valid phone number.",
       "privacy": "We need your consent to send the inquiry.",
       "sameLanguage": "Choose two different languages.",
+      "date": "Choose today or a later date.",
       "fileType": "This file type isn’t accepted.",
       "fileSize": "The file is larger than {size} MB.",
       "fileCount": "At most {count} files.",

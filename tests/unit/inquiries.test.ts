@@ -1,12 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import {
   acceptedFile,
+  byUrgency,
   defaultRouting,
   inquiryTopics,
   looksLikeSpam,
   rateLimiter,
   routeInquiry,
   topicFromQuery,
+  urgencyOf,
+  validNeededBy,
   validPhone,
 } from '@/lib/inquiries'
 
@@ -87,5 +90,69 @@ describe('validation and spam', () => {
       true,
     ])
     expect(allow('a', 2000)).toBe(true)
+  })
+})
+
+describe('the day a translation is needed by (Trello #7)', () => {
+  // 19.11.2026, 10:00 in Sofia.
+  const now = new Date('2026-11-19T08:00:00.000Z')
+  const at = (day: string) => `${day}T12:00:00.000Z`
+
+  it('accepts today and later, in Sofia’s day', () => {
+    expect(validNeededBy('2026-11-19', now)).toBe(true)
+    expect(validNeededBy('2027-01-05', now)).toBe(true)
+    // 23:30 UTC on the 19th is already the 20th in Sofia.
+    expect(validNeededBy('2026-11-19', new Date('2026-11-19T23:30:00.000Z'))).toBe(false)
+  })
+
+  it('rejects the past and what isn’t a day', () => {
+    expect(validNeededBy('2026-11-18', now)).toBe(false)
+    expect(validNeededBy('2026-02-30', now)).toBe(false)
+    expect(validNeededBy('21.11.2026', now)).toBe(false)
+    expect(validNeededBy('', now)).toBe(false)
+  })
+
+  it('says how soon an open inquiry is needed', () => {
+    const label = (day: string, status = 'new') =>
+      urgencyOf({ neededBy: at(day), status }, now)?.label
+    expect(label('2026-11-18')).toBe('просрочено · 18.11')
+    expect(label('2026-11-19')).toBe('днес')
+    expect(label('2026-11-20')).toBe('утре')
+    expect(label('2026-11-21')).toBe('до 21.11')
+    expect(label('2027-01-05')).toBe('до 05.01.2027')
+    expect(label('2026-11-18', 'closed')).toBeUndefined()
+    expect(urgencyOf({ status: 'new' }, now)).toBeNull()
+  })
+
+  it('orders by urgency, then by the day received', () => {
+    const inquiries = [
+      { id: 'old', createdAt: '2026-11-01T09:00:00.000Z', status: 'new' },
+      {
+        id: 'later',
+        createdAt: '2026-11-02T09:00:00.000Z',
+        status: 'new',
+        neededBy: at('2026-11-25'),
+      },
+      { id: 'new', createdAt: '2026-11-18T09:00:00.000Z', status: 'new' },
+      {
+        id: 'overdue',
+        createdAt: '2026-11-03T09:00:00.000Z',
+        status: 'in-progress',
+        neededBy: at('2026-11-10'),
+      },
+      {
+        id: 'closed',
+        createdAt: '2026-11-10T09:00:00.000Z',
+        status: 'closed',
+        neededBy: at('2026-11-05'),
+      },
+    ]
+    expect(byUrgency(inquiries).map((inquiry) => inquiry.id)).toEqual([
+      'overdue',
+      'later',
+      'new',
+      'closed',
+      'old',
+    ])
   })
 })

@@ -178,6 +178,7 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 | `routedTo` | email | Set by the server from the routing table (§ 5) |
 | `name`, `email`, `phone`, `message` | text | Step 3: name and email required, phone and message optional |
 | `answers` | array of { question, answer } | *(PR 11)* Step 2's answers as the visitor saw them (schedule, level, voucher, document, languages, company …) |
+| `neededBy` | date, optional, indexed | *(Trello #7)* The day a translation is needed by (noon UTC). Translations only; a real day from today on, in Sofia's time. The admin list sorts open inquiries by it (`byUrgency`). |
 | `course` | relationship → Courses, optional | When the wizard was opened from a course |
 | `files` | relationship → inquiryFiles (has many) | Translation documents |
 | `privacyAck` | checkbox, required | Links to the privacy page |

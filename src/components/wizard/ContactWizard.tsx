@@ -11,7 +11,9 @@ import {
   emailPattern,
   type InquiryTopic,
   inquiryTopics,
+  sofiaDay,
   uploadLimits,
+  validNeededBy,
   validPhone,
 } from '@/lib/inquiries'
 import { takeFiles } from '@/lib/pending-upload'
@@ -56,7 +58,7 @@ type Errors = Partial<Record<string, string>>
 const step2Fields: Record<InquiryTopic, string[]> = {
   course: ['course', 'schedule', 'levelKnown'],
   voucher: ['hasVoucher', 'voucherCourse'],
-  translation: ['document', 'kind', 'from', 'to', 'office', 'files'],
+  translation: ['document', 'kind', 'from', 'to', 'neededBy', 'office', 'files'],
   levelTest: ['testLanguage', 'testFor'],
   corporate: ['company', 'employees', 'corporateSubject'],
   other: ['subject'],
@@ -173,6 +175,8 @@ export function ContactWizard({
             : values.to.trim() === values.from?.trim()
               ? t('error.sameLanguage')
               : undefined,
+          neededBy:
+            values.neededBy && !validNeededBy(values.neededBy) ? t('error.date') : undefined,
           office: chosen('office'),
           files: fileError(files),
         })
@@ -237,6 +241,10 @@ export function ContactWizard({
                 [t('translation.kind'), t(`translation.kinds.${values.kind as 'translation'}`)],
                 [t('translation.from'), values.from],
                 [t('translation.to'), values.to],
+                [
+                  t('translation.neededBy'),
+                  values.neededBy && values.neededBy.split('-').reverse().join('.'),
+                ],
               ]
             : topic === 'levelTest'
               ? [
@@ -279,6 +287,7 @@ export function ContactWizard({
       JSON.stringify({
         topic,
         office: topic === 'translation' ? values.office : undefined,
+        neededBy: topic === 'translation' ? values.neededBy || undefined : undefined,
         course:
           topic === 'course'
             ? values.course
@@ -582,6 +591,24 @@ export function ContactWizard({
                   {text('to', t('translation.to'))}
                 </div>
               )}
+              {field('neededBy', t('translation.neededBy'), (props) => (
+                <>
+                  <input
+                    {...props}
+                    aria-describedby={[`${id}-neededBy-hint`, props['aria-describedby']]
+                      .filter(Boolean)
+                      .join(' ')}
+                    className={[styles.input, styles.date].join(' ')}
+                    type="date"
+                    min={sofiaDay()}
+                    value={values.neededBy ?? ''}
+                    onChange={(event) => set('neededBy', event.target.value)}
+                  />
+                  <span id={`${id}-neededBy-hint`} className={styles.fieldHint}>
+                    {t('translation.neededByHint')}
+                  </span>
+                </>
+              ))}
               {radios('office', t('translation.office'), [
                 { value: 'plovdiv', label: t('translation.offices.plovdiv') },
                 { value: 'sofia', label: t('translation.offices.sofia') },

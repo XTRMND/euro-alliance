@@ -68,6 +68,18 @@ export const Inquiries: CollectionConfig = {
       ],
     },
     {
+      name: 'neededBy',
+      type: 'date',
+      label: 'Готово до',
+      index: true,
+      access: { update: visitorData },
+      admin: {
+        ...readOnly,
+        date: { pickerAppearance: 'dayOnly', displayFormat: 'dd.MM.yyyy' },
+        description: 'Денят, до който посетителят иска превода. Попълва се от формата, по избор.',
+      },
+    },
+    {
       name: 'contract',
       type: 'checkbox',
       label: 'Довело до договор',

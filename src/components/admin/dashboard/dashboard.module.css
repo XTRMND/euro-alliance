@@ -295,6 +295,11 @@
   color: var(--color-text-on-brand);
 }
 
+.pill[data-tone='sand'] {
+  background: var(--color-brand-accent-subtle);
+  color: var(--color-brand-primary-strong);
+}
+
 .chevron {
   flex: none;
   color: var(--color-brand-primary);

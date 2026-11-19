@@ -160,6 +160,17 @@
   box-shadow: inset 0 0 0 1px var(--color-brand-primary-strong);
 }
 
+/* The optional day a translation is needed by: a short field, its hint under it. */
+.date {
+  max-width: 220px;
+  min-height: 48px;
+}
+
+.fieldHint {
+  font: 400 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
 .textarea {
   min-height: 96px;
   resize: vertical;

@@ -152,3 +152,55 @@ export const inquiryTopicLabels: Record<InquiryTopic, string> = {
   corporate: 'Фирмено обучение',
   other: 'Друго',
 }
+
+/** A calendar day in Sofia, «2026-11-21»: the day a translation is needed by is a day there. */
+export function sofiaDay(value: Date | string = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Sofia' }).format(new Date(value))
+}
+
+/** «2026-11-21» is a real day, today or later (in Sofia). */
+export function validNeededBy(value: string, now = new Date()): boolean {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false
+  const date = new Date(`${value}T12:00:00.000Z`)
+  if (Number.isNaN(date.getTime()) || date.toISOString().slice(0, 10) !== value) return false
+  return value >= sofiaDay(now)
+}
+
+/** A day as stored on the inquiry: noon UTC, the same day in Sofia all year. */
+export const neededByDate = (day: string) => `${day}T12:00:00.000Z`
+
+type Dated = { neededBy?: string | null; status?: string | null }
+
+/** Only an open inquiry is urgent: a closed one keeps its date but no longer its place. */
+const dueDay = (inquiry: Dated) =>
+  inquiry.neededBy && inquiry.status !== 'closed' ? sofiaDay(inquiry.neededBy) : null
+
+export type Urgency = { state: 'overdue' | 'today' | 'tomorrow' | 'later'; label: string }
+
+/** «просрочено · 18.11», «днес», «утре», «до 21.11»: how soon an open inquiry is needed. */
+export function urgencyOf(inquiry: Dated, now = new Date()): Urgency | null {
+  const day = dueDay(inquiry)
+  if (!day) return null
+  const today = sofiaDay(now)
+  const [year, month, date] = day.split('-')
+  const short = `${date}.${month}` + (year === today.slice(0, 4) ? '' : `.${year}`)
+  if (day < today) return { state: 'overdue', label: `просрочено · ${short}` }
+  if (day === today) return { state: 'today', label: 'днес' }
+  const tomorrow = new Date(`${today}T12:00:00.000Z`)
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1)
+  if (day === tomorrow.toISOString().slice(0, 10)) return { state: 'tomorrow', label: 'утре' }
+  return { state: 'later', label: `до ${short}` }
+}
+
+/**
+ * By urgency: open inquiries with a day they're needed by first, the overdue and the nearest at
+ * the top, then the rest by the day they came, newest first.
+ */
+export function byUrgency<T extends Dated & { createdAt: string }>(inquiries: T[]): T[] {
+  return [...inquiries].sort((a, b) => {
+    const [dayA, dayB] = [dueDay(a), dueDay(b)]
+    if (dayA && dayB && dayA !== dayB) return dayA < dayB ? -1 : 1
+    if (Boolean(dayA) !== Boolean(dayB)) return dayA ? -1 : 1
+    return a.createdAt < b.createdAt ? 1 : a.createdAt > b.createdAt ? -1 : 0
+  })
+}
