@@ -10,7 +10,6 @@ import { track } from '@/lib/analytics'
 import {
   emailPattern,
   type InquiryTopic,
-  inquiryTopics,
   sofiaDay,
   uploadLimits,
   validNeededBy,
@@ -20,8 +19,11 @@ import { takeFiles } from '@/lib/pending-upload'
 import styles from './ContactWizard.module.css'
 import { initialPair as openingPair, LanguagePair } from './LanguagePair'
 
-// Contact wizard (100:518): Step 1 picks a topic, Step 2 asks what that topic needs (six
-// variants), Step 3 asks who you are, then Done (docs/motion.md § 9). Links preselect the topic
+// Contact wizard (100:518): Step 1 picks a topic, Step 2 asks what that topic needs, Step 3 asks
+// who you are, then Done (docs/motion.md § 9). Step 1 has four options (Trello #9): «Обучение»
+// stands for a course, training with a voucher and training for a company, which were three
+// options in Figma. Its Step 2 asks about all three, and the inquiry is still stored and routed
+// as one of them (`inquiryTopic`), so the routing table, the admin and old inquiries are as before. Links preselect the topic
 // (and the course or the languages) and start at Step 2. Each step is checked before moving on;
 // an error sits under its field and focus goes to the first one. Moving to a step moves focus to
 // its heading. Back keeps everything entered. The server checks it all again.
@@ -53,16 +55,30 @@ type WizardProps = {
   className?: string
 }
 
+/** Step 1's options. `training` is sent as `course`, `voucher` or `corporate`. */
+const wizardTopics = ['training', 'translation', 'levelTest', 'other'] as const
+type WizardTopic = (typeof wizardTopics)[number]
+
+/** A link's topic as Step 1 shows it: the three kinds of training are one option. */
+const wizardTopicOf = (topic?: InquiryTopic): WizardTopic | undefined =>
+  topic === 'course' || topic === 'voucher' || topic === 'corporate' ? 'training' : topic
+
 type Step = 1 | 2 | 3 | 'done'
 type Values = Record<string, string>
 type Errors = Partial<Record<string, string>>
 
-const step2Fields: Record<InquiryTopic, string[]> = {
-  course: ['course', 'schedule', 'levelKnown'],
-  voucher: ['hasVoucher', 'voucherCourse'],
+const step2Fields: Record<WizardTopic, string[]> = {
+  training: [
+    'course',
+    'schedule',
+    'levelKnown',
+    'hasVoucher',
+    'company',
+    'employees',
+    'corporateSubject',
+  ],
   translation: ['document', 'kind', 'from', 'to', 'neededBy', 'office', 'files'],
   levelTest: ['testLanguage', 'testFor'],
-  corporate: ['company', 'employees', 'corporateSubject'],
   other: ['subject'],
 }
 
@@ -91,13 +107,15 @@ export function ContactWizard({
   const startedAt = useRef(0)
   const moved = useRef(false)
   const [step, setStep] = useState<Step>(initialTopic ? 2 : 1)
-  const [topic, setTopic] = useState<InquiryTopic | undefined>(initialTopic)
+  const [topic, setTopic] = useState<WizardTopic | undefined>(wizardTopicOf(initialTopic))
   const [values, setValues] = useState<Values>(() => ({
     course: courses.some((course) => course.slug === initialCourse) ? initialCourse! : '',
     kind: 'translation',
     ...openingPair(translationLanguages, initialPair),
     testLanguage: testLanguages[0] ?? '',
     corporateSubject: 'language',
+    // A link to company training opens with «Обучението е за фирма» ticked.
+    forCompany: initialTopic === 'corporate' ? 'yes' : '',
   }))
   const [files, setFiles] = useState<File[]>([])
   const [errors, setErrors] = useState<Errors>({})
@@ -140,6 +158,20 @@ export function ContactWizard({
   }
 
   const course = courses.find((item) => item.slug === values.course)
+  const forCompany = values.forCompany === 'yes'
+
+  /**
+   * What «Обучение» is stored and routed as: training for a company, else training with a
+   * voucher (the visitor has one, or came from a voucher page), else a course.
+   */
+  const inquiryTopic = (): InquiryTopic | undefined =>
+    topic !== 'training'
+      ? topic
+      : forCompany
+        ? 'corporate'
+        : values.hasVoucher === 'yes' || initialTopic === 'voucher'
+          ? 'voucher'
+          : 'course'
 
   /** The step's errors; focus moves to the first field with one. */
   const check = (fields: Record<string, string | undefined>) => {
@@ -162,14 +194,14 @@ export function ContactWizard({
 
   const checkStep2 = () => {
     switch (topic) {
-      case 'course':
+      case 'training':
         return check({
-          course: required('course'),
           schedule: course && course.schedules.length > 1 ? chosen('schedule') : undefined,
           levelKnown: course?.askLevel ? chosen('levelKnown') : undefined,
+          // From a voucher page the answer is needed; elsewhere it's optional.
+          hasVoucher: initialTopic === 'voucher' ? chosen('hasVoucher') : undefined,
+          company: forCompany ? required('company') : undefined,
         })
-      case 'voucher':
-        return check({ hasVoucher: chosen('hasVoucher') })
       case 'translation':
         return check({
           from: chosenOrTyped('from'),
@@ -185,8 +217,6 @@ export function ContactWizard({
         })
       case 'levelTest':
         return check({ testLanguage: required('testLanguage'), testFor: chosen('testFor') })
-      case 'corporate':
-        return check({ company: required('company') })
       case 'other':
         return check({ subject: required('subject') })
       default:
@@ -218,56 +248,54 @@ export function ContactWizard({
       ? t('course.levelYes', { level: course.entryLevel })
       : t('course.levelYesPlain')
     const rows: [string, string | undefined][] =
-      topic === 'course'
+      topic === 'training'
         ? [
-            [t('course.schedule'), values.schedule],
+            [t('course.schedule'), course && values.schedule],
             [
               t('course.levelKnown'),
-              values.levelKnown === 'yes' ? yes : values.levelKnown && t('course.levelTest'),
+              course?.askLevel
+                ? values.levelKnown === 'yes'
+                  ? yes
+                  : values.levelKnown && t('course.levelTest')
+                : undefined,
             ],
+            [
+              t('voucher.has'),
+              values.hasVoucher &&
+                t(values.hasVoucher === 'yes' ? 'voucher.hasYes' : 'voucher.hasNo'),
+            ],
+            ...(forCompany
+              ? ([
+                  [t('corporate.company'), values.company],
+                  [t('corporate.employees'), values.employees],
+                  [
+                    t('corporate.subject'),
+                    t(`corporate.subjects.${values.corporateSubject as 'language'}`),
+                  ],
+                ] as [string, string | undefined][])
+              : []),
           ]
-        : topic === 'voucher'
+        : topic === 'translation'
           ? [
+              [t('translation.document'), values.document],
+              [t('translation.kind'), t(`translation.kinds.${values.kind as 'translation'}`)],
+              [t('translation.from'), values.from],
+              [t('translation.to'), values.to],
               [
-                t('voucher.has'),
-                values.hasVoucher &&
-                  t(values.hasVoucher === 'yes' ? 'voucher.hasYes' : 'voucher.hasNo'),
-              ],
-              [
-                t('voucher.what'),
-                courses.find((c) => c.slug === values.voucherCourse)?.label ?? t('voucher.whatAny'),
+                t('translation.neededBy'),
+                values.neededBy && values.neededBy.split('-').reverse().join('.'),
               ],
             ]
-          : topic === 'translation'
+          : topic === 'levelTest'
             ? [
-                [t('translation.document'), values.document],
-                [t('translation.kind'), t(`translation.kinds.${values.kind as 'translation'}`)],
-                [t('translation.from'), values.from],
-                [t('translation.to'), values.to],
+                [t('levelTest.language'), values.testLanguage],
                 [
-                  t('translation.neededBy'),
-                  values.neededBy && values.neededBy.split('-').reverse().join('.'),
+                  t('levelTest.who'),
+                  values.testFor &&
+                    t(values.testFor === 'student' ? 'levelTest.student' : 'levelTest.adult'),
                 ],
               ]
-            : topic === 'levelTest'
-              ? [
-                  [t('levelTest.language'), values.testLanguage],
-                  [
-                    t('levelTest.who'),
-                    values.testFor &&
-                      t(values.testFor === 'student' ? 'levelTest.student' : 'levelTest.adult'),
-                  ],
-                ]
-              : topic === 'corporate'
-                ? [
-                    [t('corporate.company'), values.company],
-                    [t('corporate.employees'), values.employees],
-                    [
-                      t('corporate.subject'),
-                      t(`corporate.subjects.${values.corporateSubject as 'language'}`),
-                    ],
-                  ]
-                : [[t('other.subject'), values.subject]]
+            : [[t('other.subject'), values.subject]]
     return rows
       .filter((row): row is [string, string] => Boolean(row[1]))
       .map(([question, answer]) => ({ question, answer }))
@@ -282,21 +310,17 @@ export function ContactWizard({
       phone: phone && !validPhone(phone) ? t('error.phone') : undefined,
       privacy: values.privacy === 'yes' ? undefined : t('error.privacy'),
     })
-    if (!ok || !topic) return
+    const sentTopic = inquiryTopic()
+    if (!ok || !topic || !sentTopic) return
 
     const data = new FormData()
     data.set(
       'inquiry',
       JSON.stringify({
-        topic,
+        topic: sentTopic,
         office: topic === 'translation' ? values.office : undefined,
         neededBy: topic === 'translation' ? values.neededBy || undefined : undefined,
-        course:
-          topic === 'course'
-            ? values.course
-            : topic === 'voucher'
-              ? values.voucherCourse
-              : undefined,
+        course: topic === 'training' ? values.course || undefined : undefined,
         name: values.name,
         email,
         phone,
@@ -315,7 +339,7 @@ export function ContactWizard({
         const result = await sendInquiry(data)
         if (result.ok) {
           track('wizard_submit', {
-            topic,
+            topic: sentTopic,
             office: topic === 'translation' ? (values.office as 'plovdiv' | 'sofia') : 'none',
             has_upload: topic === 'translation' && files.length > 0,
           })
@@ -469,8 +493,6 @@ export function ContactWizard({
     </div>
   )
 
-  const voucherCourses = courses.filter((item) => item.voucher)
-
   return (
     <form
       ref={form}
@@ -486,7 +508,7 @@ export function ContactWizard({
             {t('step1.title')}
           </Heading>
           <ul className={styles.topics}>
-            {inquiryTopics.map((option) => (
+            {wizardTopics.map((option) => (
               <li key={option}>
                 <button
                   type="button"
@@ -498,7 +520,9 @@ export function ContactWizard({
                     go(2)
                   }}
                 >
-                  <span className={styles.topicSticker}>{stickers[option]}</span>
+                  <span className={styles.topicSticker}>
+                    {stickers[option === 'training' ? 'course' : option]}
+                  </span>
                   <span className={styles.topicText}>
                     <span className={styles.topicTitle}>{t(`topic.${option}.title`)}</span>
                     <span className={styles.topicHint}>{t(`topic.${option}.text`)}</span>
@@ -516,13 +540,13 @@ export function ContactWizard({
           <Heading ref={heading} tabIndex={-1} className={styles.title}>
             {t(`${topic}.title`)}
           </Heading>
-          {topic === 'course' && (
+          {topic === 'training' && (
             <>
               {select(
                 'course',
                 t('course.course'),
                 courses.map((item) => ({ value: item.slug, label: item.label })),
-                t('course.choose'),
+                t('training.anyCourse'),
               )}
               {course &&
                 course.schedules.length > 1 &&
@@ -541,21 +565,37 @@ export function ContactWizard({
                   },
                   { value: 'test', label: t('course.levelTest') },
                 ])}
-            </>
-          )}
-          {topic === 'voucher' && (
-            <>
               {radios('hasVoucher', t('voucher.has'), [
                 { value: 'yes', label: t('voucher.hasYes') },
                 { value: 'no', label: t('voucher.hasNo') },
               ])}
-              {voucherCourses.length > 0 &&
-                select(
-                  'voucherCourse',
-                  t('voucher.what'),
-                  voucherCourses.map((item) => ({ value: item.slug, label: item.label })),
-                  t('voucher.whatAny'),
-                )}
+              <Checkbox
+                label={t('training.forCompany')}
+                checked={forCompany}
+                onChange={(event) => set('forCompany', event.target.checked ? 'yes' : '')}
+              />
+              {forCompany && (
+                <>
+                  <div className={styles.pair}>
+                    {text('company', t('corporate.company'), {
+                      placeholder: t('corporate.companyPlaceholder'),
+                      autoComplete: 'organization',
+                    })}
+                    {text('employees', t('corporate.employees'), {
+                      placeholder: t('corporate.employeesPlaceholder'),
+                      inputMode: 'numeric',
+                    })}
+                  </div>
+                  {select(
+                    'corporateSubject',
+                    t('corporate.subject'),
+                    (['language', 'computer', 'vocational', 'other'] as const).map((value) => ({
+                      value,
+                      label: t(`corporate.subjects.${value}`),
+                    })),
+                  )}
+                </>
+              )}
             </>
           )}
           {topic === 'translation' && (
@@ -706,28 +746,6 @@ export function ContactWizard({
               <p className={styles.note}>{t('levelTest.note')}</p>
             </>
           )}
-          {topic === 'corporate' && (
-            <>
-              <div className={styles.pair}>
-                {text('company', t('corporate.company'), {
-                  placeholder: t('corporate.companyPlaceholder'),
-                  autoComplete: 'organization',
-                })}
-                {text('employees', t('corporate.employees'), {
-                  placeholder: t('corporate.employeesPlaceholder'),
-                  inputMode: 'numeric',
-                })}
-              </div>
-              {select(
-                'corporateSubject',
-                t('corporate.subject'),
-                (['language', 'computer', 'vocational', 'other'] as const).map((value) => ({
-                  value,
-                  label: t(`corporate.subjects.${value}`),
-                })),
-              )}
-            </>
-          )}
           {topic === 'other' &&
             text('subject', t('other.subject'), { placeholder: t('other.subjectPlaceholder') })}
           {actions(() => checkStep2() && go(3))}
@@ -816,7 +834,7 @@ export function ContactWizard({
           <p className={styles.doneText} role="status">
             {t('done.text')}
           </p>
-          {topic === 'course' || topic === 'voucher' || topic === 'levelTest' ? (
+          {topic === 'training' || topic === 'levelTest' ? (
             <Button href={doneHref.courses} variant="link">
               {t('done.toCourses')}
             </Button>

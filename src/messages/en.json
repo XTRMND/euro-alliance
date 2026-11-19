@@ -217,13 +217,9 @@
       "hint": "Choose one of the options to continue."
     },
     "topic": {
-      "course": {
-        "title": "Course",
-        "text": "Enrol in a language, exam, vocational or computer course"
-      },
-      "voucher": {
-        "title": "Training with a voucher",
-        "text": "Courses paid with an Employment Agency voucher"
+      "training": {
+        "title": "Training",
+        "text": "A course, training with a voucher or training for a company"
       },
       "translation": {
         "title": "Translation",
@@ -233,19 +229,18 @@
         "title": "Level test",
         "text": "A free entry test and recognition of language skills"
       },
-      "corporate": {
-        "title": "Corporate training",
-        "text": "A programme made for your team"
-      },
       "other": {
         "title": "Other",
         "text": "A question, a suggestion or anything else"
       }
     },
+    "training": {
+      "title": "About the training",
+      "anyCourse": "I haven’t chosen a course yet",
+      "forCompany": "The training is for a company"
+    },
     "course": {
-      "title": "Choose a course and a schedule",
       "course": "Course",
-      "choose": "Choose a course",
       "schedule": "Preferred schedule",
       "levelKnown": "Do you know your level?",
       "levelYes": "Yes, {level} or higher",
@@ -253,12 +248,9 @@
       "levelTest": "No, I want an entry test"
     },
     "voucher": {
-      "title": "Training with a voucher",
-      "has": "Do you already have a voucher?",
+      "has": "Do you have a voucher from the Employment Agency?",
       "hasYes": "Yes, I have one",
-      "hasNo": "Not yet, I want information",
-      "what": "What would you like to learn?",
-      "whatAny": "I don’t know yet"
+      "hasNo": "Not yet, I want information"
     },
     "translation": {
       "title": "About the translation",
@@ -291,7 +283,6 @@
       "note": "The test is free. We’ll email you a link to it."
     },
     "corporate": {
-      "title": "Corporate training",
       "company": "Company",
       "companyPlaceholder": "Company name",
       "employees": "Employees",
