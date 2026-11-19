@@ -265,8 +265,7 @@
       "documentPlaceholder": "напр. Диплома за средно образование",
       "kind": "Вид превод",
       "kinds": {
-        "written": "Писмен",
-        "oral": "Устен",
+        "translation": "Писмен или устен превод",
         "legalisation": "Легализация"
       },
       "from": "От",

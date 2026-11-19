@@ -265,8 +265,7 @@
       "documentPlaceholder": "e.g. Secondary school diploma",
       "kind": "Type of translation",
       "kinds": {
-        "written": "Written",
-        "oral": "Spoken",
+        "translation": "Written or spoken translation",
         "legalisation": "Legalisation"
       },
       "from": "From",

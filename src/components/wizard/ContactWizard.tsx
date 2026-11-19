@@ -88,7 +88,7 @@ export function ContactWizard({
   const [topic, setTopic] = useState<InquiryTopic | undefined>(initialTopic)
   const [values, setValues] = useState<Values>(() => ({
     course: courses.some((course) => course.slug === initialCourse) ? initialCourse! : '',
-    kind: 'written',
+    kind: 'translation',
     from:
       translationLanguages.find((l) => l === initialPair?.from) ?? translationLanguages[0] ?? '',
     to: translationLanguages.find((l) => l === initialPair?.to) ?? translationLanguages[1] ?? '',
@@ -223,7 +223,7 @@ export function ContactWizard({
           : topic === 'translation'
             ? [
                 [t('translation.document'), values.document],
-                [t('translation.kind'), t(`translation.kinds.${values.kind as 'written'}`)],
+                [t('translation.kind'), t(`translation.kinds.${values.kind as 'translation'}`)],
                 [t('translation.from'), values.from],
                 [t('translation.to'), values.to],
               ]
@@ -543,7 +543,7 @@ export function ContactWizard({
               {radios(
                 'kind',
                 t('translation.kind'),
-                (['written', 'oral', 'legalisation'] as const).map((value) => ({
+                (['translation', 'legalisation'] as const).map((value) => ({
                   value,
                   label: t(`translation.kinds.${value}`),
                 })),

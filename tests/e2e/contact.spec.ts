@@ -60,6 +60,11 @@ test('a link preselects the topic and starts at Step 2', async ({ page }) => {
   await expect(
     page.getByRole('radiogroup', { name: 'Офис' }).or(page.getByRole('group', { name: 'Офис' })),
   ).toBeVisible()
+  // Written and spoken translation are one option, chosen by default (Trello #8).
+  const kinds = page.getByRole('group', { name: 'Вид превод' })
+  await expect(kinds.getByRole('radio')).toHaveCount(2)
+  await expect(kinds.getByRole('radio', { name: 'Писмен или устен превод' })).toBeChecked()
+  await expect(kinds.getByRole('radio', { name: 'Легализация' })).not.toBeChecked()
   await noViolations(page)
 
   await page.getByRole('button', { name: 'Напред' }).click()
