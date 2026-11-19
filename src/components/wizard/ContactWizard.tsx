@@ -95,21 +95,7 @@ export function ContactWizard({
   const [values, setValues] = useState<Values>(() => ({
     course: courses.some((course) => course.slug === initialCourse) ? initialCourse! : '',
     kind: 'translation',
-<<<<<<< HEAD
     ...openingPair(translationLanguages, initialPair),
-=======
-<<<<<<< HEAD
-    ...openingPair(translationLanguages, initialPair),
-=======
-<<<<<<< HEAD
-    ...openingPair(translationLanguages, initialPair),
-=======
-    from:
-      translationLanguages.find((l) => l === initialPair?.from) ?? translationLanguages[0] ?? '',
-    to: translationLanguages.find((l) => l === initialPair?.to) ?? translationLanguages[1] ?? '',
->>>>>>> origin/main
->>>>>>> origin/main
->>>>>>> origin/main
     testLanguage: testLanguages[0] ?? '',
     corporateSubject: 'language',
   }))
@@ -192,16 +178,8 @@ export function ContactWizard({
             : values.to.trim() === values.from?.trim()
               ? t('error.sameLanguage')
               : undefined,
-<<<<<<< HEAD
           neededBy:
             values.neededBy && !validNeededBy(values.neededBy) ? t('error.date') : undefined,
-=======
-<<<<<<< HEAD
-          neededBy:
-            values.neededBy && !validNeededBy(values.neededBy) ? t('error.date') : undefined,
-=======
->>>>>>> origin/main
->>>>>>> origin/main
           office: chosen('office'),
           files: fileError(files),
         })
@@ -616,10 +594,6 @@ export function ContactWizard({
                   {text('to', t('translation.to'))}
                 </div>
               )}
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> origin/main
               {field('neededBy', t('translation.neededBy'), (props) => (
                 <>
                   <input
@@ -638,7 +612,6 @@ export function ContactWizard({
                   </span>
                 </>
               ))}
-<<<<<<< HEAD
               {radios(
                 'office',
                 t('translation.office'),
@@ -654,14 +627,6 @@ export function ContactWizard({
                   ),
                 })),
               )}
-=======
-=======
->>>>>>> origin/main
-              {radios('office', t('translation.office'), [
-                { value: 'plovdiv', label: t('translation.offices.plovdiv') },
-                { value: 'sofia', label: t('translation.offices.sofia') },
-              ])}
->>>>>>> origin/main
               <div
                 className={styles.dropzone}
                 data-field="files"
