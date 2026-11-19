@@ -12,7 +12,7 @@ import {
 } from '@/lib/admin-dashboard'
 import { courseTags } from '@/lib/courses'
 import { formatDateLong, startOfTodayInSofia } from '@/lib/format'
-import { inquiryStatusLabels, inquiryTopicLabels } from '@/lib/inquiries'
+import { inquiryStatusLabels, inquiryTopicLabels, urgencyOf } from '@/lib/inquiries'
 import styles from './dashboard.module.css'
 
 // «Admin · 01 Табло» (359:969): one card at the full height. The overview's three figures, the
@@ -158,6 +158,11 @@ export async function Dashboard({ payload }: AdminViewServerProps) {
                           </span>
                         </span>
                         <span className={styles.time}>{timeAgo(inquiry.createdAt)}</span>
+                        {urgencyOf(inquiry) && (
+                          <span className={styles.pill} data-tone="sand">
+                            {urgencyOf(inquiry)!.label}
+                          </span>
+                        )}
                         <span
                           className={styles.pill}
                           data-tone={inquiry.status === 'new' ? 'solid' : 'neutral'}

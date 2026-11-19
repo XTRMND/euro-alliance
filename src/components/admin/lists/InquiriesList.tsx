@@ -1,12 +1,15 @@
 import { Link } from '@payloadcms/ui'
 import type { ListViewServerProps, Where } from 'payload'
 import { initialsOf, timeAgo } from '@/lib/admin-dashboard'
-import { formatDateLong, formatDateTime, telHref } from '@/lib/format'
+import { formatDateLong, formatDateNumeric, formatDateTime, telHref } from '@/lib/format'
 import {
+  byUrgency,
   type InquiryStatus,
   inquiryStatuses,
   inquiryStatusLabels,
   inquiryTopicLabels,
+  type Urgency,
+  urgencyOf,
 } from '@/lib/inquiries'
 import type { Inquiry } from '@/payload-types'
 import { retentionDays } from '@/jobs/retention'
@@ -19,7 +22,10 @@ import styles from './inquiries.module.css'
 // «Admin · 06 Запитвания» (371:1332): the list and the open inquiry in one card. The chips filter
 // by status, the select by the inbox it was sent to. The detail shows what the visitor sent (never
 // editable), the consent, the files, and what the team adds: the status, «Довело до договор» and
-// the internal notes. The day of the automatic deletion is always in sight.
+// the internal notes. The day of the automatic deletion is always in sight. The list is in order
+// of urgency (Trello #7): open inquiries with a day they're needed by first, the overdue and the
+// nearest at the top, each with its pill («просрочено · 18.11», «до 21.11»), then the rest by the
+// day they came.
 
 const officeLabels = { plovdiv: 'Пловдив', sofia: 'София' }
 const emailLabels = {
@@ -31,6 +37,12 @@ const pillTone: Record<InquiryStatus, string> = {
   new: 'solid',
   'in-progress': 'sand',
   closed: 'neutral',
+}
+const urgencyTone: Record<Urgency['state'], string> = {
+  overdue: 'solid',
+  today: 'solid',
+  tomorrow: 'sand',
+  later: 'sand',
 }
 
 /** «Курс · Английски език A1–B1», «Превод · София». */
@@ -71,14 +83,17 @@ export async function InquiriesList({ payload, searchParams }: ListViewServerPro
     ...(status ? [{ status: { equals: status } }] : []),
     ...(inbox ? [{ routedTo: { equals: inbox } }] : []),
   ]
-  const { docs } = await payload.find({
+  // The database puts the dated ones first, so the 200 never leave an urgent one out; the final
+  // order (a closed inquiry is no longer urgent) is byUrgency's.
+  const found = await payload.find({
     collection: 'inquiries',
     where: { and: where },
-    sort: '-createdAt',
+    sort: ['neededBy', '-createdAt'],
     depth: 1,
     locale: 'bg',
     limit: 200,
   })
+  const docs = byUrgency(found.docs)
   const selectedId = Number(params.get('id'))
   const selected =
     docs.find((inquiry) => inquiry.id === selectedId) ??
@@ -150,6 +165,7 @@ export async function InquiriesList({ payload, searchParams }: ListViewServerPro
                     </span>
                     <span className={styles.meta}>
                       <span className={styles.time}>{timeAgo(inquiry.createdAt)}</span>
+                      <UrgencyPill inquiry={inquiry} />
                       <span className={list.pill} data-tone={pillTone[inquiry.status]}>
                         {inquiryStatusLabels[inquiry.status]}
                       </span>
@@ -178,6 +194,16 @@ export async function InquiriesList({ payload, searchParams }: ListViewServerPro
   )
 }
 
+/** «просрочено · 18.11», «до 21.11» for an open inquiry with a day it's needed by. */
+function UrgencyPill({ inquiry }: { inquiry: Inquiry }) {
+  const urgency = urgencyOf(inquiry)
+  return urgency ? (
+    <span className={list.pill} data-tone={urgencyTone[urgency.state]} data-urgency={urgency.state}>
+      {urgency.label}
+    </span>
+  ) : null
+}
+
 function Detail({ inquiry, admin }: { inquiry: Inquiry; admin: string }) {
   const course = typeof inquiry.course === 'object' ? inquiry.course : null
   const files = (inquiry.files ?? []).filter((file) => typeof file === 'object')
@@ -190,6 +216,14 @@ function Detail({ inquiry, admin }: { inquiry: Inquiry; admin: string }) {
     ],
     ['Страница', inquiry.sourcePage],
     ['Офис', inquiry.office ? officeLabels[inquiry.office] : null],
+    [
+      'Готово до',
+      inquiry.neededBy && (
+        <>
+          {formatDateNumeric(inquiry.neededBy)} <UrgencyPill inquiry={inquiry} />
+        </>
+      ),
+    ],
     ['Имейл', inquiry.email && <a href={`mailto:${inquiry.email}`}>{inquiry.email}</a>],
     ['Телефон', inquiry.phone && <a href={telHref(inquiry.phone)}>{inquiry.phone}</a>],
   ]

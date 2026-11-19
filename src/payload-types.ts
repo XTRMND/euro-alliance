@@ -1675,6 +1675,10 @@ export interface Inquiry {
   topic?: ('course' | 'voucher' | 'translation' | 'levelTest' | 'corporate' | 'other') | null;
   office?: ('plovdiv' | 'sofia') | null;
   /**
+   * Денят, до който посетителят иска превода. Попълва се от формата, по избор.
+   */
+  neededBy?: string | null;
+  /**
    * Такова запитване не се изтрива след 1 година.
    */
   contract?: boolean | null;
@@ -2814,6 +2818,7 @@ export interface InquiriesSelect<T extends boolean = true> {
   status?: T;
   topic?: T;
   office?: T;
+  neededBy?: T;
   contract?: T;
   notes?: T;
   name?: T;

@@ -8,9 +8,11 @@ import {
   inquiryOffices,
   inquiryTopics,
   looksLikeSpam,
+  neededByDate,
   type RoutingRule,
   routeInquiry,
   uploadLimits,
+  validNeededBy,
   validPhone,
 } from './inquiries'
 
@@ -22,6 +24,8 @@ export type InquiryInput = {
   topic?: string
   office?: string
   course?: string
+  /** The day a translation is needed by, «2026-11-21». Optional. */
+  neededBy?: string
   name?: string
   email?: string
   phone?: string
@@ -38,7 +42,7 @@ export type InquiryInput = {
 export type InquiryFileInput = { name: string; type: string; data: Buffer }
 
 export type FieldError =
-  'required' | 'email' | 'phone' | 'privacy' | 'fileType' | 'fileSize' | 'fileCount'
+  'required' | 'email' | 'phone' | 'privacy' | 'date' | 'fileType' | 'fileSize' | 'fileCount'
 
 export type SubmitResult =
   { ok: true; id: number | null } | { ok: false; errors: Partial<Record<string, FieldError>> }
@@ -51,12 +55,14 @@ function cleanPath(value: string | undefined): string | undefined {
   return value.split(/[?#]/)[0].slice(0, 200)
 }
 
-export function validateInquiry(input: InquiryInput, files: InquiryFileInput[]) {
+export function validateInquiry(input: InquiryInput, files: InquiryFileInput[], now = new Date()) {
   const errors: Partial<Record<string, FieldError>> = {}
   const topic = inquiryTopics.find((value) => value === input.topic) as InquiryTopic | undefined
   const office = inquiryOffices.find((value) => value === input.office) as InquiryOffice | undefined
   const email = text(input.email, 200)
   const phone = text(input.phone, 40)
+  // Only a translation has a day it's needed by; any other topic's is dropped.
+  const neededBy = topic === 'translation' ? text(input.neededBy, 10) : ''
 
   if (!topic) errors.topic = 'required'
   if (topic === 'translation' && !office) errors.office = 'required'
@@ -65,12 +71,13 @@ export function validateInquiry(input: InquiryInput, files: InquiryFileInput[]) 
   else if (!emailPattern.test(email)) errors.email = 'email'
   if (phone && !validPhone(phone)) errors.phone = 'phone'
   if (!input.privacyAck) errors.privacyAck = 'privacy'
+  if (neededBy && !validNeededBy(neededBy, now)) errors.neededBy = 'date'
 
   if (files.length > uploadLimits.maxFiles) errors.files = 'fileCount'
   else if (files.some((file) => file.data.length > uploadLimits.maxBytes)) errors.files = 'fileSize'
   else if (files.some((file) => !acceptedFile(file.type, file.data))) errors.files = 'fileType'
 
-  return { errors, topic, office, email, phone }
+  return { errors, topic, office, email, phone, neededBy }
 }
 
 /** Images lose their EXIF (phone photos carry GPS); orientation is applied first. */
@@ -89,7 +96,11 @@ export async function submitInquiry(
   if (looksLikeSpam(input.website ?? '', Number(input.startedAt), now))
     return { ok: true, id: null }
 
-  const { errors, topic, office, email, phone } = validateInquiry(input, files)
+  const { errors, topic, office, email, phone, neededBy } = validateInquiry(
+    input,
+    files,
+    new Date(now),
+  )
   if (Object.keys(errors).length > 0) return { ok: false, errors }
 
   const routing = await payload.findGlobal({ slug: 'inquiry-routing', depth: 0 })
@@ -131,6 +142,7 @@ export async function submitInquiry(
       topic,
       office: topic === 'translation' ? office : undefined,
       course: course?.id,
+      neededBy: neededBy ? neededByDate(neededBy) : undefined,
       name: text(input.name, 120),
       email,
       phone: phone || undefined,
