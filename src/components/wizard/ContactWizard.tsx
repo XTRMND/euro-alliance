@@ -42,6 +42,8 @@ type WizardProps = {
   initialPair?: { from?: string; to?: string }
   courses: WizardCourse[]
   translationLanguages: string[]
+  /** Each translation office's working hours in one line; empty when the CMS has none. */
+  officeHours?: Partial<Record<'plovdiv' | 'sofia', string>>
   testLanguages: string[]
   stickers: Record<InquiryTopic | 'done', ReactNode>
   privacyHref: string
@@ -70,6 +72,7 @@ export function ContactWizard({
   initialPair,
   courses,
   translationLanguages,
+  officeHours,
   testLanguages,
   stickers,
   privacyHref,
@@ -416,7 +419,7 @@ export function ContactWizard({
       </span>
     ))
 
-  const radios = (name: string, legend: string, options: { value: string; label: string }[]) => (
+  const radios = (name: string, legend: string, options: { value: string; label: ReactNode }[]) => (
     <fieldset
       className={styles.radios}
       data-field={name}
@@ -609,10 +612,21 @@ export function ContactWizard({
                   </span>
                 </>
               ))}
-              {radios('office', t('translation.office'), [
-                { value: 'plovdiv', label: t('translation.offices.plovdiv') },
-                { value: 'sofia', label: t('translation.offices.sofia') },
-              ])}
+              {radios(
+                'office',
+                t('translation.office'),
+                (['plovdiv', 'sofia'] as const).map((value) => ({
+                  value,
+                  label: (
+                    <>
+                      {t(`translation.offices.${value}`)}
+                      {officeHours?.[value] && (
+                        <span className={styles.radioHint}>{officeHours[value]}</span>
+                      )}
+                    </>
+                  ),
+                })),
+              )}
               <div
                 className={styles.dropzone}
                 data-field="files"

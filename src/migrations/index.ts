@@ -38,6 +38,7 @@ import * as migration_20261112_100253_navigation_link_pickers from './20261112_1
 import * as migration_20261112_105731_inquiry_statuses from './20261112_105731_inquiry_statuses';
 import * as migration_20261113_081123_certificate_kinds from './20261113_081123_certificate_kinds';
 import * as migration_20261119_105138_inquiry_needed_by from './20261119_105138_inquiry_needed_by';
+import * as migration_20261119_105822_office_hours from './20261119_105822_office_hours';
 
 export const migrations = [
   {
@@ -238,6 +239,11 @@ export const migrations = [
   {
     up: migration_20261119_105138_inquiry_needed_by.up,
     down: migration_20261119_105138_inquiry_needed_by.down,
-    name: '20261119_105138_inquiry_needed_by'
+    name: '20261119_105138_inquiry_needed_by',
+  },
+  {
+    up: migration_20261119_105822_office_hours.up,
+    down: migration_20261119_105822_office_hours.down,
+    name: '20261119_105822_office_hours'
   },
 ];

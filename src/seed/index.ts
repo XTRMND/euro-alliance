@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import type { Payload } from 'payload'
-import type { Media } from '@/payload-types'
+import type { Media, Office } from '@/payload-types'
 import { defaultRouting } from '@/lib/inquiries'
 import { about, aboutDocuments, aboutPhotos, pkipProject } from './about'
 import {
@@ -82,11 +82,15 @@ export async function seed(payload: Payload) {
   } else noteSkipped(payload, 'global:navigation')
 
   for (const office of offices) {
-    const { totalDocs } = await payload.count({
+    // A plain copy: the seed's data is read-only.
+    const hours = JSON.parse(JSON.stringify(office.hours)) as NonNullable<Office['hours']>
+    const { docs } = await payload.find({
       collection: 'offices',
       where: { role: { equals: office.role } },
+      depth: 0,
+      limit: 1,
     })
-    if (totalDocs === 0) {
+    if (docs.length === 0) {
       await payload.create({
         collection: 'offices',
         locale: 'bg',
@@ -94,10 +98,15 @@ export async function seed(payload: Payload) {
           ...office,
           phones: [...office.phones],
           emails: [...office.emails],
+          hours,
           _status: 'published',
         },
       })
       payload.logger.info(`Seeded the office «${office.name}».`)
+    } else if (!docs[0].hours?.regular?.length && !docs[0].hours?.seasonal?.rows?.length) {
+      // An office from before working hours existed (v0.20.0): filled in, never overwritten.
+      await payload.update({ collection: 'offices', id: docs[0].id, data: { hours } })
+      payload.logger.info(`Seeded the working hours of «${office.name}».`)
     } else noteSkipped(payload, 'offices')
   }
 }

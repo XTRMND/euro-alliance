@@ -1,0 +1,39 @@
+/* Working hours: a small title and the week's lines, the days beside their hours. */
+.hours {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.week {
+  display: grid;
+  gap: 2px;
+}
+
+.title {
+  font: 600 0.8125rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.lines {
+  display: grid;
+  gap: 0;
+  margin: 0;
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+  font: 400 0.9375rem / 1.5 var(--font-body);
+  color: var(--color-text-primary);
+}
+
+.line dt {
+  min-width: 4.75em;
+  font-weight: 600;
+}
+
+.line dd {
+  margin: 0;
+}

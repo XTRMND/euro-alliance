@@ -50,7 +50,7 @@
     "field": {
       "start": "Start",
       "days": "Days",
-      "hours": "Hours",
+      "hours": "Opening hours",
       "duration": "Length",
       "format": "Format",
       "venue": "Venue",
@@ -557,5 +557,21 @@
   "seo": {
     "name": "Euro Alliance",
     "description": "Language centre, licensed vocational training centre and translation agency in Plovdiv and Sofia since 1999."
+  },
+  "hours": {
+    "title": "Opening hours",
+    "season": "Opening hours from {from} to {to}",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "and": "and",
+    "closedOne": "closed",
+    "closedMany": "closed"
   }
 }

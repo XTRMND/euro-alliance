@@ -5,6 +5,7 @@ import { Wizard } from '@/components/wizard/Wizard'
 import { inboxOf } from '@/lib/analytics'
 import { telHref } from '@/lib/format'
 import type { SiteCourse } from '@/lib/course-state'
+import { OfficeHours } from '@/components/contact/OfficeHours'
 import type { Office } from '@/payload-types'
 import styles from './EnrolSection.module.css'
 
@@ -87,6 +88,7 @@ export async function EnrolSection({
                   )}
                 </p>
               )}
+              <OfficeHours hours={office?.hours} />
             </div>
           )}
         </aside>

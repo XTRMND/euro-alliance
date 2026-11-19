@@ -27,6 +27,27 @@ export const fundingLogo = {
   alt: 'Съфинансирано от Европейския съюз. Програма „Конкурентоспособност и иновации в предприятията“',
 }
 
+// Working hours from the client's contact page (euro-alliance.net/Contact-Us, read 19.11.2026):
+// «Офис Пловдив», its summer hours «от 15 юни до 1 септември», and «Офис за преводачески услуги
+// София».
+const plovdivHours = {
+  regular: [
+    { from: 'mon', to: 'thu', opens: '8:30', closes: '18:00' },
+    { from: 'fri', opens: '8:30', closes: '17:00' },
+    { from: 'sat', opens: '8:30', closes: '13:00' },
+  ],
+  seasonal: {
+    startDay: 15,
+    startMonth: '6',
+    endDay: 1,
+    endMonth: '9',
+    rows: [{ from: 'mon', to: 'fri', opens: '8:30', closes: '17:00' }],
+  },
+} as const
+const sofiaHours = {
+  regular: [{ from: 'mon', to: 'fri', opens: '8:30', closes: '17:00' }],
+} as const
+
 export const offices = [
   {
     role: 'courses',
@@ -35,6 +56,7 @@ export const offices = [
     address: 'Образователен бизнес център ЕВРО-АЛИАНС, Пловдив 4003, ул. Самара №13',
     phones: [{ number: '+359 886 601 108' }],
     emails: [{ email: 'office@euro-alliance.net' }],
+    hours: plovdivHours,
   },
   {
     role: 'translations-plovdiv',
@@ -43,6 +65,7 @@ export const offices = [
     address: 'Пловдив 4003, ул. Самара №13',
     phones: [{ number: '+359 885 504 509' }],
     emails: [{ email: 'prevod@euro-alliance.net' }],
+    hours: plovdivHours,
   },
   {
     role: 'translations-sofia',
@@ -51,6 +74,7 @@ export const offices = [
     address: '1000 София, ул. Георги С. Раковски 125',
     phones: [{ number: '+359 884 252 909' }],
     emails: [{ email: 'trans@euro-alliance.net' }],
+    hours: sofiaHours,
   },
 ] as const
 

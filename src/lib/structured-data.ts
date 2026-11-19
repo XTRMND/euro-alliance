@@ -1,6 +1,7 @@
 import type { SiteCourse } from './course-state'
 import type { Media, News, Office, Site } from '@/payload-types'
 import { currentGroups } from './course-state'
+import { openingHoursSpecification } from './office-hours'
 import { resolvePrice } from './price'
 import { routes } from './routes'
 import { siteUrl } from './seo'
@@ -47,6 +48,7 @@ export function organizationLd(site: Site, offices: Office[]): Ld {
         address: { '@type': 'PostalAddress', streetAddress: office.address, addressCountry: 'BG' },
         telephone: office.phones?.[0]?.number,
         email: office.emails?.[0]?.email,
+        openingHoursSpecification: openingHoursSpecification(office.hours),
       }),
     ),
   })

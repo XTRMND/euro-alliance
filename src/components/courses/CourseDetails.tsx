@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import type { CourseState } from '@/lib/course-state'
 import { formatDateLong, formatPrice } from '@/lib/format'
 import type { SiteCourse } from '@/lib/course-state'
+import { officeHoursSummary } from '@/components/contact/OfficeHours'
 import type { Office } from '@/payload-types'
 import styles from './CourseDetails.module.css'
 
@@ -71,6 +72,7 @@ export async function CourseDetails({
           label: t('field.office'),
           value: office && [office.name, office.address].filter(Boolean).join(', '),
         },
+        { label: t('field.hours'), value: office && (await officeHoursSummary(office.hours)) },
         { label: t('field.participants'), value: participants },
       ],
     },

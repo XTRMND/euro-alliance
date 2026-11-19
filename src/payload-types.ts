@@ -324,6 +324,50 @@ export interface Office {
     };
     [k: string]: unknown;
   } | null;
+  /**
+   * Показва се навсякъде, където е офисът. Дните и месеците се изписват на езика на страницата.
+   */
+  hours?: {
+    /**
+     * По един ред за дни с еднакво работно време, напр. понеделник – четвъртък, 8:30 – 18:00. Дните без ред са почивни.
+     */
+    regular?:
+      | {
+          from: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+          /**
+           * Празно за един ден.
+           */
+          to?: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun') | null;
+          opens: string;
+          closes: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Напр. лятно работно време от 15 юни до 1 септември. Важи всяка година между двете дати и се включва само.
+     */
+    seasonal?: {
+      startDay?: number | null;
+      startMonth?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12') | null;
+      endDay?: number | null;
+      endMonth?: ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12') | null;
+      /**
+       * По един ред за дни с еднакво работно време, напр. понеделник – четвъртък, 8:30 – 18:00. Дните без ред са почивни.
+       */
+      rows?:
+        | {
+            from: 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';
+            /**
+             * Празно за един ден.
+             */
+            to?: ('mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun') | null;
+            opens: string;
+            closes: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -2081,6 +2125,36 @@ export interface OfficesSelect<T extends boolean = true> {
         id?: T;
       };
   routes?: T;
+  hours?:
+    | T
+    | {
+        regular?:
+          | T
+          | {
+              from?: T;
+              to?: T;
+              opens?: T;
+              closes?: T;
+              id?: T;
+            };
+        seasonal?:
+          | T
+          | {
+              startDay?: T;
+              startMonth?: T;
+              endDay?: T;
+              endMonth?: T;
+              rows?:
+                | T
+                | {
+                    from?: T;
+                    to?: T;
+                    opens?: T;
+                    closes?: T;
+                    id?: T;
+                  };
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   _status?: T;

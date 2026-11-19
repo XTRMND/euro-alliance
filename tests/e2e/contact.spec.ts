@@ -115,5 +115,16 @@ test('the offices and locations', async ({ page }) => {
     /google\.com\/maps\/dir/,
   )
   await expect(sofia.getByRole('button', { name: 'Копирай адреса' })).toBeVisible()
+
+  // Working hours (Trello #10): the Office card has the week and the season's week, a Location
+  // card the week that applies today.
+  const central = page.getByRole('article').filter({ hasText: 'office@euro-alliance.net' })
+  await expect(central.getByText('Работно време', { exact: true })).toBeVisible()
+  await expect(central.getByText('Работно време от 15 юни до 1 септември')).toBeVisible()
+  await expect(central.getByText('пон–чет')).toBeVisible()
+  await expect(central.getByText('8:30–18:00')).toBeVisible()
+  await expect(central.getByText('почивен ден')).toBeVisible()
+  await expect(sofia.getByText('пон–пет')).toBeVisible()
+  await expect(sofia.getByText('почивни дни')).toBeVisible()
   await expect(wizard(page)).toBeVisible()
 })

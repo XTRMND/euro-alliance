@@ -171,6 +171,14 @@
   color: var(--color-text-muted);
 }
 
+/* An office's working hours under its name, in the radio card. */
+.radioHint {
+  display: block;
+  margin-top: 4px;
+  font: 400 0.8125rem / 1.45 var(--font-body);
+  color: var(--color-text-muted);
+}
+
 .textarea {
   min-height: 96px;
   resize: vertical;
