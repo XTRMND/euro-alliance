@@ -1,6 +1,6 @@
 {
   "name": "euro-alliance",
-  "version": "0.20.1",
+  "version": "0.20.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -38,7 +38,7 @@
     "@payloadcms/translations": "3.92.1",
     "@payloadcms/ui": "3.92.1",
     "graphql": "16.14.2",
-    "next": "16.4.3",
+    "next": "16.4.6",
     "next-intl": "4.14.9",
     "payload": "3.92.1",
     "pdfjs-dist": "6.4.299",
@@ -57,7 +57,7 @@
     "cheerio": "1.2.0",
     "esbuild": "0.28.2",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.4.3",
+    "eslint-config-next": "16.4.6",
     "eslint-config-prettier": "10.1.8",
     "pg": "8.20.0",
     "prettier": "3.9.10",
