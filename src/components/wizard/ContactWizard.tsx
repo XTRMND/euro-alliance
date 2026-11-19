@@ -90,7 +90,13 @@ export function ContactWizard({
   const [values, setValues] = useState<Values>(() => ({
     course: courses.some((course) => course.slug === initialCourse) ? initialCourse! : '',
     kind: 'translation',
+<<<<<<< HEAD
     ...openingPair(translationLanguages, initialPair),
+=======
+    from:
+      translationLanguages.find((l) => l === initialPair?.from) ?? translationLanguages[0] ?? '',
+    to: translationLanguages.find((l) => l === initialPair?.to) ?? translationLanguages[1] ?? '',
+>>>>>>> origin/main
     testLanguage: testLanguages[0] ?? '',
     corporateSubject: 'language',
   }))
