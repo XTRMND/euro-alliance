@@ -52,6 +52,54 @@ test('a visitor picks a topic, answers, and sends an inquiry', async ({ page }) 
   await noViolations(page)
 })
 
+// «Обучение» stands for a course, a voucher and company training (Trello #9).
+test('Step 1 has four topics, and «Обучение» asks about the course, the voucher and the company', async ({
+  page,
+}) => {
+  await page.goto(routes.contact())
+  const topics = wizard(page).getByRole('list').first().getByRole('button')
+  await expect(topics).toHaveCount(4)
+  await expect(topics.first()).toContainText('Обучение')
+
+  await topics.first().click()
+  await expect(page.getByRole('heading', { name: 'Детайли за обучението' })).toBeFocused()
+  await expect(page.getByLabel('Курс', { exact: true })).toHaveValue('')
+  await expect(
+    page.getByRole('group', { name: 'Имате ли ваучер от Агенцията по заетостта?' }),
+  ).toBeVisible()
+  await expect(page.getByLabel('Фирма', { exact: true })).toBeHidden()
+  await noViolations(page)
+
+  // Nothing is required until the training is for a company.
+  await page.getByRole('checkbox', { name: 'Обучението е за фирма' }).check()
+  await page.getByRole('button', { name: 'Напред' }).click()
+  await expect(page.getByText('Попълнете това поле.')).toBeVisible()
+  await expect(page.getByLabel('Фирма', { exact: true })).toBeFocused()
+  await noViolations(page)
+  await page.getByRole('checkbox', { name: 'Обучението е за фирма' }).uncheck()
+  await page.getByRole('button', { name: 'Напред' }).click()
+  await expect(page.getByRole('heading', { name: 'Вашите данни' })).toBeFocused()
+})
+
+test('the old links to the three kinds of training open «Обучение»', async ({ page }) => {
+  await page.goto(routes.contact('kursove'))
+  await expect(page.getByRole('heading', { name: 'Детайли за обучението' })).toBeVisible()
+  await expect(page.getByRole('checkbox', { name: 'Обучението е за фирма' })).not.toBeChecked()
+
+  // Company training opens with the company's fields.
+  await page.goto(routes.contact('firmeno-obuchenie'))
+  await expect(page.getByRole('checkbox', { name: 'Обучението е за фирма' })).toBeChecked()
+  await expect(page.getByLabel('Фирма', { exact: true })).toBeVisible()
+
+  // From a voucher page the voucher question has to be answered.
+  await page.goto(routes.contact('vaucheri'))
+  await page.getByRole('button', { name: 'Напред' }).click()
+  await expect(page.getByText('Изберете една от възможностите.')).toBeVisible()
+  await page.getByRole('radio', { name: 'Още не, искам информация' }).check()
+  await page.getByRole('button', { name: 'Напред' }).click()
+  await expect(page.getByRole('heading', { name: 'Вашите данни' })).toBeFocused()
+})
+
 test('a link preselects the topic and starts at Step 2', async ({ page }) => {
   await page.goto(routes.contact('prevodi'))
 
