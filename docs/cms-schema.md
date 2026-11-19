@@ -148,6 +148,7 @@ Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official prog
 `name`, `address`, `phones` (array), `emails` (array), `map`, `routes` (rich text: how to get there), `role` *(proposed: `courses` / `translations-plovdiv` / `translations-sofia`, used by routing)*.
 
 - Seed the three offices from `CLAUDE.md` § 3 in PR 2.
+- `hours` *(Trello #10)*: `regular`, the week as rows { `from` day, `to` day (empty for one day), `opens`, `closes` («8:30») }; a day no row covers is a day off. `seasonal`: `startDay`, `startMonth`, `endDay`, `endMonth` and its own `rows`; it applies every year between its dates, both included, and takes over by itself (`src/lib/office-hours.ts`). Day and month names come from the messages, so nothing here is localized. The seed fills the hours of an office that has none, from the client's contact page.
 - **Map (proposed):** store coordinates and render a static map image plus an "open in maps" link. An embedded Google Maps iframe sets third-party cookies and would need marketing consent first.
 
 ### Translation languages

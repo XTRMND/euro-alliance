@@ -1,7 +1,8 @@
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations } from 'next-intl/server'
 import { Sticker } from '@/components/visuals/Sticker'
-import { getListedCourses, getTranslationLanguages } from '@/lib/cms'
+import { officeHoursSummary } from '@/components/contact/OfficeHours'
+import { getListedCourses, getOffices, getTranslationLanguages } from '@/lib/cms'
 import { emptyCourseFilters } from '@/lib/course-filters'
 import { currentGroups } from '@/lib/course-state'
 import { courseTags, listingCategory } from '@/lib/courses'
@@ -90,6 +91,15 @@ export async function Wizard({
       : [],
   )
 
+  // The translators' working hours today, under each office of the translation step.
+  const offices = await getOffices()
+  const hoursOf = (role: string) =>
+    officeHoursSummary(offices.find((office) => office.role === role)?.hours)
+  const officeHours = {
+    plovdiv: await hoursOf('translations-plovdiv'),
+    sofia: await hoursOf('translations-sofia'),
+  }
+
   return (
     <NextIntlClientProvider
       messages={{ wizard: messages.wizard, sendDocument: messages.sendDocument }}
@@ -100,6 +110,7 @@ export async function Wizard({
         initialPair={initialPair}
         courses={courses}
         translationLanguages={translationLanguages}
+        officeHours={officeHours}
         testLanguages={languages.map((language) => t(`languages.${language}`))}
         stickers={
           Object.fromEntries(

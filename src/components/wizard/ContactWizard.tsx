@@ -42,6 +42,8 @@ type WizardProps = {
   initialPair?: { from?: string; to?: string }
   courses: WizardCourse[]
   translationLanguages: string[]
+  /** Each translation office's working hours in one line; empty when the CMS has none. */
+  officeHours?: Partial<Record<'plovdiv' | 'sofia', string>>
   testLanguages: string[]
   stickers: Record<InquiryTopic | 'done', ReactNode>
   privacyHref: string
@@ -70,6 +72,7 @@ export function ContactWizard({
   initialPair,
   courses,
   translationLanguages,
+  officeHours,
   testLanguages,
   stickers,
   privacyHref,
@@ -98,9 +101,13 @@ export function ContactWizard({
 <<<<<<< HEAD
     ...openingPair(translationLanguages, initialPair),
 =======
+<<<<<<< HEAD
+    ...openingPair(translationLanguages, initialPair),
+=======
     from:
       translationLanguages.find((l) => l === initialPair?.from) ?? translationLanguages[0] ?? '',
     to: translationLanguages.find((l) => l === initialPair?.to) ?? translationLanguages[1] ?? '',
+>>>>>>> origin/main
 >>>>>>> origin/main
 >>>>>>> origin/main
     testLanguage: testLanguages[0] ?? '',
@@ -189,6 +196,11 @@ export function ContactWizard({
           neededBy:
             values.neededBy && !validNeededBy(values.neededBy) ? t('error.date') : undefined,
 =======
+<<<<<<< HEAD
+          neededBy:
+            values.neededBy && !validNeededBy(values.neededBy) ? t('error.date') : undefined,
+=======
+>>>>>>> origin/main
 >>>>>>> origin/main
           office: chosen('office'),
           files: fileError(files),
@@ -429,7 +441,7 @@ export function ContactWizard({
       </span>
     ))
 
-  const radios = (name: string, legend: string, options: { value: string; label: string }[]) => (
+  const radios = (name: string, legend: string, options: { value: string; label: ReactNode }[]) => (
     <fieldset
       className={styles.radios}
       data-field={name}
@@ -605,6 +617,9 @@ export function ContactWizard({
                 </div>
               )}
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/main
               {field('neededBy', t('translation.neededBy'), (props) => (
                 <>
                   <input
@@ -623,12 +638,30 @@ export function ContactWizard({
                   </span>
                 </>
               ))}
+<<<<<<< HEAD
+              {radios(
+                'office',
+                t('translation.office'),
+                (['plovdiv', 'sofia'] as const).map((value) => ({
+                  value,
+                  label: (
+                    <>
+                      {t(`translation.offices.${value}`)}
+                      {officeHours?.[value] && (
+                        <span className={styles.radioHint}>{officeHours[value]}</span>
+                      )}
+                    </>
+                  ),
+                })),
+              )}
+=======
 =======
 >>>>>>> origin/main
               {radios('office', t('translation.office'), [
                 { value: 'plovdiv', label: t('translation.offices.plovdiv') },
                 { value: 'sofia', label: t('translation.offices.sofia') },
               ])}
+>>>>>>> origin/main
               <div
                 className={styles.dropzone}
                 data-field="files"

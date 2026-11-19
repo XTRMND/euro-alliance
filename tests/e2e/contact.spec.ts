@@ -66,11 +66,17 @@ test('a link preselects the topic and starts at Step 2', async ({ page }) => {
   await expect(kinds.getByRole('radio', { name: 'Писмен или устен превод' })).toBeChecked()
   await expect(kinds.getByRole('radio', { name: 'Легализация' })).not.toBeChecked()
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/main
   // The day it's needed by is optional (Trello #7): a past day is refused, an empty one isn't.
   const neededBy = page.getByLabel('До кога ви трябва? (по избор)')
   await expect(neededBy).toHaveAttribute('type', 'date')
   await expect(neededBy).toHaveAccessibleDescription('Оставете празно, ако няма срок.')
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> origin/main
 >>>>>>> origin/main
   await noViolations(page)
 
@@ -118,5 +124,16 @@ test('the offices and locations', async ({ page }) => {
     /google\.com\/maps\/dir/,
   )
   await expect(sofia.getByRole('button', { name: 'Копирай адреса' })).toBeVisible()
+
+  // Working hours (Trello #10): the Office card has the week and the season's week, a Location
+  // card the week that applies today.
+  const central = page.getByRole('article').filter({ hasText: 'office@euro-alliance.net' })
+  await expect(central.getByText('Работно време', { exact: true })).toBeVisible()
+  await expect(central.getByText('Работно време от 15 юни до 1 септември')).toBeVisible()
+  await expect(central.getByText('пон–чет')).toBeVisible()
+  await expect(central.getByText('8:30–18:00')).toBeVisible()
+  await expect(central.getByText('почивен ден')).toBeVisible()
+  await expect(sofia.getByText('пон–пет')).toBeVisible()
+  await expect(sofia.getByText('почивни дни')).toBeVisible()
   await expect(wizard(page)).toBeVisible()
 })

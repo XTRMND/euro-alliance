@@ -62,7 +62,8 @@
       "included": "Included",
       "price": "Price",
       "end": "Ends",
-      "office": "Office"
+      "office": "Office",
+      "officeHours": "Opening hours"
     },
     "checkLevel": "Check your level",
     "regularPrice": "Regular price <old>{price}</old>",
@@ -275,6 +276,11 @@
       "neededBy": "When do you need it by? (optional)",
       "neededByHint": "Leave it empty if there’s no deadline.",
 =======
+<<<<<<< HEAD
+      "neededBy": "When do you need it by? (optional)",
+      "neededByHint": "Leave it empty if there’s no deadline.",
+=======
+>>>>>>> origin/main
 >>>>>>> origin/main
       "office": "Office",
       "offices": {
@@ -344,6 +350,10 @@
 <<<<<<< HEAD
       "date": "Choose today or a later date.",
 =======
+<<<<<<< HEAD
+      "date": "Choose today or a later date.",
+=======
+>>>>>>> origin/main
 >>>>>>> origin/main
       "fileType": "This file type isn’t accepted.",
       "fileSize": "The file is larger than {size} MB.",
@@ -563,5 +573,21 @@
   "seo": {
     "name": "Euro Alliance",
     "description": "Language centre, licensed vocational training centre and translation agency in Plovdiv and Sofia since 1999."
+  },
+  "hours": {
+    "title": "Opening hours",
+    "season": "Opening hours from {from} to {to}",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "and": "and",
+    "closedOne": "closed",
+    "closedMany": "closed"
   }
 }

@@ -2,10 +2,12 @@ import { inboxOf } from '@/lib/analytics'
 import { telHref } from '@/lib/format'
 import type { Office } from '@/payload-types'
 import styles from './OfficeCard.module.css'
+import { OfficeHours } from './OfficeHours'
 import { TrackedLink } from './TrackedLink'
 
 // Office card (119:1876): what the office does, its name, address, phone, email and, for the
-// central office, the bank details. Phone and email links report their clicks.
+// central office, the bank details. Phone and email links report their clicks. Under them the
+// office's working hours, the regular week and the season's (Trello #10; not in Figma).
 
 export function OfficeCard({ office, bank }: { office: Office; bank?: string }) {
   return (
@@ -42,6 +44,7 @@ export function OfficeCard({ office, bank }: { office: Office; bank?: string }) 
           </a>
         )
       })}
+      <OfficeHours hours={office.hours} full className={styles.hours} />
       {bank && <p className={styles.bank}>{bank}</p>}
     </article>
   )

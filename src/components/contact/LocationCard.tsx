@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/Button'
 import { Img } from '@/components/ui/Img'
 import { LogoBadge } from '@/components/visuals/LogoBadge'
 import { Tape } from '@/components/visuals/Tape'
+import type { ReactNode } from 'react'
 import type { Media } from '@/payload-types'
 import { CopyAddress } from './CopyAddress'
 import styles from './LocationCard.module.css'
@@ -20,6 +21,8 @@ type LocationCardProps = {
   latitude: number
   longitude: number
   map?: Media | null
+  /** The office's working hours, under the address. */
+  hours?: ReactNode
 }
 
 export async function LocationCard({
@@ -30,6 +33,7 @@ export async function LocationCard({
   latitude,
   longitude,
   map,
+  hours,
 }: LocationCardProps) {
   const t = await getTranslations()
   const point = `${latitude},${longitude}`
@@ -73,6 +77,7 @@ export async function LocationCard({
           {kicker && <p className={styles.kicker}>{kicker}</p>}
           <h3 className={styles.street}>{street}</h3>
           {address && <p className={styles.address}>{address}</p>}
+          {hours}
         </div>
         <div className={styles.actions}>
           <Button href={directions} target="_blank" rel="noopener">
