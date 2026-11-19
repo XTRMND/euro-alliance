@@ -1,26 +1,41 @@
+/* The card is a size container: the figure's size is worked out from the card's width, and the
+   card's own width never depends on its text (so a long figure can't stretch a grid column). */
 .card {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: 4px;
+  min-width: 0;
   height: 100%;
   padding: 22px;
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-card);
   background: var(--color-bg-page);
+  container-type: inline-size;
 }
 
+/* Figma's 52px where the longest part fits on a line, less where it doesn't, never under 20px.
+   A character of the display face at this weight is about 0.42em wide (digits; 0.46 leaves room
+   for wider ones). Anything still too long breaks rather than leave the card. */
 .figure {
-  font: 800 3.25rem / 1 var(--font-display);
+  --figure-size: 3.25rem;
+
+  font: 800 var(--figure-size) / 1 var(--font-display);
+  font-size: min(var(--figure-size), max(1.25rem, calc(100cqi / (var(--chars, 4) * 0.46))));
   color: var(--color-brand-primary-strong);
+  overflow-wrap: anywhere;
 }
 
 .figure.words {
-  font-size: clamp(1.875rem, 1.734rem + 0.571vw, 2.375rem); /* 30 → 38 */
+  --figure-size: clamp(1.875rem, 1.734rem + 0.571vw, 2.375rem); /* 30 → 38 */
 }
 
+/* A long word is hyphenated in a narrow card, and broken only where that isn't enough. */
 .label {
   font: 700 1rem / 1.55 var(--font-display);
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--color-brand-primary-strong);
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }

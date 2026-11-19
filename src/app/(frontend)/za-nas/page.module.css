@@ -15,13 +15,6 @@
   color: var(--color-brand-primary-strong);
 }
 
-/* In numbers (194:2839): five cards in a row 18px apart, two columns on a phone. */
-.figures {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
 /* Who we train (194:2858): the statement beside the polaroid collage. */
 .statement {
   align-items: center;
@@ -264,11 +257,6 @@
 @media (min-width: 768px) {
   .section {
     padding-block: 64px;
-  }
-
-  .figures {
-    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-    gap: 18px;
   }
 
   .values {

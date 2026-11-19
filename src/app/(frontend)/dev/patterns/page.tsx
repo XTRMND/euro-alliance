@@ -5,6 +5,7 @@ import { CardGrid } from '@/components/patterns/CardGrid'
 import { CountBubble } from '@/components/patterns/CountBubble'
 import { DataTable } from '@/components/patterns/DataTable'
 import { FigureCard } from '@/components/patterns/FigureCard'
+import { FigureGrid } from '@/components/patterns/FigureGrid'
 import { IndexCard } from '@/components/patterns/IndexCard'
 import { List } from '@/components/patterns/List'
 import { Polaroid } from '@/components/patterns/Polaroid'
@@ -40,6 +41,18 @@ const rows = ['Текст на реда', 'Текст на реда', 'Текс�
 }))
 
 type Exam = { kind: string; profession: string; part: string; date: string; place: string }
+
+// Fake figures of every awkward shape: a range that can't break, a number with a space, words,
+// and a label with a long word.
+const longFigures = [
+  ['1900', 'тестова година'],
+  ['12', 'тестови офиса: Тест и Тест'],
+  ['6–12', 'тестови лица в група'],
+  ['2010-2016', '4000 тестови лица по тестова програма «Тестване»'],
+  ['над 40 000', 'тестови удостоверения'],
+  ['тестови хиляди', 'тестови деца и възрастни'],
+  ['100%', 'тестови свидетелства за правоспособност'],
+] as const
 
 export default function PatternsPage() {
   if (process.env.DEV_PAGES !== 'true') notFound()
@@ -80,6 +93,14 @@ export default function PatternsPage() {
             <CountBubble number="B2" label="Ниво" />
           </div>
         </CardGrid>
+      </section>
+
+      <section aria-label="Figure row" className={styles.section}>
+        <FigureGrid count={longFigures.length}>
+          {longFigures.map(([figure, label]) => (
+            <FigureCard key={figure} figure={figure} label={label} />
+          ))}
+        </FigureGrid>
       </section>
 
       <section aria-label="Callout band" className={styles.section}>

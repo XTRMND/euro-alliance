@@ -6,6 +6,7 @@ import { AboutSubnav } from '@/components/about/AboutSubnav'
 import { DocumentPhoto } from '@/components/about/DocumentPhoto'
 import { Timeline } from '@/components/about/Timeline'
 import { FigureCard } from '@/components/patterns/FigureCard'
+import { FigureGrid } from '@/components/patterns/FigureGrid'
 import { withHighlight } from '@/components/patterns/Highlight'
 import { List } from '@/components/patterns/List'
 import { Polaroid } from '@/components/patterns/Polaroid'
@@ -142,11 +143,11 @@ export default async function AboutPage() {
       {figures?.heading && (figures.items ?? []).length > 0 && (
         <section className={styles.section} aria-labelledby="about-figures">
           <SectionHeading id="about-figures" title={figures.heading} />
-          <div className={styles.figures}>
+          <FigureGrid count={figures.items!.length}>
             {figures.items!.map((item, i) => (
               <FigureCard key={item.id ?? i} figure={item.figure} label={item.label} />
             ))}
-          </div>
+          </FigureGrid>
         </section>
       )}
 
