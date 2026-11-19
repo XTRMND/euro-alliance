@@ -72,7 +72,10 @@ export async function CourseDetails({
           label: t('field.office'),
           value: office && [office.name, office.address].filter(Boolean).join(', '),
         },
-        { label: t('field.hours'), value: office && (await officeHoursSummary(office.hours)) },
+        {
+          label: t('field.officeHours'),
+          value: office && (await officeHoursSummary(office.hours)),
+        },
         { label: t('field.participants'), value: participants },
       ],
     },

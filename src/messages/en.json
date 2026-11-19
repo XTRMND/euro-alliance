@@ -50,7 +50,7 @@
     "field": {
       "start": "Start",
       "days": "Days",
-      "hours": "Opening hours",
+      "hours": "Hours",
       "duration": "Length",
       "format": "Format",
       "venue": "Venue",
@@ -62,7 +62,8 @@
       "included": "Included",
       "price": "Price",
       "end": "Ends",
-      "office": "Office"
+      "office": "Office",
+      "officeHours": "Opening hours"
     },
     "checkLevel": "Check your level",
     "regularPrice": "Regular price <old>{price}</old>",

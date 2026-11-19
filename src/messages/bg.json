@@ -50,7 +50,7 @@
     "field": {
       "start": "Начало",
       "days": "Учебни дни",
-      "hours": "Работно време",
+      "hours": "Учебни часове",
       "duration": "Хорариум",
       "format": "Формат",
       "venue": "Учебна база",
@@ -62,7 +62,8 @@
       "included": "Включено",
       "price": "Цена",
       "end": "Край",
-      "office": "Офис"
+      "office": "Офис",
+      "officeHours": "Работно време"
     },
     "checkLevel": "Провери нивото си",
     "regularPrice": "Редовна цена <old>{price}</old>",
