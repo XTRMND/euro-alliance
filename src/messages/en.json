@@ -270,6 +270,7 @@
       },
       "from": "From",
       "to": "To",
+      "swap": "Swap the languages",
       "office": "Office",
       "offices": {
         "plovdiv": "Plovdiv",
@@ -334,6 +335,7 @@
       "email": "Enter a valid email address.",
       "phone": "Enter a valid phone number.",
       "privacy": "We need your consent to send the inquiry.",
+      "sameLanguage": "Choose two different languages.",
       "fileType": "This file type isn’t accepted.",
       "fileSize": "The file is larger than {size} MB.",
       "fileCount": "At most {count} files.",

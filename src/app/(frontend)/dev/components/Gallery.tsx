@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { initialPair, LanguagePair } from '@/components/wizard/LanguagePair'
 import { Button, type ButtonVariant } from '@/components/ui/Button'
 import { Checkbox } from '@/components/ui/Checkbox'
 import { Chip, ChipButton } from '@/components/ui/Chip'
@@ -18,6 +19,7 @@ export function Gallery() {
   const [option, setOption] = useState('a')
   const [toggle, setToggle] = useState(false)
   const [pressed, setPressed] = useState(false)
+  const [pair, setPair] = useState(() => initialPair(languages))
   // Specimens count clicks too: no button on any page is without an action.
   const count = () => setClicks((n) => n + 1)
 
@@ -140,6 +142,37 @@ export function Gallery() {
           />
         </div>
       </section>
+
+      <section aria-labelledby="language-pair" className={styles.section}>
+        <h2 id="language-pair" className={styles.heading}>
+          Language pair <code>wizard</code>
+        </h2>
+        <LanguagePair
+          id="demo-pair"
+          languages={languages}
+          value={pair}
+          onChange={setPair}
+          labels={{ from: 'От', to: 'На', swap: 'Размени езиците' }}
+          errors={{}}
+        />
+        <p data-testid="pair">
+          {pair.from} → {pair.to}
+        </p>
+      </section>
     </div>
   )
 }
+
+// The translation languages as the wizard lists them, the centre's own first.
+const languages = [
+  'Български',
+  'Немски',
+  'Английски',
+  'Френски',
+  'Руски',
+  'Испански',
+  'Италиански',
+  'Португалски',
+  'Гръцки',
+  'Турски',
+]
