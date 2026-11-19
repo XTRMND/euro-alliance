@@ -536,6 +536,7 @@ From the admin redesign (`docs/admin-redesign.md`, from 12.11.2026):
 
 From the Trello cards (from 19.11.2026; the board «EuroAlliance», one card per PR, the card's link in the PR):
 - Figure cards (v0.16.1, card #5): a figure that can't fit its card at Figma's 52px is set smaller, down to 20px, then breaks (`FigureCard` is a size container and gets the length of the figure's longest unbreakable part); labels wrap and hyphenate. The About page's row is `src/components/patterns/FigureGrid`: up to five in a row as in Figma, more than five in even rows (7 → 4 + 3), wrapping before a card is narrower than 160px. Neither case is in Figma. Measured on a local build with seven fake figures, not on staging.
+- Translation kinds (v0.17.0, card #8): the wizard's «Вид превод» has two options, «Писмен или устен превод» (the default) and «Легализация». The wording is the card's example: confirm. Inquiries store the answer as the text the visitor saw, so old ones still read «Писмен» or «Устен»; no migration.
 - `next build` stops every other run with a security advisory for Next.js 16.4.3 (seen 19.11.2026). Waiting on the user: upgrade Next.js in a PR of its own?
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
