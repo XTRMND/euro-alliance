@@ -171,6 +171,7 @@
   color: var(--color-text-muted);
 }
 
+<<<<<<< HEAD
 /* An office's working hours under its name, in the radio card. */
 .radioHint {
   display: block;
@@ -179,6 +180,8 @@
   color: var(--color-text-muted);
 }
 
+=======
+>>>>>>> origin/main
 .textarea {
   min-height: 96px;
   resize: vertical;

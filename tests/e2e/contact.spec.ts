@@ -65,10 +65,19 @@ test('a link preselects the topic and starts at Step 2', async ({ page }) => {
   await expect(kinds.getByRole('radio')).toHaveCount(2)
   await expect(kinds.getByRole('radio', { name: 'Писмен или устен превод' })).toBeChecked()
   await expect(kinds.getByRole('radio', { name: 'Легализация' })).not.toBeChecked()
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> origin/main
   // The day it's needed by is optional (Trello #7): a past day is refused, an empty one isn't.
   const neededBy = page.getByLabel('До кога ви трябва? (по избор)')
   await expect(neededBy).toHaveAttribute('type', 'date')
   await expect(neededBy).toHaveAccessibleDescription('Оставете празно, ако няма срок.')
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> origin/main
   await noViolations(page)
 
   await neededBy.fill('2020-01-01')
