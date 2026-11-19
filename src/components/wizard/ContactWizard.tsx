@@ -16,6 +16,7 @@ import {
 } from '@/lib/inquiries'
 import { takeFiles } from '@/lib/pending-upload'
 import styles from './ContactWizard.module.css'
+import { initialPair as openingPair, LanguagePair } from './LanguagePair'
 
 // Contact wizard (100:518): Step 1 picks a topic, Step 2 asks what that topic needs (six
 // variants), Step 3 asks who you are, then Done (docs/motion.md § 9). Links preselect the topic
@@ -89,9 +90,13 @@ export function ContactWizard({
   const [values, setValues] = useState<Values>(() => ({
     course: courses.some((course) => course.slug === initialCourse) ? initialCourse! : '',
     kind: 'translation',
+<<<<<<< HEAD
+    ...openingPair(translationLanguages, initialPair),
+=======
     from:
       translationLanguages.find((l) => l === initialPair?.from) ?? translationLanguages[0] ?? '',
     to: translationLanguages.find((l) => l === initialPair?.to) ?? translationLanguages[1] ?? '',
+>>>>>>> origin/main
     testLanguage: testLanguages[0] ?? '',
     corporateSubject: 'language',
   }))
@@ -152,6 +157,9 @@ export function ContactWizard({
 
   const required = (name: string) => (values[name]?.trim() ? undefined : t('error.required'))
   const chosen = (name: string) => (values[name] ? undefined : t('error.choose'))
+  /** A language: chosen from the chips, or typed when the site has no list of languages. */
+  const chosenOrTyped = (name: string) =>
+    translationLanguages.length >= 2 ? chosen(name) : required(name)
 
   const checkStep2 = () => {
     switch (topic) {
@@ -164,7 +172,16 @@ export function ContactWizard({
       case 'voucher':
         return check({ hasVoucher: chosen('hasVoucher') })
       case 'translation':
-        return check({ office: chosen('office'), files: fileError(files) })
+        return check({
+          from: chosenOrTyped('from'),
+          to: !values.to?.trim()
+            ? chosenOrTyped('to')
+            : values.to.trim() === values.from?.trim()
+              ? t('error.sameLanguage')
+              : undefined,
+          office: chosen('office'),
+          files: fileError(files),
+        })
       case 'levelTest':
         return check({ testLanguage: required('testLanguage'), testFor: chosen('testFor') })
       case 'corporate':
@@ -548,22 +565,29 @@ export function ContactWizard({
                   label: t(`translation.kinds.${value}`),
                 })),
               )}
-              <div className={styles.pair}>
-                {translationLanguages.length >= 2
-                  ? select(
-                      'from',
-                      t('translation.from'),
-                      translationLanguages.map((value) => ({ value, label: value })),
-                    )
-                  : text('from', t('translation.from'))}
-                {translationLanguages.length >= 2
-                  ? select(
-                      'to',
-                      t('translation.to'),
-                      translationLanguages.map((value) => ({ value, label: value })),
-                    )
-                  : text('to', t('translation.to'))}
-              </div>
+              {translationLanguages.length >= 2 ? (
+                <LanguagePair
+                  id={id}
+                  languages={translationLanguages}
+                  value={{ from: values.from ?? '', to: values.to ?? '' }}
+                  onChange={(pair) => {
+                    start()
+                    setValues((current) => ({ ...current, ...pair }))
+                    setErrors((current) => ({ ...current, from: undefined, to: undefined }))
+                  }}
+                  labels={{
+                    from: t('translation.from'),
+                    to: t('translation.to'),
+                    swap: t('translation.swap'),
+                  }}
+                  errors={{ from: errors.from, to: errors.to }}
+                />
+              ) : (
+                <div className={styles.pair}>
+                  {text('from', t('translation.from'))}
+                  {text('to', t('translation.to'))}
+                </div>
+              )}
               {radios('office', t('translation.office'), [
                 { value: 'plovdiv', label: t('translation.offices.plovdiv') },
                 { value: 'sofia', label: t('translation.offices.sofia') },

@@ -95,3 +95,48 @@ test('focus is visible on every control', async ({ page }) => {
     expect(outline).toBe('3px')
   }
 })
+
+// The translation's language pair (Trello #6): chips, not dropdowns.
+test('the language pair is two radio groups that never hold the same language', async ({
+  page,
+}) => {
+  const section = page.getByRole('region', { name: 'Language pair' })
+  const from = section.getByRole('group', { name: 'От' })
+  const to = section.getByRole('group', { name: 'На' })
+  const result = page.getByTestId('pair')
+
+  await expect(section.getByRole('combobox')).toHaveCount(0)
+  await expect(from.getByRole('radio')).toHaveCount(10)
+  await expect(from.getByRole('radio', { name: 'Български' })).toBeChecked()
+  await expect(to.getByRole('radio', { checked: true })).toHaveCount(0)
+
+  await to.getByRole('radio', { name: 'Английски' }).check()
+  await expect(result).toHaveText('Български → Английски')
+
+  // Picking the other side's language swaps the two.
+  await from.getByRole('radio', { name: 'Английски' }).check()
+  await expect(result).toHaveText('Английски → Български')
+
+  await section.getByRole('button', { name: 'Размени езиците' }).click()
+  await expect(result).toHaveText('Български → Английски')
+
+  // Arrow keys move inside a group, as in any radio group.
+  await to.getByRole('radio', { name: 'Английски' }).focus()
+  await page.keyboard.press('ArrowRight')
+  await expect(result).toHaveText('Български → Френски')
+})
+
+test('the language pair fits a 320px screen', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 800 })
+  const section = page.getByRole('region', { name: 'Language pair' })
+  await section.scrollIntoViewIfNeeded()
+
+  const outside = await section.evaluate(
+    (element) =>
+      [...element.querySelectorAll('label, button')].filter((item) => {
+        const box = item.getBoundingClientRect()
+        return box.left < 0 || box.right > window.innerWidth
+      }).length,
+  )
+  expect(outside).toBe(0)
+})

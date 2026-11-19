@@ -1,0 +1,120 @@
+/* The language pair: «От» above «На», the swap button between them at the right. */
+.pair {
+  display: grid;
+  gap: 8px;
+}
+
+.group {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font: 500 0.875rem / 1.5 var(--font-body);
+  color: var(--color-text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* A chip (135:328) that is a radio button: Outline, Filled when chosen. */
+.chip {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.name {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 6px 14px 7px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 8px;
+  background: var(--color-bg-page);
+  color: var(--color-brand-primary-strong);
+  font: 600 0.9375rem / 1.5 var(--font-body);
+  white-space: nowrap;
+  transition:
+    background-color var(--motion-button) var(--ease-out),
+    color var(--motion-button) var(--ease-out),
+    border-color var(--motion-button) var(--ease-out);
+}
+
+.input:checked + .name {
+  background: var(--color-brand-primary-strong);
+  border-color: var(--color-brand-primary-strong);
+  color: var(--color-text-on-brand);
+}
+
+.input:focus-visible + .name {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
+}
+
+.input:not(:checked):focus-visible + .name {
+  border-color: var(--color-brand-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover .input:not(:checked) + .name {
+    border-color: var(--color-brand-primary);
+  }
+}
+
+.swap {
+  display: grid;
+  place-items: center;
+  justify-self: start;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-border-default);
+  border-radius: 50%;
+  background: var(--color-bg-page);
+  color: var(--color-brand-primary-strong);
+  cursor: pointer;
+  transition: border-color var(--motion-button) var(--ease-out);
+}
+
+.swap:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.swap:not(:disabled):focus-visible {
+  border-color: var(--color-brand-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .swap:not(:disabled):hover {
+    border-color: var(--color-brand-primary);
+  }
+}
+
+.error {
+  font: 600 0.875rem / 1.5 var(--font-body);
+  color: var(--color-brand-primary-strong);
+}
+
+.error::before {
+  content: '! ';
+}
