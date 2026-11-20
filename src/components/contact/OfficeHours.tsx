@@ -17,7 +17,8 @@ import styles from './OfficeHours.module.css'
 // An office's working hours (Trello #10), wherever the office is shown. `full` lists the regular
 // week and the season's week with its dates (the Office card); otherwise only the week that
 // applies today, which changes by itself on the season's first and last day. An office without
-// hours shows nothing.
+// hours shows nothing. `ticket` is the Office card's stub (docs/contact-offices.md § 3): the weeks
+// side by side, the days in a muted column of their own, days off muted too.
 
 type Translator = Awaited<ReturnType<typeof getTranslations<'hours'>>>
 
@@ -38,10 +39,12 @@ export async function officeHoursSummary(hours: Hours | null | undefined): Promi
 export async function OfficeHours({
   hours,
   full = false,
+  ticket = false,
   className,
 }: {
   hours: Hours | null | undefined
   full?: boolean
+  ticket?: boolean
   className?: string
 }) {
   const [t, locale] = await Promise.all([getTranslations('hours'), getLocale()])
@@ -60,17 +63,17 @@ export async function OfficeHours({
   if (shown.length === 0) return null
 
   return (
-    <div className={[styles.hours, className].filter(Boolean).join(' ')}>
+    <div className={[styles.hours, ticket && styles.ticket, className].filter(Boolean).join(' ')}>
       {shown.map((week) => (
         <div key={week.title} className={styles.week}>
           <p className={styles.title}>{week.title}</p>
           <dl className={styles.lines}>
             {hoursLines(week.rows)
-              .map((line) => formatLine(line, labels))
-              .map(({ days, hours: time }) => (
+              .map((line) => ({ ...formatLine(line, labels), closed: !line.opens }))
+              .map(({ days, hours: time, closed }) => (
                 <div key={days} className={styles.line}>
                   <dt>{days}</dt>
-                  <dd>{time}</dd>
+                  <dd className={closed ? styles.closed : undefined}>{time}</dd>
                 </div>
               ))}
           </dl>

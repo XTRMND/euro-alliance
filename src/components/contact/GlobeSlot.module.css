@@ -1,0 +1,26 @@
+/* The room under the wizard, in a flex column: all that's left, none of its own. The globe sits
+   24px under the wizard, centred, as large as the room allows, 340px at most. */
+.slot {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .slot {
+    position: relative;
+    display: block;
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  .frame {
+    position: absolute;
+    inset: 24px 0 0;
+    display: grid;
+    place-items: center;
+    container-type: size;
+  }
+
+  .globe {
+    width: min(100cqb, 100cqi, 340px);
+  }
+}
