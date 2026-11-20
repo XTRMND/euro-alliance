@@ -1,12 +1,20 @@
-/* Office card (119:1876): white, 16px corners. */
+/* Office card (Contact, Option A: 513:2 / 515:63): white, 16px corners, its blocks 16px apart
+   (18px from 1024px). */
 .card {
-  display: grid;
-  gap: 8px;
-  justify-items: start;
-  padding: 22px 20px;
+  --card-pad-x: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px var(--card-pad-x);
+  container-type: inline-size;
   background: var(--color-bg-page);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-card);
+}
+
+.head {
+  display: grid;
+  gap: 4px;
 }
 
 .kicker {
@@ -16,8 +24,13 @@
   color: var(--color-text-muted);
 }
 
+.title {
+  font: 800 1.75rem / 1.15 var(--font-display);
+  color: var(--color-brand-primary-strong);
+}
+
 .name {
-  font: 800 1.75rem / 1.5 var(--font-display);
+  font: 700 1.4375rem / 1.15 var(--font-display);
   color: var(--color-brand-primary-strong);
 }
 
@@ -26,19 +39,80 @@
   color: var(--color-text-primary);
 }
 
+/* The offices of one address: one under the other, side by side once the card has room. */
+.offices {
+  display: grid;
+  gap: 16px;
+}
+
+.office {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  min-width: 0;
+}
+
+.office .contacts {
+  margin-top: 8px;
+}
+
+/* Phones and emails. Below 1024px each is a row of its own, 48px tall, the whole row the link. */
+.contacts {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.phone,
+.email {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  border-top: 1px solid var(--color-border-default);
+  color: var(--color-brand-primary);
+  overflow-wrap: anywhere;
+}
+
 .phone {
   font: 600 1.125rem / 1.5 var(--font-body);
-  color: var(--color-brand-primary);
   text-decoration: none;
 }
 
 .email {
   font: 500 0.9375rem / 1.5 var(--font-body);
-  color: var(--color-brand-primary);
 }
 
-.hours {
-  margin-block: 8px 4px;
+/* The stub's tear line, from edge to edge, with a notch on each edge of the card: half a 22px
+   circle of the page's paper with the card's border around it, drawn as backgrounds over the
+   card's own border, so nothing overflows the card. */
+.perforation {
+  --notch: radial-gradient(
+    circle closest-side,
+    var(--color-bg-warm) calc(100% - 1.5px),
+    var(--color-border-default) calc(100% - 1px) calc(100% - 0.25px),
+    transparent
+  );
+  display: flex;
+  align-items: center;
+  height: 22px;
+  margin: -10px calc(-1 * var(--card-pad-x) - 1px);
+  padding-inline: 18px;
+  background:
+    var(--notch) -11px 0 / 22px 22px no-repeat,
+    var(--notch) calc(100% + 11px) 0 / 22px 22px no-repeat;
+}
+
+.perforation svg {
+  display: block;
+  overflow: visible;
+}
+
+.perforation line {
+  stroke: var(--color-border-default);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 5;
+  stroke-linecap: round;
 }
 
 .bank {
@@ -46,13 +120,28 @@
   color: var(--color-text-muted);
 }
 
+@container (min-width: 380px) {
+  .offices {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 1024px) {
   .card {
-    gap: 3px;
-    padding: 13px 24px;
+    --card-pad-x: 24px;
+    gap: 18px;
+    padding-block: 24px;
   }
 
-  .name {
-    line-height: 1.5;
+  .contacts {
+    gap: 2px;
+    justify-items: start;
+  }
+
+  .phone,
+  .email {
+    display: inline;
+    min-height: 0;
+    border-top: 0;
   }
 }

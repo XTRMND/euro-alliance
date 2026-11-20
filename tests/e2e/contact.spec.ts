@@ -176,3 +176,109 @@ test('the offices and locations', async ({ page }) => {
   await expect(sofia.getByText('почивни дни')).toBeVisible()
   await expect(wizard(page)).toBeVisible()
 })
+
+// Option A (docs/contact-offices.md): the offices at one address share a card, the wizard keeps
+// its own height, and a globe takes the room left under it.
+const officesSection = (page: Page) => page.locator('section[aria-labelledby="offices-title"]')
+
+test('offices at one address share a card, with their hours once', async ({ page }) => {
+  await page.goto(routes.contact())
+  const cards = officesSection(page).getByRole('article')
+  await expect(cards).toHaveCount(2)
+
+  const plovdiv = cards.first()
+  await expect(plovdiv.getByRole('heading', { level: 3, name: 'ул. Самара №13' })).toBeVisible()
+  await expect(plovdiv.getByText('Пловдив · курсове и преводи')).toBeVisible()
+  await expect(plovdiv.getByRole('heading', { level: 4 })).toHaveText([
+    'Централен офис, Пловдив',
+    'Преводи, Пловдив',
+  ])
+  await expect(plovdiv.getByRole('link', { name: '+359 886 601 108' })).toBeVisible()
+  await expect(plovdiv.getByRole('link', { name: 'prevod@euro-alliance.net' })).toHaveAttribute(
+    'href',
+    'mailto:prevod@euro-alliance.net',
+  )
+  await expect(plovdiv.getByText('Работно време', { exact: true })).toHaveCount(1)
+  await expect(plovdiv.getByText(/^IBAN /)).toBeVisible()
+  // Each day is paired with its hours for screen readers.
+  await expect(plovdiv.locator('dl dt').first()).toHaveText('пон–чет')
+  await expect(plovdiv.locator('dl dd').first()).toHaveText('8:30–18:00')
+
+  const sofia = cards.nth(1)
+  await expect(sofia.getByRole('heading', { level: 3, name: 'Преводи, София' })).toBeVisible()
+  await expect(sofia.getByText('Работно време', { exact: true })).toHaveCount(1)
+  await noViolations(page)
+})
+
+const boxOf = async (page: Page, selector: string) =>
+  (await page.locator(selector).first().boundingBox()) ?? { x: 0, y: 0, width: 0, height: 0 }
+
+/** The room under the wizard beside the offices, less the 24px above the globe. */
+async function roomUnderWizard(page: Page) {
+  const form = await boxOf(page, 'main form')
+  const cards = officesSection(page).getByRole('article')
+  const last = (await cards.last().boundingBox())!
+  return last.y + last.height - (form.y + form.height) - 24
+}
+
+test('the wizard keeps its height and the globe takes the room under it', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto(routes.contact(), { waitUntil: 'networkidle' })
+
+  const room = await roomUnderWizard(page)
+  expect(room).toBeGreaterThanOrEqual(140)
+  const globe = page.locator('main canvas')
+  await expect(globe).toBeVisible()
+  await expect(globe).toHaveAttribute('aria-hidden', 'true')
+  const size = (await globe.boundingBox())!
+  expect(Math.abs(size.width - Math.min(340, room))).toBeLessThanOrEqual(1)
+  expect(Math.abs(size.height - size.width)).toBeLessThanOrEqual(1)
+  await noViolations(page)
+
+  // Step 2 «Превод» is the wizard's tallest: no room, no globe.
+  await page.getByRole('button', { name: /^Превод/ }).click()
+  await expect(page.getByRole('heading', { name: 'Детайли за превода' })).toBeFocused()
+  expect(await roomUnderWizard(page)).toBeLessThan(140)
+  await expect(globe).toHaveCount(0)
+
+  // Back on Step 1 it returns.
+  await page.getByRole('button', { name: 'Назад' }).click()
+  await expect(globe).toBeVisible()
+})
+
+test('on a phone there is no globe, and phones and emails are 48px rows', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(routes.contact(), { waitUntil: 'networkidle' })
+
+  await expect(page.locator('main canvas')).toHaveCount(0)
+  await expect(page.getByRole('heading', { level: 2, name: 'Офиси' })).toBeVisible()
+  const card = officesSection(page).getByRole('article').first()
+  const cardBox = (await card.boundingBox())!
+  for (const name of ['+359 886 601 108', 'office@euro-alliance.net', '+359 885 504 509']) {
+    const row = (await card.getByRole('link', { name }).boundingBox())!
+    expect(row.height).toBeGreaterThanOrEqual(48)
+    expect(row.width).toBeGreaterThan(cardBox.width * 0.8)
+  }
+})
+
+test('the globe stays still with reduced motion', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.addInitScript(() => {
+    const clear = CanvasRenderingContext2D.prototype.clearRect
+    ;(window as unknown as { draws: number }).draws = 0
+    CanvasRenderingContext2D.prototype.clearRect = function (...args) {
+      ;(window as unknown as { draws: number }).draws++
+      return clear.apply(this, args)
+    }
+  })
+  const draws = () => page.evaluate(() => (window as unknown as { draws: number }).draws)
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto(routes.contact(), { waitUntil: 'networkidle' })
+  await expect.poll(draws).toBeGreaterThan(0)
+  await page.waitForTimeout(600)
+  const drawn = await draws()
+
+  await page.mouse.wheel(0, 300)
+  await page.waitForTimeout(1000)
+  expect(await draws()).toBe(drawn)
+})

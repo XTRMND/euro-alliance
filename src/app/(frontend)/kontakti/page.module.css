@@ -1,4 +1,6 @@
-/* Contact (119:1795): the wizard (760) beside the offices (472), 48px apart, from 1024px. */
+/* Contact (119:1795; Option A, 513:2): the wizard (760) beside the offices (472), 48px apart,
+   from 1024px. Both start at the top; the wizard keeps its own height and the globe's slot takes
+   what's left of the offices' height under it. */
 
 .sticker {
   display: none;
@@ -12,6 +14,10 @@
   max-width: var(--page-max);
   margin: 0 auto;
   padding: 4px var(--page-margin) 48px;
+}
+
+.main {
+  min-width: 0;
 }
 
 .offices {
@@ -50,11 +56,16 @@
   .body {
     grid-template-columns: minmax(0, 760fr) minmax(0, 472fr);
     gap: 48px;
-    padding-block: 16px 64px;
+    padding-block: 16px 80px;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
   }
 
   .offices {
-    gap: 11px;
+    gap: 24px;
   }
 
   /* The heading is for screen readers here; Figma shows it on mobile only. */
