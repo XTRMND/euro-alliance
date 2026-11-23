@@ -553,6 +553,15 @@ From the Contact offices section (v0.22.0, 20.11.2026; `docs/contact-offices.md`
 - Below 1024px every phone and e-mail is a 48px row with a hairline above it, the whole row the link. `mailto_click` has an optional `office` (the office's role) on these cards.
 - Not built, as the brief says: a sticky offices column, JSON-LD changes (`openingHoursSpecification` with the season is already output since v0.20.0).
 
+From the new logo (v0.23.0, 23.11.2026; Trello card #4; branch `feat/new-logo`, on top of `feat/contact-offices-a`):
+- The logo is the client's own, from the two archives the user passed on (23.11.2026), as supplied: `src/assets/logo-light.svg` is their «logo bl bg» (navy, for paper and white), `logo-dark.svg` their «logo white bg» (white, for navy). No SVGO pass: the paths are theirs. It shows in the header, the footer, the mobile menu, the admin's login and the navigation preview. It's 3.72:1 (the old one 3.54:1), so at the same widths it's 2px lower; the admin's fixed sizes follow (210 × 56, 120 × 32).
+- Its colours are its own (#023F88 navy, #D2AB67 gold), not the tokens' (#0C427E, #C0AA81). [as supplied; the tokens and the rest of the site stay] Should the site's navy and sand follow the logo?
+- Not changed, as the card says: the map pins, the About hero's bubble and the favicons. The client sent no mark, so the admin's sidebar and Payload's icon keep the old mark too (the old script «А» over the map): it no longer matches the logo's lettering. A mark from the client, or one cut from the new logo?
+- The English logos («logo bl eng», «logo white eng») are in `src/assets/logo-light-en.svg` and `logo-dark-en.svg`, unused until the English site. The two files with a navy rectangle behind the logo («… 1.svg») and the white PNGs aren't in the repository.
+- JSON-LD's `logo` is the client's PNG (`public/logos/euro-alliance.png`, 729 × 196, byte for byte), no longer the favicon.
+- Card #14 (the logo looks squashed on staging): the old files' `preserveAspectRatio="none"` is gone with them, and `tests/unit/logo.test.ts` keeps it out. Whether that was the cause still needs the user's screenshot from staging.
+- Figma still has the old logo (18:21, page 06): for the user to mirror.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Translation page counter: characters counted with spaces, and how pages are rounded.
