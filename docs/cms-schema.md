@@ -193,7 +193,13 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
 
 - Stored outside any public directory or bucket; served only through an authenticated route for editors and admins.
 - **Proposed limits (confirm):** PDF, JPG, PNG, DOC, DOCX, ODT; 20 MB per file; 10 files per inquiry. Check the MIME type from the file content, not the extension. Strip EXIF from images.
-- **Proposed:** scan uploads with ClamAV if the user's servers can run it.
+- **Hardening (v0.24.1):**
+  - *Before the body is read* (`src/proxy.ts`, `src/lib/upload-guard.ts`): a form with files needs a `Content-Length`, at most 205 MB; one address sends at most 8 large requests in ten minutes; all addresses together at most 600 MB in two minutes (503 with `Retry-After` beyond that). A server action's files are read into memory before its own checks run, so this is what bounds it.
+  - *What the file is* (`src/lib/upload-checks.ts`): a DOCX or ODT must be that document (its entries are read from the ZIP's directory, nothing is unpacked), an old `.doc` must be Word's (the same container holds Excel files and installers), a PDF must start and end as one. Documents with macros and archives that claim to unpack to more than 500 MB or 200 times their size are refused («fileUnsafe»).
+  - *Images* are decoded and written again (no EXIF, nothing riding along), up to 110 megapixels.
+  - *Stored* under a random name with the extension of the checked type; the visitor's name for the file is `originalName`, shown as text. *Served* only as a download (`Content-Disposition: attachment`, a sandboxing CSP, `no-store`).
+  - The visitor's address for the rate limits is the one our own proxy wrote into `X-Forwarded-For`, counted from the right by `TRUSTED_PROXY_HOPS` (`src/lib/client-ip.ts`).
+- **Proposed:** scan uploads with ClamAV if the user's servers can run it. Not built: PDFs aren't searched for scripts (fillable forms carry them legitimately).
 
 ### Legal pages
 

@@ -566,6 +566,15 @@ From the page counter's removal (v0.24.0, 23.11.2026; Trello card #15; branch `f
 - Not built, for the user to decide (the card's options 2–4): a promised response time (needs the client's figure), typical documents with «обикновено 1 стр.», and counting the pages of an inquiry's files on the server for the office («≈ N стр.» in the admin and the e-mail).
 - The lead still says «Заплащането е на стандартна страница» and the first factor «в стандартни страници от 1800 знака с интервалите» (Figma's copy, about how the price is formed): kept.
 
+From the upload hardening (v0.24.1, 23.11.2026; branch `fix/upload-hardening`, on top of `feat/remove-page-counter`; `docs/cms-schema.md` § inquiryFiles):
+- The contact wizard's uploads are checked in four places. Before the body is read (the proxy): a length is required, 205 MB at most, 8 large requests per address in ten minutes, 600 MB from everyone in two minutes. What the file is: a real DOCX, ODT, Word `.doc` or PDF, without macros, not a decompression bomb. Images: written again, 110 megapixels at most. Stored under a random name (`originalName` keeps the visitor's, migration `20261123_111621_inquiry_file_original_name`) and served only as a download.
+- The limits stay 10 files of 20 MB (the agreed proposal). They're what makes a request large: the files are in memory while a submission is handled. Lower them (say 50 MB in all)? [as agreed]
+- `TRUSTED_PROXY_HOPS` (default 1): the rate limits read the address Caddy wrote. Staging's Caddy overwrites what the visitor sends, so the old «first value» was right there, but it would have been the visitor's to choose behind a CDN. Set it to 2 when a CDN goes in front.
+- Payload checks a file too (a PDF it can't read is refused). Before, that ended the submission with the general error and left the files stored so far; now the visitor gets «Този тип файл не се приема.» and nothing is kept. Found by sending a real file through the wizard.
+- A refused upload at the proxy (411, 413, 429, 503) shows the wizard's general «Запитването не беше изпратено» message, not a specific one.
+- Not built: a virus scan (ClamAV on the VPS: the user's call), and a search of PDFs for scripts (fillable forms carry them legitimately). The office opens these files, so the scan is the part still missing.
+- Files stored before v0.24.1 keep the name they came with; they're served as downloads like the rest.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
