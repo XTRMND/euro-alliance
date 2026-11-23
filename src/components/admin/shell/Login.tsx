@@ -10,7 +10,7 @@ export function BeforeLogin() {
     <>
       <div className={styles.panel}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logoDark.src} alt="Евро Алианс" width={210} height={59} className={styles.logo} />
+        <img src={logoDark.src} alt="Евро Алианс" width={210} height={56} className={styles.logo} />
         <div className={styles.middle}>
           <p className={styles.hand}>добре дошли!</p>
           <p className={styles.title}>

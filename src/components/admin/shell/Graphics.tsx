@@ -11,5 +11,5 @@ export function Icon() {
 
 export function Logo() {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={logoDark.src} alt="Евро Алианс" width={210} height={59} />
+  return <img src={logoDark.src} alt="Евро Алианс" width={210} height={56} />
 }

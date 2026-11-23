@@ -35,7 +35,7 @@ export function organizationLd(site: Site, offices: Office[]): Ld {
     name: site.name,
     legalName: site.legalName,
     url: absolute(routes.home()),
-    logo: absolute('/icon.svg'),
+    logo: absolute('/logos/euro-alliance.png'),
     foundingDate: site.foundedOn?.slice(0, 10),
     identifier: site.companyId
       ? { '@type': 'PropertyValue', propertyID: 'ЕИК', value: site.companyId }
