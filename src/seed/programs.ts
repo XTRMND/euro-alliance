@@ -706,7 +706,6 @@ export const singlePrograms = [
           { title: 'Легализация', text: 'ако документът трябва да бъде легализиран' },
           { title: 'Рамков договор', text: 'при сключен рамков договор цените се договарят' },
         ],
-        counter: true,
       },
       {
         blockType: 'faqColumns',

@@ -1351,7 +1351,6 @@ export interface Program {
                   id?: string | null;
                 }[]
               | null;
-            counter?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'priceFactors';
@@ -2642,7 +2641,6 @@ export interface ProgramsSelect<T extends boolean = true> {
                     text?: T;
                     id?: T;
                   };
-              counter?: T;
               id?: T;
               blockName?: T;
             };

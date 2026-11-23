@@ -1,6 +1,6 @@
 {
   "name": "euro-alliance",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -41,7 +41,6 @@
     "next": "16.4.6",
     "next-intl": "4.14.9",
     "payload": "3.92.1",
-    "pdfjs-dist": "6.4.299",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "sharp": "0.35.5"

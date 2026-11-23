@@ -1,4 +1,5 @@
 import { RichText } from '@payloadcms/richtext-lexical/react'
+import { getTranslations } from 'next-intl/server'
 import { LocationGrid } from '@/components/contact/LocationGrid'
 import { CalloutBand } from '@/components/patterns/CalloutBand'
 import { CardGrid } from '@/components/patterns/CardGrid'
@@ -7,7 +8,6 @@ import { List } from '@/components/patterns/List'
 import { ProjectCard } from '@/components/patterns/ProjectCard'
 import { SectionHeading } from '@/components/patterns/SectionHeading'
 import { SwipeRow } from '@/components/patterns/SwipeRow'
-import { PageCounterBox } from '@/components/sections/PageCounterBox'
 import { SendDocument } from '@/components/sections/SendDocument'
 import { Button } from '@/components/ui/Button'
 import {
@@ -18,7 +18,7 @@ import {
 } from '@/lib/cms'
 import { hrefOf } from '@/lib/destinations'
 import { groupByDirection, groupInOrder } from '@/lib/programs'
-import { anchors } from '@/lib/routes'
+import { anchors, routes } from '@/lib/routes'
 import type { Certificate, FundedProject, Program, TextbookSystem } from '@/payload-types'
 import { CertificateCard } from './CertificateCard'
 import { ChecklistPanel } from './ChecklistPanel'
@@ -58,6 +58,19 @@ function Head({
       highlight={section.highlight}
       lead={section.lead}
     />
+  )
+}
+
+/** «Поискай оферта» and «Рамков договор?» under the price factors: both open the wizard on translations. */
+async function PriceActions() {
+  const t = await getTranslations('priceFactors')
+  return (
+    <div className={styles.priceActions}>
+      <Button href={routes.contact('prevodi')}>{t('quote')}</Button>
+      <Button variant="link" href={routes.contact('prevodi')}>
+        {t('framework')}
+      </Button>
+    </div>
   )
 }
 
@@ -274,25 +287,25 @@ function SectionContent({ section, index }: { section: Section; index: number })
     case 'priceFactors': {
       const items = section.items ?? []
       return (
-        <Wrap section={section} id={id} className={styles.beside}>
-          <div className={styles.factors}>
+        <Wrap section={section} id={id} className={styles.price}>
+          <div className={styles.priceHead}>
             <Head section={section} id={id} />
-            {items.length > 0 && (
-              <List
-                marker="number"
-                className={styles.factorList}
-                items={items.map((item) => ({
-                  text: (
-                    <>
-                      <strong className={styles.itemTitle}>{item.title}</strong>
-                      {item.text && <span className={styles.itemText}>{item.text}</span>}
-                    </>
-                  ),
-                }))}
-              />
-            )}
           </div>
-          {section.counter && <PageCounterBox />}
+          {items.length > 0 && (
+            <List
+              marker="number"
+              className={styles.factorList}
+              items={items.map((item) => ({
+                text: (
+                  <>
+                    <strong className={styles.itemTitle}>{item.title}</strong>
+                    {item.text && <span className={styles.itemText}>{item.text}</span>}
+                  </>
+                ),
+              }))}
+            />
+          )}
+          <PriceActions />
         </Wrap>
       )
     }
