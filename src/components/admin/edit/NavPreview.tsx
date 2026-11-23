@@ -32,7 +32,7 @@ export function NavPreview({ cta }: { cta?: string }) {
       <div className={styles.header} role="img" aria-label="Преглед на горната лента на сайта">
         <div className={styles.side}>{side(header?.left)}</div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={logo.src} alt="" width={120} height={34} className={styles.logo} />
+        <img src={logo.src} alt="" width={120} height={32} className={styles.logo} />
         <div className={styles.side} data-side="right">
           {side(header?.right)}
           {cta && <span className={styles.cta}>{cta}</span>}

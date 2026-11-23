@@ -74,7 +74,7 @@ The PR column is where each component is first expected. If a page needs a compo
 | 4 | Basics | Chip | [`135:328`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=135-328) |  |
 | 4 | Basics | Radio card | [`98:270`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=98-270) |  |
 | 4 | Basics | Toggle | [`223:349`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=223-349) | Used in cookie settings |
-| 5 | Brand | Logo | [`18:21`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=18-21) |  |
+| 5 | Brand | Logo | [`18:21`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=18-21) |Replaced in code by the client's files (23.11.2026, CLAUDE.md § 12); Figma still has the old one |
 | 5 | Brand | Logo mark | [`127:312`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=127-312) | Also the favicon |
 | 5 | Shell | Footer | [`79:887`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=79-887) |  |
 | 5 | Shell | Footer Mobile | [`114:311`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=114-311) |  |

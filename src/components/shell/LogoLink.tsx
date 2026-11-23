@@ -7,8 +7,9 @@ import type { MouseEvent } from 'react'
 import logoDark from '@/assets/logo-dark.svg'
 import logoLight from '@/assets/logo-light.svg'
 
-// Logo (18:21): Light on paper and white, Dark on navy. It links home; on the homepage it scrolls
-// to the top and moves focus to the start of <main> (docs/motion.md § 8).
+// Logo: the client's own files since 23.11.2026 (Figma's 18:21 before), as supplied: Light (navy)
+// on paper and white, Dark (white) on navy. It links home; on the homepage it scrolls to the top
+// and moves focus to the start of <main> (docs/motion.md § 8).
 
 type LogoLinkProps = {
   theme: 'light' | 'dark'
