@@ -104,7 +104,7 @@ Hero buttons and block links pick a destination from `src/lib/destinations.ts`. 
 | `indexCards` | Index card 264:448 | `cards` (up to 3: title, rows numbered or checked, the count on a chip or a navy bubble with its label); numbered rows run on from card to card; optional navy `checklist` { title, items } (the farmers' documents) |
 | `projects` | Project card 259:574 | `projects` → Funded projects; the heading beside the cards from 1024px |
 | `sendDocument` | Send a document 172:2255 | heading, lead, `steps`, `buttonLabel`, `dropzoneArt` (always / phone only); the languages come from the Translations programme (`translationLanguages`), the dropzone and the button open the wizard (PR 8) |
-| `priceFactors` | 172:2288 + Page counter 173:378 | heading, lead, numbered `items` { title, text }, `counter` (the Page counter beside them) |
+| `priceFactors` | 172:2288 (without the Page counter 173:378, removed in v0.24.0) | heading, lead, numbered `items` { title, text }; the two actions under them are fixed strings |
 | `faqColumns` | FAQ item 129:335 in two columns (172:2357) | `columns` (up to 2: anchor, heading, items { question, answer }, note) |
 | `locations` | Location card 125:302 | heading only: the Contact global's locations |
 

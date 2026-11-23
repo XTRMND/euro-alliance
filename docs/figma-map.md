@@ -109,7 +109,7 @@ The PR column is where each component is first expected. If a page needs a compo
 | 12 | Programs | Level card | [`129:357`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=129-357) |  |
 | 12 | Programs | Steps | [`129:385`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=129-385) |  |
 | 12 | Programs | System card | [`135:389`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=135-389) | Columns=Two/One |
-| 14 | Translations | Page counter | [`173:378`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=173-378) | 1 page = 1800 characters |
+| 14 | Translations | Page counter | [`173:378`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=173-378) | Not built since v0.24.0 (removed, Trello card #15) |
 | 15 | News | News feature | [`181:365`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=181-365) |  |
 | 15 | News | Page number | [`181:371`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=181-371) |  |
 | 15 | News | TOC item | [`185:366`](https://www.figma.com/design/0DS5cbqWVsErHFWV8hfOxh?node-id=185-366) | Contents rail, fed by H2s |

@@ -399,11 +399,9 @@ From the program pages (PR 13):
 - Teachers: the «10–25», «16–48» and «1–3» figures and the 29 programmes are Figma's copy; hours and credits per programme aren't in Figma, so the collection's fields stay empty until the client gives them. The «Безплатно обучение» card stays until the client answers the question above.
 
 From the Translations page (PR 14):
-- The page counter counts in the browser: pasted text, TXT, DOCX, ODT and PDFs with a text layer (pdf.js, loaded only for a PDF). Characters are counted with spaces, as Word counts them (line breaks don't count), 1800 per standard page, shown with one decimal rounded half up («6,8»). Confirm the counting and the rounding (`docs/pr-plan.md` § 14). [as described]
-- Photos and scans can't be counted in the browser (no OCR), though Figma's hint promises «снимка»; old .doc files can't either. The counter says so and offers the quote. [as described]
-- «Поискай оферта» opens the wizard on translations with the counted file. «Рамков договор?» has no destination in Figma. [the wizard on translations too]
+- The page counter was removed in v0.24.0 (see «From the page counter's removal» below); the questions about counting, rounding and photos went with it.
+- «Поискай оферта» opens the wizard on translations. «Рамков договор?» has no destination in Figma. [the wizard on translations too]
 - The hero's «Изпрати документ» has no destination in Figma. [the «Изпратете документ» section below]
-- The counter's empty «0» is border/default on white in Figma (about 1.3:1). [text/muted]
 - The note «За устен превод направете предварителна заявка…» has no link in Figma. Link it to the wizard? [text only]
 - On mobile Figma puts the hero art before the buttons here, unlike the other course-page heroes. [the buttons first, as on the others]
 - The footer's «Писмени преводи» and «Устни преводи» now go to the page's two lists (`/prevodi#pismeni-prevodi`, `#ustni-prevodi`). The seed only fills an empty navigation, so an existing database needs the two links changed in the admin.
@@ -562,9 +560,14 @@ From the new logo (v0.23.0, 23.11.2026; Trello card #4; branch `feat/new-logo`, 
 - Card #14 (the logo looks squashed on staging): the old files' `preserveAspectRatio="none"` is gone with them, and `tests/unit/logo.test.ts` keeps it out. Whether that was the cause still needs the user's screenshot from staging.
 - Figma still has the old logo (18:21, page 06): for the user to mirror.
 
+From the page counter's removal (v0.24.0, 23.11.2026; Trello card #15; branch `feat/remove-page-counter`):
+- The Translations page has no Page counter (Figma 173:378 isn't built any more; the user's card): the client publishes no prices, so the count gave a number without a price, and it counted the source text while agencies charge by the finished translation. Option 1 of the card: «Цена по оферта» keeps its heading, lead and four factors, with «Поискай оферта» and «Рамков договор?» under them (both open the wizard on translations, `priceFactors.*` in the messages). Not in Figma: from 1024px the factors sit beside the heading and the two actions; one column below.
+- Gone with it: `PageCounter`, `src/lib/page-count.ts`, `pdf-text.ts`, `pdfjs-dist`, the `pageCounter` strings, and the block's «Брояч на страници до списъка» checkbox (migration `20261123_110404_drop_price_counter`; the block is «Цена» in the admin).
+- Not built, for the user to decide (the card's options 2–4): a promised response time (needs the client's figure), typical documents with «обикновено 1 стр.», and counting the pages of an inquiry's files on the server for the office («≈ N стр.» in the admin and the e-mail).
+- The lead still says «Заплащането е на стандартна страница» and the first factor «в стандартни страници от 1800 знака с интервалите» (Figma's copy, about how the price is formed): kept.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
-- Translation page counter: characters counted with spaces, and how pages are rounded.
 - Inquiry routing for non-language programmes (default: office@).
 - Upload limits for translation documents.
 - gtag.js or GTM; whether the Facebook Pixel stays; Consent Mode basic or advanced (`docs/measurement.md`; PR 17 and 20 built gtag.js, no Pixel, basic).
