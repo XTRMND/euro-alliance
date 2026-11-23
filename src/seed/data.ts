@@ -162,18 +162,23 @@ export const navigation = {
 // client's own (Figma's «Classroom», 261:4025) showed their old logo, and they agreed to a free
 // photo from the internet (23.11.2026). The user picked it: «Happy Students Raising Their Hand in
 // a Classroom», https://www.pexels.com/photo/happy-students-raising-their-hand-in-a-classroom-8617994/
-// (Pexels licence: free to use, no attribution needed), cropped to the slot's portrait shape
-// (1100 × 1315 of 2600 × 1733, from x 1500, y 400). Photo B in the same collage (57:317) is Figma's image fill as
+// (Pexels licence: free to use, no attribution needed), cropped from the original file to the
+// slot's portrait shape (2379 × 2844 of 5623 × 3749, from x 3244, y 865) and stored 1600 wide.
+// The first copy (v0.25.0) came from Pexels' compressed 2600px version and looked soft. Photo B in the same collage (57:317) is Figma's image fill as
 // it is, 700 × 520, shown in colour: every image in the approved Figma file is approved (the user,
 // 02.11.2026). Courses and news are never seeded: they come from the client or the import (PR 21).
 export const homePhoto = {
-  file: 'src/seed/home/hero-classroom.jpg',
+  file: 'src/seed/home/hero-students.jpg',
   mimetype: 'image/jpeg',
   alt: 'Усмихнати ученици вдигат ръка в класна стая',
 }
 
-/** The hero's photo before v0.25.0, by its file name: a homepage that still shows it gets the new one. */
-export const replacedHomePhoto = 'classroom.jpg'
+/**
+ * The hero's earlier seeded photos, by file name: a homepage that still shows one gets the new
+ * one. `classroom.jpg` had the old logo (before v0.25.0); `hero-classroom.jpg` was the soft copy
+ * of today's photo (v0.25.0).
+ */
+export const replacedHomePhotos = ['classroom.jpg', 'hero-classroom.jpg']
 
 export const homePhotoSecondary = {
   file: 'src/seed/home/photo-b.jpg',

@@ -214,14 +214,14 @@ describe('seed', () => {
       (
         await payload.count({
           collection: 'media',
-          where: { filename: { equals: 'hero-classroom.jpg' } },
+          where: { filename: { equals: 'hero-students.jpg' } },
         })
       ).totalDocs,
     ).toBe(1)
   })
 
   it('replaces the hero’s old seeded photo, and leaves a photo the client chose', async () => {
-    const file = await readFile('src/seed/home/hero-classroom.jpg')
+    const file = await readFile('src/seed/home/hero-students.jpg')
     const upload = (name: string) =>
       payload.create({
         collection: 'media',
@@ -243,9 +243,19 @@ describe('seed', () => {
     })
     await payload.updateGlobal({ slug: 'site', data: { seoImage: old.id } })
     await seed(payload)
-    expect(await hero()).toBe('hero-classroom.jpg')
+    expect(await hero()).toBe('hero-students.jpg')
     const site = await payload.findGlobal({ slug: 'site', depth: 1 })
-    expect((site.seoImage as Media).filename).toBe('hero-classroom.jpg')
+    expect((site.seoImage as Media).filename).toBe('hero-students.jpg')
+
+    // The soft copy of v0.25.0 is replaced too.
+    const soft = await upload('hero-classroom.jpg')
+    await payload.updateGlobal({
+      slug: 'home',
+      locale: 'bg',
+      data: { hero: { ...current.hero, photo: soft.id } },
+    })
+    await seed(payload)
+    expect(await hero()).toBe('hero-students.jpg')
 
     const chosen = await upload('test-chosen.jpg')
     await payload.updateGlobal({

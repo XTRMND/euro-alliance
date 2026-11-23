@@ -70,6 +70,8 @@ export async function HomeHero({ hero }: { hero: Home['hero'] }) {
                     media={photo}
                     tint="hero"
                     sizes="(min-width: 640px) 290px, 45vw"
+                    // The page's main photo: at the default 75 (AVIF 55) its faces and hair smear.
+                    quality={100}
                     eager
                   />
                 </div>
