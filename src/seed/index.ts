@@ -11,6 +11,7 @@ import {
   home,
   homePhoto,
   homePhotoSecondary,
+  replacedHomePhoto,
   navigation,
   offices,
   partners,
@@ -147,6 +148,14 @@ async function seedFundingLogo(payload: Payload) {
   payload.logger.info('Seeded the EU logo strip.')
 }
 
+/** Whether this upload is the hero's old seeded photo (`replacedHomePhoto`). */
+async function isReplacedHomePhoto(payload: Payload, photo: unknown): Promise<boolean> {
+  const id = typeof photo === 'object' && photo ? (photo as { id: number }).id : photo
+  if (typeof id !== 'number') return false
+  const media = await payload.findByID({ collection: 'media', id, depth: 0, disableErrors: true })
+  return media?.filename === replacedHomePhoto
+}
+
 /**
  * The homepage copy from Figma, its classroom photo and the partner logos. Each part is filled in
  * only while it's empty, so the client's edits always win.
@@ -158,6 +167,10 @@ async function seedHome(payload: Payload) {
   if (isEmpty(current.hero?.heading)) {
     const photo = await uploadOnce(payload, { ...homePhoto, kind: 'photo', altReviewed: false })
     data.hero = { ...home.hero, photo: photo.id }
+  } else if (await isReplacedHomePhoto(payload, current.hero?.photo)) {
+    // The seeded photo with the old logo (before v0.25.0); a photo the client chose stays.
+    const photo = await uploadOnce(payload, { ...homePhoto, kind: 'photo', altReviewed: false })
+    data.hero = { ...current.hero, photo: photo.id }
   }
   // Photo B (57:317), added to a homepage seeded before it was; a photo the client chose stays.
   if (!current.hero?.photoSecondary) {
@@ -621,7 +634,9 @@ async function seedLegal(payload: Payload) {
 /** The default sharing image (PR 22): the homepage's classroom photo, when none is chosen. */
 async function seedShareImage(payload: Payload) {
   const site = await payload.findGlobal({ slug: 'site', depth: 0 })
-  if (site.seoImage) return noteSkipped(payload, 'global:site')
+  // The hero's old photo was the default here too: it follows the new one.
+  if (site.seoImage && !(await isReplacedHomePhoto(payload, site.seoImage)))
+    return noteSkipped(payload, 'global:site')
   const home = await payload.findGlobal({ slug: 'home', depth: 0 })
   const photo = home.hero?.photo
   if (!photo) return

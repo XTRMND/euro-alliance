@@ -155,16 +155,22 @@ export const navigation = {
   ],
 }
 
-// The homepage (48:184): copy from Figma. The classroom photo is the client's own (Figma layer
-// «Classroom (their photo, duotone 88%)», 261:4025): Figma's crop of its image fill (x 306,
-// y 204, 666 × 796 of 1360 × 1020). Photo B in the same collage (57:317) is Figma's image fill as
+// The homepage (48:184): copy from Figma. The hero's photo is a stock photo since v0.25.0: the
+// client's own (Figma's «Classroom», 261:4025) showed their old logo, and they agreed to a free
+// photo from the internet (23.11.2026). The user picked it: «Happy Students Raising Their Hand in
+// a Classroom», https://www.pexels.com/photo/happy-students-raising-their-hand-in-a-classroom-8617994/
+// (Pexels licence: free to use, no attribution needed), cropped to the slot's portrait shape
+// (1100 × 1315 of 2600 × 1733, from x 1500, y 400). Photo B in the same collage (57:317) is Figma's image fill as
 // it is, 700 × 520, shown in colour: every image in the approved Figma file is approved (the user,
 // 02.11.2026). Courses and news are never seeded: they come from the client or the import (PR 21).
 export const homePhoto = {
-  file: 'src/seed/home/classroom.jpg',
+  file: 'src/seed/home/hero-classroom.jpg',
   mimetype: 'image/jpeg',
-  alt: 'Деца в класна стая на Евро Алианс вдигат чанти с логото на школата',
+  alt: 'Усмихнати ученици вдигат ръка в класна стая',
 }
+
+/** The hero's photo before v0.25.0, by its file name: a homepage that still shows it gets the new one. */
+export const replacedHomePhoto = 'classroom.jpg'
 
 export const homePhotoSecondary = {
   file: 'src/seed/home/photo-b.jpg',
