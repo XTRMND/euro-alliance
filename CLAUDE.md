@@ -281,7 +281,6 @@ Waiting on the client:
 - Free teacher training under ОП «Наука и образование за интелигентен растеж»: their site still lists it beside «Обучения на място» and «Изнесени обучения» (checked 02.11.2026, the user: «check yourself»), so the card stays. The programme period (2014–2020) has closed: worth one sentence with the client.
 - English content: Claude translates the Bulgarian content when the English site is built (the user, 02.11.2026).
 - Viewer access to GA4 and Search Console, and the GA4 measurement ID for the new site (PR 20).
-- The classroom photo in the homepage hero: seeded from Figma's crop of its image fill (666 × 796). A full-resolution original would serve large screens better.
 - Translation languages (the Translations programme's «Езици» since v0.5.0; a global before): from the old «Писмени преводи» page (the user: «go check yourself», 02.11.2026), filled by the import into an empty list: Български, Немски (Figma's pair first), Английски, Френски, Руски, Испански, Италиански, Португалски, Гръцки, Турски. «Други езици с предварителна заявка» isn't a language and isn't listed.
 - Courses and news: never seeded, so the homepage's «Предстоящи курсове» and «Новини и проекти» stay hidden until the client adds them or the import (PR 21) brings them in.
 - Partner logos: Figma has eight (Агенция по заетостта, НАПОО, Аграрен университет, Pearson Longman, Oxford University Press, ТПК Пловдив, ПУ «Паисий Хилендарски», Gateway School of English) as 150 px greyscale images. Is the list current, and are there sharper originals? They're in `src/seed/partners/` until then.
@@ -574,6 +573,11 @@ From the upload hardening (v0.24.1, 23.11.2026; branch `fix/upload-hardening`, o
 - A refused upload at the proxy (411, 413, 429, 503) shows the wizard's general «Запитването не беше изпратено» message, not a specific one.
 - Not built: a virus scan (ClamAV on the VPS: the user's call), and a search of PDFs for scripts (fillable forms carry them legitimately). The office opens these files, so the scan is the part still missing.
 - Files stored before v0.24.1 keep the name they came with; they're served as downloads like the rest.
+
+From the banner photo (v0.25.0, 23.11.2026; Trello card #20; branch `feat/banner-photo`):
+- The homepage hero's photo is a stock photo: the client's own (Figma's «Classroom», 261:4025) showed their old logo on the bags, and they agreed to «подходяща такава от интернет, без авторски права» (Viber, 23.11.2026). The user picked it: «Happy Students Raising Their Hand in a Classroom», pexels.com/photo/…-8617994 (Pexels licence: free to use, no attribution), cropped to the slot's portrait shape, 1100 × 1315 (`src/seed/home/hero-classroom.jpg`). An exception to § 3's «Figma's photos in their slots», by the client's word. Alt: «Усмихнати ученици вдигат ръка в класна стая» (it doesn't say the room is theirs).
+- A database seeded before still has the old file: at its next start the base seed puts the new photo in the hero, and in the default sharing image, wherever the old seeded file (`classroom.jpg`) is still the one shown; a photo chosen in the admin stays. The old upload stays in Media, unused.
+- Figma still shows the old photo (48:184): for the user to mirror.
 
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
