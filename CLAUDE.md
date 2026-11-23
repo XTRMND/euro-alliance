@@ -579,6 +579,10 @@ From the banner photo (v0.25.0, 23.11.2026; Trello card #20; branch `feat/banner
 - A database seeded before still has the old file: at its next start the base seed puts the new photo in the hero, and in the default sharing image, wherever the old seeded file (`classroom.jpg`) is still the one shown; a photo chosen in the admin stays. The old upload stays in Media, unused.
 - Figma still shows the old photo (48:184): for the user to mirror.
 
+From the header's news link (v0.26.0, 23.11.2026; branch `feat/header-news`, on top of `feat/banner-photo`):
+- «Новини» is in the header, first on the right of the logo, before «За нас» (the client's request, through the user). Not in Figma's header. It fits from the 1200px breakpoint with 32px between links, as the others. The mobile menu had it already.
+- The navigation is the client's to edit, and the seed only fills an empty one, so an existing database gets the link once from a migration (`20261123_121025_header_news_link`, no schema change): unless a header link already goes to the news page. Taken out in the admin afterwards, it stays out.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
