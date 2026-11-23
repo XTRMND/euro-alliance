@@ -352,7 +352,7 @@ export const SendDocumentBlock: Block = {
 
 export const PriceFactorsBlock: Block = {
   slug: 'priceFactors',
-  labels: { singular: 'Цена и брояч на страници', plural: 'Цена и брояч на страници' },
+  labels: { singular: 'Цена', plural: 'Цена' },
   admin: { group: 'Преводи' },
   fields: [
     ...heading,
@@ -364,12 +364,6 @@ export const PriceFactorsBlock: Block = {
         { name: 'title', type: 'text', label: 'Заглавие', required: true, localized: true },
         { name: 'text', type: 'text', label: 'Текст', localized: true },
       ],
-    },
-    {
-      name: 'counter',
-      type: 'checkbox',
-      label: 'Брояч на страници до списъка',
-      defaultValue: true,
     },
   ],
 }

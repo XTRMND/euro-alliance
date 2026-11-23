@@ -145,13 +145,7 @@ Playwright covers this with `reducedMotion: 'reduce'` on every page (definition 
 
 ## 10. Page counter (translations)
 
-**Spec:** counts characters; 1 page = 1800 characters.
-
-- **Figma:** Page counter 173:378.
-- Counts characters including spaces (the usual Bulgarian standard page). **Confirm with the client**, and confirm how to round: proposal is to show the exact character count plus pages to one decimal.
-- Updates as the visitor types or pastes; works without uploading anything.
-- No prices (translation price per topic was dropped).
-- The result is announced through a polite live region, throttled so screen readers aren't flooded.
+Removed in v0.24.0 (the user, Trello card #15): the client publishes no prices, so a page count gave the visitor a number without a price, and it counted the source text while agencies charge by the finished translation. The price section lists what the price depends on and sends the visitor to the wizard («Поискай оферта»). Figma's Page counter (173:378) isn't built.
 
 ## 11. Search
 

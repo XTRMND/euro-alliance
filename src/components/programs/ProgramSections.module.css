@@ -94,11 +94,26 @@
   gap: 32px;
 }
 
-/* «Цена по оферта» (172:2288): the factors beside the Page counter from 1024px. */
-.factors {
-  display: grid;
-  gap: 18px;
-  align-content: start;
+/* «Цена по оферта» (172:2288, without its Page counter since v0.24.0): the heading, the factors,
+   then the two actions; from 1024px the factors sit beside the heading and the actions. */
+.priceHead {
+  grid-area: head;
+}
+
+.price > .factorList {
+  grid-area: list;
+}
+
+.priceActions {
+  grid-area: actions;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  align-items: center;
+}
+
+.price {
+  grid-template-areas: 'head' 'list' 'actions';
 }
 
 /* The price factors: rows 14px apart without rules (172:2288). */
@@ -160,6 +175,14 @@
 
   .beside {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 64px;
+    align-items: start;
+  }
+
+  .price {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'head list' 'actions list';
     column-gap: 64px;
     align-items: start;
   }

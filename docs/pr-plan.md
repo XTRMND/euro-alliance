@@ -111,7 +111,7 @@ Each page PR adds the collections it needs (with migrations and seed content fro
 
 ### 14. Translations + page counter + upload: `feat/translations`
 
-- Translations 171:2511 / 175:2005, Page counter 173:378, `translation` global; CTA into the wizard with the translation topic and upload.
+- Translations 171:2511 / 175:2005, Page counter 173:378 (removed again in v0.24.0), `translation` global; CTA into the wizard with the translation topic and upload.
 - **Needs:** counting with spaces and rounding confirmed.
 
 ### 15. News listing + article: `feat/news`
