@@ -179,3 +179,17 @@ test.describe('mobile menu', () => {
     )
   })
 })
+
+// The footer's text under the logo is the client's (v0.27.0, «Навигация» → «Долна част»); the EU
+// funding notice is out of the footer and shows only if the client fills it in again.
+test('the footer has the licence line under the logo and no funding notice', async ({ page }) => {
+  await page.goto('/')
+  const footer = page.getByRole('contentinfo')
+  await expect(
+    footer.getByText(
+      'Лицензиран център за професионално обучение, лиценз № 200312088 от 15.11.2003',
+    ),
+  ).toBeVisible()
+  await expect(footer.getByText(/Проект №/)).toHaveCount(0)
+  await expect(footer.locator('img[src*="logo-strip"]')).toHaveCount(0)
+})

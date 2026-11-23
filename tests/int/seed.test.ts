@@ -40,15 +40,28 @@ describe('seed', () => {
     ])
   })
 
-  it('stores the EU logo strip byte for byte, without tints, and links it from the footer', async () => {
-    const site = await payload.findGlobal({ slug: 'site', depth: 1 })
-    const logos = site.funding?.logos as Media
+  it('stores the EU logo strip byte for byte, without tints, for the project’s card', async () => {
+    const { docs } = await payload.find({
+      collection: 'media',
+      where: { filename: { equals: 'eu-pkip-logo-strip.jpg' } },
+      depth: 1,
+    })
+    const logos = docs[0]!
 
     expect(logos.kind).toBe('logo')
     const stored = await readFile(path.join(uploadDirs.media, logos.filename!))
     const original = await readFile('public/logos/eu-pkip-logo-strip.jpg')
     expect(stored.equals(original)).toBe(true)
     expect(logos.tints?.docs ?? []).toEqual([])
+  })
+
+  it('seeds the footer’s text under the logo, and no EU funding notice', async () => {
+    const nav = await payload.findGlobal({ slug: 'navigation', locale: 'bg', depth: 0 })
+    expect(nav.footerNote).toBe(
+      'Лицензиран център за професионално обучение, лиценз № 200312088 от 15.11.2003',
+    )
+    expect(nav.funding?.statement ?? null).toBeNull()
+    expect(nav.funding?.logos ?? null).toBeNull()
   })
 
   it('seeds the navigation with picked links: programmes, fixed pages, one typed address', async () => {

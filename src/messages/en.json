@@ -18,7 +18,6 @@
   },
   "footer": {
     "navLabel": "Footer links",
-    "licence": "Licensed vocational training centre, licence No. {number} of {date}",
     "copyright": "© {year} {company}",
     "privacy": "Privacy",
     "cookieSettings": "Cookie settings",

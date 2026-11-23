@@ -57,7 +57,6 @@ export async function seed(payload: Payload) {
     payload.logger.info(`Seeded company facts: ${Object.keys(missing).join(', ')}.`)
   } else noteSkipped(payload, 'global:site')
 
-  await seedFundingLogo(payload)
   await seedHome(payload)
   await seedShareImage(payload)
 
@@ -132,20 +131,6 @@ async function pickedNavigation(payload: Payload) {
     return href ? { ...item, ...linkFromHref(href, known) } : item
   }
   return pick(navigation)
-}
-
-/** Uploads the EU logo strip as a `logo` (stored as is) and links it from the footer notice. */
-async function seedFundingLogo(payload: Payload) {
-  const site = await payload.findGlobal({ slug: 'site', locale: 'bg', depth: 0 })
-  if (site.funding?.logos) return noteSkipped(payload, 'global:site')
-
-  const media = await uploadOnce(payload, { ...fundingLogo, kind: 'logo' })
-  await payload.updateGlobal({
-    slug: 'site',
-    locale: 'bg',
-    data: { funding: { statement: site.funding?.statement, logos: media.id } },
-  })
-  payload.logger.info('Seeded the EU logo strip.')
 }
 
 /** Whether this upload is the hero's old seeded photo (`replacedHomePhoto`). */

@@ -39,8 +39,10 @@
   height: auto;
 }
 
+/* The client's text: the line breaks typed in the admin are kept. */
 .licence {
   font: 400 0.875rem / 1.5 var(--font-body);
+  white-space: pre-line;
 }
 
 .nav {

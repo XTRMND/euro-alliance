@@ -152,6 +152,10 @@ export type SiteNavigation = {
     heading: string
     links: (SiteLink & { icon?: 'facebook' | null })[]
   }[]
+  /** The text under the footer's logo; none when it's empty. */
+  footerNote?: string | null
+  /** The optional EU funding notice under the footer's columns: shown only with a statement. */
+  funding?: { statement?: string | null; logos?: unknown } | null
 }
 
 type StoredItem = StoredLink & { id?: string | null; label: string }
@@ -168,6 +172,8 @@ export function resolveNavigation(navigation: {
         links?: (StoredItem & { icon?: 'facebook' | null })[] | null
       }[]
     | null
+  footerNote?: string | null
+  funding?: { statement?: string | null; logos?: unknown } | null
 }): SiteNavigation {
   const link = <T extends StoredItem>(item: T) => {
     const href = linkHref(item)
@@ -189,6 +195,8 @@ export function resolveNavigation(navigation: {
         link(item).map((resolved) => ({ ...resolved, icon: item.icon })),
       ),
     })),
+    footerNote: navigation.footerNote?.trim() || null,
+    funding: navigation.funding,
   }
 }
 
