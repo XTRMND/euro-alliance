@@ -196,6 +196,16 @@ export const Navigation: GlobalConfig = {
           label: 'Долна част',
           fields: [
             {
+              name: 'footerNote',
+              type: 'textarea',
+              label: 'Текст под логото',
+              localized: true,
+              admin: {
+                description:
+                  'Например лицензът на центъра. Ако полето е празно, под логото няма текст.',
+              },
+            },
+            {
               name: 'footer',
               type: 'array',
               label: 'Колони в долния колонтитул',
@@ -221,6 +231,29 @@ export const Navigation: GlobalConfig = {
                     admin: { description: 'На компютър връзката се показва като икона.' },
                   },
                 ]),
+              ],
+            },
+            {
+              name: 'funding',
+              type: 'group',
+              label: 'Бележка за финансиране от ЕС (по избор)',
+              admin: {
+                description:
+                  'Показва се под колоните само ако има текст. Проектите са описани и в «За нас».',
+              },
+              fields: [
+                { name: 'statement', type: 'textarea', label: 'Текст', localized: true },
+                {
+                  name: 'logos',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Лента с логата',
+                  filterOptions: { kind: { equals: 'logo' } },
+                  admin: {
+                    description:
+                      'Точно както е предоставена: без изрязване и промяна на цветовете.',
+                  },
+                },
               ],
             },
           ],

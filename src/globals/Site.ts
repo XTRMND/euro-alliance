@@ -56,23 +56,5 @@ export const Site: GlobalConfig = {
       relationTo: 'media',
       label: 'Изображение за споделяне по подразбиране',
     },
-    {
-      name: 'funding',
-      type: 'group',
-      label: 'Финансиране от ЕС (долен колонтитул)',
-      fields: [
-        { name: 'statement', type: 'textarea', label: 'Текст', localized: true },
-        {
-          name: 'logos',
-          type: 'upload',
-          relationTo: 'media',
-          label: 'Лента с логата',
-          filterOptions: { kind: { equals: 'logo' } },
-          admin: {
-            description: 'Точно както е предоставена: без изрязване и промяна на цветовете.',
-          },
-        },
-      ],
-    },
   ],
 }

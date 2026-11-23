@@ -3033,13 +3033,6 @@ export interface Site {
     bic?: string | null;
   };
   seoImage?: (number | null) | Media;
-  funding?: {
-    statement?: string | null;
-    /**
-     * Точно както е предоставена: без изрязване и промяна на цветовете.
-     */
-    logos?: (number | null) | Media;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -3380,6 +3373,10 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Например лицензът на центъра. Ако полето е празно, под логото няма текст.
+   */
+  footerNote?: string | null;
   footer?:
     | {
         heading: string;
@@ -3443,6 +3440,16 @@ export interface Navigation {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Показва се под колоните само ако има текст. Проектите са описани и в «За нас».
+   */
+  funding?: {
+    statement?: string | null;
+    /**
+     * Точно както е предоставена: без изрязване и промяна на цветовете.
+     */
+    logos?: (number | null) | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -4124,12 +4131,6 @@ export interface SiteSelect<T extends boolean = true> {
         bic?: T;
       };
   seoImage?: T;
-  funding?:
-    | T
-    | {
-        statement?: T;
-        logos?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -4215,6 +4216,7 @@ export interface NavigationSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  footerNote?: T;
   footer?:
     | T
     | {
@@ -4233,6 +4235,12 @@ export interface NavigationSelect<T extends boolean = true> {
               id?: T;
             };
         id?: T;
+      };
+  funding?:
+    | T
+    | {
+        statement?: T;
+        logos?: T;
       };
   updatedAt?: T;
   createdAt?: T;

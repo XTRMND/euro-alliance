@@ -14,10 +14,6 @@ export const company = {
   licence: { issuer: 'НАПОО', number: '200312088', issuedOn: '2003-11-15T12:00:00.000Z' },
   certifications: [{ standard: 'ISO 9001:2015' }, { standard: 'ISO 17100:2015' }],
   bank: { name: 'Инвестбанк', iban: 'BG58 IORT 8129 1003 0255 00', bic: 'IORTBGSF' },
-  funding: {
-    statement:
-      'Проект № BG16RFPR001-1.004-1004-C01 «Подобряване на производствения капацитет на ЕВРО-АЛИАНС ООД», финансиран по програма «Конкурентоспособност и иновации в предприятията» 2021–2027.',
-  },
 }
 
 /** The official EU logo strip, supplied by the client and stored byte for byte (publicity rules). */
@@ -92,6 +88,9 @@ const vocational = {
 
 // The addresses are turned into picked links when seeded (src/seed/index.ts, pickedNavigation).
 export const navigation = {
+  // Under the footer's logo (79:887): Figma's line, with the licence as in the verified facts.
+  footerNote:
+    'Лицензиран център за професионално обучение, лиценз № 200312088 от 15.11.2003',
   header: {
     left: [
       { label: 'Курсове', href: routes.courses() },

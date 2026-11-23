@@ -1,6 +1,6 @@
 import { Img } from '@/components/ui/Img'
 import { getTranslations } from 'next-intl/server'
-import { currentYear, formatDateNumeric } from '@/lib/format'
+import { currentYear } from '@/lib/format'
 import { routes } from '@/lib/routes'
 import type { SiteNavigation } from '@/lib/nav-links'
 import type { Media, Site } from '@/payload-types'
@@ -9,9 +9,9 @@ import styles from './Footer.module.css'
 import { LogoLink } from './LogoLink'
 import { NavLink } from './NavLink'
 
-// Footer (79:887) and Footer Mobile (114:311), with the EU funding notice built in. The official
-// logo strip is shown exactly as uploaded, on white; until the client supplies it, only the
-// statement shows.
+// Footer (79:887) and Footer Mobile (114:311). The text under the logo and the EU funding notice
+// are the client's, from «Навигация» → «Долна част» (v0.27.0): each shows only when it's filled
+// in. The notice's official logo strip is shown exactly as uploaded, on white.
 
 type FooterProps = {
   navigation: SiteNavigation
@@ -21,7 +21,9 @@ type FooterProps = {
 export async function Footer({ navigation, site }: FooterProps) {
   const t = await getTranslations('footer')
   const tHeader = await getTranslations('header')
-  const logos = typeof site.funding?.logos === 'object' ? (site.funding.logos as Media) : null
+  const { footerNote, funding } = navigation
+  const logos =
+    funding?.logos && typeof funding.logos === 'object' ? (funding.logos as Media) : null
 
   return (
     <footer className={styles.footer}>
@@ -29,14 +31,7 @@ export async function Footer({ navigation, site }: FooterProps) {
         <div className={styles.columns}>
           <div className={styles.brand}>
             <LogoLink theme="dark" label={tHeader('logoLabel')} className={styles.logo} />
-            {site.licence?.number && site.licence.issuedOn && (
-              <p className={styles.licence}>
-                {t('licence', {
-                  number: site.licence.number,
-                  date: formatDateNumeric(site.licence.issuedOn),
-                })}
-              </p>
-            )}
+            {footerNote && <p className={styles.licence}>{footerNote}</p>}
           </div>
 
           <nav aria-label={t('navLabel')} className={styles.nav}>
@@ -66,7 +61,7 @@ export async function Footer({ navigation, site }: FooterProps) {
           </nav>
         </div>
 
-        {site.funding?.statement && (
+        {funding?.statement && (
           <div className={styles.funding}>
             {logos?.url && (
               <div className={styles.fundingLogos}>
@@ -79,7 +74,7 @@ export async function Footer({ navigation, site }: FooterProps) {
                 />
               </div>
             )}
-            <p className={styles.statement}>{site.funding.statement}</p>
+            <p className={styles.statement}>{funding.statement}</p>
           </div>
         )}
       </div>
