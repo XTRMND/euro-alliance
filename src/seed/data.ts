@@ -98,7 +98,11 @@ export const navigation = {
       vocational,
       { label: 'Преводи', href: routes.translations() },
     ],
-    right: [{ label: 'За нас', href: routes.about() }],
+    // «Новини» beside «За нас» since v0.26.0 (the client's request, 23.11.2026).
+    right: [
+      { label: 'Новини', href: routes.news() },
+      { label: 'За нас', href: routes.about() },
+    ],
   },
   menu: [
     { label: 'Курсове', href: routes.courses() },
