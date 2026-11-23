@@ -4,7 +4,7 @@ import styles from './TornWindow.module.css'
 
 // Torn window (259:588): the About hero's photo seen through a hole torn in the paper (the rim),
 // colour + 45% duotone. Figma's rim and mask are SVGs in src/assets. The team photo is the hero's
-// art at 600px, so it's served at quality 90, not the default 75. On a phone the photo is 15/16 of
+// art at 600px, so it's served at quality 100 (AVIF 80; 90 was AVIF 70), not the default 75. On a phone the photo is 15/16 of
 // the page width less its margins: 83.75vw − 6px.
 
 type TornWindowProps = {
@@ -21,7 +21,7 @@ export function TornWindow({ photo, eager, className }: TornWindowProps) {
           media={photo}
           tint="about"
           sizes="(min-width: 768px) 600px, calc(83.75vw - 6px)"
-          quality={90}
+          quality={100}
           eager={eager}
         />
       </div>
