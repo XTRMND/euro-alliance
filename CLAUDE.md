@@ -601,6 +601,14 @@ From the team photo's quality (v0.27.2, 23.11.2026; Trello #11; branch `fix/abou
 - Open, the user's call: cap the About hero's photo at half its file's width (450px for this one, instead of 615px), so a small photo is never enlarged on a 2× screen and a larger upload lifts the cap by itself; or an AI upscale of the file, re-uploaded. Neither is built.
 - The seed's own team photo (`src/seed/about/team-forum-2026.jpg`, a selfie at the forum) isn't what staging shows any more; the 2048px copy on the old site (news 209) is of that selfie, not of the client's photo.
 
+From the old news' covers (v0.28.0, 23.11.2026; Trello #13; branch `feat/news-covers`; `docs/seeding.md` § News covers):
+- **Replaces the decisions of 02.11 and 09.11** («all 203 articles as text, Figma's seven covers, no other photo from the old site»). The user, 23.11.2026: take the client's own covers, replace the stock ones with fitting Unsplash photos, and keep the client's files out of git.
+- All 165 distinct old covers were looked at. 73 articles get the client's own picture (26 distinct event photos, 23 project materials, 20 of their own greeting cards and posters); 119 used stock photos, clip art or other organisations' logos (Cambridge, Shkolo, AVO) and get a free Unsplash photo for their theme (22 photos, 19 themes, picked by Claude and looked at one by one; the user hasn't seen them yet); 4 stay without a cover; Figma's 7 stay. This also widens § 3's «Unsplash only for slots Figma doesn't cover, picked by the user»: here Claude picked.
+- The client's pictures are downloaded from the old site by the staging seed and checked against a recorded sha256; only the Unsplash photos are committed (`seed/media/covers/`, 4.5 MB). The seed's container therefore reaches euro-alliance.net, which `docs/seeding.md` used to rule out, and it stops working for these covers once the old site is gone.
+- To look at on staging: 24 enrolment articles share two photos and 11 online-lesson articles two, so neighbours in the listing can repeat. More photos per theme would fix it (`news-cover-photos.json`).
+- Photographer names in the media's «Автор» field are as the photo pages gave them, not checked against Unsplash's own credit line.
+- Not done: the 11 pictures inside article texts (no design), and the delta crawl before cut-over.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
