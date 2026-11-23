@@ -41,6 +41,7 @@ import * as migration_20261119_105138_inquiry_needed_by from './20261119_105138_
 import * as migration_20261119_105822_office_hours from './20261119_105822_office_hours';
 import * as migration_20261123_110404_drop_price_counter from './20261123_110404_drop_price_counter';
 import * as migration_20261123_111621_inquiry_file_original_name from './20261123_111621_inquiry_file_original_name';
+import * as migration_20261123_121025_header_news_link from './20261123_121025_header_news_link';
 
 export const migrations = [
   {
@@ -256,6 +257,11 @@ export const migrations = [
   {
     up: migration_20261123_111621_inquiry_file_original_name.up,
     down: migration_20261123_111621_inquiry_file_original_name.down,
-    name: '20261123_111621_inquiry_file_original_name'
+    name: '20261123_111621_inquiry_file_original_name',
+  },
+  {
+    up: migration_20261123_121025_header_news_link.up,
+    down: migration_20261123_121025_header_news_link.down,
+    name: '20261123_121025_header_news_link'
   },
 ];
