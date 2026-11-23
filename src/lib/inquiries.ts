@@ -119,6 +119,12 @@ export function looksLikeSpam(honeypot: string, startedAt: number, now = Date.no
 export function rateLimiter(limit = 5, windowMs = 10 * 60 * 1000) {
   const hits = new Map<string, number[]>()
   return (key: string, now = Date.now()): boolean => {
+    // Addresses that have gone quiet are forgotten, so the list can't grow without end.
+    if (hits.size > 10_000) {
+      for (const [other, times] of hits) {
+        if (times.every((time) => now - time >= windowMs)) hits.delete(other)
+      }
+    }
     const recent = (hits.get(key) ?? []).filter((time) => now - time < windowMs)
     if (recent.length >= limit) {
       hits.set(key, recent)

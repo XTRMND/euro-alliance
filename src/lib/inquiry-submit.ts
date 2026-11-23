@@ -1,4 +1,5 @@
-import type { Payload } from 'payload'
+import { randomUUID } from 'node:crypto'
+import { type Payload, ValidationError } from 'payload'
 import sharp from 'sharp'
 import {
   acceptedFile,
@@ -15,6 +16,7 @@ import {
   validNeededBy,
   validPhone,
 } from './inquiries'
+import { inspectFile, storedExtension } from './upload-checks'
 
 // Stores an inquiry from the contact wizard (docs/cms-schema.md § 3, § 5): checks it, stores the
 // files and the inquiry, and queues its two emails. The server action calls it; integration tests
@@ -42,12 +44,31 @@ export type InquiryInput = {
 export type InquiryFileInput = { name: string; type: string; data: Buffer }
 
 export type FieldError =
-  'required' | 'email' | 'phone' | 'privacy' | 'date' | 'fileType' | 'fileSize' | 'fileCount'
+  | 'required'
+  | 'email'
+  | 'phone'
+  | 'privacy'
+  | 'date'
+  | 'fileType'
+  | 'fileUnsafe'
+  | 'fileSize'
+  | 'fileCount'
 
 export type SubmitResult =
   { ok: true; id: number | null } | { ok: false; errors: Partial<Record<string, FieldError>> }
 
 const text = (value: string | undefined, max: number) => value?.trim().slice(0, max) ?? ''
+
+/** A file's name as the visitor sent it, for showing: no path, no control characters. */
+export function displayName(name: string): string {
+  const base = name.split(/[\\/]/).pop() ?? ''
+  return (
+    base
+      .replace(/[\u0000-\u001f\u007f\u202a-\u202e\u2066-\u2069]/g, '')
+      .trim()
+      .slice(-120) || 'file'
+  )
+}
 
 /** Only a path on this site, without its query (which could carry personal data). */
 function cleanPath(value: string | undefined): string | undefined {
@@ -76,14 +97,33 @@ export function validateInquiry(input: InquiryInput, files: InquiryFileInput[], 
   if (files.length > uploadLimits.maxFiles) errors.files = 'fileCount'
   else if (files.some((file) => file.data.length > uploadLimits.maxBytes)) errors.files = 'fileSize'
   else if (files.some((file) => !acceptedFile(file.type, file.data))) errors.files = 'fileType'
+  else {
+    // A closer look (src/lib/upload-checks.ts): a real document of its type, without macros.
+    const verdict = files.map((file) => inspectFile(file.type, file.data)).find((v) => v !== 'ok')
+    if (verdict) errors.files = verdict
+  }
 
   return { errors, topic, office, email, phone, neededBy }
 }
 
-/** Images lose their EXIF (phone photos carry GPS); orientation is applied first. */
-async function stripMetadata(file: InquiryFileInput): Promise<InquiryFileInput> {
+/** The largest photo that's decoded: 110 megapixels, above a phone's 108 MP mode. */
+export const maxImagePixels = 110_000_000
+
+/**
+ * Images are decoded and written again: they lose their EXIF (phone photos carry GPS) and
+ * anything else that rode along in the file; orientation is applied first. Undefined for a file
+ * that isn't the image it says it is, or is too large to decode safely.
+ */
+async function cleanImage(file: InquiryFileInput): Promise<InquiryFileInput | undefined> {
   if (!file.type.startsWith('image/')) return file
-  return { ...file, data: await sharp(file.data).rotate().toBuffer() }
+  try {
+    const image = sharp(file.data, { limitInputPixels: maxImagePixels })
+    const { format } = await image.metadata()
+    if (format !== (file.type === 'image/png' ? 'png' : 'jpeg')) return undefined
+    return { ...file, data: await image.rotate().toBuffer() }
+  } catch {
+    return undefined
+  }
 }
 
 export async function submitInquiry(
@@ -118,22 +158,41 @@ export async function submitInquiry(
       ).docs[0]
     : undefined
 
-  const stored = []
+  // Every image is checked before anything is stored, so a refused file leaves nothing behind.
+  const cleaned: InquiryFileInput[] = []
   for (const file of topic === 'translation' ? files : []) {
-    const clean = await stripMetadata(file)
-    stored.push(
-      await payload.create({
-        collection: 'inquiry-files',
-        data: {},
-        file: {
-          data: clean.data,
-          mimetype: clean.type,
-          name: clean.name.slice(-120),
-          size: clean.data.length,
-        },
-        overrideAccess: true,
-      }),
-    )
+    const clean = await cleanImage(file)
+    if (!clean) return { ok: false, errors: { files: 'fileType' } }
+    cleaned.push(clean)
+  }
+
+  // Payload looks at a file too (a PDF it can't read is refused): then the visitor is told, and
+  // the files stored so far are taken out again.
+  const stored: { id: number }[] = []
+  try {
+    for (const clean of cleaned) {
+      stored.push(
+        await payload.create({
+          collection: 'inquiry-files',
+          // The visitor's name for the file is kept as text only; on disk and in its address the
+          // file has a random name with the extension of its checked type.
+          data: { originalName: displayName(clean.name) },
+          file: {
+            data: clean.data,
+            mimetype: clean.type,
+            name: `${randomUUID()}.${storedExtension(clean.type, uploadLimits.types)}`,
+            size: clean.data.length,
+          },
+          overrideAccess: true,
+        }),
+      )
+    }
+  } catch (error) {
+    if (!(error instanceof ValidationError)) throw error
+    for (const file of stored) {
+      await payload.delete({ collection: 'inquiry-files', id: file.id, overrideAccess: true })
+    }
+    return { ok: false, errors: { files: 'fileType' } }
   }
 
   const inquiry = await payload.create({

@@ -40,6 +40,7 @@ import * as migration_20261113_081123_certificate_kinds from './20261113_081123_
 import * as migration_20261119_105138_inquiry_needed_by from './20261119_105138_inquiry_needed_by';
 import * as migration_20261119_105822_office_hours from './20261119_105822_office_hours';
 import * as migration_20261123_110404_drop_price_counter from './20261123_110404_drop_price_counter';
+import * as migration_20261123_111621_inquiry_file_original_name from './20261123_111621_inquiry_file_original_name';
 
 export const migrations = [
   {
@@ -250,6 +251,11 @@ export const migrations = [
   {
     up: migration_20261123_110404_drop_price_counter.up,
     down: migration_20261123_110404_drop_price_counter.down,
-    name: '20261123_110404_drop_price_counter'
+    name: '20261123_110404_drop_price_counter',
+  },
+  {
+    up: migration_20261123_111621_inquiry_file_original_name.up,
+    down: migration_20261123_111621_inquiry_file_original_name.down,
+    name: '20261123_111621_inquiry_file_original_name'
   },
 ];

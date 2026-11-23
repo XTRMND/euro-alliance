@@ -137,7 +137,7 @@ test('files dropped on the homepage reach the wizard', async ({ page }) => {
   ).setFiles({
     name: 'diploma.pdf',
     mimeType: 'application/pdf',
-    buffer: Buffer.from('%PDF-1.4 test'),
+    buffer: Buffer.from('%PDF-1.4 test\n%%EOF'),
   })
 
   await expect(page).toHaveURL(routes.contact('prevodi'))

@@ -309,8 +309,8 @@ function Detail({ inquiry, admin }: { inquiry: Inquiry; admin: string }) {
                   typeof file === 'object' &&
                   file.url && (
                     <li key={file.id}>
-                      <a href={file.url} target="_blank" rel="noopener">
-                        {file.filename}
+                      <a href={file.url} download={file.originalName ?? file.filename ?? true}>
+                        {file.originalName ?? file.filename}
                       </a>
                     </li>
                   ),

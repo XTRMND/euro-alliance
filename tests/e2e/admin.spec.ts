@@ -604,3 +604,75 @@ test('the shell has no axe violations, with a branch open', async ({ page }) => 
   await expect(page.getByRole('navigation', { name: 'Раздел' })).toBeVisible()
   expect(await axe(page, ['aside[aria-label="Меню"]', '[data-admin="top"]'])).toEqual([])
 })
+
+// A visitor's upload from the wizard to the office (v0.24.1): stored under a random name, shown
+// with the name it came with, and served to signed-in staff as a download only.
+test('a visitor’s file reaches staff under a random name, as a download only', async ({ page }) => {
+  test.skip(!ready, 'The database already has accounts.')
+  await page.goto('/kontakti?tema=prevodi')
+  // No stored consent in this file: the banner would cover the wizard's buttons.
+  await page
+    .getByRole('button', { name: 'Само задължителни' })
+    .click({ timeout: 8000 })
+    .catch(() => undefined)
+
+  // Without translation languages in the CMS the pair is two text fields.
+  await page.getByLabel('От', { exact: true }).fill('Английски')
+  await page.getByLabel('На', { exact: true }).fill('Български')
+  await page
+    .getByRole('radiogroup', { name: 'Офис' })
+    .or(page.getByRole('group', { name: 'Офис' }))
+    .getByRole('radio')
+    .first()
+    .check({ force: true })
+  await page
+    .locator('input[type="file"]')
+    .first()
+    .setInputFiles({
+      name: '../dogovor.html.pdf',
+      mimeType: 'application/pdf',
+      // The smallest PDF Payload accepts as one.
+      buffer: Buffer.from(
+        [
+          '%PDF-1.4',
+          '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
+          '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj',
+          '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 10 10]>>endobj',
+          'xref',
+          '0 1',
+          '0000000000 65535 f ',
+          'trailer<</Root 1 0 R>>',
+          'startxref',
+          '0',
+          '%%EOF',
+        ].join('\n'),
+      ),
+    })
+  await page.getByRole('button', { name: 'Напред' }).click()
+  await page.getByLabel('Име', { exact: true }).fill('Тестов посетител')
+  await page.getByLabel('Имейл', { exact: true }).fill('test@example.com')
+  await page.getByRole('checkbox', { name: /Съгласен съм/ }).check()
+  // The server ignores anything sent within 3 s of opening the wizard.
+  await page.waitForTimeout(3100)
+  await page.getByRole('button', { name: 'Изпрати' }).click()
+  await expect(page.getByRole('heading', { name: 'Благодарим!' })).toBeVisible()
+
+  // Not signed in: no list, no file.
+  expect((await page.request.get('/api/inquiry-files')).status()).toBe(403)
+
+  await logIn(page)
+  const list = await page.request.get('/api/inquiry-files?limit=1&sort=-createdAt')
+  const [file] = ((await list.json()) as { docs: Record<string, string>[] }).docs
+  expect(file!.filename).toMatch(/^[0-9a-f-]{36}\.pdf$/)
+  expect(file!.originalName).toBe('dogovor.html.pdf')
+
+  const download = await page.request.get(file!.url!)
+  expect(download.status()).toBe(200)
+  expect(download.headers()).toMatchObject({
+    'content-type': 'application/pdf',
+    'content-disposition': 'attachment',
+    'content-security-policy': "default-src 'none'; sandbox",
+    'x-content-type-options': 'nosniff',
+    'cache-control': 'private, no-store',
+  })
+})

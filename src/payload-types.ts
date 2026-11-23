@@ -1758,6 +1758,7 @@ export interface Inquiry {
  */
 export interface InquiryFile {
   id: number;
+  originalName?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2918,6 +2919,7 @@ export interface InquiriesSelect<T extends boolean = true> {
  * via the `definition` "inquiry-files_select".
  */
 export interface InquiryFilesSelect<T extends boolean = true> {
+  originalName?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

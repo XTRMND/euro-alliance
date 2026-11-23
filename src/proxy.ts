@@ -1,9 +1,11 @@
 import { type NextRequest, NextResponse } from 'next/server'
 import { Pool } from 'pg'
 import { measurementIdOf } from '@/lib/analytics'
+import { clientIp } from '@/lib/client-ip'
 import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
 import { previewHeader, previewTarget } from '@/lib/preview'
 import { contentSecurityPolicy, createNonce, nonceHeader } from '@/lib/security-headers'
+import { isUpload, uploadGuard, uploadStatus } from '@/lib/upload-guard'
 
 // Old addresses (docs/content-import.md § 5): a single 301 to the new page (302 for the English
 // copies under /en until the English site exists), whatever the case and
@@ -15,6 +17,10 @@ import { contentSecurityPolicy, createNonce, nonceHeader } from '@/lib/security-
 // Every page it lets through, the site's and the admin's, gets a Content-Security-Policy with a
 // fresh nonce (src/lib/security-headers.ts): on the request, where Next reads it to put on its
 // scripts, and on the response.
+// A form with files is stopped here when it's too large, or when too much is already on its way
+// in (src/lib/upload-guard.ts): before its body is read into memory.
+
+const guard = uploadGuard()
 
 const pool = process.env.DATABASE_URL
   ? new Pool({ connectionString: process.env.DATABASE_URL, max: 2 })
@@ -82,6 +88,22 @@ function withPolicy(request: NextRequest) {
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
+  // Not the admin's own forms: its editors are signed in.
+  if (
+    !pathname.startsWith('/admin') &&
+    isUpload(request.method, request.headers.get('content-type'))
+  ) {
+    const verdict = guard(
+      request.headers.get('content-length'),
+      clientIp(request.headers.get('x-forwarded-for')),
+    )
+    if (verdict !== 'ok') {
+      return new NextResponse(null, {
+        status: uploadStatus[verdict],
+        headers: verdict === 'busy' || verdict === 'tooMany' ? { 'Retry-After': '120' } : {},
+      })
+    }
+  }
   if (isSitePath(pathname) || pathname === '/admin' || pathname.startsWith('/admin/')) {
     return withPolicy(request)
   }

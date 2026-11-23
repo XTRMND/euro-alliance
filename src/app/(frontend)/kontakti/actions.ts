@@ -4,6 +4,7 @@ import config from '@payload-config'
 import { headers } from 'next/headers'
 import { after } from 'next/server'
 import { getPayload } from 'payload'
+import { clientIp } from '@/lib/client-ip'
 import { rateLimiter } from '@/lib/inquiries'
 import {
   type InquiryFileInput,
@@ -22,8 +23,7 @@ const allow = rateLimiter(5, 10 * 60 * 1000)
 export type SendInquiryResult = SubmitResult | { ok: false; errors: { form: 'tooMany' } }
 
 export async function sendInquiry(formData: FormData): Promise<SendInquiryResult> {
-  const forwarded = (await headers()).get('x-forwarded-for')
-  const ip = forwarded?.split(',')[0]?.trim() || 'unknown'
+  const ip = clientIp((await headers()).get('x-forwarded-for'))
   if (!allow(ip)) return { ok: false, errors: { form: 'tooMany' } }
 
   let input: InquiryInput = {}
