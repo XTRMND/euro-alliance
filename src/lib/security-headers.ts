@@ -78,6 +78,18 @@ export function contentSecurityPolicy({
 // launch checklist (PR 27) raises it to two years.
 export const hsts = 'max-age=300'
 
+/**
+ * A visitor's file is only ever a download (src/collections/InquiryFiles.ts): never shown in the
+ * browser, never run in this origin, never kept in a cache.
+ */
+export function downloadOnly(headers: Headers): Headers {
+  headers.set('Content-Disposition', 'attachment')
+  headers.set('Content-Security-Policy', "default-src 'none'; sandbox")
+  headers.set('X-Content-Type-Options', 'nosniff')
+  headers.set('Cache-Control', 'private, no-store')
+  return headers
+}
+
 /** The headers every response carries (next.config.ts). */
 export function securityHeaders({ production }: { production: boolean }) {
   return [

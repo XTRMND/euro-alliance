@@ -332,6 +332,7 @@
       "sameLanguage": "Choose two different languages.",
       "date": "Choose today or a later date.",
       "fileType": "This file type isn’t accepted.",
+      "fileUnsafe": "The file contains macros or other active content. Save it without them or send it as a PDF.",
       "fileSize": "The file is larger than {size} MB.",
       "fileCount": "At most {count} files.",
       "send": "Your inquiry wasn’t sent. Try again or call us.",

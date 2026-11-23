@@ -4,6 +4,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { submitInquiry } from '@/lib/inquiry-submit'
 import { deleteExpiredInquiries, retentionCutoff } from '@/jobs/retention'
 import { seed } from '@/seed'
+import { docx, docxType } from '../zip'
 
 // The contact wizard's server side against a real database: routing, private files, spam and
 // retention (PR 11's done-when). Visitors here are obviously fake.
@@ -138,6 +139,69 @@ describe('submitting an inquiry', () => {
       [fake],
     )
     expect(result).toEqual({ ok: false, errors: { files: 'fileType' } })
+  })
+
+  it('refuses a document with macros and an image too large to decode, and stores nothing', async () => {
+    const before = (await payload.count({ collection: 'inquiry-files', overrideAccess: true }))
+      .totalDocs
+    const send = (file: { name: string; type: string; data: Buffer }) =>
+      submitInquiry(payload, { ...visitor, topic: 'translation', office: 'sofia' }, [pdf, file])
+
+    const macros = docx([{ name: 'word/vbaProject.bin', data: 'x' }])
+    expect(await send({ name: 'dogovor.docx', type: docxType, data: macros })).toEqual({
+      ok: false,
+      errors: { files: 'fileUnsafe' },
+    })
+
+    // A PNG header that claims 30 000 × 30 000 pixels.
+    const header = Buffer.alloc(33)
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]).copy(header)
+    header.writeUInt32BE(13, 8)
+    header.write('IHDR', 12)
+    header.writeUInt32BE(30_000, 16)
+    header.writeUInt32BE(30_000, 20)
+    header.set([8, 6, 0, 0, 0], 24)
+    expect(await send({ name: 'bomb.png', type: 'image/png', data: header })).toEqual({
+      ok: false,
+      errors: { files: 'fileType' },
+    })
+
+    expect(
+      (await payload.count({ collection: 'inquiry-files', overrideAccess: true })).totalDocs,
+    ).toBe(before)
+  })
+
+  it('tells the visitor when Payload refuses a file, and keeps none of the others', async () => {
+    const before = (await payload.count({ collection: 'inquiry-files', overrideAccess: true }))
+      .totalDocs
+    // It starts and ends as a PDF, which is as far as our own look goes.
+    const broken = { name: 'x.pdf', type: 'application/pdf', data: Buffer.from('%PDF-1.4\n%%EOF') }
+    const result = await submitInquiry(
+      payload,
+      { ...visitor, topic: 'translation', office: 'sofia' },
+      [pdf, broken],
+    )
+    expect(result).toEqual({ ok: false, errors: { files: 'fileType' } })
+    expect(
+      (await payload.count({ collection: 'inquiry-files', overrideAccess: true })).totalDocs,
+    ).toBe(before)
+  })
+
+  it('stores a file under a random name and keeps the visitor’s name as text', async () => {
+    const result = await submitInquiry(
+      payload,
+      { ...visitor, topic: 'translation', office: 'plovdiv' },
+      [{ ...pdf, name: '../../dogovor.html.pdf' }],
+    )
+    const inquiry = await payload.findByID({
+      collection: 'inquiries',
+      id: (result as { id: number }).id,
+      depth: 1,
+      overrideAccess: true,
+    })
+    const [file] = inquiry.files as { filename: string; originalName: string }[]
+    expect(file!.filename).toMatch(/^[0-9a-f-]{36}\.pdf$/)
+    expect(file!.originalName).toBe('dogovor.html.pdf')
   })
 
   it('stores nothing for a bot, and answers as if it had', async () => {
