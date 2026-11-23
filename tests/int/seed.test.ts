@@ -201,10 +201,47 @@ describe('seed', () => {
       (
         await payload.count({
           collection: 'media',
-          where: { filename: { equals: 'classroom.jpg' } },
+          where: { filename: { equals: 'hero-classroom.jpg' } },
         })
       ).totalDocs,
     ).toBe(1)
+  })
+
+  it('replaces the hero’s old seeded photo, and leaves a photo the client chose', async () => {
+    const file = await readFile('src/seed/home/hero-classroom.jpg')
+    const upload = (name: string) =>
+      payload.create({
+        collection: 'media',
+        locale: 'bg',
+        data: { alt: 'Test photo', kind: 'photo' },
+        file: { data: file, mimetype: 'image/jpeg', name, size: file.length },
+      })
+    const current = await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 0 })
+    const hero = async () =>
+      ((await payload.findGlobal({ slug: 'home', locale: 'bg', depth: 1 })).hero.photo as Media)
+        .filename
+
+    // As a database seeded before v0.25.0: the old file is the hero's photo and the sharing image.
+    const old = await upload('classroom.jpg')
+    await payload.updateGlobal({
+      slug: 'home',
+      locale: 'bg',
+      data: { hero: { ...current.hero, photo: old.id } },
+    })
+    await payload.updateGlobal({ slug: 'site', data: { seoImage: old.id } })
+    await seed(payload)
+    expect(await hero()).toBe('hero-classroom.jpg')
+    const site = await payload.findGlobal({ slug: 'site', depth: 1 })
+    expect((site.seoImage as Media).filename).toBe('hero-classroom.jpg')
+
+    const chosen = await upload('test-chosen.jpg')
+    await payload.updateGlobal({
+      slug: 'home',
+      locale: 'bg',
+      data: { hero: { ...current.hero, photo: chosen.id } },
+    })
+    await seed(payload)
+    expect(await hero()).toBe('test-chosen.jpg')
   })
 
   it('searches the published content directly: pages, a typo, never a draft', async () => {

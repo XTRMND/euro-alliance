@@ -46,7 +46,7 @@ test.describe('hero', () => {
 
   test('shows the classroom photo in its 88% tint and the «7 езика» bubble', async ({ page }) => {
     await page.goto(routes.home())
-    const photo = page.getByRole('img', { name: /Деца в класна стая/ })
+    const photo = page.getByRole('img', { name: /ученици вдигат ръка/ })
 
     await expect(photo).toHaveAttribute('src', /-hero\.jpg/)
     await expect(photo).toHaveAttribute('fetchpriority', 'high')
