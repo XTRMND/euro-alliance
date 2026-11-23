@@ -19,8 +19,10 @@ const nextConfig: NextConfig = {
   images: {
     // Responsive widths in AVIF and WebP come from Next's optimizer, cached behind the CDN.
     formats: ['image/avif', 'image/webp'],
-    // 75 for everything; 90 for the About hero's team photo (TornWindow).
-    qualities: [75, 90],
+    // 75 for everything; 90 for the About hero's team photo (TornWindow); 100 for the homepage
+    // hero's photo. Next encodes AVIF 20 below the number asked for, so 75 is AVIF 55, which
+    // smears faces and hair; 100 is AVIF 80, about 10 KB more at the hero's size.
+    qualities: [75, 90, 100],
     localPatterns: [{ pathname: '/api/media/file/**' }, { pathname: '/api/media-tints/file/**' }],
     // The encoded files stay in a volume across deploys (Dockerfile), so they're bounded: the
     // least recently used go first past 500 MB. Next's default is half the free disk, and the
