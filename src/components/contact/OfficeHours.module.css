@@ -37,3 +37,43 @@
 .line dd {
   margin: 0;
 }
+
+/* The Office card's ticket stub: the regular week beside the season's when there's room for
+   both (20px apart), the day 68px wide and muted, the time medium, days off muted. */
+.ticket {
+  justify-items: stretch;
+  gap: 16px 20px;
+}
+
+.ticket .week {
+  align-content: start;
+  gap: 4px;
+}
+
+.ticket .line {
+  flex-wrap: nowrap;
+}
+
+.ticket .line dt {
+  flex: none;
+  width: 68px;
+  min-width: 0;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.ticket .line dd {
+  font-weight: 500;
+}
+
+.ticket .line dd.closed {
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+/* The card is the container. */
+@container (min-width: 380px) {
+  .ticket {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

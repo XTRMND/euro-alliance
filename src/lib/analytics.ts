@@ -14,7 +14,12 @@ export type AnalyticsEvents = {
   document_upload: { file_count: number }
   enrol_click: { course: string; language?: string; audience?: string; level?: string }
   tel_click: { office: string; placement: Placement }
-  mailto_click: { inbox: 'office' | 'prevod' | 'trans'; placement: Placement }
+  mailto_click: {
+    inbox: 'office' | 'prevod' | 'trans'
+    /** The office's role, where the link belongs to one (the contact page's cards). */
+    office?: string
+    placement: Placement
+  }
   course_view: { course: string; language?: string; audience?: string; level?: string }
   search: { search_term: string; results_count: number; tab: string }
   voucher_apply_click: { destination: string }

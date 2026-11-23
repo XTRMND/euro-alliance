@@ -35,7 +35,7 @@ Two jobs: analytics events on the new site (behind consent), and the before/afte
 | `document_upload` | translation files are added in the wizard | `file_count` |
 | `enrol_click` | an enrol button on a course or program page | `course` (slug), `language`, `audience`, `level` |
 | `tel_click` | a `tel:` link is clicked | `office`, `placement` (header / footer / page / contact) |
-| `mailto_click` | a `mailto:` link is clicked | `inbox` (office / prevod / trans), `placement` |
+| `mailto_click` | a `mailto:` link is clicked | `inbox` (office / prevod / trans), `office` (on the contact page's office cards), `placement` |
 | `course_view` | a course page is viewed | `course`, `language`, `audience`, `level` |
 | `search` | a search is run | `search_term` (cleaned), `results_count`, `tab` |
 | `voucher_apply_click` | the voucher application link or button | `destination` |
