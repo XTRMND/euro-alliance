@@ -589,6 +589,12 @@ From the footer's editable parts (v0.27.0, 23.11.2026; branch `feat/footer-edita
 - **To confirm with the client:** the notice was there for the EU publicity rules (a beneficiary shows the emblem and the funding statement on its website). The ПКИП project is still described with its logo strip under «За нас» → «Проекти»; whether that's enough for their grant contract is theirs to check. Figma's statement, should it go back: «Проект № BG16RFPR001-1.004-1004-C01 «Подобряване на производствения капацитет на ЕВРО-АЛИАНС ООД», финансиран по програма «Конкурентоспособност и иновации в предприятията» 2021–2027.»
 - The ПКИП logo strip is still seeded as a `logo` for the project's card.
 
+From the hero photo's quality (v0.27.1, 23.11.2026; branch `fix/hero-photo-quality`; the user: «its defo the compression»):
+- The homepage hero's photo looked soft for two reasons, both mine. It's served as AVIF, and Next encodes AVIF 20 below the quality asked for, so the default 75 was AVIF 55, which smears faces and hair. And v0.25.0's file was cropped from Pexels' compressed 2600px version, not the original.
+- Now: the hero asks for quality 100 (AVIF 80; `images.qualities` is 75, 90, 100), about 26 KB instead of 16 KB at 640px, and the photo is cropped again from Pexels' original (5623 × 3749), stored 1600 wide as `src/seed/home/hero-students.jpg`. The seed replaces the soft copy (`hero-classroom.jpg`) like the old-logo photo, in the hero and the sharing image; a photo chosen in the admin stays.
+- Compared at the size shown (640px for a 2× screen) against the uncompressed tint: AVIF at 100 is close to it; WebP at 90 is as good at twice the bytes. The declared size (290px) was right: the frame is 284px.
+- Other photos keep 75. If news covers or the About photos look soft too, the same number is the first thing to raise.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
