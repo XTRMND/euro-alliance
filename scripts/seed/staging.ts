@@ -12,7 +12,9 @@
 // Prints the counts per collection and the missing-fields report at the end.
 //   SEED_TARGET=staging pnpm seed:staging --dry-run   what it would write; writes nothing
 //   SEED_TARGET=staging pnpm seed:staging             writes
+import { createHash } from 'node:crypto'
 import { readFile } from 'node:fs/promises'
+import sharp from 'sharp'
 import config from '@payload-config'
 import { getPayload, type Payload, type Where } from 'payload'
 import { storedCategory } from '@/lib/courses'
@@ -30,6 +32,7 @@ import {
   seedMediaDir,
 } from './fixtures'
 import { isEmpty, same } from './compare'
+import { coverFilename, type NewsCover, readNewsCovers } from './news-covers'
 import { pendingMigrations } from './migrations'
 
 // ── Guards ──────────────────────────────────────────────────────────────────
@@ -264,8 +267,109 @@ for (const document of fixtures.documents) {
   documentUrls.set(document.filename, String(doc.url ?? `/api/media/file/${document.filename}`))
 }
 
-// ── 4. News, with the covers from Figma ─────────────────────────────────────
-console.log(`4/7 News (${fixtures.news.length}) with the covers from Figma…`)
+// ── 4. News, with their covers ──────────────────────────────────────────────
+// Figma's seven first; then, where an article still has none, the cover picked for it
+// (seed/news-covers.json): the client's own picture from the old site, or the free photo that
+// replaces a stock one. A cover an article already has is never changed.
+console.log(`4/7 News (${fixtures.news.length}) with their covers…`)
+const newsCovers = await readNewsCovers()
+
+const maxCoverWidth = 2880
+let lastDownload = 0
+
+/** The client's own picture from the old site: one request a second, checked against its sha256. */
+async function downloadCover(cover: NewsCover & { source: 'old-site' }): Promise<Buffer | string> {
+  await new Promise((resolve) => setTimeout(resolve, Math.max(0, lastDownload + 1000 - Date.now())))
+  lastDownload = Date.now()
+  const response = await fetch(cover.url, {
+    headers: { 'user-agent': 'EuroAlliance-site-migration/1.0 (content migration to the new euro-alliance.net)' },
+    signal: AbortSignal.timeout(60_000),
+  }).catch((error: unknown) => String(error))
+  if (typeof response === 'string') return `not downloaded (${response})`
+  if (!response.ok) return `not downloaded (the old site answered ${response.status})`
+  const data = Buffer.from(await response.arrayBuffer())
+  if (createHash('sha256').update(data).digest('hex') !== cover.sha256)
+    return 'not the file that was looked at (its sha256 differs)'
+  // The largest are over 4000px wide; nothing shows a cover wider than the tints are stored.
+  return cover.width > maxCoverWidth
+    ? sharp(data).resize({ width: maxCoverWidth }).toBuffer()
+    : data
+}
+
+/** The media of a cover, uploaded once by its filename; undefined when it can't be had. */
+async function coverMedia(cover: NewsCover, title: string): Promise<number | undefined> {
+  const name = coverFilename(cover)
+  // The same picture on several articles: looked up, downloaded and counted once.
+  if (coverIds.has(name)) return coverIds.get(name)
+  const id = await storedCoverMedia(cover, name, title)
+  coverIds.set(name, id)
+  return id
+}
+
+const coverIds = new Map<string, number | undefined>()
+
+async function storedCoverMedia(
+  cover: NewsCover,
+  name: string,
+  title: string,
+): Promise<number | undefined> {
+  const found = await payload.find({
+    collection: 'media',
+    where: { filename: { equals: name } },
+    limit: 1,
+    depth: 0,
+  })
+  if (found.docs[0]) {
+    tally.add('media', 'skipped')
+    return found.docs[0].id
+  }
+  const fields = {
+    alt: cover.alt,
+    kind: 'photo',
+    textInImage: cover.textInImage,
+    altReviewed: false,
+    ...(cover.source === 'unsplash' ? { credit: cover.credit } : {}),
+  }
+  let data: Buffer | string = Buffer.alloc(0)
+  if (!dryRun) {
+    data =
+      cover.source === 'old-site'
+        ? await downloadCover(cover)
+        : await readFile(new URL(`../../${cover.file}`, import.meta.url))
+    if (typeof data === 'string') {
+      report.covers.push(`«${title}»: its cover from the old site was ${data}; left without one.`)
+      return undefined
+    }
+  }
+  const mimetype = cover.source === 'old-site' ? cover.mimetype : 'image/jpeg'
+  const media = await payload.create({
+    collection: 'media',
+    locale: 'bg',
+    data: fields as never,
+    file: { data, mimetype, name, size: data.length },
+  })
+  return media.id
+}
+
+// Only articles that have no cover and nobody has edited get one: looked up before anything is
+// downloaded, so a second run fetches nothing.
+const storedNews = await payload.find({
+  collection: 'news',
+  depth: 0,
+  draft: true,
+  pagination: false,
+  select: { legacyId: true, cover: true, adminEditedAt: true },
+})
+const settled = new Set(
+  storedNews.docs.filter((doc) => doc.cover || doc.adminEditedAt).map((doc) => Number(doc.legacyId)),
+)
+const pickedCovers = new Map<number, number>()
+const titleOf = new Map(fixtures.news.map((article) => [article.legacyId, article.title]))
+for (const cover of newsCovers.covers) {
+  if (settled.has(cover.legacyId) || !titleOf.has(cover.legacyId)) continue
+  const media = await coverMedia(cover, titleOf.get(cover.legacyId)!)
+  if (media !== undefined) pickedCovers.set(cover.legacyId, media)
+}
 const figmaCovers = new Map<number, number>()
 for (const cover of fixtures.covers) {
   const media = await uploadFile(
@@ -284,16 +388,16 @@ for (const cover of fixtures.covers) {
 let covered = 0
 for (const article of fixtures.news) {
   if (!article.date) continue // The date is required, and never made up: in the report.
-  const figma = figmaCovers.get(article.legacyId)
+  const figma = figmaCovers.get(article.legacyId) ?? pickedCovers.get(article.legacyId)
   await upsert(
     'news',
     { or: [{ legacyUrl: { equals: article.legacyUrl } }, { slug: { equals: article.slug } }] },
     (doc) => {
-      // A cover chosen since stays; Figma's goes only where there's none.
+      // A cover chosen since stays; Figma's, or the one picked, goes only where there's none.
       const current = doc?.cover
       if (current) covered++
       else if (figma) covered++
-      if (current && figma && current !== figma)
+      if (current && figmaCovers.has(article.legacyId) && current !== figma)
         report.covers.push(`«${article.title}» keeps the cover chosen since, not Figma's.`)
       return {
         title: article.title,
@@ -615,7 +719,10 @@ section(
   covered === fixtures.news.length
     ? []
     : [
-        `${fixtures.news.length - covered} of ${fixtures.news.length}: Figma has covers for ${covered}`,
+        `${fixtures.news.length - covered} of ${fixtures.news.length} (Figma's covers: ${figmaCovers.size}; picked in seed/news-covers.json: ${newsCovers.covers.length})`,
+        ...newsCovers.without.map(
+          (article) => `/News/${article.legacyId} «${article.title}»: ${article.reason}`,
+        ),
       ],
 )
 section('News without a date (not imported: the date is required)', notes.newsWithoutDate)

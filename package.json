@@ -1,6 +1,6 @@
 {
   "name": "euro-alliance",
-  "version": "0.27.2",
+  "version": "0.28.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,6 +18,7 @@
     "import:inventory": "node scripts/import/inventory.ts",
     "import:images": "node scripts/import/images.ts",
     "import:covers": "payload run scripts/import/covers.ts",
+    "import:news-covers": "node scripts/import/news-covers.ts",
     "lhci": "node scripts/lighthouse-cpu.mjs && lhci autorun --config=lighthouserc.cjs && lhci autorun --config=lighthouserc.desktop.cjs",
     "payload": "payload",
     "generate:types": "payload generate:types",

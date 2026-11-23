@@ -104,4 +104,18 @@ docker start staging-site && docker exec staging-site rm -rf /app/.next/cache/fe
 
 Locally: `pnpm seed:scrape` (about 7 minutes), then `git diff --stat seed/`. New old-site entries (a news article, a dated course) come in as they are. A dated course that the approved list (`scripts/import/courses.json`) doesn't take in is listed in the report, not imported. Commit `seed/` on a branch, open a PR (with its version, `docs/git-workflow.md` § 6), and run the steps above once it's merged and deployed.
 
+## News covers
+
+The old news get covers since v0.28.0 (Trello #13; the user, 23.11.2026, replacing the «text only» decision of 02.11). Each of the old site's 165 distinct covers was looked at (`scripts/import/news-cover-choices.json`):
+
+- **The client's own** (event photos, project materials, their greeting cards and posters; 73 articles): taken as the cover. The files aren't in the repository, which is public, and some show children: `pnpm seed:staging` downloads each from euro-alliance.net when it runs (one request a second, about a minute and a half the first time) and checks it against the sha256 in `seed/news-covers.json`. So the seed's container needs to reach the old site, and after the cut-over these covers can only come from a database that already has them. A file that can't be fetched or doesn't match is reported, and its article stays without a cover.
+- **Stock photos, clip art and other organisations' logos** (119 articles): replaced by a free Unsplash photo picked for the article's theme (`scripts/import/news-cover-photos.json`, 22 photos for 19 themes, committed in `seed/media/covers/`).
+- **Without a cover** (4): two official EU logo strips and two pictures too small for a card. Figma's seven covers stay as they are.
+
+An article that already has a cover, or that someone has edited in the admin, is never touched, and a second run downloads nothing. Posters and greeting cards are marked «Има текст в изображението», so they stay out of the article banner. Alt texts are drafts (`altReviewed: false`).
+
+After a new crawl (`pnpm import:inventory`, `pnpm import:images`): look at any new cover, add it to `news-cover-choices.json`, then `pnpm import:news-covers` rewrites `seed/news-covers.json`.
+
+Not done: the 11 pictures inside the texts of 5 articles (no design for a picture in an article's text).
+
 `pnpm import:covers` applies the local photo picker's choices (`scripts/import/out/photo-decisions.json`). It's local only: staging is shown without them (02.11.2026).
