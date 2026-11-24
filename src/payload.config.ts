@@ -8,6 +8,7 @@ import sharp from 'sharp'
 import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
 import { Documents } from './collections/Documents'
+import { Files } from './collections/Files'
 import { Exams } from './collections/Exams'
 import { Groups } from './collections/Groups'
 import { FundedProjects } from './collections/FundedProjects'
@@ -136,6 +137,7 @@ export default buildConfig({
     FundedProjects,
     Documents,
     Team,
+    Files,
     LegalPages,
     Redirects,
     Inquiries,
