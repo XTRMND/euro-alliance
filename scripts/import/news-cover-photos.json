@@ -1,0 +1,263 @@
+{
+  "_": "Free photos (Unsplash License: free to use, no attribution needed) that replace the old news covers the client has no licence for, by theme (news-cover-choices.json). Picked and looked at on 23.11.2026; the files are in seed/media/covers/, 2000px wide. Photographer names are as each photo page gave them.",
+  "themes": {
+    "enrol": [
+      {
+        "id": "n9AaeihA9HI",
+        "page": "https://unsplash.com/photos/open-notebook-with-pen-and-pencils-on-desk-n9AaeihA9HI",
+        "photographer": "Clay Banks",
+        "file": "enrol-1-n9AaeihA9HI.jpg",
+        "sha256": "3c2fee4aaf9d9b52e8823c8f80e82b8ccd8d8cc55c8a6bbee6109fc18353155d",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Отворена тетрадка с химикалка и моливи върху бюро"
+      },
+      {
+        "id": "w7KukacxiRg",
+        "page": "https://unsplash.com/photos/coloring-pencils-on-white-printer-paper-w7KukacxiRg",
+        "photographer": "Volodymyr Hryshchenko",
+        "file": "enrol-2-w7KukacxiRg.jpg",
+        "sha256": "8fece789651d9d46ea944e8bce622f2653e42ad28dead796e12abe313ca88e05",
+        "width": 2000,
+        "height": 1473,
+        "alt": "Цветни моливи върху бял лист"
+      }
+    ],
+    "online": [
+      {
+        "id": "_vXm9efLaXc",
+        "page": "https://unsplash.com/photos/woman-wearing-headphones-works-on-a-laptop-at-a-desk-_vXm9efLaXc",
+        "photographer": "Vitaly Gariev",
+        "file": "online-1-_vXm9efLaXc.jpg",
+        "sha256": "771463b42745500792d81475fd29036219128543c6d39df8c554983cf5b6ec01",
+        "width": 2000,
+        "height": 1125,
+        "alt": "Жена със слушалки говори пред лаптоп"
+      },
+      {
+        "id": "FHnnjk1Yj7Y",
+        "page": "https://unsplash.com/photos/macbook-pro-near-white-open-book-FHnnjk1Yj7Y",
+        "photographer": "Nick Morrison",
+        "file": "online-2-FHnnjk1Yj7Y.jpg",
+        "sha256": "c56e52c60951bd5a6c26244bcd383fec4cd7285c25204076099653f0a64403aa",
+        "width": 2000,
+        "height": 1500,
+        "alt": "Лаптоп, отворена тетрадка и чаша до прозорец"
+      }
+    ],
+    "bg-flag": [
+      {
+        "id": "T6E11THRacc",
+        "page": "https://unsplash.com/photos/green-white-and-red-flag-T6E11THRacc",
+        "photographer": "Mikhail | luxkstn",
+        "file": "bg-flag-1-T6E11THRacc.jpg",
+        "sha256": "c1d3d6e406fc4e3cba8c3a9e7ac38d75a7f36e2d52d73bd8c34a9ace4c371fc7",
+        "width": 2000,
+        "height": 1330,
+        "alt": "Българското знаме на пилон"
+      }
+    ],
+    "letters": [
+      {
+        "id": "YsBdqVgCDVI",
+        "page": "https://unsplash.com/photos/rows-of-old-books-fill-tall-library-shelves-YsBdqVgCDVI",
+        "photographer": "Gérard GRIFFAY",
+        "file": "letters-1-YsBdqVgCDVI.jpg",
+        "sha256": "4656fbc979d0059bb6bd13dec339a06e72ddb4e287a6d8d693e0a4db964a30d1",
+        "width": 2000,
+        "height": 1328,
+        "alt": "Рафтове със стари книги в историческа библиотека"
+      }
+    ],
+    "easter": [
+      {
+        "id": "OV5IgSZw2oQ",
+        "page": "https://unsplash.com/photos/a-basket-filled-with-colored-eggs-on-top-of-a-table-OV5IgSZw2oQ",
+        "photographer": "Bermix Studio",
+        "file": "easter-1-OV5IgSZw2oQ.jpg",
+        "sha256": "55139ca10fc7df6efca9504b9ff7532b2208bea5ada915bd0afa160292cf5bb6",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Кошница с боядисани великденски яйца"
+      }
+    ],
+    "christmas": [
+      {
+        "id": "sm5aAzR7FhI",
+        "page": "https://unsplash.com/photos/bokeh-photography-of-christmas-tree-sm5aAzR7FhI",
+        "photographer": "Brigitte Tohm",
+        "file": "christmas-1-sm5aAzR7FhI.jpg",
+        "sha256": "3033ec41b93060f89f0fddafbc1aded8d6b3b90bb93874e29208ac31f345f9d1",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Коледно дърво със златисти светлини"
+      }
+    ],
+    "martenitsa": [
+      {
+        "id": "LmopjWSvwZ8",
+        "page": "https://unsplash.com/photos/a-red-and-white-rope-with-a-metal-hook-LmopjWSvwZ8",
+        "photographer": "Bozhin Karaivanov",
+        "file": "martenitsa-1-LmopjWSvwZ8.jpg",
+        "sha256": "63905082f216d29380c083e12f9f2a3b08309235f8b0758d3100d81aac042220",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Мартеница от червен и бял конец"
+      }
+    ],
+    "spring": [
+      {
+        "id": "I2oKtpVr-dQ",
+        "page": "https://unsplash.com/photos/a-field-full-of-pink-and-white-tulips-I2oKtpVr-dQ",
+        "photographer": "Eric Muhr",
+        "file": "spring-1-I2oKtpVr-dQ.jpg",
+        "sha256": "d7af13f420eae1e17b09143c2343835756ed3825cb38cd67192f07ad90b6df9a",
+        "width": 2000,
+        "height": 1334,
+        "alt": "Поле с бели и розови лалета"
+      }
+    ],
+    "children": [
+      {
+        "id": "TLBplYQvqn0",
+        "page": "https://unsplash.com/photos/balloons-flying-in-the-sky-TLBplYQvqn0",
+        "photographer": "Ankush Minda",
+        "file": "children-1-TLBplYQvqn0.jpg",
+        "sha256": "afc9a84149182deab4885057e1ad71a2c6d8ed2088f10623387bba9fb54dc9c0",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Цветни балони в синьо небе"
+      }
+    ],
+    "exam": [
+      {
+        "id": "oXV3bzR7jxI",
+        "page": "https://unsplash.com/photos/person-using-pencil-oXV3bzR7jxI",
+        "photographer": "Ben Mullins",
+        "file": "exam-1-oXV3bzR7jxI.jpg",
+        "sha256": "4e62d14e90d5490ef5e4c57c17986bc68b69b2d703f6797a6ec4d23a39f83d6c",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Ученик пише върху лист на чин"
+      }
+    ],
+    "summer": [
+      {
+        "id": "9CILN1ybspA",
+        "page": "https://unsplash.com/photos/woman-reading-book-and-lying-forward-on-sheet-on-grass-beside-body-of-water-during-day-9CILN1ybspA",
+        "photographer": "Nguyen Thu Hoai",
+        "file": "summer-1-9CILN1ybspA.jpg",
+        "sha256": "2a4668e7467542468d5c0a6a91452d8dfa8ef11a876699e978b43b470b400e99",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Млада жена чете книга на тревата край езеро"
+      }
+    ],
+    "farming": [
+      {
+        "id": "D4ydaEr47qQ",
+        "page": "https://unsplash.com/photos/golden-wheat-field-under-blue-sky-D4ydaEr47qQ",
+        "photographer": "B S",
+        "file": "farming-1-D4ydaEr47qQ.jpg",
+        "sha256": "4c8f281a7c0fa50df1579e52b709fd1efbef695495dbfd557af670e716bb65c8",
+        "width": 2000,
+        "height": 1335,
+        "alt": "Узряла пшеница под синьо небе"
+      }
+    ],
+    "translation": [
+      {
+        "id": "2w0IdiEI-hg",
+        "page": "https://unsplash.com/photos/a-person-typing-on-a-laptop-on-a-desk-2w0IdiEI-hg",
+        "photographer": "Daria Glakteeva",
+        "file": "translation-1-2w0IdiEI-hg.jpg",
+        "sha256": "fb365d07872e964e535ef564c6e195654d44e4f21c074fab0e5c4d14efb90087",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Ръце пишат на клавиатура до тетрадка с бележки"
+      }
+    ],
+    "payment": [
+      {
+        "id": "HNPrWOH2Z8U",
+        "page": "https://unsplash.com/photos/person-using-credit-card-payment-terminal-HNPrWOH2Z8U",
+        "photographer": "Towfiqu barbhuiya",
+        "file": "payment-1-HNPrWOH2Z8U.jpg",
+        "sha256": "57e86d1e91485f6ef7eecd205091e5a3dfe41855d9685978537b14b1121dccc2",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Ръка с карта над ПОС терминал"
+      }
+    ],
+    "hospitality": [
+      {
+        "id": "wOkEwfChQqM",
+        "page": "https://unsplash.com/photos/a-woman-is-standing-at-the-front-desk-of-a-restaurant-wOkEwfChQqM",
+        "photographer": "Zoshua Colah",
+        "file": "hospitality-1-wOkEwfChQqM.jpg",
+        "sha256": "bf49b2ece1a576deff6d4a1262f56f669cd00fb32e2925ade0a7dbe1a9c7a5ff",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Рецепционист зад рецепцията във фоайе на хотел"
+      },
+      {
+        "id": "i4BPnD5nrPc",
+        "page": "https://unsplash.com/photos/four-people-collaborating-around-a-table-with-documents-i4BPnD5nrPc",
+        "photographer": "Vitaly Gariev",
+        "file": "hospitality-2-i4BPnD5nrPc.jpg",
+        "sha256": "145bedad8fdfdaf0c8961a80ab2534de939055f9d332ad7f7deac88339dd70a5",
+        "width": 2000,
+        "height": 1125,
+        "alt": "Четирима души обсъждат графики около маса"
+      }
+    ],
+    "business": [
+      {
+        "id": "-Lzdk59aldE",
+        "page": "https://unsplash.com/photos/woman-presenting-to-audience-in-a-modern-office-meeting-room--Lzdk59aldE",
+        "photographer": "Vitaly Gariev",
+        "file": "business-1--Lzdk59aldE.jpg",
+        "sha256": "3fee934da67117aa776181f1b63b4cfaee05574bc2038a07b307300707209817",
+        "width": 2000,
+        "height": 1125,
+        "alt": "Обучител пред флипчарт и възрастни курсисти на маси"
+      }
+    ],
+    "classroom-tech": [
+      {
+        "id": "eWnSMfxvpF4",
+        "page": "https://unsplash.com/photos/a-room-filled-with-lots-of-desks-and-computers-eWnSMfxvpF4",
+        "photographer": "RUT MIIT",
+        "file": "classroom-tech-1-eWnSMfxvpF4.jpg",
+        "sha256": "0309ad793021323e54d5ddd6691a9252e0db646047bab2a26562530f5212ed91",
+        "width": 2000,
+        "height": 1333,
+        "alt": "Празна компютърна зала с екран"
+      }
+    ],
+    "earth": [
+      {
+        "id": "aku7Zlj_x_o",
+        "page": "https://unsplash.com/photos/close-up-photo-of-blue-desk-globe-aku7Zlj_x_o",
+        "photographer": "CHUTTERSNAP",
+        "file": "earth-1-aku7Zlj_x_o.jpg",
+        "sha256": "e97b9abda9f5dc2f5dd8142d5aecd3b156d1570ca6503802f2c9394e882ad9e3",
+        "width": 2000,
+        "height": 1335,
+        "alt": "Глобус в близък план"
+      }
+    ],
+    "health": [
+      {
+        "id": "IJ0KiXl4uys",
+        "page": "https://unsplash.com/photos/black-and-silver-stethoscope-on-white-surface-IJ0KiXl4uys",
+        "photographer": "Markus Frieauff",
+        "file": "health-1-IJ0KiXl4uys.jpg",
+        "sha256": "b5bbd4710af45a3534868d033ae7adc2a7fc8c912240c00c5959225162b83d37",
+        "width": 2000,
+        "height": 1331,
+        "alt": "Стетоскоп върху бяла повърхност"
+      }
+    ]
+  }
+}

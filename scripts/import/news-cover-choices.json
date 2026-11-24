@@ -1,0 +1,1030 @@
+{
+  "_": "The old site's 165 distinct news covers, each looked at (23.11.2026). `own`: the client's own photo, a project's material or their own greeting card or poster, taken as the cover. `replace`: a stock photo, clip art or another organisation's logo the client has no licence for, replaced by the free photo picked for its theme (news-cover-photos.json). `none`: no cover. Keyed by the image's sha256 in the crawl (out/images.json).",
+  "images": {
+    "8fbacfc94a88cb21376b2b920f0f9ef5a42e3139d724936d9ebbc6f590afa397": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/de01bb8aa792c012f9e9ede42238fc11.png",
+      "articles": 1
+    },
+    "cc815802fc7907e884e2ad15f3d5ae6c3d6d602be97152fe6a1d4c3f9e8a58f8": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/0b0d1100239dcf72916a075ce1644a1f.jpg",
+      "articles": 1
+    },
+    "3400399412adeca4ba975cc8d8e6ad27718847d462c691cad1bf6da042aca035": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/fd2731295b3bdcad3c512ad697d4fac6.png",
+      "articles": 1
+    },
+    "0ce3b1ef1e618f806cb46f0746155b20cd6cea5223eece7bbf6a01e29b81ba0e": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/b22a7000c5497e3ee9dc965b7d20c346.png",
+      "articles": 1
+    },
+    "4716798106953d7c1c49b3f8ecb429075ecc7c959783046f3e0bef5da354ad51": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/851bfbf53adda52a516bbf43e99da3ac.jpg",
+      "articles": 1
+    },
+    "c5dade27740102dbbd0f36883dea437556c560a92f173ccc020f6c7d7a6f8126": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/8e8f3c33566b94933dddf9e086206661.png",
+      "articles": 1
+    },
+    "49b13bdb55a886f746e94d6ca44c59b5b56a9e44e432f81a8bacf7a0ca617287": {
+      "use": "own",
+      "kind": "graphic",
+      "src": "https://euro-alliance.net/application/site/_assets/07ada12df8dd1d1ee80354cc28402d28.png",
+      "articles": 1
+    },
+    "48fa727e80dc5de109916753331dd8b8babf9032534d20cde3906d608ecc47cf": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/fe3bd7946fc8418a99f71dcb1f9f0895.jpg",
+      "articles": 1
+    },
+    "21e075fc80d96cc23686a848eac24c26f190d0cdb6b5eeb98190616aa7a77c74": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/14eb41d9f8dba919881e5e67f9e13d4f.jpg",
+      "articles": 1
+    },
+    "ddcdf0acc0306a861bb301fefab906fa9ce93386e3871f4586838c729922adfb": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/8c0fb7f13efee211835cc1f439040a69.jpg",
+      "articles": 1
+    },
+    "af33ec8e52d5fae229e73de3795a1e4a5dae0eae4ca575191af292766087bd99": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/52db00b3070e93029a7b5c1358af43ea.jpg",
+      "articles": 1
+    },
+    "d987bfd0a90d00623173d1ec05be4671ec2600054260892c85e017c74652cc33": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/a3a09284ac2e79ea3579d2f58c80dc6b.jpg",
+      "articles": 1
+    },
+    "684ad17f87c0717398bea67f4ccdb43b0dcf4662dc517dbd8466fc08db5efbc4": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/7a767f3a80d698749beb29c47792ca0b.jpg",
+      "articles": 1
+    },
+    "83f5f8a5a87b6a19b0306b282545bb558a3ca389ccec0ff2e89f957930316556": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/07b6076031040a6bff03ed6c6d69a6f4.jpg",
+      "articles": 1
+    },
+    "d8981599c149cec5ee3023aec8dbcdb88d50362248953692a0125b79eab9a66e": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/3727df3ea183c67c1063fafb93bc4856.jpg",
+      "articles": 1
+    },
+    "aff942c1a1077e37316bc8b1f889a2edb9d22307d3cca2dea92e2e7c87df38a6": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/8cb78a72a99e7d98e3e37b37cb27fb65.jpg",
+      "articles": 1
+    },
+    "412a08cb6ea3fbc223db9eea5ff787b68765505cbd5b75b4776e9cbcb6807248": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/a688f118394e462dae26070ed410915f.jpg",
+      "articles": 1
+    },
+    "9e5eba4a4e302f7857bd1d64efd439e267f3f0ce6915a3bc3653e7aec1dbbf51": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/485f817d118ba8851603720ab241d5cd.jpg",
+      "articles": 10
+    },
+    "ea6775d555456034f8a82fa34063bf53958a4a14a2dc687217bab671a8f6e66f": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/af444c08b896e98d2a033893c4f1a8bf.jpg",
+      "articles": 1
+    },
+    "696ec28749ad7314b278bc4fee35bb978fbda4e54778ef2e8fde6a1c9dfefa66": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/19a0942e22e06ce436e2037f95c8f2b0.jpg",
+      "articles": 1
+    },
+    "42c74333ba4a0a4d9148da38eeaec7f0a51358da525b6e2f6e9f667118604ae3": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/7890d5f0a4b9926cf8c0ad330519a3b0.jpg",
+      "articles": 1
+    },
+    "f1a22b467b833be6dc7a294f80343de0d14ed6fd9c9057ccc5c066a235e8c0e2": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/7863b81aea917d6fe7899f8d5e21e459.jpg",
+      "articles": 1
+    },
+    "841596c03c05e9d9552b5303e2fbc484dbde2450e1bd134f4447739ef87c9ecd": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/8c9d76674ee301fa6886a13002494463.jpg",
+      "articles": 1
+    },
+    "f65a05b6246f66ede883fb04a7b8d4002bd878c197938709b2c0b349098aecac": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/46bdc1f0dabaa0c5d140d7a62aad1bd2.png",
+      "articles": 1
+    },
+    "3548fbd5a13772daae0c9d74a71220b713a65b215a73f383cafa851f73aa0081": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/9060317a0b557dcb9fbac8fa53d739e1.jpg",
+      "articles": 1
+    },
+    "838406337f7c61f10d78abd7c2e77065a0147bfedf4a0c14da13d4a720bfd12f": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/104c2ab19a4fbeb4110c20f77cfa6158.jpg",
+      "articles": 1
+    },
+    "a91e91e604660c0a751829853adb96457b2a419fc632a1aa6152062b83bc511f": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/47baeb51025bcd0708589642355b9311.png",
+      "articles": 1
+    },
+    "95f1c22dcfdd1cf2db0cb01c80a17bee237549ea183e195efe42db81e8c53df5": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/ab90ede858536f7190bda7a0ee494eab.png",
+      "articles": 1
+    },
+    "c5cab56f5fa572028d767a9a58cb5f04c232ab6d93db4222e9fa63cb17ed5be9": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/96b703b48b97aecee0e55287cb9a589b.png",
+      "articles": 1
+    },
+    "e1363fdfd219cc511efc3dff0b7cd853e512ca1d87136584a262da035af15bb1": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/ec3f6a79d7c0d3b03549b8051004a8a5.png",
+      "articles": 1
+    },
+    "330af214ce4fad299e0b74de14b1f787850011989481f3fe0aaef02fe54d6557": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/12d2ec66c2299e1a45450d7e59539119.jpg",
+      "articles": 1
+    },
+    "398c4266bf19a1d7c0a03dc08cb0491dd9aec42f8afa3b5b4420e1e1449a7c7c": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/c8db0e02253fb7434a2a346628a4e078.jpg",
+      "articles": 1
+    },
+    "dc0267da7694ea9c84daee91a8cfc91eb2ef5357de0849f5e8b56f418b10b6c5": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/6c8455dbb96ab7e87a12cbea3ca6baaa.jpg",
+      "articles": 3
+    },
+    "04375630ea4e0a309625183ecf2594fe064817e6fe8bc4551081f5bd00a200db": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/62933c10c19bd74eabd11bd0a3378600.jpg",
+      "articles": 1
+    },
+    "979de47234462e20af074fadc5689beb64e75e8515358947674f996aee974c13": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/d309668e57151aa2010ce58efda91882.jpg",
+      "articles": 1
+    },
+    "4eec4c98a6e2f598f22771c2d8317b0f99ca6fdc5ff8e5f5be3139045b951ece": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/70ddc2897b23b08da5eedc56bc8e1574.jpg",
+      "articles": 1
+    },
+    "b91f449cd8ffeb0ef059e772ab8d016b4e5d585484cf0916e1d7648bedb33efd": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/3ce9ffa1c84e86503698d382400df7f1.jpg",
+      "articles": 1
+    },
+    "4b1c388db7bd1ece146a02d49b3a35c4d1527efecfc7b84867f06ef4a94641c6": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/f8f44bf572ad7eeb564a9fbb5f6f188a.jpg",
+      "articles": 1
+    },
+    "2d23aa4de4b33d39f5bd9ce868095d1767f2d306a6526333eb9a094752dc937a": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/c88fa576981810928fdd357c2d585a3b.jpg",
+      "articles": 1
+    },
+    "405b063fc2998f9c8154afe33f0edf949163ce36b7f7a6121a3c6882dd41413d": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/35d3d015ef4007fee50ca2cc58c1af14.jpg",
+      "articles": 1
+    },
+    "894da6e90d6b4e0fc8f3a4329113bf328e1570927137c84e847e256b9f6c97ea": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/aae6d769f0aa16d970540aafad22223a.jpg",
+      "articles": 1
+    },
+    "168fa3ac7f4cff3cfd48108c438b9ea39fe42d41552d37f115b64d193d7214f8": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/a6d9ca7ab7761e78ef1b4073d235bb97.jpg",
+      "articles": 1
+    },
+    "1ec272ab0e451fb0195bc592b9bc5d6a4f31b365fb59c7c6fa4bf215a99f3e71": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/72bd1f8ddee712a60e4f6049e328a4d6.jpg",
+      "articles": 1
+    },
+    "2e2225c4a96893fb28109fd1cef0924e4d3689f53166ed2ad0442c46332e8ce0": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/b6ec7b4c18dc7eebfa7d6ccbb9ecf834.jpg",
+      "articles": 1
+    },
+    "479a5172dbc086611d9099b92470c13f689c68ecf1acc93a4b5c67488b1bd54d": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/7b9d3d3547aa14223de6b4c50af02478.jpg",
+      "articles": 1
+    },
+    "7c418a79a173522788501636b0381acb0be0562bcb8ae2b514beab386b797be2": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/6c1237d7f084a3f6cd2e43cde8f04e43.jpg",
+      "articles": 1
+    },
+    "8b6d5b0edb24c658936dbbc0a2d9f3ef9df5bf74d808755e93b5ae2387d2ea96": {
+      "use": "replace",
+      "theme": "hospitality",
+      "src": "https://euro-alliance.net/application/site/_assets/534474a59af4abbc324bfcca7af89c55.jpg",
+      "articles": 1
+    },
+    "d39ad85688be6c86291ca79c528a44248fd2810963d0f81302622fc0af8d56e1": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/ae1083498da7439f1dd23df3e75c37d1.jpg",
+      "articles": 1
+    },
+    "138edd073147eab7b2cd9e055b7726bc011b956b41aaa3764da458ec43e5a7c4": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/b085bea7df0752e2c2fafaf4112e83f7.jpg",
+      "articles": 1
+    },
+    "5cca20b1d305fcd0c79a46054a61c346550caedb618c8ed9264d18647ba2188d": {
+      "use": "own",
+      "kind": "project",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/daf04d75ef2c3b191116f0586c2cc13c.jpg",
+      "articles": 2
+    },
+    "b1767a2f13f38058071cd8d45a3a9fb3f8cbfe3a78e3e72a42de3467aa06a557": {
+      "use": "none",
+      "why": "an official logo strip, not a picture for a cover",
+      "src": "https://euro-alliance.net/application/site/_assets/8c19aab9af363b352ae41dcf593aad8c.png",
+      "articles": 1
+    },
+    "23ab188438ab95cd129d49ac6b0bb35932bac6f10116b11b32a117bb7745c838": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/41bdbc75c3e1afc794fc1b6008e0fa00.jpg",
+      "articles": 1
+    },
+    "d875e895b50f95d2d99ba490eb05fe56688549c5ff158fffafa7741b295d7d7e": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/e85c0e345994325db65105ecd4a0fef2.jpg",
+      "articles": 2
+    },
+    "ae13fb69e08fdb52a3156e7bd3d3211857832910f98c320cc338884db8232e29": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/eb72ad13d875500ad63393ac60729e2f.jpg",
+      "articles": 1
+    },
+    "1fda3499bc01860eeab4d77278a551b372333fe6a6a939c6e0914ef0fae06080": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/bd1b7de429fc6b38a8fd1cda700eb943.jpg",
+      "articles": 1
+    },
+    "9e4c15d897547c771e6b45db3fd583829800249bcf43ca8d7dd1f6e9d5bb5ce9": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/027cc513af72f9cc36e4b628b0e08e91.jpg",
+      "articles": 1
+    },
+    "66ba56e27259f41ae31d4430f123c407aa63da6f86ac8b0bf025b2614b48d157": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/50544fd36d833ceba8602b753907f10c.jpg",
+      "articles": 1
+    },
+    "b2f00aab97602c1b36512f49862417b8613708208d87909e87d0a98624f6eb6c": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/b98fa005606a28a35c354314c11f96d4.jpg",
+      "articles": 1
+    },
+    "8ce01f49c00147be17d38eb582db58c3e293e0dd3c4d92eef5c0f09da2986b99": {
+      "use": "own",
+      "kind": "project",
+      "src": "https://euro-alliance.net/application/site/_assets/838c833f0908e7df2f590702ee9a2ea9.jpg",
+      "articles": 1
+    },
+    "c3c177a71de6da600a0b1060e2eb4cde7af0356a0fb3fa735df8c8b46a35c08b": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/0a372cb242aa2bd366109594f4107474.png",
+      "articles": 1
+    },
+    "082f86353a0af82b9949a556d2882cc7f2d1a892d7a64e8237534152cddc6018": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/96146b50039e159ba9724d5fb7a7fa87.jpg",
+      "articles": 1
+    },
+    "c2f8d3840f4b25e061b1ef03145be0957abbcf608e5467a7ea0f2736432bbb58": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/c1b1e0370da63536ee441064f007e515.jpg",
+      "articles": 4
+    },
+    "493321809e22bb57f8af016c45598553edb92abc5f05dd3a110f3a98015a4ebe": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/ee969485177a33d3c99749092180a525.jpg",
+      "articles": 1
+    },
+    "f45edd4f82a5e76533ef587e4505462e549dc1f2a328914687a98cf2c9239951": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/92ecac6f7c6d240b33a278b1accd78c2.jpg",
+      "articles": 1
+    },
+    "8809d5b91b125e99199c2a9491195091e89554f66233f4652aa0e70169b2ec06": {
+      "use": "replace",
+      "theme": "earth",
+      "src": "https://euro-alliance.net/application/site/_assets/691fe885524881480688471cd7ae31e8.jpg",
+      "articles": 1
+    },
+    "f73952504ddc86b1e79a9d4e5e5374f597583a85be2798ab525a563717847e48": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/abaf0914d5dd41d6fe88061b1d0d683b.jpg",
+      "articles": 2
+    },
+    "51cc437bcc61c95274fab69934fe58fe4d1c653bc74b5391284bfcf39957de5e": {
+      "use": "replace",
+      "theme": "martenitsa",
+      "src": "https://euro-alliance.net/application/site/_assets/d9c5044a145ad1d3876c0a5e78baac87.jpg",
+      "articles": 1
+    },
+    "d063a94deb6122dbe90c0c553ee188bfbc8b818c1dee27213543ed28cdb70389": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/ec13bff818fb24104da15ebd6a8dcbae.jpg",
+      "articles": 1
+    },
+    "049034c242b685099357f7694224f8415f310a52e3b5181b3b4f834d07968832": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/37e5c10fc0b0f92841d3b31b4fac025f.jpg",
+      "articles": 1
+    },
+    "4d26f2929fb000bcf6b0f3c2561064e7925c3257efe0c95823fd0cc1e202c7e6": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/6a951d30fcfb4f97c9fb8e60234c0671.jpg",
+      "articles": 1
+    },
+    "824610c0f58a4bbdd4a6e2cfc6f907e7634e423b2d6d7bc769ba0317e1dab2bd": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/7e9abee87e6e3054b3742ecc3828dca1.jpg",
+      "articles": 1
+    },
+    "0b0e9d16afd220d5a86e9fdb46ced2014564e438a2a30a8c7fa84569efe09a07": {
+      "use": "replace",
+      "theme": "summer",
+      "src": "https://euro-alliance.net/application/site/_assets/8bc1dd8d7c3496c856a57452dbf568cd.jpg",
+      "articles": 2
+    },
+    "f723df0f27173c26ed05ef45c354c7819af8d9288bd834374b28bb04612215bd": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/ce4bd070033f11eba18ef4d645cd4b21.jpg",
+      "articles": 1
+    },
+    "74be40d13c3acc25cfea2f88719815e685e8742841f7453303484637041cbd65": {
+      "use": "replace",
+      "theme": "exam",
+      "src": "https://euro-alliance.net/application/site/_assets/e1fd71dcdf87948969f3d1538866966f.gif",
+      "articles": 6
+    },
+    "0ec1760c6f79fd1a79cae5583b0b6c962a9e0b20832357dcd760bd7589db044f": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/03ac26dcaa2c4605ee27ebfbf10c17e4.jpg",
+      "articles": 1
+    },
+    "f9b9907c08653afe648602de6375713727b19f32c99783bd080ee0b87e35ab97": {
+      "use": "replace",
+      "theme": "earth",
+      "src": "https://euro-alliance.net/application/site/_assets/dbb1c5157e5a1807def79b45a405b682.jpg",
+      "articles": 1
+    },
+    "3f0b4ea0829e0e033c23099c21fdf004ca35d74d3a2a54c5212dd0eb7476de6c": {
+      "use": "replace",
+      "theme": "earth",
+      "src": "https://euro-alliance.net/application/site/_assets/76e17e50d8ed4a5d4e6035148bf75c44.jpg",
+      "articles": 1
+    },
+    "692b09085037211b5fccbc0e88cd19a4cdeabd37b96f413bc63f0ea377f3fb80": {
+      "use": "replace",
+      "theme": "christmas",
+      "src": "https://euro-alliance.net/application/site/_assets/b132ba7415bbad61755ec3a99a5cd7a5.jpg",
+      "articles": 1
+    },
+    "604a0493f304ab4bb6bf20423e671a6a717d4b8f09e900e2252a28f6e3c15b71": {
+      "use": "replace",
+      "theme": "farming",
+      "src": "https://euro-alliance.net/application/site/_assets/2d8d37b85c96c98d1161136d0c4a149c.jpg",
+      "articles": 1
+    },
+    "3b156eaa55cf18888c4fd1911adce7f0fc928c581c9e318a115fe24ee9616908": {
+      "use": "replace",
+      "theme": "farming",
+      "src": "https://euro-alliance.net/application/site/_assets/b9c850342c5b79c6c09f7488302ebdba.jpg",
+      "articles": 1
+    },
+    "1dd636d8c9053922474368588f6dc5200d1e25dcc508c286e48887a2d22f29da": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/eaaf9509a9696490160bcd96166e2648.png",
+      "articles": 1
+    },
+    "d4de5fa07b4c5a6e0b37fd7c15dd6a88c36bc34533c2d53263210dca1f437f42": {
+      "use": "replace",
+      "theme": "christmas",
+      "src": "https://euro-alliance.net/application/site/_assets/95091112716230a5e9a40d6248440b08.jpg",
+      "articles": 1
+    },
+    "39c2cb3d6fddf95f4b482353e2e0d26aaa960eace52ea0ceb6b4274ec79c9ef7": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/9d4d9e422ff79d7882354c8e6d2f8579.jpg",
+      "articles": 5
+    },
+    "0b8db722424bce1d0a25d6795528b8b806dd3b83e743a3de7736ada4f3d7ea99": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/3e94e31119fd57d967cb2bf7f426ccfe.jpg",
+      "articles": 1
+    },
+    "6473ead33139f497d4b5b7cac70564603a0d36da1c10d7e328fcea41f4cee7e3": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/30b5e88717faf49334cd7ff466f37d8d.jpg",
+      "articles": 1
+    },
+    "d3abe87a1721d400b1fb980c1d984dcfb0c95b144bdfeed5755bf583f2c175ed": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/1826e7852b5e80ae2d6387d5e4ab5df8.jpg",
+      "articles": 1
+    },
+    "13628c98dec404953f94ac5d760467c9314a2125464c56306754528645e41f9b": {
+      "use": "replace",
+      "theme": "spring",
+      "src": "https://euro-alliance.net/application/site/_assets/285c5ab1b075248f3be7b3c2beed7357.jpg",
+      "articles": 1
+    },
+    "7be5052b96635175e57e3ca6d1d99165c3efa881d992d6f609f8c564387b21e3": {
+      "use": "replace",
+      "theme": "martenitsa",
+      "src": "https://euro-alliance.net/application/site/_assets/ea58aeecc26b9a54054a75975c2958f2.jpg",
+      "articles": 1
+    },
+    "510ea0d04c3f3ac1ab546020f484dac78e026b7d6c79b973d42bee6baf771942": {
+      "use": "replace",
+      "theme": "christmas",
+      "src": "https://euro-alliance.net/application/site/_assets/2f0c724202993f0dc8f29a25386a246e.jpg",
+      "articles": 1
+    },
+    "015452c64fd9a4b08cb9d60eae6ab39d8f959da3ef58ae086db39600671e7df7": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/4a2898396931ddc402c5a25c498aab42.jpg",
+      "articles": 3
+    },
+    "83c9ee39988c47d172fe98b873bab5920adb390cb97e6d415f662c4ce93265ec": {
+      "use": "replace",
+      "theme": "health",
+      "src": "https://euro-alliance.net/application/site/_assets/2a608ad35175f99a2138085506ceee02.jpg",
+      "articles": 3
+    },
+    "55304ad39d6aa2b0106b2b2fd9e40d276ffaa261f5fb81be14f3f02f3ebf62d3": {
+      "use": "none",
+      "why": "an official logo strip, not a picture for a cover",
+      "src": "https://euro-alliance.net/application/site/_assets/c8b683799ef08257c83e30f1dcc08d90.jpg",
+      "articles": 1
+    },
+    "0b5068ea8a414abb49a2c6b0a616772508fdb9e782782b562ea10463d4166202": {
+      "use": "replace",
+      "theme": "classroom-tech",
+      "src": "https://euro-alliance.net/application/site/_assets/178993c02e07389fda1b027307727e04.gif",
+      "articles": 1
+    },
+    "d17346d3a1c575bfa9d50e9b6ac630c27d2a2f6045ffbb9f260d2d7f50176588": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/9026aa15e8bdf5b6cc7c5686573e6738.jpg",
+      "articles": 1
+    },
+    "1980f304d014379aaff814ca34a28ccb2bd4d1d6bff2789748ccc219cafd682f": {
+      "use": "replace",
+      "theme": "translation",
+      "src": "https://euro-alliance.net/application/site/_assets/e37e2a1ffa2f05bbe701c12d3b0f44f3.jpg",
+      "articles": 1
+    },
+    "6cf116f8dcc563ff19614851ee12df3dcfde73457e28ab3a0f7ca21cdc6bafc3": {
+      "use": "replace",
+      "theme": "translation",
+      "src": "https://euro-alliance.net/application/site/_assets/af0769e8d64e0edea40a4a883a899d0d.jpg",
+      "articles": 1
+    },
+    "b22c60680821b4b43620616af3d55420930a777b73a76100f579bfccb83b80b5": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/9e8eeb9535a11dfcb062ce8147986f6d.jpg",
+      "articles": 1
+    },
+    "ebdcc618eaf2cf45c48356095785cf44413d0937d8e6a3c3c8ff275bdccec2c3": {
+      "use": "replace",
+      "theme": "children",
+      "src": "https://euro-alliance.net/application/site/_assets/c306e450f9f102450ada6f677a227997.jpg",
+      "articles": 1
+    },
+    "1365a3e2ae71e9c7c649cef42c659515c47d0eafd1e6ce24a0c6320c4c986636": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/d9ca9cdc08bb5b8762894eac723305d0.jpg",
+      "articles": 1
+    },
+    "f2fb668cee60b11d3d6c6cde204e987bd6553e0478f052ccd05b296072e17267": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/0a8e253148946ff3173cdf1cbd6e1c5b.jpg",
+      "articles": 2
+    },
+    "da3b8ef0e37a5f1fd35f3e35393e05866f7c491b82d1c6c85ab66de2006c87d5": {
+      "use": "replace",
+      "theme": "health",
+      "src": "https://euro-alliance.net/application/site/_assets/e098b0b54471c3deb944d90253f3696c.jpg",
+      "articles": 1
+    },
+    "4d5ae1d0abb13eb190d9dee72f517119040ffa145f83acd3a76ae1f51d45a329": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/d16eb28e8821f72f84c2cb9f55b30b3b.jpg",
+      "articles": 1
+    },
+    "9b0e84fa55bb7722282f3a3d1c5f703a856c684d1703c7dacc00980e1ec4c59a": {
+      "use": "replace",
+      "theme": "exam",
+      "src": "https://euro-alliance.net/application/site/_assets/2cf0f52ad7ea63c4b4c5fded8b632d12.jpg",
+      "articles": 1
+    },
+    "dfb746af24a7d57dcfb0f2f4845e89b0c00fcae16fab3bbafbea1966dfdd4a33": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/70c379f61d13ad180ebe2e5f4db6cfcf.jpg",
+      "articles": 1
+    },
+    "71b9f8dd81b0c9f31ec3bc6ec87f4015558b51735f54ed662f2e9768aa9d1d76": {
+      "use": "replace",
+      "theme": "payment",
+      "src": "https://euro-alliance.net/application/site/_assets/217fc76e51485741ab73d2fc24e4940b.png",
+      "articles": 2
+    },
+    "a0c96ce1c8c17418bcd806a224ef90ad6aaed5d050831aad4d9f6c399d85f35b": {
+      "use": "replace",
+      "theme": "classroom-tech",
+      "src": "https://euro-alliance.net/application/site/_assets/c7e1178f3cccad82ed709988703a1a14.png",
+      "articles": 1
+    },
+    "972774efc7c453010bfc13b8ef99b697dd735ae0cc2d996f4bc2ecd67ee379be": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/fd9741f4d54fcb9daa33d99c3ea628ee.png",
+      "articles": 1
+    },
+    "96236daead0e9d27f784cc96ee6f12f30caedcea59a965ca131861c4d9f3ddff": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/def3d3399527cb1808fb14a832158728.jpg",
+      "articles": 1
+    },
+    "35d2e891b3158bb662aeea7ecd4d7792a47dd1b69df96f332a85ba082c8214b6": {
+      "use": "replace",
+      "theme": "summer",
+      "src": "https://euro-alliance.net/application/site/_assets/cc9367a8fe9b2ab66766e3a96996ba07.jpg",
+      "articles": 1
+    },
+    "c79c7e310656193458b1d305d765edcefde92c15821a8f32edde0e144c60681c": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/307bef4f614a54a448a58cb74ae61988.jpg",
+      "articles": 1
+    },
+    "4e807afb89a5d03b4272fca289b18340c7ce439d38c41812c714e7b6c6d6a0f4": {
+      "use": "replace",
+      "theme": "business",
+      "src": "https://euro-alliance.net/application/site/_assets/1e824dc91c375d59c07e562b543766c8.jpg",
+      "articles": 1
+    },
+    "ed25863e38764142a7c69a303f2ab977d954c879360198d64b1237f0cfc40e54": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/acffd20b5c335a0ddfe45c526d5a421d.jpg",
+      "articles": 1
+    },
+    "30141eb574788681ce73997b9fa34fe5f5a17b0f57376030cba81fd45a0f0322": {
+      "use": "replace",
+      "theme": "online",
+      "src": "https://euro-alliance.net/application/site/_assets/ea4075dcd3e118f1b1dfbb2125c671d7.jpeg",
+      "articles": 1
+    },
+    "4d3382364bd9197efc9c185f8b0f26b6a449391eb330be633b94c0298152ceec": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/50f578ed520034344c390c4b34d59624.png",
+      "articles": 1
+    },
+    "075208bd779c02ec5000665261259df810592ec0a82b3e801c96d98232340e7e": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/0fe1a25388d707f1c57d20119c1048c5.JPG",
+      "articles": 1
+    },
+    "2d69a235a783ca4d67036c0fd7971210e9e035aad7de5928e5bc632581e59b2b": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/c8da5c69c32d3ce4a923bdd7d9556306.jpg",
+      "articles": 1
+    },
+    "74bc881ec8a2f77315130141bf8fcd04899de165a150783363ffbe4f52fa9566": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/8301b7703fefd489a7ec5481e859cd5f.jpg",
+      "articles": 1
+    },
+    "dc1a7fc910b222cef7c94e01ae8ca7e09d8662e456e7dedce48b090ab0b94e44": {
+      "use": "replace",
+      "theme": "christmas",
+      "src": "https://euro-alliance.net/application/site/_assets/86b8cdb0d5b47f7144a596973a357f0e.jpg",
+      "articles": 1
+    },
+    "5599e41cd82bda5b6def1da5e9d7bcaf4c9f66c7fed21718033dcf6b316d0dd2": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/807fd6373e2e665f9ab024ad05e2498a.jpg",
+      "articles": 1
+    },
+    "9c26a399d70dd1e737280035aefc99fc2a4b3ea2636eac72a87f37bf703d7c95": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/3b7bc4f18f4605917be32b288be9e41b.jpg",
+      "articles": 1
+    },
+    "98275720e9092c3a8600023719ade472bc256db8c29289ba782f8f488a993084": {
+      "use": "replace",
+      "theme": "letters",
+      "src": "https://euro-alliance.net/application/site/_assets/3286ac09d546ce545e04b0e71c0c4390.jpg",
+      "articles": 1
+    },
+    "5ebdec404a4411a05bb5e452559cf24914061115b5b51bc4ada0a698a5d91a99": {
+      "use": "replace",
+      "theme": "business",
+      "src": "https://euro-alliance.net/application/site/_assets/4a6c8fa7fb659e5243586a8533becc64.jpg",
+      "articles": 2
+    },
+    "ceea171da1a41d7aef209a20f6f7c4d2f69fa5cae2b182eddad443023bc5bd78": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/71bf4ad111dc928a303d8e1671097078.jpg",
+      "articles": 1
+    },
+    "6c7b5ba49e09e41bd8ce12d6cfe17d4459b41f86e28cead6a98c20a8e786f0c3": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/62fc529c2a7341029b24dcd5ff4ffb95.jpg",
+      "articles": 2
+    },
+    "0ec5298fca74fd5375248c99f7d5c58fcd1dc6abb7f017f9e43665854eb44141": {
+      "use": "replace",
+      "theme": "spring",
+      "src": "https://euro-alliance.net/application/site/_assets/f3e326a781a15289cbc3acf35a362bcc.jpg",
+      "articles": 1
+    },
+    "047ed6d87cc1d73cc52e9a73b42d8eef34c41b481f4d63296bd08620dc624590": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/3cae9f1d5d830f4b2c0f4baf9fbc5dc1.jpg",
+      "articles": 2
+    },
+    "37404e45ff44b9b3c09ad612e17704f241b03db9292b6d1ac6c7c6bea9cf173f": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/4c16e4629ce4902d8354b6530f17aad9.jpg",
+      "articles": 1
+    },
+    "bf0e67d1d57a8a1ff75d00d41480c2ee513a0c4be58418dc5cf86ab1a803120a": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/c54d165768a081c0265aec0c621a2e4e.png",
+      "articles": 1
+    },
+    "433b33ca8faa9355477d39e33161a94ec6173d715421339e8c77ec2ca117a4c1": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/98f45f54696423533751d6249045b4dc.jpg",
+      "articles": 1
+    },
+    "f6ff76f393bb732c1a2ef47a7d36e3d2880ab947f652379a1241f79ae3a8cd7c": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/8af7787d385a68a248d6d8f7214cebbf.JPG",
+      "articles": 1
+    },
+    "563885193f77e61241ebedd42e1bc9fa717888a28cfbfe6011de8fde32522b0d": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/893efab2c5c9451500a9bcd1210218de.png",
+      "articles": 1
+    },
+    "937fdddc7db5f0aff2d7d3d6a6898bbe3d1b39af6890a05324f0298f1c0f97f0": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/91a43701665351ed94ec3c2dbf0f8c96.png",
+      "articles": 1
+    },
+    "d34ba68af5864145aeee6eb251e6c76628075b964b3596d7a3d15b9ff4867f86": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/c9f751f2e8633351e68b84fbc886eeda.jpg",
+      "articles": 1
+    },
+    "e4b2f23633ecfeaf116e4466936e777060a4a8e34685a30821977b4e14566357": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/c471a8ca9ff4b1cffeea9ecf94f13d03.JPG",
+      "articles": 1
+    },
+    "a12cd80ad2d650d24101900d7a5577791f7bb4616c158b9fe44f2d6dfc3cf0fa": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/99c0228a9db1874e56c22709bfe00d6d.jpg",
+      "articles": 1
+    },
+    "97f4968b83e0e3aadc80231bbc195f506b7a05102099613e5410c62fb1ed41bc": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/9bf0e0ddd1cc86fda4897e78007e606f.jpg",
+      "articles": 1
+    },
+    "6088a9b1f0d212e3057a578addd26a0778dc2820171221f419101391c2675f1f": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/df24b40f53a5c1adb8b5081f8ca61728.jpg",
+      "articles": 1
+    },
+    "02806a471a7ebd786db20fb970654a5ad11ad4a2db56b1bc4c745d2a76080133": {
+      "use": "replace",
+      "theme": "children",
+      "src": "https://euro-alliance.net/application/site/_assets/026ff49ee6f958bb0c12111f02145460.jpg",
+      "articles": 1
+    },
+    "8cb663498b2e39a7c3a21378b3162c32bf267431e4ba234da61f1cdb4b72c41a": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/d9caa4c55146cc9e0f5bd946ad9f2b0a.jpg",
+      "articles": 1
+    },
+    "97ab7db793dec04f90ecff5132598a76da7231df0f615e04fb06b7b79c66c779": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/f0bec4c7aa5755b4e81c46cae1ff3ebc.jpg",
+      "articles": 1
+    },
+    "b0196bde7562c17e9a4bafdebdd8f88dfa048c089648fb606dc53186f2070f5e": {
+      "use": "replace",
+      "theme": "spring",
+      "src": "https://euro-alliance.net/application/site/_assets/462fbf2e01821ed6ef34ac5df1541961.jpg",
+      "articles": 1
+    },
+    "086900be7856dcec7b13ed8c7be574b467cf33d07d64b8b7a38902598aa3935c": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/51bb317777836773dccf9be1ae0f3462.jpg",
+      "articles": 1
+    },
+    "352c8711a1305e2a06350551aa3c0db2a31b992eebcc378737d8f655d198b191": {
+      "use": "replace",
+      "theme": "children",
+      "src": "https://euro-alliance.net/application/site/_assets/aa6f72290dfb036a9c26cb3818ed3eef.jpg",
+      "articles": 3
+    },
+    "4a0f9d2d008f90624b2b47814a07f8e1bceb809b33ccb2bb16f292db84cd2309": {
+      "use": "replace",
+      "theme": "children",
+      "src": "https://euro-alliance.net/application/site/_assets/5a72db853caa2b428132cd8eb2ab4abb.png",
+      "articles": 1
+    },
+    "d8636c50b7ae0b373ed296d12aed8728950e46c2a0e70edff3ffbd66ae708581": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/94a700a8679d737d9e0c5719bea166a0.jpg",
+      "articles": 1
+    },
+    "a5b522c5200a68e19ddc08fecb4d45eb48257ddaeaf9f521dd5c681cee19e0be": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/4962e3c536c61abe21ed6fdfb9e72629.jpg",
+      "articles": 1
+    },
+    "4a14d6fcc3830ebbd518e5dbb8f9fccf7bc64b775811056f03c5f358c7b0ffb2": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/bc4d896f57884ea569d2534772d03ec5.jpg",
+      "articles": 1
+    },
+    "7df8de5b4372954862ecba700b2d6de8ee4bd16bb9d3055e80d730f9a8464262": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/f870e19c2696322953f171b60f73618b.jpg",
+      "articles": 1
+    },
+    "411179558930a690ef2424dbd17a84b984d913b256c4ab9d89cf2e729c332f9b": {
+      "use": "replace",
+      "theme": "children",
+      "src": "https://euro-alliance.net/application/site/_assets/3f66c72f2dd4ad961efc7905295d071b.jpg",
+      "articles": 1
+    },
+    "baddbd4ae0d88adc58ef8ef4c214e792ed99bb85eb5e3c88ef4f5c81513bc15d": {
+      "use": "replace",
+      "theme": "business",
+      "src": "https://euro-alliance.net/application/site/_assets/8f7c740c18f1bc69907d330a926e3b5a.jpg",
+      "articles": 1
+    },
+    "abdae2425beb564144275e32b39007a0184212ead03b738c1ef9390e9c648c62": {
+      "use": "replace",
+      "theme": "spring",
+      "src": "https://euro-alliance.net/application/site/_assets/cb94cbdf48bbf0919ffa72a043d19d16.jpeg",
+      "articles": 1
+    },
+    "58be8bc374be38842a5ff8856f3cc8825f826879c2efa512387e620f42129d3a": {
+      "use": "replace",
+      "theme": "summer",
+      "src": "https://euro-alliance.net/application/site/_assets/c2b54c5f557733c29e920cb851444c85.jpg",
+      "articles": 1
+    },
+    "f22a615b6aa67820635deb6541b7253a0455914906a2b2765ebfbb03fee66152": {
+      "use": "replace",
+      "theme": "easter",
+      "src": "https://euro-alliance.net/application/site/_assets/6b40f107c377d02a8b7d7f3f52b2c030.jpg",
+      "articles": 1
+    },
+    "a2324dd06206b407023a70bc83ca0ef489828f9268a633d330b15b5c344b926e": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/30813b4dfe09fe45d77b234956f2451e.JPG",
+      "articles": 1
+    },
+    "5ff1ba71bf2c07218807e7c9fa2e5f6526548afc3ab5cff9b15ee5cfd6eb496e": {
+      "use": "replace",
+      "theme": "exam",
+      "src": "https://euro-alliance.net/application/site/_assets/6f02f46fefe456101e8ec1d6274ba378.jpg",
+      "articles": 1
+    },
+    "66ac80aac38c1accc22c630d23ed0a4a0d78dd1a9f073a2fa8f1a1f44c1516d6": {
+      "use": "replace",
+      "theme": "bg-flag",
+      "src": "https://euro-alliance.net/application/site/_assets/3bf38c8b584d2bd6713ae41d5e23f1dc.jpg",
+      "articles": 1
+    },
+    "2db01a835833ed3dc3bc65268b17c98f6e16a59c51c4abad0e4be764adfd8795": {
+      "use": "replace",
+      "theme": "business",
+      "src": "https://euro-alliance.net/application/site/_assets/231a3ebd09932f868a70851799b82d49.png",
+      "articles": 1
+    },
+    "4dec681816bc7185ddd728a0817846b31976b3b225d6deb874f50c989a6d4064": {
+      "use": "replace",
+      "theme": "health",
+      "src": "https://euro-alliance.net/application/site/_assets/37571ed5fdcbf4cccf739181702ffaf0.jpg",
+      "articles": 1
+    },
+    "edf7aefec9378c14a22a702b0645a149f6dfd77c28b6ec82c5e9fb6d23769298": {
+      "use": "own",
+      "kind": "graphic",
+      "textInImage": true,
+      "src": "https://euro-alliance.net/application/site/_assets/74d75637af5258e69712ad4c8606f024.png",
+      "articles": 1
+    },
+    "745df30bdf6fd9e0db1a8d864a25ed4c6a50397df01391091635aadb79a4e61a": {
+      "use": "own",
+      "kind": "photo",
+      "src": "https://euro-alliance.net/application/site/_assets/2f40c59a64c20888315d38af7ad4b2df.jpg",
+      "articles": 1
+    },
+    "5399081a0e298d514b81fa7599184aeea87a188139a20bbee4a6de6bc08ace28": {
+      "use": "replace",
+      "theme": "classroom-tech",
+      "src": "https://euro-alliance.net/application/site/_assets/282779e49f8b9c7e1f734924fe3623ad.jpg",
+      "articles": 1
+    },
+    "78536781a95b844c40276277a658e9b3ebdeb86a262e80db6b200dad469a6833": {
+      "use": "replace",
+      "theme": "classroom-tech",
+      "src": "https://euro-alliance.net/application/site/_assets/1b226a78bc5637a0d1e80d08c1121a1d.jpg",
+      "articles": 1
+    },
+    "db1901a7bd7eb9071e9e8cca65f49e04edcc792e9321018e3c944006cd410174": {
+      "use": "replace",
+      "theme": "enrol",
+      "src": "https://euro-alliance.net/application/site/_assets/5c228cd46a5c865aa0fcaea1ed38709a.jpg",
+      "articles": 1
+    },
+    "424a5179ffe6da4bb2d5e062039cfa7892e25ca92ea934003b89fb9330039535": {
+      "use": "replace",
+      "theme": "classroom-tech",
+      "src": "https://euro-alliance.net/application/site/_assets/d5c3f8ac876502eae065f57ff94b76cc.jpg",
+      "articles": 1
+    },
+    "b9fc378f1144ecaacfe9934e833ac5097e60e16853d8f66fa9b1d9e5fb1e38b2": {
+      "use": "replace",
+      "theme": "exam",
+      "src": "https://euro-alliance.net/application/site/_assets/d754c05b65ac0e2ce933b095e5966ab6.jpg",
+      "articles": 1
+    }
+  }
+}
