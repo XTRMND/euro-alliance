@@ -149,6 +149,7 @@ export function adminNav({ adminRoute: admin, programIds, newInquiries }: NavCon
         { key: 'Навигация', label: 'Навигация', href: global('navigation') },
         { key: 'Данни за фирмата', label: 'Данни за фирмата', href: global('site') },
         { key: 'Правни страници', label: 'Правни страници', href: list('legal-pages') },
+        { key: 'Файлове', label: 'Файлове', href: list('files') },
         { key: 'Пренасочвания', label: 'Пренасочвания', href: list('redirects') },
       ],
     },
@@ -217,6 +218,7 @@ const collectionKeys: Record<string, string> = {
   'funded-projects': 'За нас/Проекти',
   offices: 'Контакти/Офиси',
   'legal-pages': 'Сайт/Правни страници',
+  files: 'Сайт/Файлове',
   redirects: 'Сайт/Пренасочвания',
   users: 'Потребители',
 }

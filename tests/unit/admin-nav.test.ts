@@ -44,6 +44,7 @@ describe('the menu mirrors the site', () => {
       'Навигация',
       'Данни за фирмата',
       'Правни страници',
+      'Файлове',
       'Пренасочвания',
     ])
     expect(labels(adminFooterNav('/admin'))).toEqual(['Потребители', 'Изход'])

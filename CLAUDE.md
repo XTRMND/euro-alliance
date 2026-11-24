@@ -609,6 +609,13 @@ From the old news' covers (v0.28.0, 23.11.2026; Trello #13; branch `feat/news-co
 - Photographer names in the media's «Автор» field are as the photo pages gave them, not checked against Unsplash's own credit line.
 - Not done: the 11 pictures inside article texts (no design), and the delta crawl before cut-over.
 
+From «Файлове» (v0.29.0, 24.11.2026; branch `feat/files`; the client, on Viber: there's a link to an imported PDF in a text, but nowhere in the admin to upload a file and link to it):
+- «Медия» has had no screen since v0.6.0 (files are uploaded from photo fields), so a document couldn't be uploaded at all. Now «Сайт» → «Файлове» (`files`, migration `20261124_111148_files`): upload a PDF, DOC, DOCX or ODT, give it a name, save, and «Адрес за връзка» shows its address with «Копирай адреса»; in a text, the link button takes that address. The address has no host (`/api/files/file/…`), so a link made on staging works on the live site.
+- Not the editor's «вътрешна връзка»: the site's text renderers don't resolve picked records (a picked news article or file would render without an address), so links are typed or pasted addresses, as the import's are. Picking a file inside the link dialog would be the next step; it needs the three renderers and the reads' depth changed.
+- Public and staff-only: anyone with the address opens the file; only signed-in staff upload. The upload goes through the wizard's document checks (real type, no macros). No images (they'd skip the photo fields' alt text and tints), no spreadsheets or archives: say if the client needs XLSX.
+- The imported documents stay in `media` and can't be replaced from the admin; a new version is uploaded in «Файлове» and the link changed.
+- Checked on a local build with a fresh database (upload, the address, a visitor opening it, a fake PDF refused). Pasting the address into a text's link wasn't clicked through in the editor: the editor accepts addresses that start with «/», as the import's links do.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).

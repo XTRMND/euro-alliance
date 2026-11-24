@@ -201,6 +201,10 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
   - The visitor's address for the rate limits is the one our own proxy wrote into `X-Forwarded-For`, counted from the right by `TRUSTED_PROXY_HOPS` (`src/lib/client-ip.ts`).
 - **Proposed:** scan uploads with ClamAV if the user's servers can run it. Not built: PDFs aren't searched for scripts (fillable forms carry them legitimately).
 
+### Files (upload collection, public)
+
+«Сайт» → «Файлове» (`files`, v0.29.0): PDF, DOC, DOCX and ODT documents a text links to. A file has a name for the list («Име») and, once saved, its address («Адрес за връзка», `/api/files/file/<filename>`, without the host) with a copy button; the editor pastes it as the address of a link in any text. Staff upload, change and delete; anyone with the address reads. An upload goes through the wizard's document checks (`inspectFile`: the real type, no macros, no decompression bomb) and is served with `nosniff`. Photos aren't uploaded here: they belong to the photo field that shows them. The documents the import brought are in `media` (`/api/media/file/import-….pdf`) and stay there.
+
 ### Legal pages
 
 `page` (`privacy` / `cookies`, unique: the addresses are fixed, `routes.privacy()` and `routes.cookies()`), `title` and `highlight`, `kicker`, `sections` (array: `heading`, `tocLabel` for the contents rail, which Figma keeps shorter than the heading, and `body` rich text with paragraphs, numbered lists, links, a table block and a link-button block), `updatedOn` (date, shown under the text; empty: hidden), `pdf` (optional upload, for «Изтегли като PDF»; empty: hidden). The approved privacy and cookie policy texts are seeded as given (PR 17). Versions enabled so changes are traceable.

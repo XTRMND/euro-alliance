@@ -605,6 +605,23 @@ test('the shell has no axe violations, with a branch open', async ({ page }) => 
   expect(await axe(page, ['aside[aria-label="Меню"]', '[data-admin="top"]'])).toEqual([])
 })
 
+// The smallest PDF Payload accepts as one.
+const minimalPdf = Buffer.from(
+  [
+    '%PDF-1.4',
+    '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
+    '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj',
+    '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 10 10]>>endobj',
+    'xref',
+    '0 1',
+    '0000000000 65535 f ',
+    'trailer<</Root 1 0 R>>',
+    'startxref',
+    '0',
+    '%%EOF',
+  ].join('\n'),
+)
+
 // A visitor's upload from the wizard to the office (v0.24.1): stored under a random name, shown
 // with the name it came with, and served to signed-in staff as a download only.
 test('a visitor’s file reaches staff under a random name, as a download only', async ({ page }) => {
@@ -625,29 +642,11 @@ test('a visitor’s file reaches staff under a random name, as a download only',
     .getByRole('radio')
     .first()
     .check({ force: true })
-  await page
-    .locator('input[type="file"]')
-    .first()
-    .setInputFiles({
-      name: '../dogovor.html.pdf',
-      mimeType: 'application/pdf',
-      // The smallest PDF Payload accepts as one.
-      buffer: Buffer.from(
-        [
-          '%PDF-1.4',
-          '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
-          '2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj',
-          '3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 10 10]>>endobj',
-          'xref',
-          '0 1',
-          '0000000000 65535 f ',
-          'trailer<</Root 1 0 R>>',
-          'startxref',
-          '0',
-          '%%EOF',
-        ].join('\n'),
-      ),
-    })
+  await page.locator('input[type="file"]').first().setInputFiles({
+    name: '../dogovor.html.pdf',
+    mimeType: 'application/pdf',
+    buffer: minimalPdf,
+  })
   await page.getByRole('button', { name: 'Напред' }).click()
   await page.getByLabel('Име', { exact: true }).fill('Тестов посетител')
   await page.getByLabel('Имейл', { exact: true }).fill('test@example.com')
@@ -675,4 +674,45 @@ test('a visitor’s file reaches staff under a random name, as a download only',
     'x-content-type-options': 'nosniff',
     'cache-control': 'private, no-store',
   })
+})
+
+// «Файлове» (v0.29.0): staff upload a document and get the address to link to from a text; the
+// address works for a visitor, and a file that isn't what its name says is refused.
+test('a file uploaded in «Файлове» gets an address a visitor can open', async ({
+  page,
+  browser,
+}) => {
+  await logIn(page)
+  await page.goto('/admin/collections/files/create')
+  await page
+    .locator('input[type="file"]')
+    .setInputFiles({ name: 'pravilnik.pdf', mimeType: 'application/pdf', buffer: minimalPdf })
+  await page.getByLabel('Име', { exact: false }).first().fill('Тестов правилник')
+  await page.getByRole('button', { name: 'Запази' }).click()
+
+  const address = page.locator('code', { hasText: '/api/files/file/' })
+  await expect(address).toBeVisible()
+  const href = (await address.textContent())!.trim()
+  expect(href).toMatch(/^\/api\/files\/file\/pravilnik[\w-]*\.pdf$/)
+  await expect(page.getByRole('button', { name: 'Копирай адреса' })).toBeVisible()
+
+  // A visitor, not signed in.
+  const visitor = await browser.newContext()
+  const file = await visitor.request.get(href)
+  expect(file.status()).toBe(200)
+  expect(file.headers()).toMatchObject({
+    'content-type': 'application/pdf',
+    'x-content-type-options': 'nosniff',
+  })
+  expect((await visitor.request.post('/api/files', { multipart: {} })).status()).toBe(403)
+  await visitor.close()
+
+  // A web page named as a PDF.
+  const fake = await page.request.post('/api/files', {
+    multipart: {
+      _payload: JSON.stringify({ title: 'Не е PDF' }),
+      file: { name: 'page.pdf', mimeType: 'application/pdf', buffer: Buffer.from('<html></html>') },
+    },
+  })
+  expect(fake.status()).toBe(400)
 })

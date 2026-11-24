@@ -13,6 +13,8 @@ export const uploadDirs = {
   tints: path.join(root, 'tints'),
   /** Translation documents from inquiries: private, served only to logged-in staff. */
   inquiries: path.join(root, 'inquiries'),
+  /** Documents a text links to («Файлове»): public. */
+  files: path.join(root, 'files'),
 }
 
 export function readUpload(dir: keyof typeof uploadDirs, filename: string): Promise<Buffer> {

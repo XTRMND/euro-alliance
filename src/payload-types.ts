@@ -84,6 +84,7 @@ export interface Config {
     'funded-projects': FundedProject;
     documents: Document;
     team: Team;
+    files: File;
     'legal-pages': LegalPage;
     redirects: Redirect;
     inquiries: Inquiry;
@@ -121,6 +122,7 @@ export interface Config {
     'funded-projects': FundedProjectsSelect<false> | FundedProjectsSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    files: FilesSelect<false> | FilesSelect<true>;
     'legal-pages': LegalPagesSelect<false> | LegalPagesSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     inquiries: InquiriesSelect<false> | InquiriesSelect<true>;
@@ -1628,6 +1630,30 @@ export interface Team {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * PDF и Word документи, към които сайтът води. Качете файла, копирайте «Адрес за връзка» и го поставете като връзка в текста.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "files".
+ */
+export interface File {
+  id: number;
+  /**
+   * За вас, в този списък. На сайта се вижда текстът на връзката.
+   */
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "legal-pages".
  */
@@ -1963,6 +1989,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'files';
+        value: number | File;
       } | null)
     | ({
         relationTo: 'legal-pages';
@@ -2841,6 +2871,24 @@ export interface TeamSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "files_select".
+ */
+export interface FilesSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

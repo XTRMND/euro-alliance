@@ -31,6 +31,7 @@ import { BlocksFeatureClient as BlocksFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { NewsList as NewsList_0de1ce0d9aa90e76119936662f73caa5 } from '@/components/admin/lists/NewsList'
 import { SectionRowLabel as SectionRowLabel_ca3c814c730b3abc11b51305076563a6 } from '@/components/admin/edit/SectionRowLabel'
 import { NameRowLabel as NameRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
+import { FileAddress as FileAddress_3828a22a5bd67d8f3e67ad1042a8bafb } from '@/components/admin/edit/FileAddress'
 import { InquiriesList as InquiriesList_f73233fe44b440838e68e304ded8d716 } from '@/components/admin/lists/InquiriesList'
 import { NavPreview as NavPreview_e8ebf64039f38a0c6349facf78a44576 } from '@/components/admin/edit/NavPreview'
 import { LabelRowLabel as LabelRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd } from '@/components/admin/RowLabel'
@@ -79,6 +80,7 @@ export const importMap = {
   "@/components/admin/lists/NewsList#NewsList": NewsList_0de1ce0d9aa90e76119936662f73caa5,
   "@/components/admin/edit/SectionRowLabel#SectionRowLabel": SectionRowLabel_ca3c814c730b3abc11b51305076563a6,
   "@/components/admin/RowLabel#NameRowLabel": NameRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
+  "@/components/admin/edit/FileAddress#FileAddress": FileAddress_3828a22a5bd67d8f3e67ad1042a8bafb,
   "@/components/admin/lists/InquiriesList#InquiriesList": InquiriesList_f73233fe44b440838e68e304ded8d716,
   "@/components/admin/edit/NavPreview#NavPreview": NavPreview_e8ebf64039f38a0c6349facf78a44576,
   "@/components/admin/RowLabel#LabelRowLabel": LabelRowLabel_7f4fa5fc68fb5a0a92393f6444a57fbd,
