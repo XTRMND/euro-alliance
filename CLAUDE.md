@@ -595,6 +595,12 @@ From the hero photo's quality (v0.27.1, 23.11.2026; branch `fix/hero-photo-quali
 - Compared at the size shown (640px for a 2× screen) against the uncompressed tint: AVIF at 100 is close to it; WebP at 90 is as good at twice the bytes. The declared size (290px) was right: the frame is 284px.
 - Other photos keep 75. If news covers or the About photos look soft too, the same number is the first thing to raise.
 
+From the team photo's quality (v0.27.2, 23.11.2026; Trello #11; branch `fix/about-photos`):
+- Looked at on staging through the user's Chrome (basic auth blocks direct requests; Chrome has the login): the team photo there is the client's `team.png`, 900 × 675, and the client has no larger original (the user, 23.11.2026). The About hero shows it 615px wide, which on a 2× screen needs about 1230px: it's enlarged 1.37×, and that's why it's soft. The homepage polaroid shows it 456px wide (needs 912px): at its limit.
+- Done: both slots ask for quality 100 (AVIF 80) instead of 90 (AVIF 70). A modest gain; it can't add pixels.
+- Open, the user's call: cap the About hero's photo at half its file's width (450px for this one, instead of 615px), so a small photo is never enlarged on a 2× screen and a larger upload lifts the cap by itself; or an AI upscale of the file, re-uploaded. Neither is built.
+- The seed's own team photo (`src/seed/about/team-forum-2026.jpg`, a selfie at the forum) isn't what staging shows any more; the 2048px copy on the old site (news 209) is of that selfie, not of the client's photo.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
