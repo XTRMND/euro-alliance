@@ -201,9 +201,17 @@ Built in PR 16 (`src/collections/Team.ts`): `name`, `role`, `photo` (upload → 
   - The visitor's address for the rate limits is the one our own proxy wrote into `X-Forwarded-For`, counted from the right by `TRUSTED_PROXY_HOPS` (`src/lib/client-ip.ts`).
 - **Proposed:** scan uploads with ClamAV if the user's servers can run it. Not built: PDFs aren't searched for scripts (fillable forms carry them legitimately).
 
-### Files (upload collection, public)
+### Files (upload collection, public files, staff's list)
 
-«Сайт» → «Файлове» (`files`, v0.29.0): PDF, DOC, DOCX and ODT documents a text links to. A file has a name for the list («Име») and, once saved, its address («Адрес за връзка», `/api/files/file/<filename>`, without the host) with a copy button; the editor pastes it as the address of a link in any text. Staff upload, change and delete; anyone with the address reads. An upload goes through the wizard's document checks (`inspectFile`: the real type, no macros, no decompression bomb) and is served with `nosniff`. Photos aren't uploaded here: they belong to the photo field that shows them. The documents the import brought are in `media` (`/api/media/file/import-….pdf`) and stay there.
+«Сайт» → «Файлове» (`files`, v0.29.0; hardened in v0.29.1): PDF, DOC, DOCX and ODT documents a text links to. A file has a name for the list («Име») and, once saved, its address («Адрес за връзка», `/api/files/file/<filename>`, without the host) with a copy button; the editor pastes it as the address of a link in any text.
+
+- **Who:** signed-in staff upload and change, only an admin deletes, `uploadedBy` records the account (set on the server). A visitor gets a file by its exact address; the list (`/api/files`) and the records are staff's.
+- **What:** the type is read from the file's first bytes, whatever its name and declared type say. Then the wizard's document checks (`inspectFile`: no macros, no decompression bomb), and for a PDF a search for scripts, launch actions and embedded files (`activePdf`: plain and «#»-coded names, not compressed parts). 20 MB. No fetching from an address, no duplicating.
+- **Stored as** `<latin-name>-<8 random hex>.<extension of the checked type>` (`storedFileName`): no spaces or «%» (the text editor rewrites an address that has them into a broken link), no path, never the extension it came with.
+- **Served:** a PDF inline with `default-src 'none'; frame-ancestors 'none'` and `nosniff`; a Word or OpenDocument file only as a download, sandboxed.
+- **Before Payload reads a form** (`src/proxy.ts`, every multipart POST, PATCH or PUT to `/api/…`, so «Медия» too): a length is required; over 100 KB needs a session Payload signed (`src/lib/session-token.ts`), else 401; over 21 MB is 413. Payload's own limit is 20 MB a file (`upload.limits`).
+
+Photos aren't uploaded here: they belong to the photo field that shows them. The documents the import brought are in `media` (`/api/media/file/import-….pdf`) and stay there.
 
 ### Legal pages
 

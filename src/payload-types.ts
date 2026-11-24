@@ -1630,7 +1630,7 @@ export interface Team {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * PDF и Word документи, към които сайтът води. Качете файла, копирайте «Адрес за връзка» и го поставете като връзка в текста.
+ * PDF и Word документи, към които сайтът води. Качете файла, копирайте «Адрес за връзка» и го поставете като връзка в текста. Всеки с адреса може да отвори файла: не качвайте документи с лични данни.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "files".
@@ -1641,6 +1641,7 @@ export interface File {
    * За вас, в този списък. На сайта се вижда текстът на връзката.
    */
   title: string;
+  uploadedBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2878,6 +2879,7 @@ export interface TeamSelect<T extends boolean = true> {
  */
 export interface FilesSelect<T extends boolean = true> {
   title?: T;
+  uploadedBy?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

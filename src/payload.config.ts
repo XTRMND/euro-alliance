@@ -158,6 +158,9 @@ export default buildConfig({
     fallback: true,
   },
   editor: lexicalEditor(),
+  // One uploaded file through the API: 20 MB, and the request ends there (src/proxy.ts stops a
+  // larger one before its body is read; this is the second lock).
+  upload: { limits: { fileSize: 20 * 1024 * 1024 }, abortOnLimit: true },
   secret: process.env.PAYLOAD_SECRET || '',
   db: postgresAdapter({
     pool: { connectionString: process.env.DATABASE_URL || '' },
