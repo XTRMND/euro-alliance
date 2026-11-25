@@ -51,3 +51,36 @@ export function uploadGuard(budget = uploadBudget) {
     return 'ok'
   }
 }
+
+// Payload's API (/api/…). Its forms are multipart too, the sign-in form among them, and Payload
+// reads a request's whole body before it asks who sent it. So here: a form without a session
+// Payload signed is small (a sign-in, a password reset), and a signed-in one is one file and its
+// fields at most.
+
+export const apiBudget = {
+  /** Without a session: fields only. */
+  anonymousBytes: 100 * 1024,
+  /** With one: a file of 20 MB (src/lib/files.ts, payload.config.ts) and the form. */
+  signedBytes: 21 * MB,
+}
+
+/** Whether a request to the API brings a multipart body. */
+export function isApiForm(method: string, contentType: string | null): boolean {
+  return (
+    ['POST', 'PATCH', 'PUT'].includes(method) &&
+    (contentType ?? '').toLowerCase().startsWith('multipart/form-data')
+  )
+}
+
+/** The status to refuse an API form with, or nothing when it may pass. */
+export function apiFormStatus(
+  contentLength: string | null,
+  signedIn: boolean,
+  budget = apiBudget,
+): 401 | 411 | 413 | undefined {
+  const bytes = contentLength === null ? NaN : Number(contentLength)
+  if (!Number.isInteger(bytes) || bytes < 0) return 411
+  if (bytes > budget.signedBytes) return 413
+  if (bytes > budget.anonymousBytes && !signedIn) return 401
+  return undefined
+}

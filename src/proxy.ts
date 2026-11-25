@@ -5,7 +5,8 @@ import { clientIp } from '@/lib/client-ip'
 import { isSitePath, normalizePath, staticRedirects, withoutEnglish } from '@/lib/redirects'
 import { previewHeader, previewTarget } from '@/lib/preview'
 import { contentSecurityPolicy, createNonce, nonceHeader } from '@/lib/security-headers'
-import { isUpload, uploadGuard, uploadStatus } from '@/lib/upload-guard'
+import { signedSession } from '@/lib/session-token'
+import { apiFormStatus, isApiForm, isUpload, uploadGuard, uploadStatus } from '@/lib/upload-guard'
 
 // Old addresses (docs/content-import.md § 5): a single 301 to the new page (302 for the English
 // copies under /en until the English site exists), whatever the case and
@@ -19,6 +20,8 @@ import { isUpload, uploadGuard, uploadStatus } from '@/lib/upload-guard'
 // scripts, and on the response.
 // A form with files is stopped here when it's too large, or when too much is already on its way
 // in (src/lib/upload-guard.ts): before its body is read into memory.
+// Payload's API passes through for one thing only: a form sent to it is refused when it's large
+// and unsigned, or larger than a file may be (v0.29.1). Nothing else about an API request changes.
 
 const guard = uploadGuard()
 
@@ -88,6 +91,19 @@ function withPolicy(request: NextRequest) {
 
 export async function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
+  if (pathname.startsWith('/api/')) {
+    if (isApiForm(request.method, request.headers.get('content-type'))) {
+      const status = apiFormStatus(
+        request.headers.get('content-length'),
+        signedSession({
+          cookie: request.headers.get('cookie'),
+          authorization: request.headers.get('authorization'),
+        }),
+      )
+      if (status) return new NextResponse(null, { status })
+    }
+    return NextResponse.next()
+  }
   // Not the admin's own forms: its editors are signed in.
   if (
     !pathname.startsWith('/admin') &&
@@ -120,8 +136,9 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Not the framework's files, Payload's API, or the files in public/.
+  // Not the framework's files or the files in public/. Payload's API only for its forms.
   matcher: [
     '/((?!_next/|api/|fonts/|logos/|icon|apple-touch-icon|favicon|robots\\.txt|sitemap).*)',
+    '/api/:path*',
   ],
 }

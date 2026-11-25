@@ -46,6 +46,9 @@ const nextConfig: NextConfig = {
     // The contact wizard's server action carries translation documents: up to 10 files of 20 MB
     // (src/lib/inquiries.ts), checked again on the server.
     serverActions: { bodySizeLimit: '205mb' },
+    // The proxy keeps a copy of a request's body for the route behind it, 10 MB unless told: a
+    // larger upload would arrive cut short. As much as the wizard's form may carry.
+    proxyClientMaxBodySize: '205mb',
   },
 }
 

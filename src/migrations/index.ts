@@ -44,6 +44,7 @@ import * as migration_20261123_111621_inquiry_file_original_name from './2026112
 import * as migration_20261123_121025_header_news_link from './20261123_121025_header_news_link';
 import * as migration_20261123_122158_footer_note_and_funding from './20261123_122158_footer_note_and_funding';
 import * as migration_20261124_111148_files from './20261124_111148_files';
+import * as migration_20261124_143506_file_uploader from './20261124_143506_file_uploader';
 
 export const migrations = [
   {
@@ -274,6 +275,11 @@ export const migrations = [
   {
     up: migration_20261124_111148_files.up,
     down: migration_20261124_111148_files.down,
-    name: '20261124_111148_files'
+    name: '20261124_111148_files',
+  },
+  {
+    up: migration_20261124_143506_file_uploader.up,
+    down: migration_20261124_143506_file_uploader.down,
+    name: '20261124_143506_file_uploader'
   },
 ];

@@ -616,6 +616,16 @@ From «Файлове» (v0.29.0, 24.11.2026; branch `feat/files`; the client, o
 - The imported documents stay in `media` and can't be replaced from the admin; a new version is uploaded in «Файлове» and the link changed.
 - Checked on a local build with a fresh database (upload, the address, a visitor opening it, a fake PDF refused). Pasting the address into a text's link wasn't clicked through in the editor: the editor accepts addresses that start with «/», as the import's links do.
 
+From the hardening of «Файлове» (v0.29.1, 24.11.2026; branch `fix/files-hardening`; the user: «this needs a SERIOUS security hardening pass»; `docs/cms-schema.md` § Files):
+- **A bug of v0.29.0, found by the user on staging:** a file with a space in its name («Daniela Georgieva.pdf») got an address with «%20», and the text editor rewrites any address with «%» into `%2Fapi%2F…`, a link to the 404 page. Files are now stored as `<latin-name>-<8 random hex>.<ext>`; a file uploaded under v0.29.0 keeps its old name and must be uploaded again.
+- **Payload's API read any upload before asking who sent it**, and the upload guard of v0.24.1 never covered `/api/…` (the proxy skipped it): anyone could send a form of any size to `/api/files` or `/api/media`. Now the proxy passes API forms: over 100 KB needs a session Payload signed (checked from the token's signature, without loading Payload), over 21 MB is refused, and Payload itself stops a file at 20 MB.
+- **The proxy copied only the first 10 MB of a request's body** (Next's default, `proxyClientMaxBodySize`), so a larger upload through it would have arrived cut short: likely the contact wizard's files above 10 MB since v0.24.1. Set to 205 MB; a 12 MB file through the API is tested, the wizard's wasn't tested before or after.
+- The file: its type from its first bytes (not the declared one); a PDF with a script, a launch action or an embedded file is refused, with advice to print it to PDF again (a search of the file's bytes: it doesn't open compressed parts, so a file built to hide them passes; ClamAV, card #19, is still the missing part); no «Поставяне на URL»; no duplicating. A fillable form with scripts is refused too: say if the client has one.
+- Access: the list and the records are staff's (before, `/api/files` listed every file to anyone); a file opens for anyone with its address; only an admin deletes; `uploadedBy` (migration `20261124_143506_file_uploader`).
+- Served: a PDF inline with a policy that loads nothing and can't be framed (opens in Chrome's viewer: checked); Word and OpenDocument files only as downloads.
+- `src/lib/session-token.ts` repeats how Payload derives its signing key. A Payload upgrade that changes it makes signed-in uploads fail with 401: `tests/e2e/admin.spec.ts` catches it.
+- Not done: the same checks for «Медия»'s uploads (images and PDFs from photo fields: staff-only, and now behind the same door), rate limits per account, a virus scan.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).

@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import AxeBuilder from '@axe-core/playwright'
 import { expect as baseExpect, type Page, test } from '@playwright/test'
+import { docxType, zip } from '../zip'
 
 // The admin's shell (docs/admin-redesign.md, PR 6; Figma «07 CMS admin»): the login, the sidebar
 // that mirrors the site, the top bar and the hairline sub-nav. The first account of an empty
@@ -605,6 +606,17 @@ test('the shell has no axe violations, with a branch open', async ({ page }) => 
   expect(await axe(page, ['aside[aria-label="Меню"]', '[data-admin="top"]'])).toEqual([])
 })
 
+// A Word file Payload takes for one: its list of parts names the main document.
+const docx = (extra: { name: string; data: string }[] = []) =>
+  zip([
+    {
+      name: '[Content_Types].xml',
+      data: `<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Override PartName="/word/document.xml" ContentType="${docxType}.main+xml"/></Types>`,
+    },
+    { name: 'word/document.xml', data: '<w:document/>' },
+    ...extra,
+  ])
+
 // The smallest PDF Payload accepts as one.
 const minimalPdf = Buffer.from(
   [
@@ -676,43 +688,91 @@ test('a visitor’s file reaches staff under a random name, as a download only',
   })
 })
 
-// «Файлове» (v0.29.0): staff upload a document and get the address to link to from a text; the
-// address works for a visitor, and a file that isn't what its name says is refused.
+// «Файлове» (v0.29.0, hardened in v0.29.1): staff upload a document and get the address to link
+// to from a text. The address works for a visitor; the list doesn't; what isn't a plain document
+// is refused; and Payload's API doesn't read a large form from someone who isn't signed in.
 test('a file uploaded in «Файлове» gets an address a visitor can open', async ({
   page,
   browser,
 }) => {
   await logIn(page)
   await page.goto('/admin/collections/files/create')
+  // No fetching a file from an address.
+  await expect(page.getByRole('button', { name: /URL/ })).toHaveCount(0)
+  // A name that isn't the type's, in Cyrillic.
   await page
     .locator('input[type="file"]')
-    .setInputFiles({ name: 'pravilnik.pdf', mimeType: 'application/pdf', buffer: minimalPdf })
+    .setInputFiles({ name: 'Правилник.html', mimeType: 'application/pdf', buffer: minimalPdf })
   await page.getByLabel('Име', { exact: false }).first().fill('Тестов правилник')
   await page.getByRole('button', { name: 'Запази' }).click()
 
   const address = page.locator('code', { hasText: '/api/files/file/' })
   await expect(address).toBeVisible()
   const href = (await address.textContent())!.trim()
-  expect(href).toMatch(/^\/api\/files\/file\/pravilnik[\w-]*\.pdf$/)
+  expect(href).toMatch(/^\/api\/files\/file\/pravilnik-[0-9a-f]{8}\.pdf$/)
   await expect(page.getByRole('button', { name: 'Копирай адреса' })).toBeVisible()
 
-  // A visitor, not signed in.
+  const upload = (name: string, mimeType: string, buffer: Buffer, request = page.request) =>
+    request.post('/api/files', {
+      multipart: { _payload: JSON.stringify({ title: name }), file: { name, mimeType, buffer } },
+    })
+  const pdf = 'application/pdf'
+
+  // A visitor, not signed in: the file, but not the list, and no upload.
   const visitor = await browser.newContext()
   const file = await visitor.request.get(href)
   expect(file.status()).toBe(200)
   expect(file.headers()).toMatchObject({
-    'content-type': 'application/pdf',
+    'content-type': pdf,
+    'content-disposition': 'inline',
+    'content-security-policy': "default-src 'none'; frame-ancestors 'none'",
     'x-content-type-options': 'nosniff',
   })
-  expect((await visitor.request.post('/api/files', { multipart: {} })).status()).toBe(403)
+  expect((await visitor.request.get('/api/files')).status()).toBe(403)
+  expect((await upload('a.pdf', pdf, minimalPdf, visitor.request)).status()).toBe(403)
+  // A large form without a session never reaches Payload; nor with a made-up one.
+  const large = Buffer.concat([minimalPdf, Buffer.alloc(200 * 1024, 0x20)])
+  expect((await upload('a.pdf', pdf, large, visitor.request)).status()).toBe(401)
+  // Unsigned, built here so no token is written in the repository.
+  const part = (value: object) => Buffer.from(JSON.stringify(value)).toString('base64url')
+  const unsigned = `${part({ alg: 'none' })}.${part({ id: 1, exp: 9999999999 })}.`
+  const forged = await visitor.request.post('/api/files', {
+    headers: { cookie: `payload-token=${unsigned}` },
+    multipart: { _payload: '{}', file: { name: 'a.pdf', mimeType: pdf, buffer: large } },
+  })
+  expect(forged.status()).toBe(401)
   await visitor.close()
 
-  // A web page named as a PDF.
-  const fake = await page.request.post('/api/files', {
-    multipart: {
-      _payload: JSON.stringify({ title: 'Не е PDF' }),
-      file: { name: 'page.pdf', mimeType: 'application/pdf', buffer: Buffer.from('<html></html>') },
-    },
+  // Signed in. A web page named as a PDF; a PDF that runs a script; a picture; too large a file.
+  expect((await upload('page.pdf', pdf, Buffer.from('<html></html>'))).status()).toBe(400)
+  const script = Buffer.from(
+    minimalPdf.toString().replace('/Type/Catalog', '/Type/Catalog/OpenAction<</S/JavaScript>>'),
+  )
+  expect((await upload('script.pdf', pdf, script)).status()).toBe(400)
+  const png = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a])
+  expect((await upload('photo.pdf', pdf, png)).status()).toBe(400)
+  expect((await upload('big.pdf', pdf, Buffer.alloc(22 * 1024 * 1024, 0x20))).status()).toBe(413)
+
+  // A file larger than the proxy's default copy of a body (10 MB) arrives whole.
+  const padded = Buffer.from(
+    minimalPdf.toString().replace('%PDF-1.4\n', `%PDF-1.4\n%${'a'.repeat(12 * 1024 * 1024)}\n`),
+  )
+  const stored = await upload('golyam.pdf', pdf, padded)
+  expect(stored.status()).toBe(201)
+  const { doc } = (await stored.json()) as { doc: { filesize: number; uploadedBy: unknown } }
+  expect(doc.filesize).toBe(padded.length)
+  expect(doc.uploadedBy).toBeTruthy()
+
+  // A Word file is only ever a download.
+  const word = await upload('Договор.docx', docxType, docx())
+  expect(word.status()).toBe(201)
+  const { doc: wordDoc } = (await word.json()) as { doc: { url: string; filename: string } }
+  expect(wordDoc.filename).toMatch(/^dogovor-[0-9a-f]{8}\.docx$/)
+  expect((await page.request.get(wordDoc.url)).headers()).toMatchObject({
+    'content-disposition': 'attachment',
+    'content-security-policy': "default-src 'none'; sandbox",
   })
-  expect(fake.status()).toBe(400)
+  // With macros: refused.
+  const macros = docx([{ name: 'word/vbaProject.bin', data: 'x' }])
+  expect((await upload('macro.docx', docxType, macros)).status()).toBe(400)
 })

@@ -2,7 +2,7 @@
 
 import { useFormFields } from '@payloadcms/ui'
 import { useState } from 'react'
-import { fileAddress } from '@/lib/files'
+import { fileAddress } from '@/lib/file-address'
 import styles from './file-address.module.css'
 
 // «Файлове»: the uploaded file's address, to paste into a link in any text. Without the host, so
