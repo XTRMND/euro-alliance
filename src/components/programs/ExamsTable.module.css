@@ -1,0 +1,10 @@
+/* The «Резултати» cell before the results are out: the deadline, then the place, one under the
+   other in one grid cell (the mobile row puts the column's label beside it). */
+.announced {
+  display: flex;
+  flex-direction: column;
+}
+
+.place {
+  color: var(--color-text-muted);
+}

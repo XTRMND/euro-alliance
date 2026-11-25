@@ -392,6 +392,7 @@
         "both": "Theory and practice"
       },
       "results": "Results",
+      "resultsBy": "by <time>{date}</time>",
       "empty": {
         "title": "No exams are announced at the moment.",
         "text": "New dates are published here."
