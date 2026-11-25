@@ -9,6 +9,7 @@ import { Certificates } from './collections/Certificates'
 import { Courses } from './collections/Courses'
 import { Documents } from './collections/Documents'
 import { Files } from './collections/Files'
+import { withEditorLink } from './fields/editor-link'
 import { Exams } from './collections/Exams'
 import { Groups } from './collections/Groups'
 import { FundedProjects } from './collections/FundedProjects'
@@ -157,7 +158,7 @@ export default buildConfig({
     // (`fallbackLocale: false`), once English exists.
     fallback: true,
   },
-  editor: lexicalEditor(),
+  editor: lexicalEditor({ features: ({ defaultFeatures }) => withEditorLink(defaultFeatures) }),
   // One uploaded file through the API: 20 MB, and the request ends there (src/proxy.ts stops a
   // larger one before its body is read; this is the second lock).
   upload: { limits: { fileSize: 20 * 1024 * 1024 }, abortOnLimit: true },
