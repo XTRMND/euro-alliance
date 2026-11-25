@@ -626,6 +626,10 @@ From the hardening of «Файлове» (v0.29.1, 24.11.2026; branch `fix/files
 - `src/lib/session-token.ts` repeats how Payload derives its signing key. A Payload upgrade that changes it makes signed-in uploads fail with 401: `tests/e2e/admin.spec.ts` catches it.
 - Not done: the same checks for «Медия»'s uploads (images and PDFs from photo fields: staff-only, and now behind the same door), rate limits per account, a virus scan.
 
+From the link dialog's address (v0.29.2, 25.11.2026; branch `fix/link-field-empty`; the user: «remove the pre-written https:// from the link thing»):
+- The text editor's link dialog opens with an empty address and the hint «https://… или адрес от «Файлове»» (`src/fields/editor-link.ts`, used by every editor: the default one, news and the legal pages). Payload wrote «https://» into it, and an address pasted after that was a broken link. An outside address now needs its «https://» typed or pasted with it.
+- Existing links aren't touched.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).

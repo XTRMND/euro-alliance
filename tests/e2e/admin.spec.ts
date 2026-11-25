@@ -776,3 +776,25 @@ test('a file uploaded in «Файлове» gets an address a visitor can open',
   const macros = docx([{ name: 'word/vbaProject.bin', data: 'x' }])
   expect((await upload('macro.docx', docxType, macros)).status()).toBe(400)
 })
+
+// The text editor's link dialog (v0.29.2): the address field opens empty, so an address pasted
+// from «Файлове» isn't glued to a pre-written «https://», and it's kept as typed.
+test('a link in a text starts with an empty address and keeps the one typed', async ({ page }) => {
+  await logIn(page)
+  await page.goto('/admin/collections/news/create')
+  const editor = page.locator('[contenteditable="true"]').first()
+  await editor.click()
+  await page.keyboard.type('Правилник')
+  await page.keyboard.press('ControlOrMeta+A')
+  await page.locator('.toolbar-popup__button-link').first().click()
+
+  // The field's label isn't tied to it in Payload's dialog; its hint is.
+  const address = page.getByRole('dialog').getByPlaceholder(/Файлове/)
+  await expect(address).toHaveValue('')
+  await address.fill('/api/files/file/pravilnik-1a2b3c4d.pdf')
+  await page.getByRole('button', { name: 'Запази промените' }).click()
+  await expect(editor.locator('a')).toHaveAttribute(
+    'href',
+    '/api/files/file/pravilnik-1a2b3c4d.pdf',
+  )
+})
