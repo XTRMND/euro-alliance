@@ -124,6 +124,8 @@ Built in PR 13 (`src/collections/Professions.ts`): `directionCode` (3 digits), `
 
 Built in PR 13 (`src/collections/Exams.ts`), the ЦПО's qualification exams in the Data table: `kind` («Вид изпит»), `subject` («Професия / специалност»), `part` (theory / practice / both), `date` (date and time), `place`, `results` (a link to the results, optional). The page lists them by date from 60 days ago on; without any it shows the table's empty state. Not seeded.
 
+*(v0.30.0, the client, 25.11.2026)* `resultsBy` («Срок за резултатите», a day, not before the exam's day in Sofia) and `resultsPlace` («Място на обявяване на резултатите», localized), both optional. The «Резултати» cell shows the link once there is one; before that, «до 15 декември 2026» and the place under it (`examResults`, `src/lib/exams.ts`); with none of the three it's empty. Migration `20261125_130745_exam_results_deadline`.
+
 ### Teacher programmes
 
 Built in PR 13 (`src/collections/TeacherProgrammes.ts`): `number` (official programme number, kept as given, e.g. «01»), `theme` (text; the card the programme is in), `title`, `hours` and `credits` (1–3; optional, not on the page: Figma doesn't show them and they're never invented). Ordered by dragging in the admin (`orderable`); a theme's card comes where its first programme is, and its chip counts its programmes. Seeded with the 29 programmes of Figma 237:3823 in five themes.
