@@ -5,6 +5,7 @@
 .columns {
   --tape-room: 16px; /* the tape: 12px above its card, turned 3° (its corner about 15px) */
   padding-top: 2px;
+  padding-bottom: var(--tape-room); /* the room the last card's margin gave up */
 }
 
 .item {
