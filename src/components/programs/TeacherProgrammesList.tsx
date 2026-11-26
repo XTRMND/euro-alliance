@@ -9,14 +9,14 @@ export function TeacherProgrammesList({ themes }: { themes: TeacherProgramme[][]
   return (
     <div className={styles.columns}>
       {themes.map((programmes) => (
-        <IndexCard
-          key={programmes[0].theme}
-          title={programmes[0].theme}
-          count={String(programmes.length)}
-          marker="number"
-          items={programmes.map((programme) => ({ no: programme.number, text: programme.title }))}
-          className={styles.card}
-        />
+        <div key={programmes[0].theme} className={styles.item}>
+          <IndexCard
+            title={programmes[0].theme}
+            count={String(programmes.length)}
+            marker="number"
+            items={programmes.map((programme) => ({ no: programme.number, text: programme.title }))}
+          />
+        </div>
       ))}
     </div>
   )

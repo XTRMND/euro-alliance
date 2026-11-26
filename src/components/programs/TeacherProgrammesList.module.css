@@ -1,13 +1,17 @@
-/* Cards 40px apart in a column, the columns 32px apart (247:3853). Inline blocks, so each card's
-   tape (above the card) stays in the card's column. */
+/* Cards 40px apart in a column, the columns 32px apart (247:3853). The room above each card for
+   its tape is part of the item: a column break cuts off whatever sticks out above the column, so
+   the second column's first tape was clipped flat. The list's top padding and the gaps are less
+   by that room, so the cards stay where they were. */
 .columns {
-  padding-top: 18px;
+  --tape-room: 16px; /* the tape: 12px above its card, turned 3° (its corner about 15px) */
+  padding-top: 2px;
 }
 
-.card {
+.item {
   display: inline-block;
   width: 100%;
-  margin-bottom: 40px;
+  padding-top: var(--tape-room);
+  margin-bottom: calc(40px - var(--tape-room));
   vertical-align: top;
   break-inside: avoid;
 }
