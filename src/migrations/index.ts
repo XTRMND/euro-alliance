@@ -45,6 +45,7 @@ import * as migration_20261123_121025_header_news_link from './20261123_121025_h
 import * as migration_20261123_122158_footer_note_and_funding from './20261123_122158_footer_note_and_funding';
 import * as migration_20261124_111148_files from './20261124_111148_files';
 import * as migration_20261124_143506_file_uploader from './20261124_143506_file_uploader';
+import * as migration_20261125_130745_exam_results_deadline from './20261125_130745_exam_results_deadline';
 
 export const migrations = [
   {
@@ -280,6 +281,11 @@ export const migrations = [
   {
     up: migration_20261124_143506_file_uploader.up,
     down: migration_20261124_143506_file_uploader.down,
-    name: '20261124_143506_file_uploader'
+    name: '20261124_143506_file_uploader',
+  },
+  {
+    up: migration_20261125_130745_exam_results_deadline.up,
+    down: migration_20261125_130745_exam_results_deadline.down,
+    name: '20261125_130745_exam_results_deadline'
   },
 ];

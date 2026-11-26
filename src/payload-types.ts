@@ -1570,7 +1570,15 @@ export interface Exam {
   date: string;
   place: string;
   /**
-   * Адрес на документа с резултатите, когато ги има.
+   * До кога ще бъдат обявени резултатите (по избор).
+   */
+  resultsBy?: string | null;
+  /**
+   * Например на сайта или в офиса (по избор).
+   */
+  resultsPlace?: string | null;
+  /**
+   * Адрес на документа с резултатите, когато ги има (по избор). На сайта заменя срока и мястото.
    */
   results?: string | null;
   updatedAt: string;
@@ -2802,6 +2810,8 @@ export interface ExamsSelect<T extends boolean = true> {
   part?: T;
   date?: T;
   place?: T;
+  resultsBy?: T;
+  resultsPlace?: T;
   results?: T;
   updatedAt?: T;
   createdAt?: T;

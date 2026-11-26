@@ -558,6 +558,15 @@ test('exams and certificates have a kind and a «Кога», and empty cells are
     'aria-current',
     'page',
   )
+  // A session's results: a deadline and a place, the link kept, all optional (the client,
+  // 25.11.2026). Nothing is saved: CI's ЦПО page is checked without exams.
+  await page.goto('/admin/collections/exams/create')
+  for (const label of [
+    'Срок за резултатите',
+    'Място на обявяване на резултатите',
+    'Резултати (връзка)',
+  ])
+    await expect(page.locator('label', { hasText: label })).toBeVisible()
 
   // On the site the card reads as before: «12. клас» on its first line.
   await page.goto('/ezitsi/balgarski/uchenitsi')

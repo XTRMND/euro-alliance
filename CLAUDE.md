@@ -630,6 +630,11 @@ From the link dialog's address (v0.29.2, 25.11.2026; branch `fix/link-field-empt
 - The text editor's link dialog opens with an empty address and the hint «https://… или адрес от «Файлове»» (`src/fields/editor-link.ts`, used by every editor: the default one, news and the legal pages). Payload wrote «https://» into it, and an address pasted after that was a broken link. An outside address now needs its «https://» typed or pasted with it.
 - Existing links aren't touched.
 
+From the exams' results (v0.30.0, 25.11.2026; branch `feat/exam-results-deadline`; the client, on Viber: keep «Резултати (връзка)» optional, add a deadline (a date) and a place where the results are announced):
+- «Изпитни сесии» has «Срок за резултатите» (`resultsBy`, a day; not before the exam's day) and «Място на обявяване на резултатите» (`resultsPlace`, localized), both optional (migration `20261125_130745_exam_results_deadline`).
+- On the ЦПО page the «Резултати» column shows the link once it's set; before that «до 15 декември 2026» and the place under it in muted text; without any of the three, nothing. Not in Figma (it shows only the empty table). The column is 150px (was 120px) to fit the date. [as described] Should the deadline and the place stay beside the link once the results are out?
+- The table still lists exams from 60 days ago on, by the exam's date; a deadline more than 60 days after the exam isn't kept up for it.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).
