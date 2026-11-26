@@ -1,12 +1,18 @@
+/* The room above each card for its tape is part of the item: a column break cuts off whatever
+   sticks out above the column, so a tape hanging out of the second column's first card was
+   clipped flat. The list's top padding and the gaps are less by that room, so the cards stay
+   where they were (18px above the first, 28px between them, 32px from 1024px). */
 .columns {
-  padding-top: 18px;
+  --tape-room: 16px; /* the tape: 12px above its card, turned 3° (its corner about 15px) */
+  padding-top: 2px;
+  padding-bottom: var(--tape-room); /* the room the last card's margin gave up */
 }
 
-/* Inline blocks, so each card's tape (above the card) stays in the card's column. */
-.columns > * {
+.item {
   display: inline-block;
   width: 100%;
-  margin-bottom: 28px;
+  padding-top: var(--tape-room);
+  margin-bottom: calc(28px - var(--tape-room));
   vertical-align: top;
   break-inside: avoid;
 }
@@ -17,7 +23,7 @@
     column-gap: 32px;
   }
 
-  .columns > * {
-    margin-bottom: 32px;
+  .item {
+    margin-bottom: calc(32px - var(--tape-room));
   }
 }

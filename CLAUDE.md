@@ -635,6 +635,9 @@ From the exams' results (v0.30.0, 25.11.2026; branch `feat/exam-results-deadline
 - On the ЦПО page the «Резултати» column shows the link once it's set; before that «до 15 декември 2026» and the place under it in muted text; without any of the three, nothing. Not in Figma (it shows only the empty table). The column is 150px (was 120px) to fit the date. [as described] Should the deadline and the place stay beside the link once the results are out?
 - The table still lists exams from 60 days ago on, by the exam's date; a deadline more than 60 days after the exam isn't kept up for it.
 
+From the clipped tape (v0.30.1, 26.11.2026; branch `fix/tape-column-clip`; the user's screenshot of «101 Персонални услуги»):
+- Safari (WebKit) cuts off whatever sticks out above a column box, so in the two-column lists (ЦПО directions, the teachers' themes) the tape of the card that opens the second column was clipped flat. Chrome doesn't clip, which is why CI and the local runs never showed it. Each card now sits in an item with 16px of room on top for its tape (`--tape-room`); the list's top padding and the gaps are less by that much, so no card moves. Checked in Playwright's WebKit at 1024, 1280 and 1440, before and after.
+
 - Halftone is applied only to art, never to photos (resolves a conflict in the brief; see `docs/cms-schema.md`).
 - Amounts in лв: Bulgaria has used the euro since 01.01.2026. Course prices are converted (the import rules above). Funded-project amounts: ask whether they show the contracted лв amount, the euro amount, or both; never convert them silently.
 - Inquiry routing for non-language programmes (default: office@).

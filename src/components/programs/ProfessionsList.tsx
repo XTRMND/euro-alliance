@@ -12,7 +12,9 @@ export function ProfessionsList({
   return (
     <div className={styles.columns}>
       {directions.map((direction) => (
-        <DirectionCard key={direction.code} {...direction} />
+        <div key={direction.code} className={styles.item}>
+          <DirectionCard {...direction} />
+        </div>
       ))}
     </div>
   )
